@@ -1,0 +1,21 @@
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+
+  .toolbar-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2;
+  }
+  
+  .toolbar-container,
+  .toolbar-sidenav {
+    position: absolute;
+    padding-top: 64px;
+    height: calc(100vh - 64px);
+    width: 100%;
+  }
+
+  .dark-theme{
+    background-color: #35284A;
+    color: #816F90;
+  }
