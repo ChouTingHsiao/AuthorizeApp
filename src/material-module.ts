@@ -6,6 +6,7 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import {MatButtonModule} from '@angular/material';
 import {MatInputModule} from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
+import {MatCardModule} from '@angular/material/card';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import {MatIconModule} from '@angular/material/icon';
         MatGridListModule,
         MatButtonModule,
         MatInputModule,
-        MatIconModule
+        MatIconModule,
+        MatCardModule
     ]
 })
 

@@ -9,11 +9,18 @@ export class LoginGuard implements CanActivate {
     constructor(private router: Router) {}
 
     canActivate() {
-    const loggedIn: boolean = Math.random() < 0.5;
+
+    const Auth: string =  localStorage.getItem('Auth');
+
+    const loggedIn: boolean = Auth.length > 0;
+
     if (!loggedIn) {
       console.log('Not Login');
       this.router.navigate(['/Login']);
+    } else {
+      console.log(`Role:${Auth}`);
     }
+
     return loggedIn;
   }
 }
