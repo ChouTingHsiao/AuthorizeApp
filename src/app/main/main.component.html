@@ -10,6 +10,9 @@
          ...
     </mat-sidenav>
     <mat-sidenav-content>
-      <app-view></app-view>
+      <a [routerLink]="['User']">User</a>&nbsp;
+      <a [routerLink]="['Role']">Role</a>&nbsp;
+      <a [routerLink]="['Group']">Group</a>
+      <router-outlet></router-outlet>
     </mat-sidenav-content>
 </mat-sidenav-container>
