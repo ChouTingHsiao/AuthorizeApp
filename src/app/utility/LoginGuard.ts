@@ -12,7 +12,7 @@ export class LoginGuard implements CanActivate {
 
     const Auth: string =  localStorage.getItem('Auth');
 
-    const loggedIn: boolean = Auth.length > 0;
+    const loggedIn: boolean = Auth && Auth.length > 0;
 
     if (!loggedIn) {
       console.log('Not Login');
