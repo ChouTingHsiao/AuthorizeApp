@@ -8,12 +8,18 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { MainComponent } from './main/main.component';
+import { UserComponent } from './user/user.component';
+import { RoleComponent } from './role/role.component';
+import { GroupComponent } from './group/group.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    MainComponent
+    MainComponent,
+    UserComponent,
+    RoleComponent,
+    GroupComponent
   ],
   imports: [
     BrowserModule,
