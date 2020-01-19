@@ -33,15 +33,5 @@ export interface PeriodicElement {
 
 const ELEMENT_DATA: PeriodicElement[] = [
   {name: 'ADMIN', password: 'ADMIN'},
-  {name: 'ADMIN', password: 'ADMIN'},
-  {name: 'ADMIN', password: 'ADMIN'},
-  {name: 'ADMIN', password: 'ADMIN'},
-  {name: 'ADMIN', password: 'ADMIN'},
-  {name: 'ADMIN', password: 'ADMIN'},
-  {name: 'ADMIN', password: 'ADMIN'},
-  {name: 'ADMIN', password: 'ADMIN'},
-  {name: 'ADMIN', password: 'ADMIN'},
-  {name: 'ADMIN', password: 'ADMIN'},
-  {name: 'ADMIN', password: 'ADMIN'},
   {name: 'USER', password: 'USER'}
 ];
