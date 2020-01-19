@@ -8,7 +8,8 @@ import {MatInputModule} from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
 import {MatCardModule} from '@angular/material/card';
 import {MatListModule} from '@angular/material/list';
-
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatTableModule} from '@angular/material/table';
 
 @NgModule({
     exports: [
@@ -19,7 +20,9 @@ import {MatListModule} from '@angular/material/list';
         MatInputModule,
         MatIconModule,
         MatCardModule,
-        MatListModule
+        MatListModule,
+        MatPaginatorModule,
+        MatTableModule
     ]
 })
 

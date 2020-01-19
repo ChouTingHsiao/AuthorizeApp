@@ -1,19 +1,19 @@
 <mat-toolbar class="toolbar-header dark-theme">
-    <button class="toolbar-button" mat-icon-button (click)="sideNav.toggle()">
+    <button class="dark-theme" mat-icon-button (click)="sideNav.toggle()">
         <mat-icon>{{ sideNav.opened ? 'close' : 'menu' }}</mat-icon>
     </button>&nbsp;
     <span>{{title}}</span>
     <span class="toolbar-seprator"></span>
-    <button class="toolbar-button" mat-icon-button (click)="Logout()" >
+    <button class="dark-theme" mat-icon-button (click)="Logout()" >
       <mat-icon>exit_to_app</mat-icon>
     </button>
 </mat-toolbar>
   
 <mat-sidenav-container class="toolbar-container">
-    <mat-sidenav #sideNav  class="toolbar-sidenav" >
+    <mat-sidenav #sideNav mode="side" class="dark-theme">
       <mat-nav-list>
         <a [routerLink]="['User']" mat-list-item>User</a>
-        <a [routerLink]="['Role']" mat-list-item>Role</a>&nbsp;
+        <a [routerLink]="['Role']" mat-list-item>Role</a>
         <a [routerLink]="['Group']" mat-list-item>Group</a>
       </mat-nav-list>
     </mat-sidenav>

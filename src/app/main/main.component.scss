@@ -1,35 +1,25 @@
+.dark-theme{
+    background-color: #35284A;
+    color: #816F90;
+  }
+
   .toolbar-header {
     position: fixed;
     top: 0;
     left: 0;
     z-index: 2;
   }
-  
-  .toolbar-container{
-    position: absolute;
-    padding-top: 64px;
-    height: calc(100vh - 64px);
-    width: 100%;
-  }
-  
-  .toolbar-sidenav {
-    position: absolute;
-    padding-top: 64px;
-    height: calc(100vh - 64px);
-    width: 100%;
-    background-color: white;
-  }
 
   .toolbar-seprator {
     flex: 1 1 auto;
   }
 
-  .toolbar-button {
-    background-color: #35284A;
-    color: #816F90;
+  .toolbar-container{
+    position: absolute;
+    margin-top: 4%;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
   }
-
-  .dark-theme{
-    background-color: #35284A;
-    color: #816F90;
-  }
+  
