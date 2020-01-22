@@ -10,6 +10,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatListModule} from '@angular/material/list';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatTableModule} from '@angular/material/table';
+import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
     exports: [
@@ -22,7 +23,8 @@ import {MatTableModule} from '@angular/material/table';
         MatCardModule,
         MatListModule,
         MatPaginatorModule,
-        MatTableModule
+        MatTableModule,
+        MatDialogModule
     ]
 })
 

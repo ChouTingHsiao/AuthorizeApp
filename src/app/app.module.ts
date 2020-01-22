@@ -11,6 +11,10 @@ import { MainComponent } from './main/main.component';
 import { UserComponent } from './user/user.component';
 import { RoleComponent } from './role/role.component';
 import { GroupComponent } from './group/group.component';
+import { DialogComponent } from './dialog/dialog.component';
+import { InputComponent } from './shared/Component/input.component';
+import { DynamicHostDirective } from './shared/Directive/dynamichost.Directive';
+
 
 @NgModule({
   declarations: [
@@ -19,7 +23,10 @@ import { GroupComponent } from './group/group.component';
     MainComponent,
     UserComponent,
     RoleComponent,
-    GroupComponent
+    GroupComponent,
+    DialogComponent,
+    InputComponent,
+    DynamicHostDirective
   ],
   imports: [
     BrowserModule,
@@ -30,6 +37,10 @@ import { GroupComponent } from './group/group.component';
     MaterialModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    DialogComponent,
+    InputComponent
+  ]
 })
 export class AppModule { }

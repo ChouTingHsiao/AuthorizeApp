@@ -1,4 +1,8 @@
-    <table mat-table [dataSource]="dataSource">
+
+<button mat-button (click)="openDialog()">新增</button>
+
+<mat-card>
+  <table mat-table [dataSource]="dataSource">
   
     <!-- Name Column -->
     <ng-container matColumnDef="name">
@@ -17,3 +21,6 @@
     </table>
   
     <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+</mat-card>
+
+
