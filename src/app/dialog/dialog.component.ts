@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, AfterViewInit, ComponentFactoryResolver, 
 import { DynamicHostDirective } from '../shared/Directive/dynamichost.Directive';
 import { InputComponent } from '../shared/Component/input.component';
 import {Schema} from '../shared/Model/table.model';
+import {Dialog} from '../shared/Model/dialog.model';
 
 @Component({
   selector: 'app-dialog',
@@ -14,11 +15,7 @@ export class DialogComponent implements OnInit, AfterViewInit {
 
   InputArray: InputComponent[] = [];
 
-  public DialogData: Dialog = {
-    title: '',
-    button: [],
-    template: '<p>test</p>'
-  };
+  public DialogData: Dialog;
 
   @ViewChild(DynamicHostDirective, {static: true}) dynamicComponentLoader: DynamicHostDirective;
 
@@ -26,10 +23,7 @@ export class DialogComponent implements OnInit, AfterViewInit {
 
   constructor(private componenFactoryResolver: ComponentFactoryResolver) {}
 
-  ngOnInit() {
-      this.DialogData.title = '維護頁面';
-      this.DialogData.button = ['新增', '取消'];
-  }
+  ngOnInit() {}
 
   ngAfterViewInit() {
 
@@ -69,10 +63,3 @@ export class DialogComponent implements OnInit, AfterViewInit {
   }
 
 }
-
-export interface Dialog {
-  title: string;
-  button: string[];
-  template: string;
-}
-

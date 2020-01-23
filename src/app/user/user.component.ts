@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild, AfterViewInit, Output, Input } from '@angular/core';
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import {MatDialog} from '@angular/material/dialog';
-import {DialogComponent} from '../dialog/dialog.component';
-import {Schema} from '../shared/Model/table.model';
-
+import { MatDialog } from '@angular/material/dialog';
+import { DialogComponent } from '../dialog/dialog.component';
+import { Schema } from '../shared/Model/table.model';
+import {Dialog} from '../shared/Model/dialog.model';
 
 @Component({
   selector: 'app-user',
@@ -21,8 +21,8 @@ export class UserComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['maintain', 'name', 'password'];
 
   ELEMENT_DATA: PeriodicElement[] = [
-    {name: 'ADMIN', password: 'ADMIN'},
-    {name: 'USER', password: 'USER'}
+    {id: '1', name: 'ADMIN', password: 'ADMIN'},
+    {id: '2', name: 'USER', password: 'USER'}
   ];
 
   dataSource = new MatTableDataSource<PeriodicElement>(this.ELEMENT_DATA);
@@ -34,27 +34,49 @@ export class UserComponent implements OnInit, AfterViewInit {
   ngOnInit() {}
 
   ngAfterViewInit() {
-    setTimeout(() => this.dataSource.paginator = this.paginator);
+    this.dataSource.paginator = this.paginator;
   }
 
-  openDialog() {
+  create() {
+
+    this.openDialog({
+      title: '新增頁面',
+      button: ['新增', '取消'],
+      template: '<p>test</p>'
+    });
+
+    // this.ELEMENT_DATA.push({name: 'TEST', password: 'TEST'});
+    this.dataSource.paginator = this.paginator;
+  }
+
+  edit(event: any) {
+    const element = event.target as HTMLElement;
+    const next = element.closest('td').nextSibling as HTMLElement;
+
+    console.log(next.innerHTML);
+    this.openDialog({
+      title: '修改頁面',
+      button: ['修改', '取消'],
+      template: '<p>test</p>'
+    });
+
+
+  }
+
+  openDialog(DialogData: Dialog) {
     const dialogRef = this.dialog.open(DialogComponent);
     const instance = dialogRef.componentInstance;
     instance.SchemaArray = this.SCHEMA;
-
+    instance.DialogData = DialogData;
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
   }
 
-  log(event: any) {
-   console.log(event.target.parentNode.nextSibling.innerHTML);
-  }
-
-
 }
 
 export interface PeriodicElement {
+  id: string;
   name: string;
   password: string;
 }
