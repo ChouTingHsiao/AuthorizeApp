@@ -5,6 +5,6 @@
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close>{{DialogData.button[0]}}</button>
-  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>{{DialogData.button[1]}}</button>
+  <button mat-button mat-dialog-close (click)="confirm()">{{DialogData.button[0]}}</button>
+  <button mat-button [mat-dialog-close]="true">{{DialogData.button[1]}}</button>
 </mat-dialog-actions>

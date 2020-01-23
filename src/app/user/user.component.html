@@ -3,7 +3,13 @@
 
 <mat-card>
   <table mat-table [dataSource]="dataSource">
-  
+    
+    <!-- Name Column -->
+    <ng-container matColumnDef="maintain">
+    <th mat-header-cell *matHeaderCellDef></th>
+    <td mat-cell *matCellDef="let element"><button (click)="log($event)">log</button> </td>
+    </ng-container>
+
     <!-- Name Column -->
     <ng-container matColumnDef="name">
     <th mat-header-cell *matHeaderCellDef> Name </th>

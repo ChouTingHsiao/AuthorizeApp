@@ -1,8 +1,9 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, Output, Input } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import {MatDialog} from '@angular/material/dialog';
 import {DialogComponent} from '../dialog/dialog.component';
+import {Schema} from '../shared/Model/table.model';
 
 
 @Component({
@@ -12,16 +13,25 @@ import {DialogComponent} from '../dialog/dialog.component';
 })
 export class UserComponent implements OnInit, AfterViewInit {
 
-  displayedColumns: string[] = ['name', 'password'];
+  SCHEMA: Schema[] = [
+    {column: 'name', type: 'string', value: ''},
+    {column: 'password', type: 'string', value: ''}
+  ];
 
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+  displayedColumns: string[] = ['maintain', 'name', 'password'];
+
+  ELEMENT_DATA: PeriodicElement[] = [
+    {name: 'ADMIN', password: 'ADMIN'},
+    {name: 'USER', password: 'USER'}
+  ];
+
+  dataSource = new MatTableDataSource<PeriodicElement>(this.ELEMENT_DATA);
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
   constructor(public dialog: MatDialog) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   ngAfterViewInit() {
     setTimeout(() => this.dataSource.paginator = this.paginator);
@@ -29,11 +39,18 @@ export class UserComponent implements OnInit, AfterViewInit {
 
   openDialog() {
     const dialogRef = this.dialog.open(DialogComponent);
+    const instance = dialogRef.componentInstance;
+    instance.SchemaArray = this.SCHEMA;
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
   }
+
+  log(event: any) {
+   console.log(event.target.parentNode.nextSibling.innerHTML);
+  }
+
 
 }
 
@@ -41,8 +58,3 @@ export interface PeriodicElement {
   name: string;
   password: string;
 }
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {name: 'ADMIN', password: 'ADMIN'},
-  {name: 'USER', password: 'USER'}
-];
