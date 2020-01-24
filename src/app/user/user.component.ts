@@ -1,76 +1,72 @@
-import { Component, OnInit, ViewChild, AfterViewInit, Output, Input } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
+import { Component, OnInit, ViewChild, ComponentFactoryResolver } from '@angular/core';
+import { DynamicHostDirective } from '../shared/Directive/dynamichost.Directive';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '../dialog/dialog.component';
-import { Schema } from '../shared/Model/table.model';
-import {Dialog} from '../shared/Model/dialog.model';
+import { Grid } from '../shared/Model/table.model';
+import { TableComponent } from '../shared/Component/table.component';
 
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.scss']
 })
-export class UserComponent implements OnInit, AfterViewInit {
+export class UserComponent implements OnInit {
 
-  SCHEMA: Schema[] = [
-    {column: 'name', type: 'string', value: ''},
-    {column: 'password', type: 'string', value: ''}
-  ];
+  tableComponent: TableComponent;
 
-  displayedColumns: string[] = ['maintain', 'name', 'password'];
+  @ViewChild(DynamicHostDirective, {static: true}) dynamicComponentLoader: DynamicHostDirective;
 
   ELEMENT_DATA: PeriodicElement[] = [
     {id: '1', name: 'ADMIN', password: 'ADMIN'},
     {id: '2', name: 'USER', password: 'USER'}
   ];
 
-  dataSource = new MatTableDataSource<PeriodicElement>(this.ELEMENT_DATA);
+  grid: Grid = {
+    SCHEMA: [
+      {column: 'name', type: 'string', value: ''},
+      {column: 'password', type: 'string', value: ''}
+    ],
+    columns: [
+      { columnDef: 'name', header: 'Name', cell: (element: any) => `${element.name}` },
+      { columnDef: 'password', header: 'Password', cell: (element: any) => `${element.password}` },
+    ],
+    displayedColumns: ['maintain', 'name', 'password'],
+    dataSource: new MatTableDataSource<PeriodicElement>(this.ELEMENT_DATA),
+  };
 
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  constructor(private componenFactoryResolver: ComponentFactoryResolver) { }
 
-  constructor(public dialog: MatDialog) { }
-
-  ngOnInit() {}
-
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
+  ngOnInit() {
+    this.dynamicAddComponent();
   }
 
   create() {
-
-    this.openDialog({
+    this.tableComponent.openDialog({
       title: '新增頁面',
       button: ['新增', '取消'],
       template: '<p>test</p>'
     });
 
-    // this.ELEMENT_DATA.push({name: 'TEST', password: 'TEST'});
-    this.dataSource.paginator = this.paginator;
+    this.ELEMENT_DATA.push({id: '', name: 'TEST', password: 'TEST'});
+    this.tableComponent.pageNation();
   }
 
-  edit(event: any) {
-    const element = event.target as HTMLElement;
-    const next = element.closest('td').nextSibling as HTMLElement;
+  dynamicAddComponent() {
 
-    console.log(next.innerHTML);
-    this.openDialog({
-      title: '修改頁面',
-      button: ['修改', '取消'],
-      template: '<p>test</p>'
-    });
+    const componentFactory = this.componenFactoryResolver.resolveComponentFactory(TableComponent);
 
+    const viewContainerRef = this.dynamicComponentLoader.viewContainerRef;
 
-  }
+    viewContainerRef.clear();
 
-  openDialog(DialogData: Dialog) {
-    const dialogRef = this.dialog.open(DialogComponent);
-    const instance = dialogRef.componentInstance;
-    instance.SchemaArray = this.SCHEMA;
-    instance.DialogData = DialogData;
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
+    const componentRef = viewContainerRef.createComponent(componentFactory);
+
+    const instance = componentRef.instance;
+
+    this.tableComponent = instance;
+
+    instance.grid = this.grid;
+
+    componentRef.changeDetectorRef.detectChanges();
   }
 
 }

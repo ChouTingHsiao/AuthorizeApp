@@ -13,6 +13,7 @@ import { RoleComponent } from './role/role.component';
 import { GroupComponent } from './group/group.component';
 import { DialogComponent } from './dialog/dialog.component';
 import { InputComponent } from './shared/Component/input.component';
+import { TableComponent } from './shared/Component/table.component';
 import { DynamicHostDirective } from './shared/Directive/dynamichost.Directive';
 
 
@@ -26,6 +27,7 @@ import { DynamicHostDirective } from './shared/Directive/dynamichost.Directive';
     GroupComponent,
     DialogComponent,
     InputComponent,
+    TableComponent,
     DynamicHostDirective
   ],
   imports: [
@@ -40,7 +42,8 @@ import { DynamicHostDirective } from './shared/Directive/dynamichost.Directive';
   bootstrap: [AppComponent],
   entryComponents: [
     DialogComponent,
-    InputComponent
+    InputComponent,
+    TableComponent
   ]
 })
 export class AppModule { }
