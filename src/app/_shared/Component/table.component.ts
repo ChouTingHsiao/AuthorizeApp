@@ -1,11 +1,11 @@
-import { Component, OnInit, ViewChild, AfterViewInit, Input, Output, EventEmitter} from '@angular/core';
-import { MatSort, Sort } from '@angular/material/sort';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '../Component/dialog.component';
-import { Grid } from '../Model/table.model';
-import { Dialog } from '../Model/dialog.model';
-import { DialogEnum } from '../Enum/dialog.enum';
+import {Component, OnInit, ViewChild, AfterViewInit, Input, Output, EventEmitter} from '@angular/core';
+import {MatSort, Sort} from '@angular/material/sort';
+import {MatPaginator} from '@angular/material/paginator';
+import {MatDialog} from '@angular/material/dialog';
+import {DialogComponent} from '@shared/Component/dialog.component';
+import {Grid } from '@shared/Model/table.model';
+import {Dialog} from '@shared/Model/dialog.model';
+import {DialogEnum} from '@shared/Enum/dialog.enum';
 
 @Component({
   selector: 'app-table',

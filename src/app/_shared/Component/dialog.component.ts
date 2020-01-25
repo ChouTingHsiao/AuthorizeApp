@@ -1,10 +1,10 @@
-import { Component, OnInit, ViewChild, AfterViewInit, ComponentFactoryResolver, ElementRef } from '@angular/core';
-import { DynamicHostDirective } from '../Directive/dynamichost.Directive';
-import { InputComponent } from '../Component/input.component';
-import { LabelComponent } from '../Component/label.component';
-import { Schema } from '../Model/table.model';
-import { Dialog } from '../Model/dialog.model';
-import { DialogEnum } from '../Enum/dialog.enum';
+import {Component, OnInit, ViewChild, AfterViewInit, ComponentFactoryResolver, ElementRef} from '@angular/core';
+import {DynamicHostDirective} from '@shared/Directive/dynamichost.Directive';
+import {InputComponent} from '@shared/Component/input.component';
+import {LabelComponent} from '@shared/Component/label.component';
+import {Schema} from '@shared/Model/table.model';
+import {Dialog} from '@shared/Model/dialog.model';
+import {DialogEnum} from '@shared/Enum/dialog.enum';
 
 @Component({
   selector: 'app-dialog',
