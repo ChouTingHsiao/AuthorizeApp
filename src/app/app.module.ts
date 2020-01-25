@@ -16,6 +16,7 @@ import { InputComponent } from '@shared/Component/input.component';
 import { LabelComponent } from '@shared/Component/label.component';
 import { TableComponent } from '@shared/Component/table.component';
 import { DynamicHostDirective } from '@shared/Directive/dynamichost.Directive';
+import { ProgramComponent } from './program/program.component';
 
 
 @NgModule({
@@ -31,6 +32,7 @@ import { DynamicHostDirective } from '@shared/Directive/dynamichost.Directive';
     LabelComponent,
     TableComponent,
     DynamicHostDirective,
+    ProgramComponent,
   ],
   imports: [
     BrowserModule,

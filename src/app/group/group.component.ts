@@ -1,37 +1,98 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
+import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
+import { TableComponent } from '@shared/Component/table.component';
+import { DialogEnum } from '@shared/Enum/dialog.enum';
+import { Grid } from '@shared/Model/table.model';
+import { Schema } from '@shared/Model/table.model';
+import { Group } from '@shared/Model/group.model';
 
 @Component({
   selector: 'app-group',
   templateUrl: './group.component.html',
   styleUrls: ['./group.component.scss']
 })
-export class GroupComponent implements OnInit, AfterViewInit {
+export class GroupComponent implements OnInit {
 
-  displayedColumns: string[] = ['name', 'remark'];
+  tableComponent: TableComponent;
 
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+  ELEMENT_DATA: Group[] = [
+    { id: '1', name: 'ADMIN', remark: '管理員群組' }
+  ];
 
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  myGrid: Grid = {
+    dataSource: new MatTableDataSource<Group>(this.ELEMENT_DATA),
+    sort: { active: 'id', direction: 'asc' },
+    columns: [
+      { columnDef: 'id', header: 'Id', cell: (element: Group) => `${ element.id }` },
+      { columnDef: 'name', header: 'Name', cell: (element: Group) => `${ element.name }` },
+      { columnDef: 'remark', header: 'Remark', cell: (element: Group) => `${ element.remark }` },
+    ],
+    displayedColumns: ['maintain', 'id', 'name', 'remark'],
+    create: () => {
+      const data = this.tableComponent.dialogComponent.getData() as Group;
+      data.id = (this.ELEMENT_DATA.length + 1).toString();
+      this.ELEMENT_DATA.push(data);
+      this.myGrid.dataSource = new MatTableDataSource<Group>(this.ELEMENT_DATA);
+      this.tableComponent.pageNation();
+    },
+    createDialog: () => {
+
+      const userModel: Schema[] = [
+        { column: 'id', type: 'string', value: '' },
+        { column: 'name', type: 'string', value: '' },
+        { column: 'remark', type: 'string', value: '' }
+      ];
+
+      this.tableComponent.openDialog({
+        title: '新增頁面',
+        button: [DialogEnum.btnCreate, DialogEnum.btnCancel],
+        method: DialogEnum.create,
+        model: userModel,
+      });
+
+     },
+    edit: () => {
+      const data = this.tableComponent.dialogComponent.getData() as Group;
+      console.log(data);
+      const newData = this.ELEMENT_DATA.filter(x => x.id !== data.id);
+      this.ELEMENT_DATA = newData;
+      console.log(this.ELEMENT_DATA);
+      this.ELEMENT_DATA.push(data);
+      console.log(this.ELEMENT_DATA);
+      this.myGrid.dataSource = new MatTableDataSource<Group>(this.ELEMENT_DATA);
+      this.tableComponent.pageNation();
+    },
+    editDialog: (event: any) => {
+
+      const element = event.target as HTMLElement;
+
+      const nextNode = element.closest('td').nextSibling as HTMLElement;
+
+      const userData =  this.ELEMENT_DATA.filter(x => x.id === nextNode.innerHTML.trim());
+
+      const userModel: Schema[] = [
+        { column: 'id', type: 'string', value: userData[0].id },
+        { column: 'name', type: 'string', value:  userData[0].name },
+        { column: 'remark', type: 'string', value:  userData[0].remark }
+      ];
+
+      this.tableComponent.openDialog({
+        title: '修改頁面',
+        button: [DialogEnum.btnEdit, DialogEnum.btnCancel],
+        method: DialogEnum.edit,
+        model:  userModel,
+      });
+
+    }
+  };
 
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
-  ngAfterViewInit() {
-    setTimeout(() => this.dataSource.paginator = this.paginator);
+  initComponentHandler(component: TableComponent) {
+    this.tableComponent = component;
+    console.log(component);
   }
 
 }
-
-export interface PeriodicElement {
-  name: string;
-  remark: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {name: 'Admin', remark: '管理員群組'},
-  {name: 'BelowAdmin', remark: '管理員之下群組'}
-];

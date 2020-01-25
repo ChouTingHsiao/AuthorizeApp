@@ -6,6 +6,7 @@ import { MainComponent } from './main/main.component';
 import { UserComponent } from './user/user.component';
 import { RoleComponent } from './role/role.component';
 import { GroupComponent } from './group/group.component';
+import { ProgramComponent } from './program/program.component';
 
 const routes: Routes = [
   {  path: '',   redirectTo: '/Main', pathMatch: 'full'  },
@@ -15,6 +16,7 @@ const routes: Routes = [
           {  path: 'User', component: UserComponent  },
           {  path: 'Role', component: RoleComponent  },
           {  path: 'Group', component: GroupComponent  },
+          {  path: 'Program', component: ProgramComponent  },
           {  path: '**', redirectTo: '/Main'  }
     ]
    },

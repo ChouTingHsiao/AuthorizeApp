@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { Grid } from '@shared/Model/table.model';
 import { TableComponent } from '@shared/Component/table.component';
 import { DialogEnum } from '@shared/Enum/dialog.enum';
+import { Grid } from '@shared/Model/table.model';
 import { Schema } from '@shared/Model/table.model';
 import { User } from '@shared/Model/user.model';
 
@@ -24,9 +24,9 @@ export class UserComponent implements OnInit {
     dataSource: new MatTableDataSource<User>(this.ELEMENT_DATA),
     sort: { active: 'id', direction: 'asc' },
     columns: [
-      { columnDef: 'id', header: 'Id', cell: (element: any) => `${ element.id }` },
-      { columnDef: 'name', header: 'Name', cell: (element: any) => `${ element.name }` },
-      { columnDef: 'password', header: 'Password', cell: (element: any) => `${ element.password }` },
+      { columnDef: 'id', header: 'Id', cell: (element: User) => `${ element.id }` },
+      { columnDef: 'name', header: 'Name', cell: (element: User) => `${ element.name }` },
+      { columnDef: 'password', header: 'Password', cell: (element: User) => `${ element.password }` },
     ],
     displayedColumns: ['maintain', 'id', 'name', 'password'],
     create: () => {
