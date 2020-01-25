@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { Grid } from '../shared/Model/table.model';
-import { TableComponent } from '../shared/Component/table.component';
-import { DialogEnum } from '../shared/Enum/dialog.enum';
-import { Schema } from '../shared/Model/table.model';
-import { User } from '../shared/Model/user.model';
+import { Grid } from '../_shared/Model/table.model';
+import { TableComponent } from '../_shared/Component/table.component';
+import { DialogEnum } from '../_shared/Enum/dialog.enum';
+import { Schema } from '../_shared/Model/table.model';
+import { User } from '../_shared/Model/user.model';
 
 @Component({
   selector: 'app-user',

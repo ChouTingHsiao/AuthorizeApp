@@ -1,15 +1,24 @@
 import { Component, OnInit, ViewChild, AfterViewInit, ComponentFactoryResolver, ElementRef } from '@angular/core';
-import { DynamicHostDirective } from '../shared/Directive/dynamichost.Directive';
-import { InputComponent } from '../shared/Component/input.component';
-import { LabelComponent } from '../shared/Component/label.component';
-import { Schema } from '../shared/Model/table.model';
-import { Dialog } from '../shared/Model/dialog.model';
-import { DialogEnum } from '../shared/Enum/dialog.enum';
+import { DynamicHostDirective } from '../Directive/dynamichost.Directive';
+import { InputComponent } from '../Component/input.component';
+import { LabelComponent } from '../Component/label.component';
+import { Schema } from '../Model/table.model';
+import { Dialog } from '../Model/dialog.model';
+import { DialogEnum } from '../Enum/dialog.enum';
 
 @Component({
   selector: 'app-dialog',
-  templateUrl: './dialog.component.html',
-  styleUrls: ['./dialog.component.scss']
+  template:
+  `<h2 mat-dialog-title>{{DialogData.title}}</h2>
+
+   <mat-dialog-content  #content class="mat-typography">
+      <ng-container appDynamicHost></ng-container>
+   </mat-dialog-content>
+
+   <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close (click)="confirm()">{{DialogData.button[0]}}</button>
+    <button mat-button [mat-dialog-close]="true">{{DialogData.button[1]}}</button>
+   </mat-dialog-actions>`
 })
 export class DialogComponent implements OnInit, AfterViewInit {
 

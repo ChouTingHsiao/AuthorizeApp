@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, AfterViewInit, Input, Output, EventEmitte
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '../../dialog/dialog.component';
+import { DialogComponent } from '../Component/dialog.component';
 import { Grid } from '../Model/table.model';
 import { Dialog } from '../Model/dialog.model';
 import { DialogEnum } from '../Enum/dialog.enum';

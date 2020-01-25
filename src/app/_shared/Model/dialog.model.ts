@@ -1,4 +1,4 @@
-import { Schema } from '../Model/table.model';
+import { Schema } from './table.model';
 
 export interface Dialog {
     title: string;
