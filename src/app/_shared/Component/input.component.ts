@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {Schema} from '@shared/Model/table.model';
+import { Component, OnInit } from '@angular/core';
+import { Schema } from '@shared/Model/table.model';
 
 @Component({
   selector: 'app-input',

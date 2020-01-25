@@ -1,4 +1,4 @@
-import {Schema} from '@shared/Model/table.model';
+import { Schema } from '@shared/Model/table.model';
 
 export interface Dialog {
     title: string;

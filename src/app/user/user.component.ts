@@ -1,10 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {MatTableDataSource} from '@angular/material/table';
-import {Grid} from '@shared/Model/table.model';
-import {TableComponent} from '@shared/Component/table.component';
-import {DialogEnum} from '@shared/Enum/dialog.enum';
-import {Schema} from '@shared/Model/table.model';
-import {User} from '@shared/Model/user.model';
+import { Component, OnInit } from '@angular/core';
+import { MatTableDataSource } from '@angular/material/table';
+import { Grid } from '@shared/Model/table.model';
+import { TableComponent } from '@shared/Component/table.component';
+import { DialogEnum } from '@shared/Enum/dialog.enum';
+import { Schema } from '@shared/Model/table.model';
+import { User } from '@shared/Model/user.model';
 
 @Component({
   selector: 'app-user',
@@ -16,17 +16,17 @@ export class UserComponent implements OnInit {
   tableComponent: TableComponent;
 
   ELEMENT_DATA: User[] = [
-    {id: '1', name: 'ADMIN', password: 'ADMIN'},
-    {id: '2', name: 'USER', password: 'USER'}
+    { id: '1', name: 'ADMIN', password: 'ADMIN' },
+    { id: '2', name: 'USER', password: 'USER' }
   ];
 
   myGrid: Grid = {
     dataSource: new MatTableDataSource<User>(this.ELEMENT_DATA),
-    sort: {active: 'id', direction: 'asc'},
+    sort: { active: 'id', direction: 'asc' },
     columns: [
-      { columnDef: 'id', header: 'Id', cell: (element: any) => `${element.id}` },
-      { columnDef: 'name', header: 'Name', cell: (element: any) => `${element.name}` },
-      { columnDef: 'password', header: 'Password', cell: (element: any) => `${element.password}` },
+      { columnDef: 'id', header: 'Id', cell: (element: any) => `${ element.id }` },
+      { columnDef: 'name', header: 'Name', cell: (element: any) => `${ element.name }` },
+      { columnDef: 'password', header: 'Password', cell: (element: any) => `${ element.password }` },
     ],
     displayedColumns: ['maintain', 'id', 'name', 'password'],
     create: () => {
@@ -39,9 +39,9 @@ export class UserComponent implements OnInit {
     createDialog: () => {
 
       const userModel: Schema[] = [
-        {column: 'id', type: 'string', value: ''},
-        {column: 'name', type: 'string', value: ''},
-        {column: 'password', type: 'string', value: ''}
+        { column: 'id', type: 'string', value: '' },
+        { column: 'name', type: 'string', value: '' },
+        { column: 'password', type: 'string', value: '' }
       ];
 
       this.tableComponent.openDialog({
@@ -51,7 +51,7 @@ export class UserComponent implements OnInit {
         model: userModel,
       });
 
-    },
+     },
     edit: () => {
       const data = this.tableComponent.dialogComponent.getData() as User;
       console.log(data);
@@ -72,9 +72,9 @@ export class UserComponent implements OnInit {
       const userData =  this.ELEMENT_DATA.filter(x => x.id === nextNode.innerHTML.trim());
 
       const userModel: Schema[] = [
-        {column: 'id', type: 'string', value: userData[0].id},
-        {column: 'name', type: 'string', value:  userData[0].name},
-        {column: 'password', type: 'string', value:  userData[0].password}
+        { column: 'id', type: 'string', value: userData[0].id },
+        { column: 'name', type: 'string', value:  userData[0].name },
+        { column: 'password', type: 'string', value:  userData[0].password }
       ];
 
       this.tableComponent.openDialog({
@@ -89,7 +89,7 @@ export class UserComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   initComponentHandler(component: TableComponent) {
     this.tableComponent = component;
