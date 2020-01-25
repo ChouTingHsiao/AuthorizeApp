@@ -1,9 +1,6 @@
 
-<button mat-button color="primary" (click)="create()">新增</button>
+<button mat-button color="primary" (click)="myGrid.createDialog()">新增</button>
 
 <mat-card>
-
-  <ng-container  appDynamicHost></ng-container>
-
-
+  <app-table [grid]="myGrid" (initComponent)="initComponentHandler($event)"></app-table>
 </mat-card>

@@ -13,6 +13,7 @@ import { RoleComponent } from './role/role.component';
 import { GroupComponent } from './group/group.component';
 import { DialogComponent } from './dialog/dialog.component';
 import { InputComponent } from './shared/Component/input.component';
+import { LabelComponent } from './shared/Component/label.component';
 import { TableComponent } from './shared/Component/table.component';
 import { DynamicHostDirective } from './shared/Directive/dynamichost.Directive';
 
@@ -27,8 +28,9 @@ import { DynamicHostDirective } from './shared/Directive/dynamichost.Directive';
     GroupComponent,
     DialogComponent,
     InputComponent,
+    LabelComponent,
     TableComponent,
-    DynamicHostDirective
+    DynamicHostDirective,
   ],
   imports: [
     BrowserModule,
@@ -43,6 +45,7 @@ import { DynamicHostDirective } from './shared/Directive/dynamichost.Directive';
   entryComponents: [
     DialogComponent,
     InputComponent,
+    LabelComponent,
     TableComponent
   ]
 })

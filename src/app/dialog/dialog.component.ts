@@ -1,8 +1,10 @@
 import { Component, OnInit, ViewChild, AfterViewInit, ComponentFactoryResolver, ElementRef } from '@angular/core';
 import { DynamicHostDirective } from '../shared/Directive/dynamichost.Directive';
 import { InputComponent } from '../shared/Component/input.component';
-import {Schema} from '../shared/Model/table.model';
-import {Dialog} from '../shared/Model/dialog.model';
+import { LabelComponent } from '../shared/Component/label.component';
+import { Schema } from '../shared/Model/table.model';
+import { Dialog } from '../shared/Model/dialog.model';
+import { DialogEnum } from '../shared/Enum/dialog.enum';
 
 @Component({
   selector: 'app-dialog',
@@ -15,7 +17,9 @@ export class DialogComponent implements OnInit, AfterViewInit {
 
   InputArray: InputComponent[] = [];
 
-  public DialogData: Dialog;
+  DialogData: Dialog;
+
+  id: string;
 
   @ViewChild(DynamicHostDirective, {static: true}) dynamicComponentLoader: DynamicHostDirective;
 
@@ -35,13 +39,13 @@ export class DialogComponent implements OnInit, AfterViewInit {
 
   dynamicAddComponent(element: Schema) {
 
-    console.log(element);
+    let componentFactory = this.componenFactoryResolver.resolveComponentFactory(InputComponent);
 
-    const componentFactory = this.componenFactoryResolver.resolveComponentFactory(InputComponent);
+    if (element.column === DialogEnum.id) {
+        componentFactory = this.componenFactoryResolver.resolveComponentFactory(LabelComponent);
+    }
 
     const viewContainerRef = this.dynamicComponentLoader.viewContainerRef;
-
-    // viewContainerRef.clear();
 
     const componentRef = viewContainerRef.createComponent(componentFactory);
 
@@ -49,17 +53,21 @@ export class DialogComponent implements OnInit, AfterViewInit {
 
     this.InputArray.push(instance);
 
-    instance.placeholdertext = element.column;
-
-    instance.valuetext = element.value;
+    instance.schema = element;
 
     componentRef.changeDetectorRef.detectChanges();
   }
 
-  confirm() {
+  confirm() {}
+
+  getData(): any {
+    const data = {};
+
     this.InputArray.forEach(element => {
-      console.log(`${element.placeholdertext}:${element.valuetext}`);
+      data[element.schema.column] = element.schema.value;
     });
+
+    return data;
   }
 
 }

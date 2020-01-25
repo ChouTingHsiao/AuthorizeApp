@@ -10,8 +10,11 @@ export interface Schema {
 }
 
 export interface Grid {
-    SCHEMA: Schema[];
     columns: Column[];
     displayedColumns: string[];
     dataSource: any;
+    create: () => void;
+    createDialog: () => void;
+    edit: () => void;
+    editDialog: (event: any) => void;
 }
