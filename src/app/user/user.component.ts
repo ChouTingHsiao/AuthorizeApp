@@ -3,7 +3,6 @@ import { MatTableDataSource } from '@angular/material/table';
 import { TableComponent } from '@shared/Component/table.component';
 import { DialogEnum } from '@shared/Enum/dialog.enum';
 import { Grid } from '@shared/Model/table.model';
-import { Schema } from '@shared/Model/table.model';
 import { User } from '@shared/Model/user.model';
 
 @Component({
@@ -24,11 +23,10 @@ export class UserComponent implements OnInit {
     dataSource: new MatTableDataSource<User>(this.ELEMENT_DATA),
     sort: { active: 'id', direction: 'asc' },
     columns: [
-      { columnDef: 'id', header: 'Id', cell: (element: User) => `${ element.id }` },
-      { columnDef: 'name', header: 'Name', cell: (element: User) => `${ element.name }` },
-      { columnDef: 'password', header: 'Password', cell: (element: User) => `${ element.password }` },
+      { columnDef: 'id', header: 'Id', type: 'string', cell: (element: User) => `${ element.id }` },
+      { columnDef: 'name', header: 'Name', type: 'string', cell: (element: User) => `${ element.name }` },
+      { columnDef: 'password', header: 'Password', type: 'string', cell: (element: User) => `${ element.password }` },
     ],
-    displayedColumns: ['maintain', 'id', 'name', 'password'],
     create: () => {
       const data = this.tableComponent.dialogComponent.getData() as User;
       data.id = (this.ELEMENT_DATA.length + 1).toString();
@@ -38,28 +36,19 @@ export class UserComponent implements OnInit {
     },
     createDialog: () => {
 
-      const userModel: Schema[] = [
-        { column: 'id', type: 'string', value: '' },
-        { column: 'name', type: 'string', value: '' },
-        { column: 'password', type: 'string', value: '' }
-      ];
-
       this.tableComponent.openDialog({
         title: '新增頁面',
         button: [DialogEnum.btnCreate, DialogEnum.btnCancel],
         method: DialogEnum.create,
-        model: userModel,
+        data:  '',
       });
 
      },
     edit: () => {
       const data = this.tableComponent.dialogComponent.getData() as User;
-      console.log(data);
       const newData = this.ELEMENT_DATA.filter(x => x.id !== data.id);
       this.ELEMENT_DATA = newData;
-      console.log(this.ELEMENT_DATA);
       this.ELEMENT_DATA.push(data);
-      console.log(this.ELEMENT_DATA);
       this.myGrid.dataSource = new MatTableDataSource<User>(this.ELEMENT_DATA);
       this.tableComponent.pageNation();
     },
@@ -71,17 +60,11 @@ export class UserComponent implements OnInit {
 
       const userData =  this.ELEMENT_DATA.filter(x => x.id === nextNode.innerHTML.trim());
 
-      const userModel: Schema[] = [
-        { column: 'id', type: 'string', value: userData[0].id },
-        { column: 'name', type: 'string', value:  userData[0].name },
-        { column: 'password', type: 'string', value:  userData[0].password }
-      ];
-
       this.tableComponent.openDialog({
         title: '修改頁面',
         button: [DialogEnum.btnEdit, DialogEnum.btnCancel],
         method: DialogEnum.edit,
-        model:  userModel,
+        data:  userData[0],
       });
 
     }
@@ -93,7 +76,6 @@ export class UserComponent implements OnInit {
 
   initComponentHandler(component: TableComponent) {
     this.tableComponent = component;
-    console.log(component);
   }
 
 }

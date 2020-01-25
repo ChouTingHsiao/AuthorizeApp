@@ -23,11 +23,10 @@ export class GroupComponent implements OnInit {
     dataSource: new MatTableDataSource<Group>(this.ELEMENT_DATA),
     sort: { active: 'id', direction: 'asc' },
     columns: [
-      { columnDef: 'id', header: 'Id', cell: (element: Group) => `${ element.id }` },
-      { columnDef: 'name', header: 'Name', cell: (element: Group) => `${ element.name }` },
-      { columnDef: 'remark', header: 'Remark', cell: (element: Group) => `${ element.remark }` },
+      { columnDef: 'id', header: 'Id', type: 'string', cell: (element: Group) => `${ element.id }` },
+      { columnDef: 'name', header: 'Name', type: 'string', cell: (element: Group) => `${ element.name }` },
+      { columnDef: 'remark', header: 'Remark', type: 'string', cell: (element: Group) => `${ element.remark }` },
     ],
-    displayedColumns: ['maintain', 'id', 'name', 'remark'],
     create: () => {
       const data = this.tableComponent.dialogComponent.getData() as Group;
       data.id = (this.ELEMENT_DATA.length + 1).toString();
@@ -36,29 +35,18 @@ export class GroupComponent implements OnInit {
       this.tableComponent.pageNation();
     },
     createDialog: () => {
-
-      const userModel: Schema[] = [
-        { column: 'id', type: 'string', value: '' },
-        { column: 'name', type: 'string', value: '' },
-        { column: 'remark', type: 'string', value: '' }
-      ];
-
       this.tableComponent.openDialog({
         title: '新增頁面',
         button: [DialogEnum.btnCreate, DialogEnum.btnCancel],
         method: DialogEnum.create,
-        model: userModel,
+        data:  '',
       });
-
-     },
+    },
     edit: () => {
       const data = this.tableComponent.dialogComponent.getData() as Group;
-      console.log(data);
       const newData = this.ELEMENT_DATA.filter(x => x.id !== data.id);
       this.ELEMENT_DATA = newData;
-      console.log(this.ELEMENT_DATA);
       this.ELEMENT_DATA.push(data);
-      console.log(this.ELEMENT_DATA);
       this.myGrid.dataSource = new MatTableDataSource<Group>(this.ELEMENT_DATA);
       this.tableComponent.pageNation();
     },
@@ -70,17 +58,11 @@ export class GroupComponent implements OnInit {
 
       const userData =  this.ELEMENT_DATA.filter(x => x.id === nextNode.innerHTML.trim());
 
-      const userModel: Schema[] = [
-        { column: 'id', type: 'string', value: userData[0].id },
-        { column: 'name', type: 'string', value:  userData[0].name },
-        { column: 'remark', type: 'string', value:  userData[0].remark }
-      ];
-
       this.tableComponent.openDialog({
         title: '修改頁面',
         button: [DialogEnum.btnEdit, DialogEnum.btnCancel],
         method: DialogEnum.edit,
-        model:  userModel,
+        data:   userData[0],
       });
 
     }
@@ -92,7 +74,6 @@ export class GroupComponent implements OnInit {
 
   initComponentHandler(component: TableComponent) {
     this.tableComponent = component;
-    console.log(component);
   }
 
 }

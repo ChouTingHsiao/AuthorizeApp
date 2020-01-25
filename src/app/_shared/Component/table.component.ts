@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '@shared/Component/dialog.component';
 import { Grid } from '@shared/Model/table.model';
 import { Dialog } from '@shared/Model/dialog.model';
+import { Schema } from '@shared/Model/table.model';
 import { DialogEnum } from '@shared/Enum/dialog.enum';
 
 @Component({
@@ -31,8 +32,8 @@ import { DialogEnum } from '@shared/Enum/dialog.enum';
     <td mat-cell *matCellDef="let element">{{ column.cell(element) }}</td>
    </ng-container>
 
-  <tr mat-header-row *matHeaderRowDef="grid.displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: grid.displayedColumns;"></tr>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
   <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>`
 })
@@ -48,11 +49,14 @@ export class TableComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
+  displayedColumns: string[];
+
   dialogComponent: DialogComponent;
 
   constructor(public dialog: MatDialog) {}
 
   ngOnInit() {
+    this.displayedColumns = this.columnToDisplay();
     this.initComponent.emit(this);
   }
 
@@ -68,7 +72,7 @@ export class TableComponent implements OnInit, AfterViewInit {
 
     this.dialogComponent = instance;
 
-    instance.SchemaArray = DialogData.model;
+    instance.SchemaArray = this.dataToSchema(DialogData.data);
 
     instance.DialogData = DialogData;
 
@@ -83,12 +87,29 @@ export class TableComponent implements OnInit, AfterViewInit {
         break;
     }
 
-    console.log(this.sort);
-
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
 
+  }
+
+  dataToSchema(data: any): Schema[] {
+    const schema: Schema[] =  this.grid.columns.map((x) => {
+      return {
+        column: x.columnDef,
+        type: x.type,
+        value: data[x.columnDef],
+      };
+    });
+    return schema;
+  }
+
+  columnToDisplay(): string[] {
+    const display = ['maintain'];
+    const columnArray = this.grid.columns.map((x) => {
+      return  x.columnDef;
+    });
+    return display.concat(columnArray);
   }
 
   sortData(sort: Sort) {

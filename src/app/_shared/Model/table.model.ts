@@ -1,6 +1,7 @@
-export interface Column {
+export class Column {
     columnDef: string;
     header: string;
+    type: string;
     cell: any;
 }
 export interface Schema {
@@ -18,7 +19,6 @@ export interface Grid {
     dataSource: any;
     sort: Sort;
     columns: Column[];
-    displayedColumns: string[];
     create: () => void;
     createDialog: () => void;
     edit: () => void;
