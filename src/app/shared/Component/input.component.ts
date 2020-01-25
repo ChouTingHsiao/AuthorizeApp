@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Schema } from '../Model/table.model';
 
 @Component({

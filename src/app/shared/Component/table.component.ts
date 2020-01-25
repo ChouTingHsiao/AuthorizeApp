@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild, AfterViewInit, Input, Output, EventEmitter} from '@angular/core';
+import { MatSort, Sort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../../dialog/dialog.component';
@@ -9,7 +10,13 @@ import { DialogEnum } from '../Enum/dialog.enum';
 @Component({
   selector: 'app-table',
   template:
- `<table mat-table [dataSource]="grid.dataSource">
+ `<table
+  mat-table
+  matSort matSortActive="{{grid.sort.active}}"
+  matSortDirection="{{grid.sort.direction}}"
+  [dataSource]="grid.dataSource"
+  (matSortChange)="sortData($event)" >
+
    <!-- Maintain Column -->
    <ng-container matColumnDef="maintain">
    <th mat-header-cell *matHeaderCellDef></th>
@@ -17,11 +24,13 @@ import { DialogEnum } from '../Enum/dialog.enum';
     <button mat-button color="warn" (click)="grid.editDialog($event)">修改</button>
    </td>
    </ng-container>
+
    <!-- Column -->
    <ng-container *ngFor="let column of grid.columns" matColumnDef="{{column.columnDef}}">
-    <th mat-header-cell *matHeaderCellDef>{{ column.header }}</th>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ column.header }}</th>
     <td mat-cell *matCellDef="let element">{{ column.cell(element) }}</td>
    </ng-container>
+
   <tr mat-header-row *matHeaderRowDef="grid.displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: grid.displayedColumns;"></tr>
   </table>
@@ -35,9 +44,11 @@ export class TableComponent implements OnInit, AfterViewInit {
   @Output()
   initComponent: EventEmitter<TableComponent> = new EventEmitter();
 
-  dialogComponent: DialogComponent;
-
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
+
+  dialogComponent: DialogComponent;
 
   constructor(public dialog: MatDialog) {}
 
@@ -72,6 +83,7 @@ export class TableComponent implements OnInit, AfterViewInit {
         break;
     }
 
+    console.log(this.sort);
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
@@ -79,8 +91,14 @@ export class TableComponent implements OnInit, AfterViewInit {
 
   }
 
+  sortData(sort: Sort) {
+      console.log(sort.active);
+      console.log(sort.direction);
+  }
+
   pageNation() {
-     this.grid.dataSource.paginator = this.paginator;
+    this.grid.dataSource.sort = this.sort;
+    this.grid.dataSource.paginator = this.paginator;
   }
 
 }

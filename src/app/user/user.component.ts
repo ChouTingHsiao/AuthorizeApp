@@ -21,13 +21,14 @@ export class UserComponent implements OnInit {
   ];
 
   myGrid: Grid = {
+    dataSource: new MatTableDataSource<User>(this.ELEMENT_DATA),
+    sort: {active: 'id', direction: 'asc'},
     columns: [
       { columnDef: 'id', header: 'Id', cell: (element: any) => `${element.id}` },
       { columnDef: 'name', header: 'Name', cell: (element: any) => `${element.name}` },
       { columnDef: 'password', header: 'Password', cell: (element: any) => `${element.password}` },
     ],
     displayedColumns: ['maintain', 'id', 'name', 'password'],
-    dataSource: new MatTableDataSource<User>(this.ELEMENT_DATA),
     create: () => {
       const data = this.tableComponent.dialogComponent.getData() as User;
       data.id = (this.ELEMENT_DATA.length + 1).toString();

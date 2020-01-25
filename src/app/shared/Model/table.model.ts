@@ -9,10 +9,16 @@ export interface Schema {
     value: string;
 }
 
+export interface Sort {
+    active: string;
+    direction: string;
+}
+
 export interface Grid {
+    dataSource: any;
+    sort: Sort;
     columns: Column[];
     displayedColumns: string[];
-    dataSource: any;
     create: () => void;
     createDialog: () => void;
     edit: () => void;
