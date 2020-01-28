@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, AfterViewInit, Input, Output, EventEmitter } from '@angular/core';
 import { MatSort, Sort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '@shared/Component/dialog.component';
@@ -7,6 +8,8 @@ import { Grid } from '@shared/Model/table.model';
 import { Dialog } from '@shared/Model/dialog.model';
 import { Schema } from '@shared/Model/table.model';
 import { DialogEnum } from '@shared/Enum/dialog.enum';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-table',
@@ -39,6 +42,8 @@ import { DialogEnum } from '@shared/Enum/dialog.enum';
 })
 export class TableComponent implements OnInit, AfterViewInit {
 
+  maintain$: Observable<any>;
+
   @Input()
   grid: Grid;
 
@@ -53,15 +58,16 @@ export class TableComponent implements OnInit, AfterViewInit {
 
   dialogComponent: DialogComponent;
 
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog, public store: Store<any>) {}
 
   ngOnInit() {
+    this.maintain$ = this.store.select('maintainReducer');
     this.displayedColumns = this.columnToDisplay();
     this.initComponent.emit(this);
   }
 
   ngAfterViewInit() {
-    this.pageNation();
+    this.setSource();
   }
 
   openDialog(DialogData: Dialog) {
@@ -110,6 +116,13 @@ export class TableComponent implements OnInit, AfterViewInit {
       return  x.columnDef;
     });
     return display.concat(columnArray);
+  }
+
+  setSource() {
+    this.maintain$.subscribe((x) => {
+      this.grid.dataSource = new MatTableDataSource<any>(x);
+      this.pageNation();
+    });
   }
 
   sortData(sort: Sort) {

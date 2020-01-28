@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { MatTableDataSource } from '@angular/material/table';
 import { TableComponent } from '@shared/Component/table.component';
 import { DialogEnum } from '@shared/Enum/dialog.enum';
 import { Grid } from '@shared/Model/table.model';
 import { User } from '@shared/Model/user.model';
+
 
 @Component({
   selector: 'app-user',
@@ -28,29 +30,30 @@ export class UserComponent implements OnInit {
       { columnDef: 'password', header: 'Password', type: 'string', cell: (element: User) => `${ element.password }` },
     ],
     create: () => {
-      const data = this.tableComponent.dialogComponent.getData() as User;
-      data.id = (this.ELEMENT_DATA.length + 1).toString();
-      this.ELEMENT_DATA.push(data);
-      this.myGrid.dataSource = new MatTableDataSource<User>(this.ELEMENT_DATA);
-      this.tableComponent.pageNation();
+      this.store.dispatch({
+        type: DialogEnum.create,
+        payload: {
+          source: this.myGrid.dataSource.data,
+          newData: this.tableComponent.dialogComponent.getData() as User
+        }
+      });
     },
     createDialog: () => {
-
       this.tableComponent.openDialog({
         title: '新增頁面',
         button: [DialogEnum.btnCreate, DialogEnum.btnCancel],
         method: DialogEnum.create,
         data:  '',
       });
-
-     },
+    },
     edit: () => {
-      const data = this.tableComponent.dialogComponent.getData() as User;
-      const newData = this.ELEMENT_DATA.filter(x => x.id !== data.id);
-      this.ELEMENT_DATA = newData;
-      this.ELEMENT_DATA.push(data);
-      this.myGrid.dataSource = new MatTableDataSource<User>(this.ELEMENT_DATA);
-      this.tableComponent.pageNation();
+      this.store.dispatch({
+        type: DialogEnum.edit,
+        payload: {
+          source: this.myGrid.dataSource.data,
+          newData: this.tableComponent.dialogComponent.getData() as User
+        }
+      });
     },
     editDialog: (event: any) => {
 
@@ -58,7 +61,7 @@ export class UserComponent implements OnInit {
 
       const nextNode = element.closest('td').nextSibling as HTMLElement;
 
-      const userData =  this.ELEMENT_DATA.filter(x => x.id === nextNode.innerHTML.trim());
+      const userData =  this.myGrid.dataSource.data.filter(x => x.id === nextNode.innerHTML.trim());
 
       this.tableComponent.openDialog({
         title: '修改頁面',
@@ -70,9 +73,16 @@ export class UserComponent implements OnInit {
     }
   };
 
-  constructor() { }
+  constructor(private store: Store<any>) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.store.dispatch({
+      type: DialogEnum.read,
+      payload: {
+        source: this.myGrid.dataSource.data
+      }
+    });
+  }
 
   initComponentHandler(component: TableComponent) {
     this.tableComponent = component;

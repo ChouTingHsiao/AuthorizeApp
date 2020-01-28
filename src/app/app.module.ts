@@ -3,6 +3,8 @@ import { NgModule  } from '@angular/core';
 import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
 import { BrowserAnimationsModule  } from '@angular/platform-browser/animations';
 import { MaterialModule  } from '../material-module';
+import { StoreModule } from '@ngrx/store';
+import { maintainReducer } from '@shared/Reducer/maintain.reducer';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -17,6 +19,7 @@ import { LabelComponent } from '@shared/Component/label.component';
 import { TableComponent } from '@shared/Component/table.component';
 import { DynamicHostDirective } from '@shared/Directive/dynamichost.Directive';
 import { ProgramComponent } from './program/program.component';
+
 
 
 @NgModule({
@@ -41,6 +44,7 @@ import { ProgramComponent } from './program/program.component';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     MaterialModule,
+    StoreModule.forRoot({ maintainReducer }),
   ],
   providers: [],
   bootstrap: [AppComponent],
