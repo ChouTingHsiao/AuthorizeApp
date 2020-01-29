@@ -15,21 +15,27 @@ export class LoginComponent implements OnInit {
   Account: string;
   Password: string;
 
+  Users: User[] = JSON.parse(localStorage.getItem('Users'));
+  Roles: Role[] = JSON.parse(localStorage.getItem('Roles'));
+
   constructor(private router: Router) { }
 
   ngOnInit() {
-    this.Account = 'ADMIN';
-    this.Password = 'ADMIN';
+    this.Account = 'USER';
+    this.Password = 'USER';
   }
 
   Login() {
-    if (this.Account === 'ADMIN' && this.Password === 'ADMIN' ) {
-        alert('登入成功');
-        localStorage.setItem('Auth', 'Admin');
+    const user = Users.filter(x => x.name === this.Account && x.password === this.Password);
+
+    if ( user.length > 0 ) {
+        const role = Roles.filter(x => x.name === this.Account);
+        localStorage.setItem('Auth', role[0].name);
         localStorage.setItem('Users', JSON.stringify(Users));
         localStorage.setItem('Roles', JSON.stringify(Roles));
         localStorage.setItem('Groups', JSON.stringify(Groups));
         localStorage.setItem('Programs', JSON.stringify(Programs));
+        alert('登入成功');
         this.router.navigate(['/Main']);
         return;
     }
@@ -55,7 +61,7 @@ const Groups: Group[] = [
 
 const Programs: Program[] = [
   { id: '1', name: 'User', remark: '使用者', auth: '' },
-  { id: '2', name: 'Role', remark: '角色', auth: 'ADMIN' },
-  { id: '3', name: 'Group', remark: '群組', auth: 'ADMIN' },
-  { id: '4', name: 'Program', remark: '程式', auth: 'ADMIN' },
+  { id: '2', name: 'Role', remark: '角色', auth: '1' },
+  { id: '3', name: 'Group', remark: '群組', auth: '1' },
+  { id: '4', name: 'Program', remark: '程式', auth: '1' },
 ];

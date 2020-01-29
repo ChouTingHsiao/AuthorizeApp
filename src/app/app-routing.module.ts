@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { LoginGuard } from './_utility/LoginGuard';
+import { LoginGuard } from '@utility/LoginGuard';
+import { AuthGuard } from '@utility/AuthGuard';
 import { LoginComponent } from './login/login.component';
 import { MainComponent } from './main/main.component';
 import { UserComponent } from './user/user.component';
@@ -13,10 +14,10 @@ const routes: Routes = [
   {  path: 'Login', component: LoginComponent  },
   {  path: 'Main', component: MainComponent, canActivate: [LoginGuard],
     children: [
-          {  path: 'User', component: UserComponent  },
-          {  path: 'Role', component: RoleComponent  },
-          {  path: 'Group', component: GroupComponent  },
-          {  path: 'Program', component: ProgramComponent  },
+          {  path: 'User', component: UserComponent, canActivate: [AuthGuard] },
+          {  path: 'Role', component: RoleComponent, canActivate: [AuthGuard]  },
+          {  path: 'Group', component: GroupComponent, canActivate: [AuthGuard]  },
+          {  path: 'Program', component: ProgramComponent, canActivate: [AuthGuard]  },
           {  path: '**', redirectTo: '/Main'  }
     ]
    },
