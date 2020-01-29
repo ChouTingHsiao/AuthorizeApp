@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { MatTableDataSource } from '@angular/material/table';
 import { TableComponent } from '@shared/Component/table.component';
 import { DialogEnum } from '@shared/Enum/dialog.enum';
 import { Grid } from '@shared/Model/table.model';
-import { Schema } from '@shared/Model/table.model';
 import { Program } from '@shared/Model/program.model';
 
 @Component({
@@ -15,12 +15,7 @@ export class ProgramComponent implements OnInit {
 
   tableComponent: TableComponent;
 
-  ELEMENT_DATA: Program[] = [
-    { id: '1', name: 'User', remark: '使用者', auth: '' },
-    { id: '2', name: 'Role', remark: '角色', auth: 'ADMIN' },
-    { id: '3', name: 'Group', remark: '群組', auth: 'ADMIN' },
-    { id: '4', name: 'Program', remark: '程式', auth: 'ADMIN' },
-  ];
+  ELEMENT_DATA: Program[] = JSON.parse(localStorage.getItem('Programs'));
 
   myGrid: Grid = {
     dataSource: new MatTableDataSource<Program>(this.ELEMENT_DATA),
@@ -32,27 +27,30 @@ export class ProgramComponent implements OnInit {
       { columnDef: 'auth', header: 'Auth', type: 'string', cell: (element: Program) => `${ element.auth }` },
     ],
     create: () => {
-      const data = this.tableComponent.dialogComponent.getData() as Program;
-      data.id = (this.ELEMENT_DATA.length + 1).toString();
-      this.ELEMENT_DATA.push(data);
-      this.myGrid.dataSource = new MatTableDataSource<Program>(this.ELEMENT_DATA);
-      this.tableComponent.pageNation();
+      this.store.dispatch({
+        type: DialogEnum.create,
+        payload: {
+          source: this.myGrid.dataSource.data,
+          newData: this.tableComponent.dialogComponent.getData() as Program
+        }
+      });
     },
     createDialog: () => {
       this.tableComponent.openDialog({
         title: '新增頁面',
         button: [DialogEnum.btnCreate, DialogEnum.btnCancel],
         method: DialogEnum.create,
-        data: '',
+        data:  '',
       });
     },
     edit: () => {
-      const data = this.tableComponent.dialogComponent.getData() as Program;
-      const newData = this.ELEMENT_DATA.filter(x => x.id !== data.id);
-      this.ELEMENT_DATA = newData;
-      this.ELEMENT_DATA.push(data);
-      this.myGrid.dataSource = new MatTableDataSource<Program>(this.ELEMENT_DATA);
-      this.tableComponent.pageNation();
+      this.store.dispatch({
+        type: DialogEnum.edit,
+        payload: {
+          source: this.myGrid.dataSource.data,
+          newData: this.tableComponent.dialogComponent.getData() as Program
+        }
+      });
     },
     editDialog: (event: any) => {
 
@@ -60,21 +58,28 @@ export class ProgramComponent implements OnInit {
 
       const nextNode = element.closest('td').nextSibling as HTMLElement;
 
-      const userData =  this.ELEMENT_DATA.filter(x => x.id === nextNode.innerHTML.trim());
+      const data =  this.myGrid.dataSource.data.filter(x => x.id === nextNode.innerHTML.trim());
 
       this.tableComponent.openDialog({
         title: '修改頁面',
         button: [DialogEnum.btnEdit, DialogEnum.btnCancel],
         method: DialogEnum.edit,
-        data:   userData[0],
+        data:  data[0],
       });
 
     }
   };
 
-  constructor() { }
+  constructor(private store: Store<any>) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.store.dispatch({
+      type: DialogEnum.read,
+      payload: {
+        source: this.myGrid.dataSource.data
+      }
+    });
+  }
 
   initComponentHandler(component: TableComponent) {
     this.tableComponent = component;

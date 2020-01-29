@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { MatTableDataSource } from '@angular/material/table';
 import { TableComponent } from '@shared/Component/table.component';
 import { DialogEnum } from '@shared/Enum/dialog.enum';
@@ -14,10 +15,7 @@ export class RoleComponent implements OnInit {
 
   tableComponent: TableComponent;
 
-  ELEMENT_DATA: Role[] = [
-    { id: '1', name: 'ADMIN', remark: '管理員' },
-    { id: '2', name: 'USER', remark: '一般使用者' }
-  ];
+  ELEMENT_DATA: Role[] = JSON.parse(localStorage.getItem('Roles'));
 
   myGrid: Grid = {
     dataSource: new MatTableDataSource<Role>(this.ELEMENT_DATA),
@@ -28,27 +26,30 @@ export class RoleComponent implements OnInit {
       { columnDef: 'remark', header: 'Remark', type: 'string', cell: (element: Role) => `${ element.remark }` },
     ],
     create: () => {
-      const data = this.tableComponent.dialogComponent.getData() as Role;
-      data.id = (this.ELEMENT_DATA.length + 1).toString();
-      this.ELEMENT_DATA.push(data);
-      this.myGrid.dataSource = new MatTableDataSource<Role>(this.ELEMENT_DATA);
-      this.tableComponent.pageNation();
+      this.store.dispatch({
+        type: DialogEnum.create,
+        payload: {
+          source: this.myGrid.dataSource.data,
+          newData: this.tableComponent.dialogComponent.getData() as Role
+        }
+      });
     },
     createDialog: () => {
       this.tableComponent.openDialog({
         title: '新增頁面',
         button: [DialogEnum.btnCreate, DialogEnum.btnCancel],
         method: DialogEnum.create,
-        data: '',
+        data:  '',
       });
-     },
+    },
     edit: () => {
-      const data = this.tableComponent.dialogComponent.getData() as Role;
-      const newData = this.ELEMENT_DATA.filter(x => x.id !== data.id);
-      this.ELEMENT_DATA = newData;
-      this.ELEMENT_DATA.push(data);
-      this.myGrid.dataSource = new MatTableDataSource<Role>(this.ELEMENT_DATA);
-      this.tableComponent.pageNation();
+      this.store.dispatch({
+        type: DialogEnum.edit,
+        payload: {
+          source: this.myGrid.dataSource.data,
+          newData: this.tableComponent.dialogComponent.getData() as Role
+        }
+      });
     },
     editDialog: (event: any) => {
 
@@ -56,21 +57,28 @@ export class RoleComponent implements OnInit {
 
       const nextNode = element.closest('td').nextSibling as HTMLElement;
 
-      const userData =  this.ELEMENT_DATA.filter(x => x.id === nextNode.innerHTML.trim());
+      const data =  this.myGrid.dataSource.data.filter(x => x.id === nextNode.innerHTML.trim());
 
       this.tableComponent.openDialog({
         title: '修改頁面',
         button: [DialogEnum.btnEdit, DialogEnum.btnCancel],
         method: DialogEnum.edit,
-        data:   userData[0],
+        data:  data[0],
       });
 
     }
   };
 
-  constructor() { }
+  constructor(private store: Store<any>) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.store.dispatch({
+      type: DialogEnum.read,
+      payload: {
+        source: this.myGrid.dataSource.data
+      }
+    });
+  }
 
   initComponentHandler(component: TableComponent) {
     this.tableComponent = component;

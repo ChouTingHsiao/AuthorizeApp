@@ -16,10 +16,7 @@ export class UserComponent implements OnInit {
 
   tableComponent: TableComponent;
 
-  ELEMENT_DATA: User[] = [
-    { id: '1', name: 'ADMIN', password: 'ADMIN' },
-    { id: '2', name: 'USER', password: 'USER' }
-  ];
+  ELEMENT_DATA: User[] = JSON.parse(localStorage.getItem('Users'));
 
   myGrid: Grid = {
     dataSource: new MatTableDataSource<User>(this.ELEMENT_DATA),

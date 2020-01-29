@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, AfterViewInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
@@ -9,7 +9,7 @@ import { Dialog } from '@shared/Model/dialog.model';
 import { Schema } from '@shared/Model/table.model';
 import { DialogEnum } from '@shared/Enum/dialog.enum';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-table',
@@ -40,8 +40,9 @@ import { Observable } from 'rxjs';
   </table>
   <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>`
 })
-export class TableComponent implements OnInit, AfterViewInit {
+export class TableComponent implements OnInit, OnDestroy {
 
+  subscription: Subscription;
   maintain$: Observable<any>;
 
   @Input()
@@ -61,13 +62,13 @@ export class TableComponent implements OnInit, AfterViewInit {
   constructor(public dialog: MatDialog, public store: Store<any>) {}
 
   ngOnInit() {
-    this.maintain$ = this.store.select('maintainReducer');
+    this.setSource();
     this.displayedColumns = this.columnToDisplay();
     this.initComponent.emit(this);
   }
 
-  ngAfterViewInit() {
-    this.setSource();
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   openDialog(DialogData: Dialog) {
@@ -119,7 +120,8 @@ export class TableComponent implements OnInit, AfterViewInit {
   }
 
   setSource() {
-    this.maintain$.subscribe((x) => {
+    this.maintain$ = this.store.select('maintainReducer');
+    this.subscription = this.maintain$.subscribe((x) => {
       this.grid.dataSource = new MatTableDataSource<any>(x);
       this.pageNation();
     });
