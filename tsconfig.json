@@ -20,7 +20,8 @@
     ],
     "paths": {
       "@shared/*": ["src/app/_shared/*"],
-      "@utility/*": ["src/app/_utility/*"]
+      "@utility/*": ["src/app/_utility/*"],
+      "@src/*": ["src/*"]
     }
   },
   "angularCompilerOptions": {
