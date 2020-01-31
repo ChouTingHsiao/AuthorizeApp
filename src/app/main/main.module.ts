@@ -17,6 +17,7 @@ import { RoleComponent } from './role/role.component';
 import { GroupComponent } from './group/group.component';
 import { ProgramComponent } from './program/program.component';
 import { DynamicHostDirective } from '@shared/Directive/dynamichost.Directive';
+import { UnauthorizeComponent } from './unauthorize/unauthorize.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { DynamicHostDirective } from '@shared/Directive/dynamichost.Directive';
     LabelComponent,
     TableComponent,
     DynamicHostDirective,
+    UnauthorizeComponent,
   ],
   imports: [
     CommonModule,

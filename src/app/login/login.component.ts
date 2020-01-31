@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
         return;
     }
     localStorage.setItem('Auth', '');
-    alert('登入失敗' + this.Account + this.Password);
+    alert('登入失敗');
   }
 
 }
