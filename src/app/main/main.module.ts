@@ -10,6 +10,7 @@ import { MainRoutingModule } from './main-routing.module';
 import { DialogComponent } from '@shared/Component/dialog.component';
 import { InputComponent } from '@shared/Component/input.component';
 import { LabelComponent } from '@shared/Component/label.component';
+import { SelectComponent } from '@shared/Component/select.component';
 import { TableComponent } from '@shared/Component/table.component';
 import { MainComponent } from './main.component';
 import { UserComponent } from './user/user.component';
@@ -29,6 +30,7 @@ import { UnauthorizeComponent } from './unauthorize/unauthorize.component';
     DialogComponent,
     InputComponent,
     LabelComponent,
+    SelectComponent,
     TableComponent,
     DynamicHostDirective,
     UnauthorizeComponent,
@@ -46,6 +48,7 @@ import { UnauthorizeComponent } from './unauthorize/unauthorize.component';
     DialogComponent,
     InputComponent,
     LabelComponent,
+    SelectComponent,
     TableComponent
   ]
 })

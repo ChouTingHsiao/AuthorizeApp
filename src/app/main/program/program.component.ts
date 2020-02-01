@@ -47,7 +47,8 @@ export class ProgramComponent implements OnInit {
         header: 'Auth',
         columnDef: 'auth',
         type: ColumnEnum.string,
-        selector: ColumnEnum.input,
+        selector: ColumnEnum.select,
+        source: JSON.parse(localStorage.getItem('Groups')),
         cell: (element: Program) => `${ element.auth }`
       },
     ],

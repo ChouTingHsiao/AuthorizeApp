@@ -2,9 +2,9 @@ import { Component, OnInit, ViewChild, AfterViewInit, ComponentFactoryResolver, 
 import { DynamicHostDirective } from '@shared/Directive/dynamichost.Directive';
 import { InputComponent } from '@shared/Component/input.component';
 import { LabelComponent } from '@shared/Component/label.component';
+import { SelectComponent } from '@shared/Component/select.component';
 import { Schema } from '@shared/Model/table.model';
 import { Dialog } from '@shared/Model/dialog.model';
-import { DialogEnum } from '@shared/Enum/dialog.enum';
 import { ColumnEnum } from '@shared/Enum/column.enum';
 
 @Component({
@@ -54,6 +54,10 @@ export class DialogComponent implements OnInit, AfterViewInit {
     switch (element.selector) {
       case ColumnEnum.input: {
         componentFactory = this.componenFactoryResolver.resolveComponentFactory(InputComponent);
+        break;
+      }
+      case ColumnEnum.select: {
+        componentFactory = this.componenFactoryResolver.resolveComponentFactory(SelectComponent);
         break;
       }
       default: {
