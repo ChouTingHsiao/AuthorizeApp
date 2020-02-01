@@ -29,6 +29,7 @@ export class RoleComponent implements OnInit {
       this.store.dispatch({
         type: DialogEnum.create,
         payload: {
+          name: 'Roles',
           source: this.myGrid.dataSource.data,
           newData: this.tableComponent.dialogComponent.getData() as Role
         }
@@ -46,6 +47,7 @@ export class RoleComponent implements OnInit {
       this.store.dispatch({
         type: DialogEnum.edit,
         payload: {
+          name: 'Roles',
           source: this.myGrid.dataSource.data,
           newData: this.tableComponent.dialogComponent.getData() as Role
         }

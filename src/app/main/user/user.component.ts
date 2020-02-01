@@ -30,6 +30,7 @@ export class UserComponent implements OnInit {
       this.store.dispatch({
         type: DialogEnum.create,
         payload: {
+          name: 'Users',
           source: this.myGrid.dataSource.data,
           newData: this.tableComponent.dialogComponent.getData() as User
         }
@@ -47,6 +48,7 @@ export class UserComponent implements OnInit {
       this.store.dispatch({
         type: DialogEnum.edit,
         payload: {
+          name: 'Users',
           source: this.myGrid.dataSource.data,
           newData: this.tableComponent.dialogComponent.getData() as User
         }

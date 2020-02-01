@@ -29,6 +29,7 @@ export class GroupComponent implements OnInit {
       this.store.dispatch({
         type: DialogEnum.create,
         payload: {
+          name: 'Groups',
           source: this.myGrid.dataSource.data,
           newData: this.tableComponent.dialogComponent.getData() as Group
         }
@@ -46,6 +47,7 @@ export class GroupComponent implements OnInit {
       this.store.dispatch({
         type: DialogEnum.edit,
         payload: {
+          name: 'Groups',
           source: this.myGrid.dataSource.data,
           newData: this.tableComponent.dialogComponent.getData() as Group
         }

@@ -60,8 +60,8 @@ const Groups: Group[] = [
 ];
 
 const Programs: Program[] = [
-  { id: '1', name: 'User', remark: '使用者', auth: '' },
+  { id: '1', name: 'User', remark: '使用者', auth: '1' },
   { id: '2', name: 'Role', remark: '角色', auth: '1' },
-  { id: '3', name: 'Group', remark: '群組', auth: '1' },
-  { id: '4', name: 'Program', remark: '程式', auth: '1' },
+  { id: '3', name: 'Group', remark: '群組', auth: '' },
+  { id: '4', name: 'Program', remark: '程式', auth: '' },
 ];

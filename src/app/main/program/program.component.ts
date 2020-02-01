@@ -30,6 +30,7 @@ export class ProgramComponent implements OnInit {
       this.store.dispatch({
         type: DialogEnum.create,
         payload: {
+          name: 'Programs',
           source: this.myGrid.dataSource.data,
           newData: this.tableComponent.dialogComponent.getData() as Program
         }
@@ -47,6 +48,7 @@ export class ProgramComponent implements OnInit {
       this.store.dispatch({
         type: DialogEnum.edit,
         payload: {
+          name: 'Programs',
           source: this.myGrid.dataSource.data,
           newData: this.tableComponent.dialogComponent.getData() as Program
         }
