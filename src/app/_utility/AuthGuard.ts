@@ -8,9 +8,6 @@ import { Program } from '@shared/Model/program.model';
 })
 export class AuthGuard implements CanActivate {
 
-    Groups: Group[] = JSON.parse(localStorage.getItem('Groups'));
-    Programs: Program[] = JSON.parse(localStorage.getItem('Programs'));
-
     constructor(private router: Router) {}
 
     canActivate(
@@ -18,21 +15,23 @@ export class AuthGuard implements CanActivate {
        state: RouterStateSnapshot
     ): boolean {
 
+    const  Groups: Group[] = JSON.parse(localStorage.getItem('Groups'));
+
+    const Programs: Program[] = JSON.parse(localStorage.getItem('Programs'));
+
     const Auth: string =  localStorage.getItem('Auth');
 
     const ProgramName =  state.url.split('/')[2];
 
-    const AuthId = this.Programs.filter(x => x.name === ProgramName);
+    const AuthId = Programs.filter(x => x.name === ProgramName);
 
     let AuthName = '' ;
 
     if (AuthId[0] && AuthId[0].auth.length > 0) {
-      AuthName = this.Groups.filter(x => x.id === AuthId[0].auth)[0].name;
+      AuthName = Groups.filter(x => x.id === AuthId[0].auth)[0].name;
     }
 
     const loggedIn: boolean = AuthName.includes(Auth) || AuthId[0].auth.length < 1;
-
-    console.log(ProgramName);
 
     if (!loggedIn) {
       console.log('Not Auth');
