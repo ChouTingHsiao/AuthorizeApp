@@ -104,6 +104,8 @@ export class TableComponent implements OnInit, OnDestroy {
     const schema: Schema[] =  this.grid.columns.map((x) => {
       return {
         column: x.columnDef,
+        selector: x.selector,
+        source: x.source,
         type: x.type,
         value: data[x.columnDef],
       };

@@ -1,11 +1,15 @@
 export class Column {
-    columnDef: string;
     header: string;
+    columnDef: string;
     type: string;
+    selector: string;
+    source?: [];
     cell: any;
 }
 export interface Schema {
     column: string;
+    selector: string;
+    source?: [];
     type: string;
     value: string;
 }

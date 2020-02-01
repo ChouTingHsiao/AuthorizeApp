@@ -1,10 +1,11 @@
-import { Component, OnInit, ViewChild, AfterViewInit, ComponentFactoryResolver, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, ComponentFactoryResolver, ComponentFactory, ElementRef } from '@angular/core';
 import { DynamicHostDirective } from '@shared/Directive/dynamichost.Directive';
 import { InputComponent } from '@shared/Component/input.component';
 import { LabelComponent } from '@shared/Component/label.component';
 import { Schema } from '@shared/Model/table.model';
 import { Dialog } from '@shared/Model/dialog.model';
 import { DialogEnum } from '@shared/Enum/dialog.enum';
+import { ColumnEnum } from '@shared/Enum/column.enum';
 
 @Component({
   selector: 'app-dialog',
@@ -48,10 +49,17 @@ export class DialogComponent implements OnInit, AfterViewInit {
 
   dynamicAddComponent(element: Schema) {
 
-    let componentFactory = this.componenFactoryResolver.resolveComponentFactory(InputComponent);
+    let componentFactory: ComponentFactory<any>;
 
-    if (element.column === DialogEnum.id) {
+    switch (element.selector) {
+      case ColumnEnum.input: {
+        componentFactory = this.componenFactoryResolver.resolveComponentFactory(InputComponent);
+        break;
+      }
+      default: {
         componentFactory = this.componenFactoryResolver.resolveComponentFactory(LabelComponent);
+        break;
+      }
     }
 
     const viewContainerRef = this.dynamicComponentLoader.viewContainerRef;

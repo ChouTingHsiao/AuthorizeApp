@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import { MatTableDataSource } from '@angular/material/table';
 import { TableComponent } from '@shared/Component/table.component';
 import { DialogEnum } from '@shared/Enum/dialog.enum';
+import { ColumnEnum } from '@shared/Enum/column.enum';
 import { Grid } from '@shared/Model/table.model';
 import { Group } from '@shared/Model/group.model';
 
@@ -21,9 +22,27 @@ export class GroupComponent implements OnInit {
     dataSource: new MatTableDataSource<Group>(this.ELEMENT_DATA),
     sort: { active: 'id', direction: 'asc' },
     columns: [
-      { columnDef: 'id', header: 'Id', type: 'string', cell: (element: Group) => `${ element.id }` },
-      { columnDef: 'name', header: 'Name', type: 'string', cell: (element: Group) => `${ element.name }` },
-      { columnDef: 'remark', header: 'Remark', type: 'string', cell: (element: Group) => `${ element.remark }` },
+      {
+        header: 'Id',
+        columnDef: 'id',
+        type: ColumnEnum.string,
+        selector: ColumnEnum.label,
+        cell: (element: Group) => `${ element.id }`
+      },
+      {
+        header: 'Name',
+        columnDef: 'name',
+        type: ColumnEnum.string,
+        selector: ColumnEnum.input,
+        cell: (element: Group) => `${ element.name }`
+      },
+      {
+        header: 'Remark',
+        columnDef: 'remark',
+        type: ColumnEnum.string,
+        selector: ColumnEnum.input,
+        cell: (element: Group) => `${ element.remark }`
+      },
     ],
     create: () => {
       this.store.dispatch({

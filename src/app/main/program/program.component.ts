@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import { MatTableDataSource } from '@angular/material/table';
 import { TableComponent } from '@shared/Component/table.component';
 import { DialogEnum } from '@shared/Enum/dialog.enum';
+import { ColumnEnum } from '@shared/Enum/column.enum';
 import { Grid } from '@shared/Model/table.model';
 import { Program } from '@shared/Model/program.model';
 
@@ -21,10 +22,34 @@ export class ProgramComponent implements OnInit {
     dataSource: new MatTableDataSource<Program>(this.ELEMENT_DATA),
     sort: { active: 'id', direction: 'asc' },
     columns: [
-      { columnDef: 'id', header: 'Id', type: 'string', cell: (element: Program) => `${ element.id }` },
-      { columnDef: 'name', header: 'Name', type: 'string', cell: (element: Program) => `${ element.name }` },
-      { columnDef: 'remark', header: 'Remark', type: 'string', cell: (element: Program) => `${ element.remark }` },
-      { columnDef: 'auth', header: 'Auth', type: 'string', cell: (element: Program) => `${ element.auth }` },
+      {
+        header: 'Id',
+        columnDef: 'id',
+        type: ColumnEnum.string,
+        selector: ColumnEnum.label,
+        cell: (element: Program) => `${ element.id }`,
+      },
+      {
+        header: 'Name',
+        columnDef: 'name',
+        type: ColumnEnum.string,
+        selector: ColumnEnum.input,
+        cell: (element: Program) => `${ element.name }`
+      },
+      {
+        header: 'Remark',
+        columnDef: 'remark',
+        type: ColumnEnum.string,
+        selector: ColumnEnum.input,
+        cell: (element: Program) => `${ element.remark }`
+      },
+      {
+        header: 'Auth',
+        columnDef: 'auth',
+        type: ColumnEnum.string,
+        selector: ColumnEnum.input,
+        cell: (element: Program) => `${ element.auth }`
+      },
     ],
     create: () => {
       this.store.dispatch({

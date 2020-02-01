@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import { MatTableDataSource } from '@angular/material/table';
 import { TableComponent } from '@shared/Component/table.component';
 import { DialogEnum } from '@shared/Enum/dialog.enum';
+import { ColumnEnum } from '@shared/Enum/column.enum';
 import { Grid } from '@shared/Model/table.model';
 import { User } from '@shared/Model/user.model';
 
@@ -22,9 +23,27 @@ export class UserComponent implements OnInit {
     dataSource: new MatTableDataSource<User>(this.ELEMENT_DATA),
     sort: { active: 'id', direction: 'asc' },
     columns: [
-      { columnDef: 'id', header: 'Id', type: 'string', cell: (element: User) => `${ element.id }` },
-      { columnDef: 'name', header: 'Name', type: 'string', cell: (element: User) => `${ element.name }` },
-      { columnDef: 'password', header: 'Password', type: 'string', cell: (element: User) => `${ element.password }` },
+      {
+        header: 'Id',
+        columnDef: 'id',
+        type: ColumnEnum.string,
+        selector: ColumnEnum.label,
+        cell: (element: User) => `${ element.id }`
+      },
+      {
+        header: 'Name',
+        columnDef: 'name',
+        type: ColumnEnum.string,
+        selector: ColumnEnum.input,
+        cell: (element: User) => `${ element.name }`
+      },
+      {
+        header: 'Password',
+        columnDef: 'password',
+        type: ColumnEnum.string,
+        selector: ColumnEnum.input,
+        cell: (element: User) => `${ element.password }`
+      },
     ],
     create: () => {
       this.store.dispatch({
