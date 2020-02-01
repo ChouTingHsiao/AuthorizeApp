@@ -56,7 +56,7 @@ const Roles: Role[] = [
 ];
 
 const Groups: Group[] = [
-  { id: '1', name: 'ADMIN', remark: '管理員群組' }
+  { id: '1', name: '管理員群組', role: ['1']}
 ];
 
 const Programs: Program[] = [

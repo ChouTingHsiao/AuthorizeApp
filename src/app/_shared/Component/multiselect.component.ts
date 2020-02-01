@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Schema } from '@shared/Model/table.model';
 
 @Component({
-  selector: 'app-select',
+  selector: 'app-multiselect',
   template:
   `<mat-label>{{schema.column}}</mat-label>
-   <mat-select [(ngModel)]="schema.value" name="{{schema.column}}">
+   <mat-select multiple [(ngModel)]="schema.value" name="{{schema.column}}">
     <mat-option [value]="default">--</mat-option>
     <mat-option *ngFor="let data of schema.source" [value]="data.id">
       {{data.name}}
@@ -13,7 +13,7 @@ import { Schema } from '@shared/Model/table.model';
    </mat-select>
    <br/>`
 })
-export class SelectComponent implements OnInit {
+export class MultiSelectComponent implements OnInit {
 
   schema: Schema;
 

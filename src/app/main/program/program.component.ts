@@ -5,6 +5,7 @@ import { TableComponent } from '@shared/Component/table.component';
 import { DialogEnum } from '@shared/Enum/dialog.enum';
 import { ColumnEnum } from '@shared/Enum/column.enum';
 import { Grid } from '@shared/Model/table.model';
+import { Group } from '@shared/Model/group.model';
 import { Program } from '@shared/Model/program.model';
 
 @Component({
@@ -13,6 +14,8 @@ import { Program } from '@shared/Model/program.model';
   styleUrls: ['./program.component.scss']
 })
 export class ProgramComponent implements OnInit {
+
+  Groups: Group[] = JSON.parse(localStorage.getItem('Groups'));
 
   tableComponent: TableComponent;
 
@@ -49,7 +52,10 @@ export class ProgramComponent implements OnInit {
         type: ColumnEnum.string,
         selector: ColumnEnum.select,
         source: JSON.parse(localStorage.getItem('Groups')),
-        cell: (element: Program) => `${ element.auth }`
+        cell: (element: Program) => `${
+          element.auth === '' ? '' :
+          this.Groups.filter(x => x.id ===  element.auth)[0].name
+        }`
       },
     ],
     create: () => {

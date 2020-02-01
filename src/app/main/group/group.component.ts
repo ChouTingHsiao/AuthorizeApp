@@ -5,6 +5,7 @@ import { TableComponent } from '@shared/Component/table.component';
 import { DialogEnum } from '@shared/Enum/dialog.enum';
 import { ColumnEnum } from '@shared/Enum/column.enum';
 import { Grid } from '@shared/Model/table.model';
+import { Role } from '@shared/Model/role.model';
 import { Group } from '@shared/Model/group.model';
 
 @Component({
@@ -13,6 +14,8 @@ import { Group } from '@shared/Model/group.model';
   styleUrls: ['./group.component.scss']
 })
 export class GroupComponent implements OnInit {
+
+  Roles: Role[] = JSON.parse(localStorage.getItem('Roles'));
 
   tableComponent: TableComponent;
 
@@ -37,11 +40,16 @@ export class GroupComponent implements OnInit {
         cell: (element: Group) => `${ element.name }`
       },
       {
-        header: 'Remark',
-        columnDef: 'remark',
+        header: 'Role',
+        columnDef: 'role',
         type: ColumnEnum.string,
-        selector: ColumnEnum.input,
-        cell: (element: Group) => `${ element.remark }`
+        selector: ColumnEnum.multiselect,
+        source: JSON.parse(localStorage.getItem('Roles')),
+        cell: (element: Group) => `${
+          element.role.map(x => {
+            return  this.Roles.filter(y => y.id === x)[0].name;
+          }).join(',')
+        }`
       },
     ],
     create: () => {

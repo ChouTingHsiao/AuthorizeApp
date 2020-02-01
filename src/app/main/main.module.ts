@@ -11,6 +11,7 @@ import { DialogComponent } from '@shared/Component/dialog.component';
 import { InputComponent } from '@shared/Component/input.component';
 import { LabelComponent } from '@shared/Component/label.component';
 import { SelectComponent } from '@shared/Component/select.component';
+import { MultiSelectComponent } from '@shared/Component/multiselect.component';
 import { TableComponent } from '@shared/Component/table.component';
 import { MainComponent } from './main.component';
 import { UserComponent } from './user/user.component';
@@ -31,6 +32,7 @@ import { UnauthorizeComponent } from './unauthorize/unauthorize.component';
     InputComponent,
     LabelComponent,
     SelectComponent,
+    MultiSelectComponent,
     TableComponent,
     DynamicHostDirective,
     UnauthorizeComponent,
@@ -49,6 +51,7 @@ import { UnauthorizeComponent } from './unauthorize/unauthorize.component';
     InputComponent,
     LabelComponent,
     SelectComponent,
+    MultiSelectComponent,
     TableComponent
   ]
 })

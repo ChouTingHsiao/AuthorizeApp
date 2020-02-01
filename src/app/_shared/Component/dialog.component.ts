@@ -3,6 +3,7 @@ import { DynamicHostDirective } from '@shared/Directive/dynamichost.Directive';
 import { InputComponent } from '@shared/Component/input.component';
 import { LabelComponent } from '@shared/Component/label.component';
 import { SelectComponent } from '@shared/Component/select.component';
+import { MultiSelectComponent } from '@shared/Component/multiselect.component';
 import { Schema } from '@shared/Model/table.model';
 import { Dialog } from '@shared/Model/dialog.model';
 import { ColumnEnum } from '@shared/Enum/column.enum';
@@ -58,6 +59,10 @@ export class DialogComponent implements OnInit, AfterViewInit {
       }
       case ColumnEnum.select: {
         componentFactory = this.componenFactoryResolver.resolveComponentFactory(SelectComponent);
+        break;
+      }
+      case ColumnEnum.multiselect: {
+        componentFactory = this.componenFactoryResolver.resolveComponentFactory(MultiSelectComponent);
         break;
       }
       default: {

@@ -3,4 +3,5 @@ export enum ColumnEnum {
   input = 'input',
   label = 'label',
   select = 'select',
+  multiselect = 'multiselect',
 }
