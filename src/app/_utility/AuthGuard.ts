@@ -39,9 +39,6 @@ export class AuthGuard implements CanActivate {
 
     const loggedIn: boolean = AuthName.includes(Auth) || AuthId[0].auth.length < 1;
 
-    console.log(AuthName);
-    console.log(Auth);
-
     if (!loggedIn) {
       console.log('Not Auth');
       this.router.navigate(['/401']);
