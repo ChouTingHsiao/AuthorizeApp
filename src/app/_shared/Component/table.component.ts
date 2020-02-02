@@ -4,9 +4,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '@shared/Component/dialog.component';
-import { Grid } from '@shared/Model/table.model';
+import { Grid, Column } from '@shared/Model/table.model';
 import { Dialog } from '@shared/Model/dialog.model';
-import { Schema } from '@shared/Model/table.model';
 import { DialogEnum } from '@shared/Enum/dialog.enum';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
@@ -79,7 +78,7 @@ export class TableComponent implements OnInit, OnDestroy {
 
     this.dialogComponent = instance;
 
-    instance.SchemaArray = this.dataToSchema(DialogData.data);
+    instance.ColumnArray = this.dataToSchema(DialogData.data);
 
     instance.DialogData = DialogData;
 
@@ -100,17 +99,11 @@ export class TableComponent implements OnInit, OnDestroy {
 
   }
 
-  dataToSchema(data: any): Schema[] {
-    const schema: Schema[] =  this.grid.columns.map((x) => {
-      return {
-        column: x.columnDef,
-        selector: x.selector,
-        source: x.source,
-        type: x.type,
-        value: data[x.columnDef],
-      };
+  dataToSchema(data: any): Column[] {
+    this.grid.columns.forEach(x => {
+         x.value = data[x.columnDef];
     });
-    return schema;
+    return this.grid.columns;
   }
 
   columnToDisplay(): string[] {

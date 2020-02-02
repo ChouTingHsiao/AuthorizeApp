@@ -4,14 +4,9 @@ export class Column {
     type: string;
     selector: string;
     source?: [];
+    visible?: boolean;
+    value?: string;
     cell: any;
-}
-export interface Schema {
-    column: string;
-    selector: string;
-    source?: [];
-    type: string;
-    value: string;
 }
 
 export interface Sort {

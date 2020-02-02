@@ -30,6 +30,7 @@ export class ProgramComponent implements OnInit {
         columnDef: 'id',
         type: ColumnEnum.string,
         selector: ColumnEnum.label,
+        visible: false,
         cell: (element: Program) => `${ element.id }`,
       },
       {

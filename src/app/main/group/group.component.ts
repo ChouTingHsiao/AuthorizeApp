@@ -30,6 +30,7 @@ export class GroupComponent implements OnInit {
         columnDef: 'id',
         type: ColumnEnum.string,
         selector: ColumnEnum.label,
+        visible: false,
         cell: (element: Group) => `${ element.id }`
       },
       {

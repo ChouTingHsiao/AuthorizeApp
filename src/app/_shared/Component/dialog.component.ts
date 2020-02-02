@@ -4,7 +4,7 @@ import { InputComponent } from '@shared/Component/input.component';
 import { LabelComponent } from '@shared/Component/label.component';
 import { SelectComponent } from '@shared/Component/select.component';
 import { MultiSelectComponent } from '@shared/Component/multiselect.component';
-import { Schema } from '@shared/Model/table.model';
+import { Column } from '@shared/Model/table.model';
 import { Dialog } from '@shared/Model/dialog.model';
 import { ColumnEnum } from '@shared/Enum/column.enum';
 
@@ -24,7 +24,7 @@ import { ColumnEnum } from '@shared/Enum/column.enum';
 })
 export class DialogComponent implements OnInit, AfterViewInit {
 
-  SchemaArray: Schema[];
+  ColumnArray: Column[];
 
   InputArray: InputComponent[] = [];
 
@@ -42,13 +42,13 @@ export class DialogComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
 
-    this.SchemaArray.forEach(element => {
+    this.ColumnArray.forEach(element => {
       this.dynamicAddComponent(element);
     });
 
   }
 
-  dynamicAddComponent(element: Schema) {
+  dynamicAddComponent(element: Column) {
 
     let componentFactory: ComponentFactory<any>;
 
@@ -79,7 +79,7 @@ export class DialogComponent implements OnInit, AfterViewInit {
 
     this.InputArray.push(instance);
 
-    instance.schema = element;
+    instance.column = element;
 
     componentRef.changeDetectorRef.detectChanges();
   }
@@ -90,7 +90,7 @@ export class DialogComponent implements OnInit, AfterViewInit {
     const data = {};
 
     this.InputArray.forEach(element => {
-      data[element.schema.column] = element.schema.value;
+      data[element.column.columnDef] = element.column.value;
     });
 
     return data;

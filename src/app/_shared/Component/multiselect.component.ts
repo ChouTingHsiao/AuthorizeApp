@@ -1,21 +1,23 @@
 import { Component, OnInit } from '@angular/core';
-import { Schema } from '@shared/Model/table.model';
+import { Column } from '@shared/Model/table.model';
 
 @Component({
   selector: 'app-multiselect',
   template:
-  `<mat-label>{{schema.column}}</mat-label>
-   <mat-select multiple [(ngModel)]="schema.value" name="{{schema.column}}">
+  `<mat-form-field>
+   <mat-label>{{column.columnDef}}</mat-label>
+   <mat-select multiple [(ngModel)]="column.value" name="{{column.columnDef}}">
     <mat-option [value]="default">--</mat-option>
-    <mat-option *ngFor="let data of schema.source" [value]="data.id">
+    <mat-option *ngFor="let data of column.source" [value]="data.id">
       {{data.name}}
     </mat-option>
    </mat-select>
+   </mat-form-field>
    <br/>`
 })
 export class MultiSelectComponent implements OnInit {
 
-  schema: Schema;
+  column: Column;
 
   default = '';
 

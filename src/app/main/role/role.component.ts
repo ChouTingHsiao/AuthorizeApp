@@ -27,6 +27,7 @@ export class RoleComponent implements OnInit {
         columnDef: 'id',
         type: ColumnEnum.string,
         selector: ColumnEnum.label,
+        visible: false,
         cell: (element: Role) => `${ element.id }`
       },
       {

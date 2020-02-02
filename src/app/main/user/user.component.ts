@@ -28,6 +28,7 @@ export class UserComponent implements OnInit {
         columnDef: 'id',
         type: ColumnEnum.string,
         selector: ColumnEnum.label,
+        visible: false,
         cell: (element: User) => `${ element.id }`
       },
       {
