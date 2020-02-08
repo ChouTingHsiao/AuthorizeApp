@@ -6,7 +6,7 @@ import { DialogEnum } from '@shared/Enum/dialog.enum';
 import { ColumnEnum } from '@shared/Enum/column.enum';
 import { Grid } from '@shared/Model/table.model';
 import { User } from '@shared/Model/user.model';
-
+import { Role } from '@shared/Model/role.model';
 
 @Component({
   selector: 'app-user',
@@ -14,6 +14,8 @@ import { User } from '@shared/Model/user.model';
   styleUrls: ['./user.component.scss']
 })
 export class UserComponent implements OnInit {
+
+  Roles: Role[] = JSON.parse(localStorage.getItem('Roles'));
 
   tableComponent: TableComponent;
 
@@ -44,6 +46,17 @@ export class UserComponent implements OnInit {
         type: ColumnEnum.string,
         selector: ColumnEnum.input,
         cell: (element: User) => `${ element.password }`
+      },
+      {
+        header: 'Role',
+        columnDef: 'role',
+        type: ColumnEnum.string,
+        selector: ColumnEnum.select,
+        source: JSON.parse(localStorage.getItem('Roles')),
+        cell: (element: User) => `${
+          element.role === '' ? '' :
+          this.Roles.filter(x => x.id ===  element.role)[0].name
+        }`
       },
     ],
     create: () => {

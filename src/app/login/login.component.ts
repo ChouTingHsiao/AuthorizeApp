@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
     const user = Users.filter(x => x.name === this.Account && x.password === this.Password);
 
     if ( user.length > 0 ) {
-        const role = Roles.filter(x => x.name === this.Account);
+        const role = Roles.filter(x => x.id === user[0].role);
         localStorage.setItem('Auth', role[0].name);
         localStorage.setItem('Users', JSON.stringify(Users));
         localStorage.setItem('Roles', JSON.stringify(Roles));
@@ -46,8 +46,8 @@ export class LoginComponent implements OnInit {
 }
 
 const Users: User[] = [
-  { id: '1', name: 'ADMIN', password: 'ADMIN' },
-  { id: '2', name: 'USER', password: 'USER' }
+  { id: '1', name: 'ADMIN', password: 'ADMIN', role: '1' },
+  { id: '2', name: 'USER', password: 'USER', role: '2' }
 ];
 
 const Roles: Role[] = [
