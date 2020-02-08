@@ -8,7 +8,6 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "homepage": "https://chou-ting-hsiao.github.io/AuthorizeApp/",
     "deploy": "ng build --prod --base-href https://chou-ting-hsiao.github.io/AuthorizeApp/ && npx ngh --dir=dist/authorize-example"
   },
   "private": true,
