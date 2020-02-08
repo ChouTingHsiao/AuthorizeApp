@@ -11,7 +11,7 @@ jobs:
       uses: actions/checkout@master
 
     - name: Build and Deploy
-      uses: chou-ting-hsiao/AuthorizeApp@master
+      uses: chou-ting-hsiao/AuthorizeApp/.github/workflows@master
       env:
         ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
         BRANCH: gh-pages
