@@ -16,4 +16,4 @@ jobs:
         ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
         BRANCH: gh-pages
         FOLDER: dist/authorize-example
-        BUILD_SCRIPT: npm install && npm run build --prod
+        BUILD_SCRIPT: npm install && npx ng build --prod
