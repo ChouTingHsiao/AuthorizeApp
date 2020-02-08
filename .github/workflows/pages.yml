@@ -1,4 +1,4 @@
-name: GitHub Actions Build and Deploy Demo
+name: AuthorizeApp GitHub Actions Build and Deploy
 on:
   push:
     branches:
@@ -16,4 +16,4 @@ jobs:
         ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
         BRANCH: gh-pages
         FOLDER: dist/authorize-example
-        BUILD_SCRIPT: npm install && npm run build
+        BUILD_SCRIPT: npm install && npm run build --prod
