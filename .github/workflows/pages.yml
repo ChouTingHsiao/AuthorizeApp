@@ -10,6 +10,12 @@ jobs:
     - name: Checkout
       uses: actions/checkout@master
 
+    - name: Notify
+      uses: snow-actions/line-notify@v1.0.0
+      with:
+        access_token: ${{ secrets.LINE_ACCESS_TOKEN }}
+        message: Trigger
+
     - name: Build and Deploy
       uses: JamesIves/github-pages-deploy-action@master
       env:
