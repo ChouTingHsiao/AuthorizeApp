@@ -11,20 +11,14 @@ jobs:
     - name: Checkout
       id: Checkout
       uses: actions/checkout@master
-
-    - name: Build and Deploy
-      id: Ngh
-      uses: JamesIves/github-pages-deploy-action@master
       env:
-       ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-       BRANCH: gh-pages
-       FOLDER: dist/authorize-example
-       BUILD_SCRIPT: npm install && npx ng build --prod --base-href https://chou-ting-hsiao.github.io/AuthorizeApp/
-
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+      if: success()
+      run: echo "$GITHUB_CONTEXT"
+  
     - name: Notify
       id: Notify
       uses: snow-actions/line-notify@v1.0.0
       with:
         access_token: ${{ secrets.LINE_ACCESS_TOKEN }}
-        message: ${{ job.status }}
-
+        message: ${{ toJson(steps) }}
