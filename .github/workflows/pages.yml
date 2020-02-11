@@ -27,3 +27,5 @@ jobs:
       with:
         access_token: ${{ secrets.LINE_ACCESS_TOKEN }}
         message: ${{ toJson(steps) }}
+        message: ${{ toJson(steps) }}
+
