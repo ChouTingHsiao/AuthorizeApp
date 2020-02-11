@@ -18,13 +18,13 @@ jobs:
       FOLDER: dist/authorize-example
       BUILD_SCRIPT: npm install && npx ng build --prod --base-href https://chou-ting-hsiao.github.io/AuthorizeApp/
       if: success()
-    - name: Notify
+      name: Notify
       uses: snow-actions/line-notify@v1.0.0
       with:
         access_token: ${{ secrets.LINE_ACCESS_TOKEN }}
         message: success
       if: failure()
-    - name: Notify
+      name: Notify
       uses: snow-actions/line-notify@v1.0.0
       with:
         access_token: ${{ secrets.LINE_ACCESS_TOKEN }}
