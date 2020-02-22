@@ -48,7 +48,8 @@ export class GroupComponent implements OnInit {
         source: JSON.parse(localStorage.getItem('Roles')),
         cell: (element: Group) => `${
           element.role.map(x => {
-            return  this.Roles.filter(y => y.id === x)[0].name;
+            const role = this.Roles.filter(y => y.id === x)[0];
+            return  role ? role.name : '';
           }).join(',')
         }`
       },
