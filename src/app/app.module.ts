@@ -10,7 +10,9 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
 
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
+import { environment } from '../environments/environment'; // Angular CLI environment
 
 @NgModule({
   declarations: [
@@ -24,6 +26,10 @@ import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+      logOnly: environment.production,
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent]
