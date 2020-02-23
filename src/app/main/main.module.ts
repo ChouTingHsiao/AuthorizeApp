@@ -4,7 +4,7 @@ import { MaterialModule  } from '@src/material-module';
 import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
 import { BrowserAnimationsModule  } from '@angular/platform-browser/animations';
 import { StoreModule } from '@ngrx/store';
-import { maintainReducer } from '@shared/Reducer/maintain.reducer';
+import { maintainReducer } from '@shared/ngrx/Reducer/maintain.reducer';
 
 import { MainRoutingModule } from './main-routing.module';
 import { DialogComponent } from '@shared/Component/dialog.component';
