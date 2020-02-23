@@ -1,4 +1,4 @@
-export class Column {
+export interface Column {
     header: string;
     columnDef: string;
     type: string;

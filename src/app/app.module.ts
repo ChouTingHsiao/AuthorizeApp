@@ -14,6 +14,9 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { environment } from '../environments/environment'; // Angular CLI environment
 
+import { UserService } from '@services/user/user.service';
+import { RoleService } from '@services/role/role.service';
+
 @NgModule({
   declarations: [
     AppComponent,

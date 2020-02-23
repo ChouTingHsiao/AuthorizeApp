@@ -7,6 +7,8 @@ import { ColumnEnum } from '@shared/Enum/column.enum';
 import { Grid } from '@shared/Model/table.model';
 import { User } from '@shared/Model/user.model';
 import { Role } from '@shared/Model/role.model';
+import { RoleService } from '@services/role/role.service';
+import { UserService } from '@services/user/user.service';
 
 @Component({
   selector: 'app-user',
@@ -15,11 +17,11 @@ import { Role } from '@shared/Model/role.model';
 })
 export class UserComponent implements OnInit {
 
-  Roles: Role[] = JSON.parse(localStorage.getItem('Roles'));
+  Roles: Role[] = this.roleService.getAll();
 
   tableComponent: TableComponent;
 
-  ELEMENT_DATA: User[] = JSON.parse(localStorage.getItem('Users'));
+  ELEMENT_DATA: User[] = this.userService.getAll();
 
   myGrid: Grid = {
     dataSource: new MatTableDataSource<User>(this.ELEMENT_DATA),
@@ -52,7 +54,7 @@ export class UserComponent implements OnInit {
         columnDef: 'role',
         type: ColumnEnum.string,
         selector: ColumnEnum.select,
-        source: JSON.parse(localStorage.getItem('Roles')),
+        source: this.Roles as [],
         cell: (element: User) => `${
           element.role === '' ? '' :
           this.Roles.filter(x => x.id ===  element.role)[0].name
@@ -105,7 +107,9 @@ export class UserComponent implements OnInit {
     }
   };
 
-  constructor(private store: Store<any>) { }
+  constructor(private store: Store<any>,
+              private roleService: RoleService,
+              private userService: UserService) { }
 
   ngOnInit() {
     this.store.dispatch({

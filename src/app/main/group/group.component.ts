@@ -7,6 +7,8 @@ import { ColumnEnum } from '@shared/Enum/column.enum';
 import { Grid } from '@shared/Model/table.model';
 import { Role } from '@shared/Model/role.model';
 import { Group } from '@shared/Model/group.model';
+import { GroupService } from '@services/group/group.service';
+import { RoleService } from '@services/role/role.service';
 
 @Component({
   selector: 'app-group',
@@ -15,11 +17,11 @@ import { Group } from '@shared/Model/group.model';
 })
 export class GroupComponent implements OnInit {
 
-  Roles: Role[] = JSON.parse(localStorage.getItem('Roles'));
+  Roles: Role[] = this.roleService.getAll();
 
   tableComponent: TableComponent;
 
-  ELEMENT_DATA: Group[] = JSON.parse(localStorage.getItem('Groups'));
+  ELEMENT_DATA: Group[] = this.groupService.getAll();
 
   myGrid: Grid = {
     dataSource: new MatTableDataSource<Group>(this.ELEMENT_DATA),
@@ -45,7 +47,7 @@ export class GroupComponent implements OnInit {
         columnDef: 'role',
         type: ColumnEnum.string,
         selector: ColumnEnum.multiselect,
-        source: JSON.parse(localStorage.getItem('Roles')),
+        source:  this.Roles as [],
         cell: (element: Group) => `${
           element.role.map(x => {
             const role = this.Roles.filter(y => y.id === x)[0];
@@ -100,7 +102,9 @@ export class GroupComponent implements OnInit {
     }
   };
 
-  constructor(private store: Store<any>) { }
+  constructor(private store: Store<any>,
+              private groupService: GroupService,
+              private roleService: RoleService) { }
 
   ngOnInit() {
     this.store.dispatch({

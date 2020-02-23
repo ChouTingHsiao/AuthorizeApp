@@ -7,6 +7,8 @@ import { ColumnEnum } from '@shared/Enum/column.enum';
 import { Grid } from '@shared/Model/table.model';
 import { Group } from '@shared/Model/group.model';
 import { Program } from '@shared/Model/program.model';
+import { GroupService } from '@services/group/group.service';
+import { ProgramService } from '@services/program/program.service';
 
 @Component({
   selector: 'app-program',
@@ -15,11 +17,11 @@ import { Program } from '@shared/Model/program.model';
 })
 export class ProgramComponent implements OnInit {
 
-  Groups: Group[] = JSON.parse(localStorage.getItem('Groups'));
+  Groups: Group[] = this.groupService.getAll();
 
   tableComponent: TableComponent;
 
-  ELEMENT_DATA: Program[] = JSON.parse(localStorage.getItem('Programs'));
+  ELEMENT_DATA: Program[] = this.programService.getAll();
 
   myGrid: Grid = {
     dataSource: new MatTableDataSource<Program>(this.ELEMENT_DATA),
@@ -52,7 +54,7 @@ export class ProgramComponent implements OnInit {
         columnDef: 'auth',
         type: ColumnEnum.string,
         selector: ColumnEnum.select,
-        source: JSON.parse(localStorage.getItem('Groups')),
+        source: this.Groups as [],
         cell: (element: Program) => `${
           element.auth === '' ? '' :
           this.Groups.filter(x => x.id ===  element.auth)[0].name
@@ -105,7 +107,9 @@ export class ProgramComponent implements OnInit {
     }
   };
 
-  constructor(private store: Store<any>) { }
+  constructor(private store: Store<any>,
+              private groupService: GroupService,
+              private programService: ProgramService) { }
 
   ngOnInit() {
     this.store.dispatch({

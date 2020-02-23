@@ -6,6 +6,7 @@ import { DialogEnum } from '@shared/Enum/dialog.enum';
 import { ColumnEnum } from '@shared/Enum/column.enum';
 import { Grid } from '@shared/Model/table.model';
 import { Role } from '@shared/Model/role.model';
+import { RoleService } from '@services/role/role.service';
 
 @Component({
   selector: 'app-role',
@@ -16,7 +17,7 @@ export class RoleComponent implements OnInit {
 
   tableComponent: TableComponent;
 
-  ELEMENT_DATA: Role[] = JSON.parse(localStorage.getItem('Roles'));
+  ELEMENT_DATA: Role[] = this.roleService.getAll();
 
   myGrid: Grid = {
     dataSource: new MatTableDataSource<Role>(this.ELEMENT_DATA),
@@ -91,7 +92,8 @@ export class RoleComponent implements OnInit {
     }
   };
 
-  constructor(private store: Store<any>) { }
+  constructor(private store: Store<any>,
+              private roleService: RoleService) { }
 
   ngOnInit() {
     this.store.dispatch({

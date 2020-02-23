@@ -3,13 +3,18 @@ import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot  } fro
 import { Role } from '@shared/Model/role.model';
 import { Group } from '@shared/Model/group.model';
 import { Program } from '@shared/Model/program.model';
-
+import { RoleService } from '@services/role/role.service';
+import { GroupService } from '@services/group/group.service';
+import { ProgramService } from '@services/program/program.service';
 @Injectable({
     providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
 
-    constructor(private router: Router) {}
+    constructor(private router: Router,
+                private roleService: RoleService,
+                private groupService: GroupService,
+                private programService: ProgramService) {}
 
     canActivate(
        next: ActivatedRouteSnapshot,
@@ -17,11 +22,11 @@ export class AuthGuard implements CanActivate {
     ): boolean {
 
 
-    const  Roles: Role[] = JSON.parse(localStorage.getItem('Roles'));
+    const  Roles: Role[] = this.roleService.getAll();
 
-    const  Groups: Group[] = JSON.parse(localStorage.getItem('Groups'));
+    const  Groups: Group[] = this.groupService.getAll();
 
-    const Programs: Program[] = JSON.parse(localStorage.getItem('Programs'));
+    const Programs: Program[] = this.programService.getAll();
 
     const Auth: string =  localStorage.getItem('Auth');
 
