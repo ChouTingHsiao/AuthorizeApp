@@ -4,6 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { TableComponent } from '@shared/Component/table.component';
 import { DialogEnum } from '@shared/Enum/dialog.enum';
 import { ColumnEnum } from '@shared/Enum/column.enum';
+import { TableEnum } from '@shared/Enum/table.enum';
 import { Grid } from '@shared/Model/table.model';
 import { Role } from '@shared/Model/role.model';
 import { Group } from '@shared/Model/group.model';
@@ -24,6 +25,7 @@ export class GroupComponent implements OnInit {
   ELEMENT_DATA: Group[] = this.groupService.getAll();
 
   myGrid: Grid = {
+    tableName: TableEnum.Groups,
     dataSource: new MatTableDataSource<Group>(this.ELEMENT_DATA),
     sort: { active: 'id', direction: 'asc' },
     columns: [
@@ -58,9 +60,9 @@ export class GroupComponent implements OnInit {
     ],
     create: () => {
       this.store.dispatch({
-        type: DialogEnum.create,
+        type: `${TableEnum.Groups}.${DialogEnum.create}`,
         payload: {
-          name: 'Groups',
+          name: TableEnum.Groups,
           source: this.myGrid.dataSource.data,
           newData: this.tableComponent.dialogComponent.getData() as Group
         }
@@ -76,9 +78,9 @@ export class GroupComponent implements OnInit {
     },
     edit: () => {
       this.store.dispatch({
-        type: DialogEnum.edit,
+        type: `${TableEnum.Groups}.${DialogEnum.edit}`,
         payload: {
-          name: 'Groups',
+          name: TableEnum.Groups,
           source: this.myGrid.dataSource.data,
           newData: this.tableComponent.dialogComponent.getData() as Group
         }
@@ -108,7 +110,7 @@ export class GroupComponent implements OnInit {
 
   ngOnInit() {
     this.store.dispatch({
-      type: DialogEnum.read,
+      type: `${TableEnum.Groups}.${DialogEnum.read}`,
       payload: {
         source: this.myGrid.dataSource.data
       }

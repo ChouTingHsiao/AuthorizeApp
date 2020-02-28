@@ -21,6 +21,8 @@ import { ProgramComponent } from './program/program.component';
 import { DynamicHostDirective } from '@shared/Directive/dynamichost.Directive';
 import { UnauthorizeComponent } from './unauthorize/unauthorize.component';
 
+import { TableEnum } from '@shared/Enum/table.enum';
+
 @NgModule({
   declarations: [
     MainComponent,
@@ -44,7 +46,12 @@ import { UnauthorizeComponent } from './unauthorize/unauthorize.component';
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    StoreModule.forRoot({ maintainReducer }),
+    StoreModule.forRoot({
+      Users: maintainReducer(TableEnum.Users),
+      Roles: maintainReducer(TableEnum.Roles),
+      Groups: maintainReducer(TableEnum.Groups),
+      Programs: maintainReducer(TableEnum.Programs),
+    }),
   ],
   entryComponents: [
     DialogComponent,

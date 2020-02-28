@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Role } from '@shared/Model/role.model';
+import { TableEnum } from '@shared/Enum/table.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -17,12 +18,12 @@ export class RoleService {
 
   getAll(): Role[] {
 
-    if (localStorage.getItem(this.TableName)) {
-      return JSON.parse(localStorage.getItem(this.TableName));
+    if (localStorage.getItem(TableEnum.Roles)) {
+      return JSON.parse(localStorage.getItem(TableEnum.Roles));
     }
 
-    localStorage.setItem(this.TableName, JSON.stringify(this.Roles));
+    localStorage.setItem(TableEnum.Roles, JSON.stringify(this.Roles));
 
-    return JSON.parse(localStorage.getItem(this.TableName));
+    return JSON.parse(localStorage.getItem(TableEnum.Roles));
   }
 }

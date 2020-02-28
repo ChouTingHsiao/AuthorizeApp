@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Program } from '@shared/Model/program.model';
+import { TableEnum } from '@shared/Enum/table.enum';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProgramService {
-
-  TableName = 'Programs';
 
   Programs: Program[] = [
     { id: '1', name: 'User', remark: '使用者', auth: '1' },
@@ -19,13 +18,13 @@ export class ProgramService {
 
   getAll(): Program[] {
 
-    if (localStorage.getItem(this.TableName)) {
-      return JSON.parse(localStorage.getItem(this.TableName));
+    if (localStorage.getItem(TableEnum.Programs)) {
+      return JSON.parse(localStorage.getItem(TableEnum.Programs));
     }
 
-    localStorage.setItem(this.TableName, JSON.stringify(this.Programs));
+    localStorage.setItem(TableEnum.Programs, JSON.stringify(this.Programs));
 
-    return JSON.parse(localStorage.getItem(this.TableName));
+    return JSON.parse(localStorage.getItem(TableEnum.Programs));
   }
 
 }

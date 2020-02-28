@@ -4,6 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { TableComponent } from '@shared/Component/table.component';
 import { DialogEnum } from '@shared/Enum/dialog.enum';
 import { ColumnEnum } from '@shared/Enum/column.enum';
+import { TableEnum } from '@shared/Enum/table.enum';
 import { Grid } from '@shared/Model/table.model';
 import { User } from '@shared/Model/user.model';
 import { Role } from '@shared/Model/role.model';
@@ -24,6 +25,7 @@ export class UserComponent implements OnInit {
   ELEMENT_DATA: User[] = this.userService.getAll();
 
   myGrid: Grid = {
+    tableName: TableEnum.Users,
     dataSource: new MatTableDataSource<User>(this.ELEMENT_DATA),
     sort: { active: 'id', direction: 'asc' },
     columns: [
@@ -63,7 +65,7 @@ export class UserComponent implements OnInit {
     ],
     create: () => {
       this.store.dispatch({
-        type: DialogEnum.create,
+        type: `${TableEnum.Users}.${DialogEnum.create}`,
         payload: {
           name: 'Users',
           source: this.myGrid.dataSource.data,
@@ -81,7 +83,7 @@ export class UserComponent implements OnInit {
     },
     edit: () => {
       this.store.dispatch({
-        type: DialogEnum.edit,
+        type: `${TableEnum.Users}.${DialogEnum.edit}`,
         payload: {
           name: 'Users',
           source: this.myGrid.dataSource.data,
@@ -113,7 +115,7 @@ export class UserComponent implements OnInit {
 
   ngOnInit() {
     this.store.dispatch({
-      type: DialogEnum.read,
+      type: `${TableEnum.Users}.${DialogEnum.read}`,
       payload: {
         source: this.myGrid.dataSource.data
       }

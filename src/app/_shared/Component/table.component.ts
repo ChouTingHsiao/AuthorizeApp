@@ -115,7 +115,7 @@ export class TableComponent implements OnInit, OnDestroy {
   }
 
   setSource() {
-    this.maintain$ = this.store.select('maintainReducer');
+    this.maintain$ = this.store.select(this.grid.tableName);
     this.subscription = this.maintain$.subscribe((x) => {
       this.grid.dataSource = new MatTableDataSource<any>(x);
       this.pageNation();

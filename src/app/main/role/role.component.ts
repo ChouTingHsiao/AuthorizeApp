@@ -4,6 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { TableComponent } from '@shared/Component/table.component';
 import { DialogEnum } from '@shared/Enum/dialog.enum';
 import { ColumnEnum } from '@shared/Enum/column.enum';
+import { TableEnum } from '@shared/Enum/table.enum';
 import { Grid } from '@shared/Model/table.model';
 import { Role } from '@shared/Model/role.model';
 import { RoleService } from '@services/role/role.service';
@@ -20,6 +21,7 @@ export class RoleComponent implements OnInit {
   ELEMENT_DATA: Role[] = this.roleService.getAll();
 
   myGrid: Grid = {
+    tableName: TableEnum.Roles,
     dataSource: new MatTableDataSource<Role>(this.ELEMENT_DATA),
     sort: { active: 'id', direction: 'asc' },
     columns: [
@@ -48,9 +50,9 @@ export class RoleComponent implements OnInit {
     ],
     create: () => {
       this.store.dispatch({
-        type: DialogEnum.create,
+        type: `${TableEnum.Roles}.${DialogEnum.create}`,
         payload: {
-          name: 'Roles',
+          name: TableEnum.Roles,
           source: this.myGrid.dataSource.data,
           newData: this.tableComponent.dialogComponent.getData() as Role
         }
@@ -66,9 +68,9 @@ export class RoleComponent implements OnInit {
     },
     edit: () => {
       this.store.dispatch({
-        type: DialogEnum.edit,
+        type: `${TableEnum.Roles}.${DialogEnum.edit}`,
         payload: {
-          name: 'Roles',
+          name: TableEnum.Roles,
           source: this.myGrid.dataSource.data,
           newData: this.tableComponent.dialogComponent.getData() as Role
         }
@@ -97,7 +99,7 @@ export class RoleComponent implements OnInit {
 
   ngOnInit() {
     this.store.dispatch({
-      type: DialogEnum.read,
+      type: `${TableEnum.Roles}.${DialogEnum.read}`,
       payload: {
         source: this.myGrid.dataSource.data
       }

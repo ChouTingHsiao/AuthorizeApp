@@ -15,6 +15,7 @@ export interface Sort {
 }
 
 export interface Grid {
+    tableName: string;
     dataSource: any;
     sort: Sort;
     columns: Column[];
