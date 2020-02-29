@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Group } from '@shared/Model/group.model';
 import { TableEnum } from '@shared/Enum/table.enum';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,15 +14,17 @@ export class GroupService {
 
   constructor() { }
 
-  getAll(): Group[] {
+  getAll(): Observable<Group[]> {
+    return new Observable(subscriber => {
 
-    if (localStorage.getItem(TableEnum.Groups)) {
-      return JSON.parse(localStorage.getItem(TableEnum.Groups));
-    }
+      if (!localStorage.getItem(TableEnum.Groups)) {
+        localStorage.setItem(TableEnum.Groups, JSON.stringify(this.Groups));
+      }
 
-    localStorage.setItem(TableEnum.Groups, JSON.stringify(this.Groups));
+      subscriber.next(JSON.parse(localStorage.getItem(TableEnum.Groups)));
+      subscriber.complete();
 
-    return JSON.parse(localStorage.getItem(TableEnum.Groups));
+    });
   }
 
 }

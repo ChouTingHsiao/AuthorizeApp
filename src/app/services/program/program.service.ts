@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Program } from '@shared/Model/program.model';
 import { TableEnum } from '@shared/Enum/table.enum';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -16,15 +17,17 @@ export class ProgramService {
 
   constructor() { }
 
-  getAll(): Program[] {
+  getAll(): Observable<Program[]> {
+    return new Observable(subscriber => {
 
-    if (localStorage.getItem(TableEnum.Programs)) {
-      return JSON.parse(localStorage.getItem(TableEnum.Programs));
-    }
+      if (!localStorage.getItem(TableEnum.Programs)) {
+        localStorage.setItem(TableEnum.Programs, JSON.stringify(this.Programs));
+      }
 
-    localStorage.setItem(TableEnum.Programs, JSON.stringify(this.Programs));
+      subscriber.next(JSON.parse(localStorage.getItem(TableEnum.Programs)));
+      subscriber.complete();
 
-    return JSON.parse(localStorage.getItem(TableEnum.Programs));
+    });
   }
 
 }

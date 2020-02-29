@@ -18,103 +18,110 @@ import { RoleService } from '@services/role/role.service';
 })
 export class GroupComponent implements OnInit {
 
-  Roles: Role[] = this.roleService.getAll();
-
   tableComponent: TableComponent;
 
-  ELEMENT_DATA: Group[] = this.groupService.getAll();
+  myGrid: Grid;
 
-  myGrid: Grid = {
-    tableName: TableEnum.Groups,
-    dataSource: new MatTableDataSource<Group>(this.ELEMENT_DATA),
-    sort: { active: 'id', direction: 'asc' },
-    columns: [
-      {
-        header: 'Id',
-        columnDef: 'id',
-        type: ColumnEnum.string,
-        selector: ColumnEnum.label,
-        visible: false,
-        cell: (element: Group) => `${ element.id }`
-      },
-      {
-        header: 'Name',
-        columnDef: 'name',
-        type: ColumnEnum.string,
-        selector: ColumnEnum.input,
-        cell: (element: Group) => `${ element.name }`
-      },
-      {
-        header: 'Role',
-        columnDef: 'role',
-        type: ColumnEnum.string,
-        selector: ColumnEnum.multiselect,
-        source:  this.Roles as [],
-        cell: (element: Group) => `${
-          element.role.map(x => {
-            const role = this.Roles.filter(y => y.id === x)[0];
-            return  role ? role.name : '';
-          }).join(',')
-        }`
-      },
-    ],
-    create: () => {
-      this.store.dispatch({
-        type: `${TableEnum.Groups}.${DialogEnum.create}`,
-        payload: {
-          name: TableEnum.Groups,
-          source: this.myGrid.dataSource.data,
-          newData: this.tableComponent.dialogComponent.getData() as Group
-        }
-      });
-    },
-    createDialog: () => {
-      this.tableComponent.openDialog({
-        title: '新增頁面',
-        button: [DialogEnum.btnCreate, DialogEnum.btnCancel],
-        method: DialogEnum.create,
-        data:  '',
-      });
-    },
-    edit: () => {
-      this.store.dispatch({
-        type: `${TableEnum.Groups}.${DialogEnum.edit}`,
-        payload: {
-          name: TableEnum.Groups,
-          source: this.myGrid.dataSource.data,
-          newData: this.tableComponent.dialogComponent.getData() as Group
-        }
-      });
-    },
-    editDialog: (event: any) => {
+  Groups: Group[];
 
-      const element = event.target as HTMLElement;
-
-      const nextNode = element.closest('td').nextSibling as HTMLElement;
-
-      const data =  this.myGrid.dataSource.data.filter(x => x.id === nextNode.innerHTML.trim());
-
-      this.tableComponent.openDialog({
-        title: '修改頁面',
-        button: [DialogEnum.btnEdit, DialogEnum.btnCancel],
-        method: DialogEnum.edit,
-        data:  data[0],
-      });
-
-    }
-  };
+  Roles: Role[];
 
   constructor(private store: Store<any>,
               private groupService: GroupService,
               private roleService: RoleService) { }
 
   ngOnInit() {
+    this.groupService.getAll().subscribe((groups) => this.Groups = groups);
+    this.roleService.getAll().subscribe((roles) => this.Roles = roles);
+    this.loadGrid();
     this.store.dispatch({
       type: `${TableEnum.Groups}.${DialogEnum.read}`,
       payload: {
         source: this.myGrid.dataSource.data
       }
     });
+  }
+
+  loadGrid() {
+    this.myGrid = {
+      tableName: TableEnum.Groups,
+      dataSource: new MatTableDataSource<Group>(this.Groups),
+      sort: { active: 'id', direction: 'asc' },
+      columns: [
+        {
+          header: 'Id',
+          columnDef: 'id',
+          type: ColumnEnum.string,
+          selector: ColumnEnum.label,
+          visible: false,
+          cell: (element: Group) => `${ element.id }`
+        },
+        {
+          header: 'Name',
+          columnDef: 'name',
+          type: ColumnEnum.string,
+          selector: ColumnEnum.input,
+          cell: (element: Group) => `${ element.name }`
+        },
+        {
+          header: 'Role',
+          columnDef: 'role',
+          type: ColumnEnum.string,
+          selector: ColumnEnum.multiselect,
+          source:  this.Roles as [],
+          cell: (element: Group) => `${
+            element.role.map(x => {
+              const role = this.Roles.filter(y => y.id === x)[0];
+              return  role ? role.name : '';
+            }).join(',')
+          }`
+        },
+      ],
+      create: () => {
+        this.store.dispatch({
+          type: `${TableEnum.Groups}.${DialogEnum.create}`,
+          payload: {
+            name: TableEnum.Groups,
+            source: this.myGrid.dataSource.data,
+            newData: this.tableComponent.dialogComponent.getData() as Group
+          }
+        });
+      },
+      createDialog: () => {
+        this.tableComponent.openDialog({
+          title: '新增頁面',
+          button: [DialogEnum.btnCreate, DialogEnum.btnCancel],
+          method: DialogEnum.create,
+          data:  '',
+        });
+      },
+      edit: () => {
+        this.store.dispatch({
+          type: `${TableEnum.Groups}.${DialogEnum.edit}`,
+          payload: {
+            name: TableEnum.Groups,
+            source: this.myGrid.dataSource.data,
+            newData: this.tableComponent.dialogComponent.getData() as Group
+          }
+        });
+      },
+      editDialog: (event: any) => {
+
+        const element = event.target as HTMLElement;
+
+        const nextNode = element.closest('td').nextSibling as HTMLElement;
+
+        const data =  this.myGrid.dataSource.data.filter(x => x.id === nextNode.innerHTML.trim());
+
+        this.tableComponent.openDialog({
+          title: '修改頁面',
+          button: [DialogEnum.btnEdit, DialogEnum.btnCancel],
+          method: DialogEnum.edit,
+          data:  data[0],
+        });
+
+      }
+    };
   }
 
   initComponentHandler(component: TableComponent) {

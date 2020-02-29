@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Role } from '@shared/Model/role.model';
 import { TableEnum } from '@shared/Enum/table.enum';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RoleService {
-
-  TableName = 'Roles';
 
   Roles: Role[] = [
     { id: '1', name: 'ADMIN', remark: '管理員' },
@@ -16,14 +15,16 @@ export class RoleService {
 
   constructor() { }
 
-  getAll(): Role[] {
+  getAll(): Observable<Role[]> {
+    return new Observable(subscriber => {
 
-    if (localStorage.getItem(TableEnum.Roles)) {
-      return JSON.parse(localStorage.getItem(TableEnum.Roles));
-    }
+      if (!localStorage.getItem(TableEnum.Roles)) {
+        localStorage.setItem(TableEnum.Roles, JSON.stringify(this.Roles));
+      }
 
-    localStorage.setItem(TableEnum.Roles, JSON.stringify(this.Roles));
+      subscriber.next(JSON.parse(localStorage.getItem(TableEnum.Roles)));
+      subscriber.complete();
 
-    return JSON.parse(localStorage.getItem(TableEnum.Roles));
+    });
   }
 }

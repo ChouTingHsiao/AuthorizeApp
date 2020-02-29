@@ -23,17 +23,20 @@ export class LoginComponent implements OnInit {
   }
 
   Login() {
-    const user = this.userService.getAll().filter(x => x.name === this.Account && x.password === this.Password);
-
-    if ( user.length > 0 ) {
-        const role = this.roleService.getAll().filter(x => x.id === user[0].role);
-        localStorage.setItem('Auth', role[0].name);
-        alert('登入成功');
-        this.router.navigate(['/Main']);
-        return;
-    }
-    localStorage.setItem('Auth', '');
-    alert('登入失敗');
+    this.userService.getAll().subscribe((users) => {
+        const user = users.filter(x => x.name === this.Account && x.password === this.Password);
+        if ( user.length > 0 ) {
+          this.roleService.getAll().subscribe((roles) => {
+            const role = roles.filter( x => x.id === user[0].role);
+            localStorage.setItem('Auth', role[0].name);
+            alert('登入成功');
+            this.router.navigate(['/Main']);
+          });
+          return;
+        }
+        localStorage.setItem('Auth', '');
+        alert('登入失敗');
+    });
   }
 
 }

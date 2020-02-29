@@ -4,7 +4,12 @@ import { MaterialModule  } from '@src/material-module';
 import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
 import { BrowserAnimationsModule  } from '@angular/platform-browser/animations';
 import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 import { maintainReducer } from '@shared/ngrx/Reducer/maintain.reducer';
+import { UserEffects } from '@shared/ngrx/Effects/user.effects';
+import { RoleEffects } from '@shared/ngrx/Effects/role.effects';
+import { GroupEffects } from '@shared/ngrx/Effects/group.effects';
+import { ProgramEffects } from '@shared/ngrx/Effects/program.effects';
 
 import { MainRoutingModule } from './main-routing.module';
 import { DialogComponent } from '@shared/Component/dialog.component';
@@ -46,6 +51,12 @@ import { TableEnum } from '@shared/Enum/table.enum';
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
+    EffectsModule.forRoot([
+      UserEffects,
+      RoleEffects,
+      GroupEffects,
+      ProgramEffects,
+    ]),
     StoreModule.forRoot({
       Users: maintainReducer(TableEnum.Users),
       Roles: maintainReducer(TableEnum.Roles),

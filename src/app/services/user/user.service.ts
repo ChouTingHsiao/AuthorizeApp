@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { User } from '@shared/Model/user.model';
 import { TableEnum } from '@shared/Enum/table.enum';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -14,14 +15,16 @@ export class UserService {
 
   constructor() { }
 
-  getAll(): User[] {
+  getAll(): Observable<User[]> {
+    return new Observable(subscriber => {
 
-    if (localStorage.getItem(TableEnum.Users)) {
-      return JSON.parse(localStorage.getItem(TableEnum.Users));
-    }
+      if (!localStorage.getItem(TableEnum.Users)) {
+        localStorage.setItem(TableEnum.Users, JSON.stringify(this.Users));
+      }
 
-    localStorage.setItem(TableEnum.Users, JSON.stringify(this.Users));
+      subscriber.next(JSON.parse(localStorage.getItem(TableEnum.Users)));
+      subscriber.complete();
 
-    return JSON.parse(localStorage.getItem(TableEnum.Users));
+    });
   }
 }

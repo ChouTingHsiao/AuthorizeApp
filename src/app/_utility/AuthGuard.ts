@@ -6,6 +6,8 @@ import { Program } from '@shared/Model/program.model';
 import { RoleService } from '@services/role/role.service';
 import { GroupService } from '@services/group/group.service';
 import { ProgramService } from '@services/program/program.service';
+import { Observable } from 'rxjs';
+
 @Injectable({
     providedIn: 'root'
 })
@@ -21,34 +23,46 @@ export class AuthGuard implements CanActivate {
        state: RouterStateSnapshot
     ): boolean {
 
+    const Roles: Observable<Role[]> = this.roleService.getAll();
 
-    const  Roles: Role[] = this.roleService.getAll();
+    const Groups: Observable<Group[]> = this.groupService.getAll();
 
-    const  Groups: Group[] = this.groupService.getAll();
+    const Programs: Observable<Program[]> = this.programService.getAll();
 
-    const Programs: Program[] = this.programService.getAll();
+    let loggedIn = false;
 
-    const Auth: string =  localStorage.getItem('Auth');
+    Programs.subscribe((programs) => {
+        const Auth: string =  localStorage.getItem('Auth');
 
-    const ProgramName =  state.url.split('/')[2];
+        const ProgramName =  state.url.split('/')[2];
 
-    const AuthId = Programs.filter(x => x.name === ProgramName);
+        const AuthId = programs.filter( x => x.name === ProgramName);
 
-    let AuthName = '' ;
+        let AuthName = '' ;
 
-    if (AuthId[0] && AuthId[0].auth.length > 0) {
-      AuthName = Groups.filter(x => x.id === AuthId[0].auth)[0].role.map(x => {
-          return  Roles.filter(y => y.id === x)[0].name;
-      }).join(',');
-    }
+        if (AuthId[0] && AuthId[0].auth.length > 0) {
+          Groups.subscribe((groups) => {
+              const group = groups.filter(x => x.id === AuthId[0].auth)[0];
 
-    const loggedIn: boolean = AuthName.includes(Auth) || AuthId[0].auth.length < 1;
+              group.role.map(x => {
+                  Roles.subscribe((roles) => {
+                    roles.filter(y => y.id === x);
+                    AuthName = roles[0].name;
+                  });
+              }).join(',');
+          });
+        }
 
-    if (!loggedIn) {
-      console.log('Not Auth');
-      this.router.navigate(['/401']);
-    }
+        loggedIn = AuthName.includes(Auth) || AuthId[0].auth.length < 1;
+
+        if (!loggedIn) {
+          console.log('Not Auth');
+          this.router.navigate(['/401']);
+        }
+
+    });
 
     return loggedIn;
+
   }
 }
