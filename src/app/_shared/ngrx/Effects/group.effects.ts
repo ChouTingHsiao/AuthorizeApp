@@ -13,7 +13,7 @@ export class GroupEffects {
     ofType(`${TableEnum.Groups}.${DialogEnum.read}`),
     mergeMap(() => this.groupService.getAll()
       .pipe(
-        map(Groups => ({ type: '[Groups API] Groups Loaded Success', payload: Groups })),
+        map(Groups => ({ type: `${TableEnum.Groups}.${DialogEnum.read}.${DialogEnum.success}`, payload: {source: Groups} })),
         catchError(() => EMPTY)
       ))
     )

@@ -10,4 +10,6 @@ export enum DialogEnum {
   btnCancel = '取消',
   delete = 'delete',
   btnDelete = '刪除',
+  success = 'success',
+  fail = 'fail',
 }

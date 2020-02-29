@@ -34,12 +34,7 @@ export class UserComponent implements OnInit {
     this.userService.getAll().subscribe((users) => this.Users = users);
     this.roleService.getAll().subscribe((roles) => this.Roles = roles);
     this.loadGrid();
-    this.store.dispatch({
-      type: `${TableEnum.Users}.${DialogEnum.read}`,
-      payload: {
-        source: this.myGrid.dataSource.data
-      }
-    });
+    this.store.dispatch({ type: `${TableEnum.Users}.${DialogEnum.read}` });
   }
 
   loadGrid() {

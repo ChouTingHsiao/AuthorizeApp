@@ -13,7 +13,7 @@ export class RoleEffects {
     ofType(`${TableEnum.Roles}.${DialogEnum.read}`),
     mergeMap(() => this.roleService.getAll()
       .pipe(
-        map(Roles => ({ type: '[Roles API] Roles Loaded Success', payload: Roles })),
+        map(Roles => ({ type: `${TableEnum.Roles}.${DialogEnum.read}.${DialogEnum.success}`, payload: {source: Roles} })),
         catchError(() => EMPTY)
       ))
     )

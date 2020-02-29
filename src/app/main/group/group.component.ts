@@ -34,12 +34,7 @@ export class GroupComponent implements OnInit {
     this.groupService.getAll().subscribe((groups) => this.Groups = groups);
     this.roleService.getAll().subscribe((roles) => this.Roles = roles);
     this.loadGrid();
-    this.store.dispatch({
-      type: `${TableEnum.Groups}.${DialogEnum.read}`,
-      payload: {
-        source: this.myGrid.dataSource.data
-      }
-    });
+    this.store.dispatch({ type: `${TableEnum.Groups}.${DialogEnum.read}` });
   }
 
   loadGrid() {

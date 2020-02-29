@@ -21,7 +21,7 @@ export function maintainReducer<T>(tableName: string) {
   return function reducer( state: [], action: ActionWithPayload<MaintainPayload<T>> ) {
     switch (action.type) {
 
-      case  `${tableName}.${DialogEnum.read}`:
+      case  `${tableName}.${DialogEnum.read}.${DialogEnum.success}`:
         return [...action.payload.source];
 
       case  `${tableName}.${DialogEnum.create}`:

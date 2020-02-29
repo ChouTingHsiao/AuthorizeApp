@@ -34,12 +34,7 @@ export class ProgramComponent implements OnInit {
     this.programService.getAll().subscribe((programs) => this.Programs = programs);
     this.groupService.getAll().subscribe((groups) => this.Groups = groups);
     this.loadGrid();
-    this.store.dispatch({
-      type: `${TableEnum.Programs}.${DialogEnum.read}`,
-      payload: {
-        source: this.myGrid.dataSource.data
-      }
-    });
+    this.store.dispatch({ type: `${TableEnum.Programs}.${DialogEnum.read}` });
   }
 
   loadGrid() {

@@ -28,12 +28,7 @@ export class RoleComponent implements OnInit {
   ngOnInit() {
     this.roleService.getAll().subscribe((roles) => this.Roles = roles);
     this.loadGrid();
-    this.store.dispatch({
-      type: `${TableEnum.Roles}.${DialogEnum.read}`,
-      payload: {
-        source: this.myGrid.dataSource.data
-      }
-    });
+    this.store.dispatch({ type: `${TableEnum.Roles}.${DialogEnum.read}` });
   }
 
   loadGrid() {

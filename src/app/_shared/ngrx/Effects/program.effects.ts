@@ -13,7 +13,7 @@ export class ProgramEffects {
     ofType(`${TableEnum.Programs}.${DialogEnum.read}`),
     mergeMap(() => this.programService.getAll()
       .pipe(
-        map(Programs => ({ type: '[Programs API] Programs Loaded Success', payload: Programs })),
+        map(Programs => ({ type: `${TableEnum.Programs}.${DialogEnum.read}.${DialogEnum.success}`, payload: {source: Programs} })),
         catchError(() => EMPTY)
       ))
     )

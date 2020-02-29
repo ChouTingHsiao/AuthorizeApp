@@ -13,7 +13,7 @@ export class UserEffects {
     ofType(`${TableEnum.Users}.${DialogEnum.read}`),
     mergeMap(() => this.userService.getAll()
       .pipe(
-        map(Users => ({ type: '[Users API] Users Loaded Success', payload: Users })),
+        map(Users => ({ type: `${TableEnum.Users}.${DialogEnum.read}.${DialogEnum.success}`, payload: {source: Users} })),
         catchError(() => EMPTY)
       ))
     )
