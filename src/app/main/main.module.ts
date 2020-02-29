@@ -5,7 +5,8 @@ import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
 import { BrowserAnimationsModule  } from '@angular/platform-browser/animations';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-import { maintainReducer } from '@shared/ngrx/Reducer/maintain.reducer';
+import { ROOT_REDUCER } from '@shared/ngrx/Reducer/root.reducer';
+
 import { UserEffects } from '@shared/ngrx/Effects/user.effects';
 import { RoleEffects } from '@shared/ngrx/Effects/role.effects';
 import { GroupEffects } from '@shared/ngrx/Effects/group.effects';
@@ -26,7 +27,7 @@ import { ProgramComponent } from './program/program.component';
 import { DynamicHostDirective } from '@shared/Directive/dynamichost.Directive';
 import { UnauthorizeComponent } from './unauthorize/unauthorize.component';
 
-import { TableEnum } from '@shared/Enum/table.enum';
+
 
 @NgModule({
   declarations: [
@@ -57,12 +58,7 @@ import { TableEnum } from '@shared/Enum/table.enum';
       GroupEffects,
       ProgramEffects,
     ]),
-    StoreModule.forRoot({
-      Users: maintainReducer(TableEnum.Users),
-      Roles: maintainReducer(TableEnum.Roles),
-      Groups: maintainReducer(TableEnum.Groups),
-      Programs: maintainReducer(TableEnum.Programs),
-    }),
+    StoreModule.forRoot(ROOT_REDUCER),
   ],
   entryComponents: [
     DialogComponent,
