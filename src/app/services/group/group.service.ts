@@ -27,4 +27,38 @@ export class GroupService {
     });
   }
 
+  create(group: Group): Observable<Group[]> {
+    return new Observable(subscriber => {
+
+      const dataList: Group[] = JSON.parse(localStorage.getItem(TableEnum.Groups));
+
+      group.id = (dataList.length + 1).toString();
+
+      dataList.push(group);
+
+      localStorage.setItem(TableEnum.Groups, JSON.stringify(dataList));
+
+      subscriber.next(dataList);
+      subscriber.complete();
+
+    });
+  }
+
+  update(group: Group): Observable<Group[]> {
+    return new Observable(subscriber => {
+
+      let dataList: Group[] = JSON.parse(localStorage.getItem(TableEnum.Groups));
+
+      dataList = dataList.filter(x => x.id !== group.id);
+
+      dataList.push(group);
+
+      localStorage.setItem(TableEnum.Groups, JSON.stringify(dataList));
+
+      subscriber.next(dataList);
+      subscriber.complete();
+
+    });
+  }
+
 }

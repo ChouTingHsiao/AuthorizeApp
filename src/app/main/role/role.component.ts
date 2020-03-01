@@ -64,8 +64,6 @@ export class RoleComponent implements OnInit {
         this.store.dispatch({
           type: `${TableEnum.Roles}.${DialogEnum.create}`,
           payload: {
-            name: TableEnum.Roles,
-            source: this.myGrid.dataSource.data,
             newData: this.tableComponent.dialogComponent.getData() as Role
           }
         });
@@ -82,8 +80,6 @@ export class RoleComponent implements OnInit {
         this.store.dispatch({
           type: `${TableEnum.Roles}.${DialogEnum.edit}`,
           payload: {
-            name: TableEnum.Roles,
-            source: this.myGrid.dataSource.data,
             newData: this.tableComponent.dialogComponent.getData() as Role
           }
         });

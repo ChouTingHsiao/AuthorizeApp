@@ -30,4 +30,38 @@ export class ProgramService {
     });
   }
 
+  create(program: Program): Observable<Program[]> {
+    return new Observable(subscriber => {
+
+      const dataList: Program[] = JSON.parse(localStorage.getItem(TableEnum.Programs));
+
+      program.id = (dataList.length + 1).toString();
+
+      dataList.push(program);
+
+      localStorage.setItem(TableEnum.Programs, JSON.stringify(dataList));
+
+      subscriber.next(dataList);
+      subscriber.complete();
+
+    });
+  }
+
+  update(program: Program): Observable<Program[]> {
+    return new Observable(subscriber => {
+
+      let dataList: Program[] = JSON.parse(localStorage.getItem(TableEnum.Programs));
+
+      dataList = dataList.filter(x => x.id !== program.id);
+
+      dataList.push(program);
+
+      localStorage.setItem(TableEnum.Programs, JSON.stringify(dataList));
+
+      subscriber.next(dataList);
+      subscriber.complete();
+
+    });
+  }
+
 }

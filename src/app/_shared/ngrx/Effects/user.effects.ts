@@ -9,11 +9,34 @@ import { TableEnum } from '@shared/Enum/table.enum';
 @Injectable()
 export class UserEffects {
 
+  payload = 'payload';
+  newData = 'newData';
+
   loadUsers$ = createEffect(() => this.actions$.pipe(
     ofType(`${TableEnum.Users}.${DialogEnum.read}`),
     mergeMap(() => this.userService.getAll()
       .pipe(
         map(Users => ({ type: `${TableEnum.Users}.${DialogEnum.read}.${DialogEnum.success}`, payload: {source: Users} })),
+        catchError(() => EMPTY)
+      ))
+    )
+  );
+
+  createUser$ = createEffect(() => this.actions$.pipe(
+    ofType(`${TableEnum.Users}.${DialogEnum.create}`),
+    mergeMap((x) => this.userService.create(x[this.payload][this.newData])
+      .pipe(
+        map(Users => ({ type: `${TableEnum.Users}.${DialogEnum.create}.${DialogEnum.success}`, payload: {source: Users} })),
+        catchError(() => EMPTY)
+      ))
+    )
+  );
+
+  updateUser$ = createEffect(() => this.actions$.pipe(
+    ofType(`${TableEnum.Users}.${DialogEnum.edit}`),
+    mergeMap((x) => this.userService.update(x[this.payload][this.newData])
+      .pipe(
+        map(Users => ({ type: `${TableEnum.Users}.${DialogEnum.edit}.${DialogEnum.success}`, payload: {source: Users} })),
         catchError(() => EMPTY)
       ))
     )

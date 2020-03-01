@@ -81,8 +81,6 @@ export class ProgramComponent implements OnInit {
         this.store.dispatch({
           type: `${TableEnum.Programs}.${DialogEnum.create}`,
           payload: {
-            name: TableEnum.Programs,
-            source: this.myGrid.dataSource.data,
             newData: this.tableComponent.dialogComponent.getData() as Program
           }
         });
@@ -99,8 +97,6 @@ export class ProgramComponent implements OnInit {
         this.store.dispatch({
           type: `${TableEnum.Programs}.${DialogEnum.edit}`,
           payload: {
-            name: TableEnum.Programs,
-            source: this.myGrid.dataSource.data,
             newData: this.tableComponent.dialogComponent.getData() as Program
           }
         });

@@ -9,11 +9,34 @@ import { TableEnum } from '@shared/Enum/table.enum';
 @Injectable()
 export class ProgramEffects {
 
+  payload = 'payload';
+  newData = 'newData';
+
   loadPrograms$ = createEffect(() => this.actions$.pipe(
     ofType(`${TableEnum.Programs}.${DialogEnum.read}`),
     mergeMap(() => this.programService.getAll()
       .pipe(
         map(Programs => ({ type: `${TableEnum.Programs}.${DialogEnum.read}.${DialogEnum.success}`, payload: {source: Programs} })),
+        catchError(() => EMPTY)
+      ))
+    )
+  );
+
+  createProgram$ = createEffect(() => this.actions$.pipe(
+    ofType(`${TableEnum.Programs}.${DialogEnum.create}`),
+    mergeMap((x) => this.programService.create(x[this.payload][this.newData])
+      .pipe(
+        map(Programs => ({ type: `${TableEnum.Programs}.${DialogEnum.create}.${DialogEnum.success}`, payload: {source: Programs} })),
+        catchError(() => EMPTY)
+      ))
+    )
+  );
+
+  updateProgram$ = createEffect(() => this.actions$.pipe(
+    ofType(`${TableEnum.Programs}.${DialogEnum.edit}`),
+    mergeMap((x) => this.programService.update(x[this.payload][this.newData])
+      .pipe(
+        map(Programs => ({ type: `${TableEnum.Programs}.${DialogEnum.edit}.${DialogEnum.success}`, payload: {source: Programs} })),
         catchError(() => EMPTY)
       ))
     )

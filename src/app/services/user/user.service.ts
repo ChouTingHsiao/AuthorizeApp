@@ -27,4 +27,38 @@ export class UserService {
 
     });
   }
+
+  create(user: User): Observable<User[]> {
+    return new Observable(subscriber => {
+
+      const dataList: User[] = JSON.parse(localStorage.getItem(TableEnum.Users));
+
+      user.id = (dataList.length + 1).toString();
+
+      dataList.push(user);
+
+      localStorage.setItem(TableEnum.Users, JSON.stringify(dataList));
+
+      subscriber.next(dataList);
+      subscriber.complete();
+
+    });
+  }
+
+  update(user: User): Observable<User[]> {
+    return new Observable(subscriber => {
+
+      let dataList: User[] = JSON.parse(localStorage.getItem(TableEnum.Users));
+
+      dataList = dataList.filter(x => x.id !== user.id);
+
+      dataList.push(user);
+
+      localStorage.setItem(TableEnum.Users, JSON.stringify(dataList));
+
+      subscriber.next(dataList);
+      subscriber.complete();
+
+    });
+  }
 }

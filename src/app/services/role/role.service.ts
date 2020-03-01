@@ -27,4 +27,38 @@ export class RoleService {
 
     });
   }
+
+  create(role: Role): Observable<Role[]> {
+    return new Observable(subscriber => {
+
+      const dataList: Role[] = JSON.parse(localStorage.getItem(TableEnum.Roles));
+
+      role.id = (dataList.length + 1).toString();
+
+      dataList.push(role);
+
+      localStorage.setItem(TableEnum.Roles, JSON.stringify(dataList));
+
+      subscriber.next(dataList);
+      subscriber.complete();
+
+    });
+  }
+
+  update(role: Role): Observable<Role[]> {
+    return new Observable(subscriber => {
+
+      let dataList: Role[] = JSON.parse(localStorage.getItem(TableEnum.Roles));
+
+      dataList = dataList.filter(x => x.id !== role.id);
+
+      dataList.push(role);
+
+      localStorage.setItem(TableEnum.Roles, JSON.stringify(dataList));
+
+      subscriber.next(dataList);
+      subscriber.complete();
+
+    });
+  }
 }

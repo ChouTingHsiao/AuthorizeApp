@@ -76,8 +76,6 @@ export class GroupComponent implements OnInit {
         this.store.dispatch({
           type: `${TableEnum.Groups}.${DialogEnum.create}`,
           payload: {
-            name: TableEnum.Groups,
-            source: this.myGrid.dataSource.data,
             newData: this.tableComponent.dialogComponent.getData() as Group
           }
         });
@@ -94,8 +92,6 @@ export class GroupComponent implements OnInit {
         this.store.dispatch({
           type: `${TableEnum.Groups}.${DialogEnum.edit}`,
           payload: {
-            name: TableEnum.Groups,
-            source: this.myGrid.dataSource.data,
             newData: this.tableComponent.dialogComponent.getData() as Group
           }
         });
