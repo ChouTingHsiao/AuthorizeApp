@@ -42,6 +42,16 @@ export class GroupEffects {
     )
   );
 
+  deleteGroup$ = createEffect(() => this.actions$.pipe(
+    ofType(`${TableEnum.Groups}.${DialogEnum.delete}`),
+    mergeMap((x) => this.groupService.delete(x[this.payload][this.newData])
+      .pipe(
+        map(Groups => ({ type: `${TableEnum.Groups}.${DialogEnum.delete}.${DialogEnum.success}`, payload: {source: Groups} })),
+        catchError(() => EMPTY)
+      ))
+    )
+  );
+
   constructor(
     private actions$: Actions,
     private groupService: GroupService

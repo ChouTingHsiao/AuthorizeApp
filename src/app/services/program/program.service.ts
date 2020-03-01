@@ -64,4 +64,19 @@ export class ProgramService {
     });
   }
 
+  delete(program: Program): Observable<Program[]> {
+    return new Observable(subscriber => {
+
+      let dataList: Program[] = JSON.parse(localStorage.getItem(TableEnum.Programs));
+
+      dataList = dataList.filter(x => x.id !== program.id);
+
+      localStorage.setItem(TableEnum.Programs, JSON.stringify(dataList));
+
+      subscriber.next(dataList);
+      subscriber.complete();
+
+    });
+  }
+
 }

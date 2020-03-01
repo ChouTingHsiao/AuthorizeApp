@@ -23,4 +23,5 @@ export interface Grid {
     createDialog: () => void;
     edit: () => void;
     editDialog: (event: any) => void;
+    delete: (event: any) => void;
 }

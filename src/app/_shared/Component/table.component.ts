@@ -25,6 +25,7 @@ import { Observable, Subscription } from 'rxjs';
    <th mat-header-cell *matHeaderCellDef></th>
    <td mat-cell *matCellDef="let element" >
     <button mat-button color="warn" (click)="grid.editDialog($event)">修改</button>
+    <button mat-button color="warn" (click)="grid.delete($event)">刪除</button>
    </td>
    </ng-container>
 

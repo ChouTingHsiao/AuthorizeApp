@@ -42,6 +42,16 @@ export class RoleEffects {
     )
   );
 
+  deleteRole$ = createEffect(() => this.actions$.pipe(
+    ofType(`${TableEnum.Roles}.${DialogEnum.delete}`),
+    mergeMap((x) => this.roleService.delete(x[this.payload][this.newData])
+      .pipe(
+        map(Roles => ({ type: `${TableEnum.Roles}.${DialogEnum.delete}.${DialogEnum.success}`, payload: {source: Roles} })),
+        catchError(() => EMPTY)
+      ))
+    )
+  );
+
   constructor(
     private actions$: Actions,
     private roleService: RoleService

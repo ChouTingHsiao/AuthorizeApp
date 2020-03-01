@@ -116,7 +116,20 @@ export class UserComponent implements OnInit {
           data:  userData[0],
         });
 
-      }
+      },
+      delete: (event: any) => {
+
+        const element = event.target as HTMLElement;
+
+        const nextNode = element.closest('td').nextSibling as HTMLElement;
+
+        this.store.dispatch({
+          type: `${TableEnum.Users}.${DialogEnum.delete}`,
+          payload: {
+            newData: {id: nextNode.innerHTML.trim()} as User
+          }
+        });
+      },
     };
   }
 

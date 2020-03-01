@@ -61,4 +61,19 @@ export class RoleService {
 
     });
   }
+
+  delete(role: Role): Observable<Role[]> {
+    return new Observable(subscriber => {
+
+      let dataList: Role[] = JSON.parse(localStorage.getItem(TableEnum.Roles));
+
+      dataList = dataList.filter(x => x.id !== role.id);
+
+      localStorage.setItem(TableEnum.Roles, JSON.stringify(dataList));
+
+      subscriber.next(dataList);
+      subscriber.complete();
+
+    });
+  }
 }

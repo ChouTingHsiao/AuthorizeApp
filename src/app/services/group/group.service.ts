@@ -61,4 +61,19 @@ export class GroupService {
     });
   }
 
+  delete(group: Group): Observable<Group[]> {
+    return new Observable(subscriber => {
+
+      let dataList: Group[] = JSON.parse(localStorage.getItem(TableEnum.Groups));
+
+      dataList = dataList.filter(x => x.id !== group.id);
+
+      localStorage.setItem(TableEnum.Groups, JSON.stringify(dataList));
+
+      subscriber.next(dataList);
+      subscriber.complete();
+
+    });
+  }
+
 }

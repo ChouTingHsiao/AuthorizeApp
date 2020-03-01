@@ -25,6 +25,9 @@ export function maintainReducer<T>(tableName: string) {
       case  `${tableName}.${DialogEnum.edit}.${DialogEnum.success}`:
         return [...action.payload.source];
 
+      case  `${tableName}.${DialogEnum.delete}.${DialogEnum.success}`:
+        return [...action.payload.source];
+
       default:
         return state;
     }

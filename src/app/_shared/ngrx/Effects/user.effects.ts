@@ -42,6 +42,16 @@ export class UserEffects {
     )
   );
 
+  deleteUser$ = createEffect(() => this.actions$.pipe(
+    ofType(`${TableEnum.Users}.${DialogEnum.delete}`),
+    mergeMap((x) => this.userService.delete(x[this.payload][this.newData])
+      .pipe(
+        map(Users => ({ type: `${TableEnum.Users}.${DialogEnum.delete}.${DialogEnum.success}`, payload: {source: Users} })),
+        catchError(() => EMPTY)
+      ))
+    )
+  );
+
   constructor(
     private actions$: Actions,
     private userService: UserService

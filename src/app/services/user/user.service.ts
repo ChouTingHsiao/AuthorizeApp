@@ -61,4 +61,19 @@ export class UserService {
 
     });
   }
+
+  delete(user: User): Observable<User[]> {
+    return new Observable(subscriber => {
+
+      let dataList: User[] = JSON.parse(localStorage.getItem(TableEnum.Users));
+
+      dataList = dataList.filter(x => x.id !== user.id);
+
+      localStorage.setItem(TableEnum.Users, JSON.stringify(dataList));
+
+      subscriber.next(dataList);
+      subscriber.complete();
+
+    });
+  }
 }

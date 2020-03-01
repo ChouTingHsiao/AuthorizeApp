@@ -42,6 +42,16 @@ export class ProgramEffects {
     )
   );
 
+  deleteProgram$ = createEffect(() => this.actions$.pipe(
+    ofType(`${TableEnum.Programs}.${DialogEnum.delete}`),
+    mergeMap((x) => this.programService.delete(x[this.payload][this.newData])
+      .pipe(
+        map(Programs => ({ type: `${TableEnum.Programs}.${DialogEnum.delete}.${DialogEnum.success}`, payload: {source: Programs} })),
+        catchError(() => EMPTY)
+      ))
+    )
+  );
+
   constructor(
     private actions$: Actions,
     private programService: ProgramService
