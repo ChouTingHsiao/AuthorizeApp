@@ -53,7 +53,7 @@ export class AuthGuard implements CanActivate {
           });
         }
 
-        loggedIn = AuthName.includes(Auth) || AuthId[0].auth.length < 1;
+        loggedIn = AuthName.includes(Auth)  || !AuthId[0] || AuthId[0].auth.length < 1;
 
         if (!loggedIn) {
           console.log('Not Auth');
