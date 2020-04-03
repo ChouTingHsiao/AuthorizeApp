@@ -5,6 +5,8 @@ import { map, mergeMap, catchError } from 'rxjs/operators';
 import { UserService } from '@services/user/user.service';
 import { DialogEnum } from '@shared/Enum/dialog.enum';
 import { TableEnum } from '@shared/Enum/table.enum';
+import { User } from '@shared/Model/user.model';
+import { CreateSuccess, ReadSuccess, EditSuccess, DeleteSuccess } from '@shared/ngrx/Actions/maintain.action';
 
 @Injectable()
 export class UserEffects {
@@ -16,7 +18,7 @@ export class UserEffects {
     ofType(`${TableEnum.Users}.${DialogEnum.read}`),
     mergeMap(() => this.userService.getAll()
       .pipe(
-        map(Users => ({ type: `${TableEnum.Users}.${DialogEnum.read}.${DialogEnum.success}`, payload: {source: Users} })),
+        map(Users => ( new ReadSuccess<User>(TableEnum.Users, Users) )),
         catchError(() => EMPTY)
       ))
     )
@@ -26,7 +28,7 @@ export class UserEffects {
     ofType(`${TableEnum.Users}.${DialogEnum.create}`),
     mergeMap((x) => this.userService.create(x[this.payload][this.newData])
       .pipe(
-        map(Users => ({ type: `${TableEnum.Users}.${DialogEnum.create}.${DialogEnum.success}`, payload: {source: Users} })),
+        map(Users => ( new CreateSuccess<User>(TableEnum.Users, Users) )),
         catchError(() => EMPTY)
       ))
     )
@@ -36,7 +38,7 @@ export class UserEffects {
     ofType(`${TableEnum.Users}.${DialogEnum.edit}`),
     mergeMap((x) => this.userService.update(x[this.payload][this.newData])
       .pipe(
-        map(Users => ({ type: `${TableEnum.Users}.${DialogEnum.edit}.${DialogEnum.success}`, payload: {source: Users} })),
+        map(Users => ( new EditSuccess<User>(TableEnum.Users, Users) )),
         catchError(() => EMPTY)
       ))
     )
@@ -46,7 +48,7 @@ export class UserEffects {
     ofType(`${TableEnum.Users}.${DialogEnum.delete}`),
     mergeMap((x) => this.userService.delete(x[this.payload][this.newData])
       .pipe(
-        map(Users => ({ type: `${TableEnum.Users}.${DialogEnum.delete}.${DialogEnum.success}`, payload: {source: Users} })),
+        map(Users => ( new DeleteSuccess<User>(TableEnum.Users, Users) )),
         catchError(() => EMPTY)
       ))
     )

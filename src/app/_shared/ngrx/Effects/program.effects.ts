@@ -5,6 +5,8 @@ import { map, mergeMap, catchError } from 'rxjs/operators';
 import { ProgramService } from '@services/program/program.service';
 import { DialogEnum } from '@shared/Enum/dialog.enum';
 import { TableEnum } from '@shared/Enum/table.enum';
+import { Program } from '@shared/Model/program.model';
+import { CreateSuccess, ReadSuccess, EditSuccess, DeleteSuccess } from '@shared/ngrx/Actions/maintain.action';
 
 @Injectable()
 export class ProgramEffects {
@@ -16,7 +18,7 @@ export class ProgramEffects {
     ofType(`${TableEnum.Programs}.${DialogEnum.read}`),
     mergeMap(() => this.programService.getAll()
       .pipe(
-        map(Programs => ({ type: `${TableEnum.Programs}.${DialogEnum.read}.${DialogEnum.success}`, payload: {source: Programs} })),
+        map(Programs => ( new ReadSuccess<Program>(TableEnum.Programs, Programs) )),
         catchError(() => EMPTY)
       ))
     )
@@ -26,7 +28,7 @@ export class ProgramEffects {
     ofType(`${TableEnum.Programs}.${DialogEnum.create}`),
     mergeMap((x) => this.programService.create(x[this.payload][this.newData])
       .pipe(
-        map(Programs => ({ type: `${TableEnum.Programs}.${DialogEnum.create}.${DialogEnum.success}`, payload: {source: Programs} })),
+        map(Programs => ( new CreateSuccess<Program>(TableEnum.Programs, Programs) )),
         catchError(() => EMPTY)
       ))
     )
@@ -36,7 +38,7 @@ export class ProgramEffects {
     ofType(`${TableEnum.Programs}.${DialogEnum.edit}`),
     mergeMap((x) => this.programService.update(x[this.payload][this.newData])
       .pipe(
-        map(Programs => ({ type: `${TableEnum.Programs}.${DialogEnum.edit}.${DialogEnum.success}`, payload: {source: Programs} })),
+        map(Programs => ( new EditSuccess<Program>(TableEnum.Programs, Programs) )),
         catchError(() => EMPTY)
       ))
     )
@@ -46,7 +48,7 @@ export class ProgramEffects {
     ofType(`${TableEnum.Programs}.${DialogEnum.delete}`),
     mergeMap((x) => this.programService.delete(x[this.payload][this.newData])
       .pipe(
-        map(Programs => ({ type: `${TableEnum.Programs}.${DialogEnum.delete}.${DialogEnum.success}`, payload: {source: Programs} })),
+        map(Programs => ( new DeleteSuccess<Program>(TableEnum.Programs, Programs) )),
         catchError(() => EMPTY)
       ))
     )

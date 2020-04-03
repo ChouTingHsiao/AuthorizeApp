@@ -5,6 +5,8 @@ import { map, mergeMap, catchError } from 'rxjs/operators';
 import { GroupService } from '@services/group/group.service';
 import { DialogEnum } from '@shared/Enum/dialog.enum';
 import { TableEnum } from '@shared/Enum/table.enum';
+import { Group } from '@shared/Model/group.model';
+import { CreateSuccess, ReadSuccess, EditSuccess, DeleteSuccess} from '@shared/ngrx/Actions/maintain.action';
 
 @Injectable()
 export class GroupEffects {
@@ -16,7 +18,7 @@ export class GroupEffects {
     ofType(`${TableEnum.Groups}.${DialogEnum.read}`),
     mergeMap(() => this.groupService.getAll()
       .pipe(
-        map(Groups => ({ type: `${TableEnum.Groups}.${DialogEnum.read}.${DialogEnum.success}`, payload: {source: Groups} })),
+        map(Groups => ( new ReadSuccess<Group>(TableEnum.Groups, Groups) )),
         catchError(() => EMPTY)
       ))
     )
@@ -26,7 +28,7 @@ export class GroupEffects {
     ofType(`${TableEnum.Groups}.${DialogEnum.create}`),
     mergeMap((x) => this.groupService.create(x[this.payload][this.newData])
       .pipe(
-        map(Groups => ({ type: `${TableEnum.Groups}.${DialogEnum.create}.${DialogEnum.success}`, payload: {source: Groups} })),
+        map(Groups => ( new CreateSuccess<Group>(TableEnum.Groups, Groups) )),
         catchError(() => EMPTY)
       ))
     )
@@ -36,7 +38,7 @@ export class GroupEffects {
     ofType(`${TableEnum.Groups}.${DialogEnum.edit}`),
     mergeMap((x) => this.groupService.update(x[this.payload][this.newData])
       .pipe(
-        map(Groups => ({ type: `${TableEnum.Groups}.${DialogEnum.edit}.${DialogEnum.success}`, payload: {source: Groups} })),
+        map(Groups => ( new EditSuccess<Group>(TableEnum.Groups, Groups) )),
         catchError(() => EMPTY)
       ))
     )
@@ -46,7 +48,7 @@ export class GroupEffects {
     ofType(`${TableEnum.Groups}.${DialogEnum.delete}`),
     mergeMap((x) => this.groupService.delete(x[this.payload][this.newData])
       .pipe(
-        map(Groups => ({ type: `${TableEnum.Groups}.${DialogEnum.delete}.${DialogEnum.success}`, payload: {source: Groups} })),
+        map(Groups => ( new DeleteSuccess<Group>(TableEnum.Groups, Groups) )),
         catchError(() => EMPTY)
       ))
     )
