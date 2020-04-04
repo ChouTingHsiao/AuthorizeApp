@@ -10,6 +10,7 @@ import { Group } from '@shared/Model/group.model';
 import { Program } from '@shared/Model/program.model';
 import { GroupService } from '@services/group/group.service';
 import { ProgramService } from '@services/program/program.service';
+import { ProgramsCreate, ProgramsRead, ProgramsEdit, ProgramsDelete} from '@shared/ngrx/Actions/program.action';
 
 @Component({
   selector: 'app-program',
@@ -34,7 +35,7 @@ export class ProgramComponent implements OnInit {
     this.programService.getAll().subscribe((programs) => this.Programs = programs);
     this.groupService.getAll().subscribe((groups) => this.Groups = groups);
     this.loadGrid();
-    this.store.dispatch({ type: `${TableEnum.Programs}.${DialogEnum.read}` });
+    this.store.dispatch( new ProgramsRead<Program>(TableEnum.Programs) );
   }
 
   loadGrid() {
@@ -78,12 +79,11 @@ export class ProgramComponent implements OnInit {
         },
       ],
       create: () => {
-        this.store.dispatch({
-          type: `${TableEnum.Programs}.${DialogEnum.create}`,
-          payload: {
-            newData: this.tableComponent.dialogComponent.getData() as Program
-          }
-        });
+        this.store.dispatch( new ProgramsCreate<Program>(
+          TableEnum.Programs,
+          [],
+          this.tableComponent.dialogComponent.getData() as Program )
+        );
       },
       createDialog: () => {
         this.tableComponent.openDialog({
@@ -94,12 +94,11 @@ export class ProgramComponent implements OnInit {
         });
       },
       edit: () => {
-        this.store.dispatch({
-          type: `${TableEnum.Programs}.${DialogEnum.edit}`,
-          payload: {
-            newData: this.tableComponent.dialogComponent.getData() as Program
-          }
-        });
+        this.store.dispatch( new ProgramsEdit<Program>(
+          TableEnum.Programs,
+          [],
+          this.tableComponent.dialogComponent.getData() as Program )
+        );
       },
       editDialog: (event: any) => {
 
@@ -123,12 +122,11 @@ export class ProgramComponent implements OnInit {
 
         const nextNode = element.closest('td').nextSibling as HTMLElement;
 
-        this.store.dispatch({
-          type: `${TableEnum.Programs}.${DialogEnum.delete}`,
-          payload: {
-            newData: {id: nextNode.innerHTML.trim()} as Program
-          }
-        });
+        this.store.dispatch( new ProgramsDelete<Program>(
+          TableEnum.Programs,
+          [],
+          {id: nextNode.innerHTML.trim()} as Program )
+        );
       },
     };
   }

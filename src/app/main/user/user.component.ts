@@ -10,6 +10,7 @@ import { User } from '@shared/Model/user.model';
 import { Role } from '@shared/Model/role.model';
 import { RoleService } from '@services/role/role.service';
 import { UserService } from '@services/user/user.service';
+import { UsersCreate, UsersRead, UsersEdit, UsersDelete} from '@shared/ngrx/Actions/user.action';
 
 @Component({
   selector: 'app-user',
@@ -34,7 +35,7 @@ export class UserComponent implements OnInit {
     this.userService.getAll().subscribe((users) => this.Users = users);
     this.roleService.getAll().subscribe((roles) => this.Roles = roles);
     this.loadGrid();
-    this.store.dispatch({ type: `${TableEnum.Users}.${DialogEnum.read}` });
+    this.store.dispatch( new UsersRead<User>(TableEnum.Users) );
   }
 
   loadGrid() {
@@ -78,12 +79,11 @@ export class UserComponent implements OnInit {
         },
       ],
       create: () => {
-        this.store.dispatch({
-          type: `${TableEnum.Users}.${DialogEnum.create}`,
-          payload: {
-            newData: this.tableComponent.dialogComponent.getData() as User
-          }
-        });
+        this.store.dispatch( new UsersCreate<User>(
+          TableEnum.Users,
+          [],
+          this.tableComponent.dialogComponent.getData() as User )
+        );
       },
       createDialog: () => {
         this.tableComponent.openDialog({
@@ -94,12 +94,11 @@ export class UserComponent implements OnInit {
         });
       },
       edit: () => {
-        this.store.dispatch({
-          type: `${TableEnum.Users}.${DialogEnum.edit}`,
-          payload: {
-            newData: this.tableComponent.dialogComponent.getData() as User
-          }
-        });
+        this.store.dispatch( new UsersEdit<User>(
+          TableEnum.Users,
+          [],
+          this.tableComponent.dialogComponent.getData() as User )
+        );
       },
       editDialog: (event: any) => {
 
@@ -123,12 +122,11 @@ export class UserComponent implements OnInit {
 
         const nextNode = element.closest('td').nextSibling as HTMLElement;
 
-        this.store.dispatch({
-          type: `${TableEnum.Users}.${DialogEnum.delete}`,
-          payload: {
-            newData: {id: nextNode.innerHTML.trim()} as User
-          }
-        });
+        this.store.dispatch( new UsersDelete<User>(
+          TableEnum.Users,
+          [],
+          {id: nextNode.innerHTML.trim()} as User )
+        );
       },
     };
   }

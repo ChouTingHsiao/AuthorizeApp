@@ -1,5 +1,5 @@
 import { MaintainSuccessActions,
-         CREATESUCCESS, READSUCCESS, EDITSUCCESS, DELETESUCCESS} from '@shared/ngrx/Actions/maintain.action';
+         CREATE_SUCCESS, READ_SUCCESS, EDIT_SUCCESS, DELETE_SUCCESS} from '@shared/ngrx/Actions/maintain.action';
 
 export function maintainReducer<T>(tableName: string) {
 
@@ -8,16 +8,16 @@ export function maintainReducer<T>(tableName: string) {
     function reducer(state: T[] = initialState, action: MaintainSuccessActions<T>) {
       switch (action.type) {
 
-        case  READSUCCESS:
+        case  READ_SUCCESS:
           return [...action.source];
 
-        case  CREATESUCCESS:
+        case  CREATE_SUCCESS:
           return [...action.source];
 
-        case  EDITSUCCESS:
+        case  EDIT_SUCCESS:
           return [...action.source];
 
-        case  DELETESUCCESS:
+        case  DELETE_SUCCESS:
           return [...action.source];
 
         default:

@@ -8,6 +8,7 @@ import { TableEnum } from '@shared/Enum/table.enum';
 import { Grid } from '@shared/Model/table.model';
 import { Role } from '@shared/Model/role.model';
 import { RoleService } from '@services/role/role.service';
+import { RolesCreate, RolesRead, RolesEdit, RolesDelete} from '@shared/ngrx/Actions/role.action';
 
 @Component({
   selector: 'app-role',
@@ -28,7 +29,7 @@ export class RoleComponent implements OnInit {
   ngOnInit() {
     this.roleService.getAll().subscribe((roles) => this.Roles = roles);
     this.loadGrid();
-    this.store.dispatch({ type: `${TableEnum.Roles}.${DialogEnum.read}` });
+    this.store.dispatch( new RolesRead<Role>(TableEnum.Roles) );
   }
 
   loadGrid() {
@@ -61,12 +62,11 @@ export class RoleComponent implements OnInit {
         },
       ],
       create: () => {
-        this.store.dispatch({
-          type: `${TableEnum.Roles}.${DialogEnum.create}`,
-          payload: {
-            newData: this.tableComponent.dialogComponent.getData() as Role
-          }
-        });
+        this.store.dispatch( new RolesCreate<Role>(
+          TableEnum.Roles,
+          [],
+          this.tableComponent.dialogComponent.getData() as Role )
+        );
       },
       createDialog: () => {
         this.tableComponent.openDialog({
@@ -77,12 +77,11 @@ export class RoleComponent implements OnInit {
         });
       },
       edit: () => {
-        this.store.dispatch({
-          type: `${TableEnum.Roles}.${DialogEnum.edit}`,
-          payload: {
-            newData: this.tableComponent.dialogComponent.getData() as Role
-          }
-        });
+        this.store.dispatch( new RolesEdit<Role>(
+          TableEnum.Roles,
+          [],
+          this.tableComponent.dialogComponent.getData() as Role )
+        );
       },
       editDialog: (event: any) => {
 
@@ -106,12 +105,11 @@ export class RoleComponent implements OnInit {
 
         const nextNode = element.closest('td').nextSibling as HTMLElement;
 
-        this.store.dispatch({
-          type: `${TableEnum.Roles}.${DialogEnum.delete}`,
-          payload: {
-            newData: {id: nextNode.innerHTML.trim()} as Role
-          }
-        });
+        this.store.dispatch( new RolesDelete<Role>(
+          TableEnum.Roles,
+          [],
+          {id: nextNode.innerHTML.trim()} as Role )
+        );
       },
     };
   }

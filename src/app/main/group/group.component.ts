@@ -10,6 +10,7 @@ import { Role } from '@shared/Model/role.model';
 import { Group } from '@shared/Model/group.model';
 import { GroupService } from '@services/group/group.service';
 import { RoleService } from '@services/role/role.service';
+import { GroupsCreate, GroupsRead, GroupsEdit, GroupsDelete} from '@shared/ngrx/Actions/group.action';
 
 @Component({
   selector: 'app-group',
@@ -34,7 +35,7 @@ export class GroupComponent implements OnInit {
     this.groupService.getAll().subscribe((groups) => this.Groups = groups);
     this.roleService.getAll().subscribe((roles) => this.Roles = roles);
     this.loadGrid();
-    this.store.dispatch({ type: `${TableEnum.Groups}.${DialogEnum.read}` });
+    this.store.dispatch( new GroupsRead<Group>(TableEnum.Groups) );
   }
 
   loadGrid() {
@@ -73,12 +74,11 @@ export class GroupComponent implements OnInit {
         },
       ],
       create: () => {
-        this.store.dispatch({
-          type: `${TableEnum.Groups}.${DialogEnum.create}`,
-          payload: {
-            newData: this.tableComponent.dialogComponent.getData() as Group
-          }
-        });
+        this.store.dispatch( new GroupsCreate<Group>(
+          TableEnum.Groups,
+          [],
+          this.tableComponent.dialogComponent.getData() as Group)
+        );
       },
       createDialog: () => {
         this.tableComponent.openDialog({
@@ -89,12 +89,11 @@ export class GroupComponent implements OnInit {
         });
       },
       edit: () => {
-        this.store.dispatch({
-          type: `${TableEnum.Groups}.${DialogEnum.edit}`,
-          payload: {
-            newData: this.tableComponent.dialogComponent.getData() as Group
-          }
-        });
+        this.store.dispatch( new GroupsEdit<Group>(
+          TableEnum.Groups,
+          [],
+          this.tableComponent.dialogComponent.getData() as Group)
+        );
       },
       editDialog: (event: any) => {
 
@@ -118,12 +117,11 @@ export class GroupComponent implements OnInit {
 
         const nextNode = element.closest('td').nextSibling as HTMLElement;
 
-        this.store.dispatch({
-          type: `${TableEnum.Groups}.${DialogEnum.delete}`,
-          payload: {
-            newData: {id: nextNode.innerHTML.trim()} as Group
-          }
-        });
+        this.store.dispatch( new GroupsDelete<Group>(
+          TableEnum.Groups,
+          [],
+          {id: nextNode.innerHTML.trim()} as Group)
+        );
       },
     };
   }

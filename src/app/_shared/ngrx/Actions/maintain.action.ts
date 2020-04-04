@@ -7,35 +7,35 @@ export interface MaintainPayload<T> extends Action {
   newData?: T;
 }
 
-export const CREATESUCCESS = `${ DialogEnum.create }.${ DialogEnum.success }`;
-export const READSUCCESS   = `${ DialogEnum.read }.${ DialogEnum.success }`;
-export const EDITSUCCESS   = `${ DialogEnum.edit }.${ DialogEnum.success }`;
-export const DELETESUCCESS = `${ DialogEnum.delete }.${ DialogEnum.success }`;
+export const CREATE_SUCCESS = `${ DialogEnum.create }.${ DialogEnum.success }`;
+export const READ_SUCCESS   = `${ DialogEnum.read }.${ DialogEnum.success }`;
+export const EDIT_SUCCESS   = `${ DialogEnum.edit }.${ DialogEnum.success }`;
+export const DELETE_SUCCESS = `${ DialogEnum.delete }.${ DialogEnum.success }`;
 
 
 export class CreateSuccess<T> implements MaintainPayload<T> {
-  type = CREATESUCCESS;
+  type = CREATE_SUCCESS;
   constructor(public actionPrefix: string,
               public source?: T[],
               public newData?: T) { }
 }
 
 export class ReadSuccess<T> implements MaintainPayload<T> {
-  type = READSUCCESS;
+  type = READ_SUCCESS;
   constructor(public actionPrefix: string,
               public source?: T[],
               public newData?: T) { }
   }
 
 export class EditSuccess<T> implements MaintainPayload<T> {
-  type = EDITSUCCESS;
+  type = EDIT_SUCCESS;
   constructor(public actionPrefix: string,
               public source?: T[],
               public newData?: T) { }
   }
 
 export class DeleteSuccess<T> implements MaintainPayload<T> {
-  type = DELETESUCCESS;
+  type = DELETE_SUCCESS;
   constructor(public actionPrefix: string,
               public source?: T[],
               public newData?: T) { }
