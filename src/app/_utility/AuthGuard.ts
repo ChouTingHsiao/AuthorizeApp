@@ -1,12 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot  } from '@angular/router';
-import { Role } from '@shared/Model/role.model';
-import { Group } from '@shared/Model/group.model';
-import { Program } from '@shared/Model/program.model';
 import { RoleService } from '@services/role/role.service';
 import { GroupService } from '@services/group/group.service';
 import { ProgramService } from '@services/program/program.service';
-import { Observable } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -23,43 +20,35 @@ export class AuthGuard implements CanActivate {
        state: RouterStateSnapshot
     ): boolean {
 
-    const Roles: Observable<Role[]> = this.roleService.getAll();
+    let loggedIn = true;
 
-    const Groups: Observable<Group[]> = this.groupService.getAll();
+    this.programService.getAll().pipe(
+      switchMap(Programs => this.groupService.getAll().pipe(
+        switchMap(Groups => this.roleService.getAll().pipe(
+          map(Roles => ({ Programs, Groups, Roles }))
+        ))
+      ))
+    ).subscribe(({ Programs, Groups, Roles }) => {
 
-    const Programs: Observable<Program[]> = this.programService.getAll();
+      const Auth: string =  localStorage.getItem('Auth');
 
-    let loggedIn = false;
+      const ProgramName =  state.url.split('/')[2];
 
-    Programs.subscribe((programs) => {
-        const Auth: string =  localStorage.getItem('Auth');
+      const Program = Programs.filter( x => x.name === ProgramName);
 
-        const ProgramName =  state.url.split('/')[2];
+      if (Program[0] && Program[0].auth.length > 0) {
 
-        const AuthId = programs.filter( x => x.name === ProgramName);
+        const group = Groups.filter(x => x.id === Program[0].auth)[0];
 
-        let AuthName = '' ;
+        const AuthName = group.role.map(x => Roles.filter(y => y.id === x)[0].name ).join(',');
 
-        if (AuthId[0] && AuthId[0].auth.length > 0) {
-          Groups.subscribe((groups) => {
-              const group = groups.filter(x => x.id === AuthId[0].auth)[0];
-
-              group.role.map(x => {
-                  Roles.subscribe((roles) => {
-                    roles.filter(y => y.id === x);
-                    AuthName = roles[0].name;
-                  });
-              }).join(',');
-          });
-        }
-
-        loggedIn = AuthName.includes(Auth)  || !AuthId[0] || AuthId[0].auth.length < 1;
+        loggedIn = AuthName.includes(Auth);
 
         if (!loggedIn) {
           console.log('Not Auth');
           this.router.navigate(['/401']);
         }
-
+      }
     });
 
     return loggedIn;
