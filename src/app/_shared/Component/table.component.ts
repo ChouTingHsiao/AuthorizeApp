@@ -13,7 +13,8 @@ import { Observable, Subscription } from 'rxjs';
 @Component({
   selector: 'app-table',
   template:
- `<table
+ `<button  mat-fab color="primary" (click)="grid.createDialog()">新增</button>
+  <table
   mat-table
   matSort matSortActive="{{grid.sort.active}}"
   matSortDirection="{{grid.sort.direction}}"
@@ -24,8 +25,9 @@ import { Observable, Subscription } from 'rxjs';
    <ng-container matColumnDef="maintain">
    <th mat-header-cell *matHeaderCellDef></th>
    <td mat-cell *matCellDef="let element" >
-    <button mat-button color="warn" (click)="grid.editDialog($event)">修改</button>
-    <button mat-button color="warn" (click)="grid.delete($event)">刪除</button>
+    <button mat-raised-button color="accent" (click)="grid.editDialog($event)">修改</button>
+    &nbsp;
+    <button mat-raised-button color="warn" (click)="grid.delete($event)">刪除</button>
    </td>
    </ng-container>
 
