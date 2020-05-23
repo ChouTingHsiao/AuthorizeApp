@@ -16,7 +16,7 @@ export interface Sort {
 
 export interface Grid {
     tableName: string;
-    dataSource: any;
+    dataSource?: any;
     sort: Sort;
     columns: Column[];
     create: () => void;

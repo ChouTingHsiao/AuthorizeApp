@@ -27,7 +27,7 @@ export class ProgramEffects {
     ofType(PROGRAMS_CREATE),
     mergeMap((x) => this.programService.create(x[this.newData])
       .pipe(
-        map(Programs => ( new CreateSuccess<Program>(TableEnum.Programs, Programs) )),
+        map(Programs => ( new CreateSuccess<Program>(TableEnum.Programs, Programs, x[this.newData]) )),
         catchError(() => EMPTY)
       ))
     )
@@ -37,7 +37,7 @@ export class ProgramEffects {
     ofType(PROGRAMS_EDIT),
     mergeMap((x) => this.programService.update(x[this.newData])
       .pipe(
-        map(Programs => ( new EditSuccess<Program>(TableEnum.Programs, Programs) )),
+        map(Programs => ( new EditSuccess<Program>(TableEnum.Programs, Programs, x[this.newData]) )),
         catchError(() => EMPTY)
       ))
     )
@@ -47,7 +47,7 @@ export class ProgramEffects {
     ofType(PROGRAMS_DELETE),
     mergeMap((x) => this.programService.delete(x[this.newData])
       .pipe(
-        map(Programs => ( new DeleteSuccess<Program>(TableEnum.Programs, Programs) )),
+        map(Programs => ( new DeleteSuccess<Program>(TableEnum.Programs, Programs, x[this.newData]) )),
         catchError(() => EMPTY)
       ))
     )

@@ -1,36 +1,53 @@
 import { MaintainSuccessActions,
          CREATE_SUCCESS, READ_SUCCESS, EDIT_SUCCESS, DELETE_SUCCESS} from '@shared/ngrx/Actions/maintain.action';
+import { EntityState, EntityAdapter, createEntityAdapter, Update } from '@ngrx/entity';
+
+interface State<T> extends EntityState<T> {
+  // additional entities state properties
+  selectedUserId: number | null;
+}
 
 export function maintainReducer<T>(tableName: string) {
 
-    const initialState = [];
+  const key = 'id';
 
-    function reducer(state: T[] = initialState, action: MaintainSuccessActions<T>) {
-      switch (action.type) {
+  const adapter: EntityAdapter<T> = createEntityAdapter<T>();
 
-        case  READ_SUCCESS:
-          return [...action.source];
+  const initialState: State<T> = adapter.getInitialState({
+    // additional entity state properties
+    selectedUserId: null,
+  });
+  // const initialState = [];
 
-        case  CREATE_SUCCESS:
-          return [...action.source];
+  console.log(initialState);
 
-        case  EDIT_SUCCESS:
-          return [...action.source];
+  function reducer(state: State<T>  = initialState, action: MaintainSuccessActions<T>) {
+    switch (action.type) {
 
-        case  DELETE_SUCCESS:
-          return [...action.source];
+      case  READ_SUCCESS:
+        return adapter.setAll(action.source, state);
 
-        default:
-          return state;
-      }
+      case  CREATE_SUCCESS:
+        return adapter.addOne(action.newData, state);
+
+      case  EDIT_SUCCESS:
+        const entity: Update<T> =  Object.assign({}, {id: action.newData[key], changes: action.newData});
+        return adapter.updateOne(entity, state);
+
+      case  DELETE_SUCCESS:
+        return adapter.removeOne(action.newData[key], state);
+
+      default:
+        return state;
     }
+  }
 
-    return (state: T[] = initialState, action: MaintainSuccessActions<T>) => {
-      switch (action.actionPrefix) {
-        case tableName:
-          return reducer(state, action);
-        default:
-          return state;
-      }
-    };
+  return (state: State<T> = initialState, action: MaintainSuccessActions<T>) => {
+    switch (action.actionPrefix) {
+      case tableName:
+        return reducer(state, action);
+      default:
+        return state;
+    }
+  };
 }

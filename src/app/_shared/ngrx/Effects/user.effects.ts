@@ -27,7 +27,7 @@ export class UserEffects {
     ofType(USERS_CREATE),
     mergeMap((x) => this.userService.create(x[this.newData])
       .pipe(
-        map(Users => ( new CreateSuccess<User>(TableEnum.Users, Users) )),
+        map(Users => ( new CreateSuccess<User>(TableEnum.Users, Users, x[this.newData]) )),
         catchError(() => EMPTY)
       ))
     )
@@ -37,7 +37,7 @@ export class UserEffects {
     ofType(USERS_EDIT),
     mergeMap((x) => this.userService.update(x[this.newData])
       .pipe(
-        map(Users => ( new EditSuccess<User>(TableEnum.Users, Users) )),
+        map(Users => ( new EditSuccess<User>(TableEnum.Users, Users, x[this.newData]) )),
         catchError(() => EMPTY)
       ))
     )
@@ -47,7 +47,7 @@ export class UserEffects {
     ofType(USERS_DELETE),
     mergeMap((x) => this.userService.delete(x[this.newData])
       .pipe(
-        map(Users => ( new DeleteSuccess<User>(TableEnum.Users, Users) )),
+        map(Users => ( new DeleteSuccess<User>(TableEnum.Users, Users, x[this.newData]) )),
         catchError(() => EMPTY)
       ))
     )

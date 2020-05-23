@@ -28,11 +28,9 @@ export class GroupComponent implements OnInit {
   Roles: Role[];
 
   constructor(private store: Store<any>,
-              private groupService: GroupService,
               private roleService: RoleService) { }
 
   ngOnInit() {
-    this.groupService.getAll().subscribe((groups) => this.Groups = groups);
     this.roleService.getAll().subscribe((roles) => this.Roles = roles);
     this.loadGrid();
     this.store.dispatch( new GroupsRead<Group>(TableEnum.Groups) );
@@ -41,7 +39,6 @@ export class GroupComponent implements OnInit {
   loadGrid() {
     this.myGrid = {
       tableName: TableEnum.Groups,
-      dataSource: new MatTableDataSource<Group>(this.Groups),
       sort: { active: 'id', direction: 'asc' },
       columns: [
         {

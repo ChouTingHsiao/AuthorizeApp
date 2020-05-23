@@ -27,7 +27,7 @@ export class RoleEffects {
     ofType(ROLES_CREATE),
     mergeMap((x) => this.roleService.create(x[this.newData])
       .pipe(
-        map(Roles => ( new CreateSuccess<Role>(TableEnum.Roles, Roles) )),
+        map(Roles => ( new CreateSuccess<Role>(TableEnum.Roles, Roles, x[this.newData]) )),
         catchError(() => EMPTY)
       ))
     )
@@ -37,7 +37,7 @@ export class RoleEffects {
     ofType(ROLES_EDIT),
     mergeMap((x) => this.roleService.update(x[this.newData])
       .pipe(
-        map(Roles => ( new EditSuccess<Role>(TableEnum.Roles, Roles) )),
+        map(Roles => ( new EditSuccess<Role>(TableEnum.Roles, Roles, x[this.newData]) )),
         catchError(() => EMPTY)
       ))
     )
@@ -47,7 +47,7 @@ export class RoleEffects {
     ofType(ROLES_DELETE),
     mergeMap((x) => this.roleService.delete(x[this.newData])
       .pipe(
-        map(Roles => ( new DeleteSuccess<Role>(TableEnum.Roles, Roles) )),
+        map(Roles => ( new DeleteSuccess<Role>(TableEnum.Roles, Roles, x[this.newData]) )),
         catchError(() => EMPTY)
       ))
     )
