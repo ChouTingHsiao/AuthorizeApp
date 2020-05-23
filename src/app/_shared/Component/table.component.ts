@@ -13,7 +13,7 @@ import { Observable, Subscription } from 'rxjs';
 @Component({
   selector: 'app-table',
   template:
- `<button  mat-fab color="primary" (click)="grid.createDialog()">新增</button>
+ `<button mat-raised-button style="background-color: #a829c3; color: white;" (click)="grid.createDialog()">新增</button>
   <table
   mat-table
   matSort matSortActive="{{grid.sort.active}}"
@@ -44,7 +44,10 @@ import { Observable, Subscription } from 'rxjs';
 })
 export class TableComponent implements OnInit, OnDestroy {
 
+  entities = 'entities';
+
   subscription: Subscription;
+
   maintain$: Observable<any>;
 
   @Input()
@@ -120,7 +123,8 @@ export class TableComponent implements OnInit, OnDestroy {
   setSource() {
     this.maintain$ = this.store.select(this.grid.tableName);
     this.subscription = this.maintain$.subscribe((x) => {
-      this.grid.dataSource = new MatTableDataSource<any>(x);
+      const entitiesArray = this.objectToArray(x[this.entities]);
+      this.grid.dataSource = new MatTableDataSource<any>(entitiesArray);
       this.pageNation();
     });
   }
@@ -133,6 +137,33 @@ export class TableComponent implements OnInit, OnDestroy {
   pageNation() {
     this.grid.dataSource.sort = this.sort;
     this.grid.dataSource.paginator = this.paginator;
+  }
+
+  objectToArray(obj) {
+
+    const size = this.getObjectSize(obj);
+
+    const array = [];
+
+    for (let i = 1; i <= size; i++) {
+      array.push(obj[i]);
+    }
+
+    return array;
+  }
+
+  getObjectSize(obj) {
+
+    let size = 0;
+
+    let key;
+
+    for (key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        size++;
+      }
+    }
+    return size;
   }
 
 }
