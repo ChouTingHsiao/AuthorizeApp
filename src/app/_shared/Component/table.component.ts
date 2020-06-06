@@ -26,7 +26,7 @@ import { Observable, Subscription } from 'rxjs';
 
    <!-- Maintain Column -->
    <ng-container matColumnDef="maintain">
-   <th mat-header-cell *matHeaderCellDef></th>
+   <th mat-header-cell *matHeaderCellDef  style="width: 20%;"></th>
    <td mat-cell *matCellDef="let element" >
     <button mat-raised-button color="accent" (click)="grid.editDialog($event)">修改</button>
     &nbsp;
