@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '@shared/Component/dialog.component';
 import { Grid, Column } from '@shared/Model/table.model';
@@ -43,7 +43,7 @@ import { Observable, Subscription } from 'rxjs';
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
-  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>`
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" (page)="pageData($event)" showFirstLastButtons></mat-paginator>`
 })
 export class TableComponent implements OnInit, OnDestroy {
 
@@ -135,6 +135,10 @@ export class TableComponent implements OnInit, OnDestroy {
   sortData(sort: Sort) {
       console.log(sort.active);
       console.log(sort.direction);
+  }
+
+  pageData(page: PageEvent) {
+    console.log(page);
   }
 
   pageNation() {
