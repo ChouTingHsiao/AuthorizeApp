@@ -11,6 +11,7 @@ import { UserEffects } from '@shared/ngrx/Effects/user.effects';
 import { RoleEffects } from '@shared/ngrx/Effects/role.effects';
 import { GroupEffects } from '@shared/ngrx/Effects/group.effects';
 import { ProgramEffects } from '@shared/ngrx/Effects/program.effects';
+import { MenuEffects } from '@shared/ngrx/Effects/menu.effects';
 
 import { MainRoutingModule } from './main-routing.module';
 import { DialogComponent } from '@shared/Component/dialog.component';
@@ -26,6 +27,7 @@ import { GroupComponent } from './group/group.component';
 import { ProgramComponent } from './program/program.component';
 import { DynamicHostDirective } from '@shared/Directive/dynamichost.Directive';
 import { UnauthorizeComponent } from './unauthorize/unauthorize.component';
+import { MenuComponent } from './menu/menu.component';
 
 
 
@@ -44,6 +46,7 @@ import { UnauthorizeComponent } from './unauthorize/unauthorize.component';
     TableComponent,
     DynamicHostDirective,
     UnauthorizeComponent,
+    MenuComponent,
   ],
   imports: [
     CommonModule,
@@ -57,6 +60,7 @@ import { UnauthorizeComponent } from './unauthorize/unauthorize.component';
       RoleEffects,
       GroupEffects,
       ProgramEffects,
+      MenuEffects,
     ]),
     StoreModule.forRoot(ROOT_REDUCER),
   ],

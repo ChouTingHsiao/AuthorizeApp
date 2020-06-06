@@ -7,6 +7,7 @@ import { UserComponent } from './user/user.component';
 import { RoleComponent } from './role/role.component';
 import { GroupComponent } from './group/group.component';
 import { ProgramComponent } from './program/program.component';
+import { MenuComponent } from './menu/menu.component';
 import { LoginComponent } from '../login/login.component';
 import { UnauthorizeComponent } from './unauthorize/unauthorize.component';
 
@@ -20,6 +21,7 @@ const routes: Routes = [
           {  path: 'Role', component: RoleComponent, canActivate: [AuthGuard]  },
           {  path: 'Group', component: GroupComponent, canActivate: [AuthGuard]  },
           {  path: 'Program', component: ProgramComponent, canActivate: [AuthGuard]  },
+          {  path: 'Menu', component: MenuComponent, canActivate: [AuthGuard]  },
           {  path: '**', redirectTo: '/Main'  }
     ]
   },
