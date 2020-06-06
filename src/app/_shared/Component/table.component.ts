@@ -13,7 +13,10 @@ import { Observable, Subscription } from 'rxjs';
 @Component({
   selector: 'app-table',
   template:
- `<button mat-raised-button style="background-color: #a829c3; color: white;" (click)="grid.createDialog()">新增</button>
+ `<button mat-raised-button (click)="grid.createDialog()"
+   style="background-color: #534B62;
+        color: #D0BCD5;
+        font-size: 1em;">新增</button>
   <table
   mat-table
   matSort matSortActive="{{grid.sort.active}}"
