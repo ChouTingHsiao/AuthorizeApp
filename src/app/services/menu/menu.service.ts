@@ -13,6 +13,7 @@ export class MenuService {
     { id: '2', name: 'Role', link: 'Role'},
     { id: '3', name: 'Group', link: 'Group'},
     { id: '4', name: 'Program', link: 'Program'},
+    { id: '5', name: 'Menu', link: 'Menu'},
   ];
 
   constructor() { }
