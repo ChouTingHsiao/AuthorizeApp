@@ -37,6 +37,10 @@ export class ProgramService {
 
       program.id = (dataList.length + 1).toString();
 
+      if (!program.auth) {
+        program.auth = '';
+      }
+
       dataList.push(program);
 
       localStorage.setItem(TableEnum.Programs, JSON.stringify(dataList));

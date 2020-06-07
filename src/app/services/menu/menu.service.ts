@@ -9,11 +9,11 @@ import { Observable } from 'rxjs';
 export class MenuService {
 
   Menus: Menu[] = [
-    { id: '1', name: 'User', link: 'User'},
-    { id: '2', name: 'Role', link: 'Role'},
-    { id: '3', name: 'Group', link: 'Group'},
-    { id: '4', name: 'Program', link: 'Program'},
-    { id: '5', name: 'Menu', link: 'Menu'},
+    { id: '1', name: 'User', link: 'User', program: 'User'},
+    { id: '2', name: 'Role', link: 'Role', program: 'Role'},
+    { id: '3', name: 'Group', link: 'Group', program: 'Group'},
+    { id: '4', name: 'Program', link: 'Program', program: 'Program'},
+    { id: '5', name: 'Menu', link: 'Menu', program: 'Menu'},
   ];
 
   constructor() { }
@@ -38,6 +38,10 @@ export class MenuService {
       const dataList: Menu[] = JSON.parse(localStorage.getItem(TableEnum.Menus));
 
       menu.id = (dataList.length + 1).toString();
+
+      if (!menu.program) {
+        menu.program = '';
+      }
 
       dataList.push(menu);
 

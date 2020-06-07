@@ -35,6 +35,10 @@ export class UserService {
 
       user.id = (dataList.length + 1).toString();
 
+      if (!user.role) {
+        user.role = '';
+      }
+
       dataList.push(user);
 
       localStorage.setItem(TableEnum.Users, JSON.stringify(dataList));

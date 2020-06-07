@@ -34,7 +34,13 @@ export class GroupService {
 
       group.id = (dataList.length + 1).toString();
 
+      if (!group.role) {
+        group.role = [''];
+      }
+
       dataList.push(group);
+
+      console.log(group);
 
       localStorage.setItem(TableEnum.Groups, JSON.stringify(dataList));
 
