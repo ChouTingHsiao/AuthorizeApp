@@ -39,6 +39,7 @@ export class GroupComponent implements OnInit {
   loadGrid() {
     this.myGrid = {
       tableName: TableEnum.Groups,
+      dataSource: this.store.select(TableEnum.Groups),
       sort: { active: 'id', direction: 'asc' },
       columns: [
         {

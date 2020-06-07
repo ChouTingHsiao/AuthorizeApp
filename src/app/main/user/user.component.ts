@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { MatTableDataSource } from '@angular/material/table';
 import { TableComponent } from '@shared/Component/table.component';
 import { DialogEnum } from '@shared/Enum/dialog.enum';
 import { ColumnEnum } from '@shared/Enum/column.enum';
@@ -9,7 +8,6 @@ import { Grid } from '@shared/Model/table.model';
 import { User } from '@shared/Model/user.model';
 import { Role } from '@shared/Model/role.model';
 import { RoleService } from '@services/role/role.service';
-import { UserService } from '@services/user/user.service';
 import { UsersCreate, UsersRead, UsersEdit, UsersDelete} from '@shared/ngrx/Actions/user.action';
 
 @Component({
@@ -28,11 +26,9 @@ export class UserComponent implements OnInit {
   Roles: Role[];
 
   constructor(private store: Store<any>,
-              private roleService: RoleService,
-              private userService: UserService) { }
+              private roleService: RoleService) { }
 
   ngOnInit() {
-    this.userService.getAll().subscribe((users) => this.Users = users);
     this.roleService.getAll().subscribe((roles) => this.Roles = roles);
     this.loadGrid();
     this.store.dispatch( new UsersRead<User>(TableEnum.Users) );
@@ -41,7 +37,7 @@ export class UserComponent implements OnInit {
   loadGrid() {
     this.myGrid = {
       tableName: TableEnum.Users,
-      dataSource: new MatTableDataSource<User>(this.Users),
+      dataSource: this.store.select(TableEnum.Users),
       sort: { active: 'id', direction: 'asc' },
       columns: [
         {

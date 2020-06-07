@@ -37,6 +37,7 @@ export class MenuComponent implements OnInit {
   loadGrid() {
     this.myGrid = {
       tableName: TableEnum.Menus,
+      dataSource: this.store.select(TableEnum.Menus),
       sort: { active: 'id', direction: 'asc' },
       columns: [
         {

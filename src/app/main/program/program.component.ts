@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { MatTableDataSource } from '@angular/material/table';
 import { TableComponent } from '@shared/Component/table.component';
 import { DialogEnum } from '@shared/Enum/dialog.enum';
 import { ColumnEnum } from '@shared/Enum/column.enum';
@@ -9,7 +8,6 @@ import { Grid } from '@shared/Model/table.model';
 import { Group } from '@shared/Model/group.model';
 import { Program } from '@shared/Model/program.model';
 import { GroupService } from '@services/group/group.service';
-import { ProgramService } from '@services/program/program.service';
 import { ProgramsCreate, ProgramsRead, ProgramsEdit, ProgramsDelete} from '@shared/ngrx/Actions/program.action';
 
 @Component({
@@ -28,11 +26,9 @@ export class ProgramComponent implements OnInit {
   Groups: Group[];
 
   constructor(private store: Store<any>,
-              private groupService: GroupService,
-              private programService: ProgramService) { }
+              private groupService: GroupService) { }
 
   ngOnInit() {
-    this.programService.getAll().subscribe((programs) => this.Programs = programs);
     this.groupService.getAll().subscribe((groups) => this.Groups = groups);
     this.loadGrid();
     this.store.dispatch( new ProgramsRead<Program>(TableEnum.Programs) );
@@ -41,7 +37,7 @@ export class ProgramComponent implements OnInit {
   loadGrid() {
     this.myGrid = {
       tableName: TableEnum.Programs,
-      dataSource: new MatTableDataSource<Program>(this.Programs),
+      dataSource: this.store.select(TableEnum.Programs),
       sort: { active: 'id', direction: 'asc' },
       columns: [
         {

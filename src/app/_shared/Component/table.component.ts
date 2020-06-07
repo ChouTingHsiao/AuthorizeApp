@@ -51,8 +51,6 @@ export class TableComponent implements OnInit, OnDestroy {
 
   subscription: Subscription;
 
-  maintain$: Observable<any>;
-
   @Input()
   grid: Grid;
 
@@ -124,8 +122,7 @@ export class TableComponent implements OnInit, OnDestroy {
   }
 
   setSource() {
-    this.maintain$ = this.store.select(this.grid.tableName);
-    this.subscription = this.maintain$.subscribe((x) => {
+    this.subscription = this.grid.dataSource.subscribe((x) => {
       const entitiesArray = this.objectToArray(x[this.entities]);
       this.grid.dataSource = new MatTableDataSource<any>(entitiesArray);
       this.pageNation();

@@ -23,11 +23,9 @@ export class RoleComponent implements OnInit {
 
   Roles: Role[];
 
-  constructor(private store: Store<any>,
-              private roleService: RoleService) { }
+  constructor(private store: Store<any>) { }
 
   ngOnInit() {
-    this.roleService.getAll().subscribe((roles) => this.Roles = roles);
     this.loadGrid();
     this.store.dispatch( new RolesRead<Role>(TableEnum.Roles) );
   }
@@ -35,7 +33,7 @@ export class RoleComponent implements OnInit {
   loadGrid() {
     this.myGrid =  {
       tableName: TableEnum.Roles,
-      dataSource: new MatTableDataSource<Role>(this.Roles),
+      dataSource: this.store.select(TableEnum.Roles),
       sort: { active: 'id', direction: 'asc' },
       columns: [
         {
