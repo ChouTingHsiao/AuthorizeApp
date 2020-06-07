@@ -145,29 +145,18 @@ export class TableComponent implements OnInit, OnDestroy {
 
   objectToArray(obj) {
 
-    const size = this.getObjectSize(obj);
+    const keys = Object.keys(obj);
+
+    const length = keys.length - 1;
+
+    let key = '';
 
     const array = [];
 
-    for (let i = 1; i <= size; i++) {
-      array.push(obj[i]);
+    for (let i = 0; i <= length; i++) {
+        key =  keys[i];
+        array.push(obj[key]);
     }
-
     return array;
   }
-
-  getObjectSize(obj) {
-
-    let size = 0;
-
-    let key;
-
-    for (key in obj) {
-      if (obj.hasOwnProperty(key)) {
-        size++;
-      }
-    }
-    return size;
-  }
-
 }
