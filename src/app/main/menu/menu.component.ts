@@ -59,8 +59,19 @@ export class MenuComponent implements OnInit {
           header: 'Link',
           columnDef: 'link',
           type: ColumnEnum.string,
-          selector: ColumnEnum.multiselect,
+          selector: ColumnEnum.input,
           cell: (element: Menu) => `${ element.link }`
+        },
+        {
+          header: 'Program',
+          columnDef: 'program',
+          type: ColumnEnum.string,
+          selector: ColumnEnum.select,
+          source: this.Programs as [],
+          cell: (element: Menu) => `${
+            element.program === '' ? '' :
+            this.Programs.filter(x => x.id ===  element.program)[0].name
+          }`
         },
       ],
       create: () => {
