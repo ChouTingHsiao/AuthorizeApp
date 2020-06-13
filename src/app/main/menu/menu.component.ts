@@ -56,13 +56,6 @@ export class MenuComponent implements OnInit {
           cell: (element: Menu) => `${ element.name }`
         },
         {
-          header: 'Link',
-          columnDef: 'link',
-          type: ColumnEnum.string,
-          selector: ColumnEnum.input,
-          cell: (element: Menu) => `${ element.link }`
-        },
-        {
           header: 'Program',
           columnDef: 'program',
           type: ColumnEnum.string,

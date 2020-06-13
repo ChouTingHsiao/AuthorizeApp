@@ -9,11 +9,11 @@ import { Observable } from 'rxjs';
 export class ProgramService {
 
   Programs: Program[] = [
-    { id: '1', name: 'User', remark: '使用者', auth: '1' },
-    { id: '2', name: 'Role', remark: '角色', auth: '1' },
-    { id: '3', name: 'Group', remark: '群組', auth: '' },
-    { id: '4', name: 'Program', remark: '程式', auth: '' },
-    { id: '5', name: 'Menu', remark: '選單', auth: '' },
+    { id: '1', name: 'User', remark: '使用者', link: 'User', auth: '1' },
+    { id: '2', name: 'Role', remark: '角色', link: 'Role', auth: '1' },
+    { id: '3', name: 'Group', remark: '群組', link: 'Group', auth: '' },
+    { id: '4', name: 'Program', remark: '程式', link: 'Program', auth: '' },
+    { id: '5', name: 'Menu', remark: '選單', link: 'Menu', auth: '' },
   ];
 
   constructor() { }

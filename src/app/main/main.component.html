@@ -12,11 +12,7 @@
 <mat-sidenav-container class="toolbar-container">
     <mat-sidenav #sideNav mode="side" class="dark-theme">
       <mat-nav-list>
-        <a [routerLink]="['User']" mat-list-item class="dark-theme">User</a>
-        <a [routerLink]="['Role']" mat-list-item class="dark-theme">Role</a>
-        <a [routerLink]="['Group']" mat-list-item class="dark-theme">Group</a>
-        <a [routerLink]="['Program']" mat-list-item class="dark-theme">Program</a>
-        <a [routerLink]="['Menu']" mat-list-item class="dark-theme">Menu</a>
+          <a mat-list-item  *ngFor="let menu of menus" [routerLink]="[menu.link]" class="dark-theme">{{menu.name}}</a>
       </mat-nav-list>
     </mat-sidenav>
 
