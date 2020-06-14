@@ -39,7 +39,7 @@ export class MenuService {
 
   getByAuth(): Observable<Menu[]> {
 
-    let AuthProgram;
+    let AuthMenu: Menu[];
 
     this.getAll().pipe(
       switchMap(Menus => this.programService.getAll().pipe(
@@ -55,17 +55,23 @@ export class MenuService {
 
       const roleId: string = Roles.filter(x => x.name === Auth)[0].id;
 
-      const AuthGroup = Groups.filter( x => x.role.includes(roleId));
+      const AuthGroupMap = Groups.filter( x => x.role.includes(roleId)).map(x => x.id);
 
-      const AuthGroupMap = AuthGroup.map(x => x.id);
+      const AuthProgram = Programs.filter( x => x.auth === '' || AuthGroupMap.includes(x.auth));
 
-      AuthProgram = Programs.filter( x => x.auth === '' || AuthGroupMap.includes(x.auth));
+      const AuthProgramMap = AuthProgram.map(x => x.id);
+
+      AuthMenu = Menus.filter( x => x.program === '' || AuthProgramMap.includes(x.program));
+
+      AuthProgram.forEach(x => {
+        AuthMenu.find(y => y.program === x.id).link = x.link;
+      });
 
     });
 
     return new Observable(subscriber => {
 
-      subscriber.next(AuthProgram);
+      subscriber.next(AuthMenu);
       subscriber.complete();
 
     });
