@@ -2,7 +2,7 @@
     <button class="dark-theme" mat-icon-button (click)="sideNav.toggle()">
         <mat-icon>{{ sideNav.opened ? 'close' : 'menu' }}</mat-icon>
     </button>&nbsp;
-    <span>{{title}}</span>
+    <span [routerLink]="['Main']">{{title}}</span>
     <span class="toolbar-seprator"></span>
     <button class="dark-theme" mat-icon-button (click)="Logout()" >
       <mat-icon>exit_to_app</mat-icon>
