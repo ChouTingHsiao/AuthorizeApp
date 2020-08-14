@@ -2,12 +2,17 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UnauthorizeComponent } from './unauthorize.component';
 
+import { RouterTestingModule } from '@angular/router/testing';
+
 describe('UnauthorizeComponent', () => {
   let component: UnauthorizeComponent;
   let fixture: ComponentFixture<UnauthorizeComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [
+        RouterTestingModule
+      ],
       declarations: [ UnauthorizeComponent ]
     })
     .compileComponents();

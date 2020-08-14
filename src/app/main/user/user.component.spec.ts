@@ -1,6 +1,26 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { BrowserAnimationsModule  } from '@angular/platform-browser/animations';
+
 import { UserComponent } from './user.component';
+
+import { TableComponent } from '@shared/Component/table.component';
+
+import { MatTableModule } from '@angular/material/table';
+
+import { MatPaginatorModule } from '@angular/material/paginator';
+
+import { MatSortModule } from '@angular/material/sort';
+
+import { MatCardModule } from '@angular/material/card';
+
+import { MatIconModule } from '@angular/material/icon';
+
+import { MatDialogModule } from '@angular/material/dialog';
+
+import { StoreModule } from '@ngrx/store';
+
+import { ROOT_REDUCER } from '@shared/ngrx/Reducer/root.reducer';
 
 describe('UserComponent', () => {
   let component: UserComponent;
@@ -8,7 +28,23 @@ describe('UserComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UserComponent ]
+      imports: [
+        StoreModule.forRoot(ROOT_REDUCER),
+        BrowserAnimationsModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatSortModule,
+        MatCardModule,
+        MatIconModule,
+        MatDialogModule
+      ],
+      declarations: [
+        UserComponent,
+        TableComponent
+      ],
+      providers: [
+        TableComponent
+      ]
     })
     .compileComponents();
   }));
