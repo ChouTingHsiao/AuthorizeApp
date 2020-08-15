@@ -14,6 +14,10 @@ import { MatListModule } from '@angular/material/list';
 
 import { MatIconModule } from '@angular/material/icon';
 
+import { MenuService } from '@services/menu/menu.service';
+
+import { of } from 'rxjs';
+
 describe('MainComponent', () => {
   let component: MainComponent;
   let fixture: ComponentFixture<MainComponent>;
@@ -28,7 +32,20 @@ describe('MainComponent', () => {
         MatSidenavModule,
         RouterTestingModule
       ],
-      declarations: [ MainComponent ]
+      declarations: [ MainComponent ],
+      providers: [
+        {provide: MenuService, useValue:
+          {
+            getByAuth: () => of( [
+              { id: '1', name: 'User', program: '1'},
+              { id: '2', name: 'Role', program: '2'},
+              { id: '3', name: 'Group', program: '3'},
+              { id: '4', name: 'Program', program: '4'},
+              { id: '5', name: 'Menu', program: '5'},
+            ])
+          }
+        }
+      ]
     })
     .compileComponents();
   }));
