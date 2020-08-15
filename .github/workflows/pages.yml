@@ -12,6 +12,12 @@ jobs:
       id: Checkout
       uses: actions/checkout@master
 
+    - name: Test
+      run: npm test
+
+    - name: E2E
+      run: npm run e2e
+
     - name: Build and Deploy
       id: Ngh
       uses: JamesIves/github-pages-deploy-action@master
