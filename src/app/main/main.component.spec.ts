@@ -70,7 +70,7 @@ describe('MainComponent', () => {
     fixture = TestBed.createComponent(MainComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('.mat-sidenav-content span').textContent).toContain('Hellow!!');
+    expect(compiled.querySelector('.mat-sidenav-content span').textContent).toContain('Hello!!');
   });
 
 });
