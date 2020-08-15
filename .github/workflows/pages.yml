@@ -12,6 +12,24 @@ jobs:
       id: Checkout
       uses: actions/checkout@master
 
+    - name: Use Node.js 12.8
+      id: Node
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12.8
+
+    - name: install
+      id: install
+      run: npm install
+
+    - name: test
+      id: test
+      run: npm test
+
+    - name: e2e
+      id: e2e
+      run: npm run e2e
+
     - name: Build and Deploy
       id: Ngh
       uses: JamesIves/github-pages-deploy-action@master
@@ -19,7 +37,7 @@ jobs:
        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
        BRANCH: gh-pages
        FOLDER: dist/authorize-example
-       BUILD_SCRIPT: npm install && npm test && npm run e2e &&npx ng build --prod --base-href https://chou-ting-hsiao.github.io/AuthorizeApp/
+       BUILD_SCRIPT: npx ng build --prod --base-href https://chou-ting-hsiao.github.io/AuthorizeApp/
 
     - name: Notify
       id: Notify
