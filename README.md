@@ -1,3 +1,5 @@
+[![Anurag's github stats](https://github-readme-stats.vercel.app/api?username=Chou-ting-hsiao)](https://github.com/anuraghazra/github-readme-stats)
+
 # AuthorizeExample
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.12.
