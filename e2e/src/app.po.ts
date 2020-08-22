@@ -6,6 +6,17 @@ export class AppPage {
     return browser.get(browser.baseUrl) as Promise<any>;
   }
 
+  login() {
+    const accountInput = element(by.css('input#Account'));
+    accountInput.clear();
+    accountInput.sendKeys('USER');
+    const passwordInput = element(by.css('input#Password'));
+    passwordInput.clear();
+    passwordInput.sendKeys('USER');
+    element(by.css('input#btn_Login')).click();
+    browser.switchTo().alert().accept();
+  }
+
   getTitleText() {
     return element(by.css('.form-title p')).getText() as Promise<string>;
   }

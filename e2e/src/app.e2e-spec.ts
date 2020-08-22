@@ -14,6 +14,11 @@ describe('workspace-project App', () => {
     expect(page.getTitleText()).toEqual('Auth');
   });
 
+  it('should display Main page', () => {
+    page.login();
+    page.takeScreenshot();
+  });
+
   afterEach(async () => {
     // Assert that there are no errors emitted from the browser
     const logs = await browser.manage().logs().get(logging.Type.BROWSER);
