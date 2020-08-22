@@ -1,6 +1,5 @@
 import { AppPage } from './app.po';
-import { browser, logging, element, by } from 'protractor';
-import { writeScreenShot } from './utility/imageHelper';
+import { browser, logging} from 'protractor';
 
 describe('workspace-project App', () => {
   let page: AppPage;
@@ -11,11 +10,8 @@ describe('workspace-project App', () => {
 
   it('should display login page', () => {
     page.navigateTo();
-    browser.takeScreenshot().then(data =>
-      writeScreenShot(data, 'firstPage.png')
-    );
-    const formTitle = element(by.css('.form-title p')).getText();
-    expect(formTitle).toEqual('Auth');
+    page.takeScreenshot();
+    expect(page.getTitleText()).toEqual('Auth');
   });
 
   afterEach(async () => {
