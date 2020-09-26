@@ -44,4 +44,4 @@ jobs:
       uses: snow-actions/line-notify@v1.0.0
       with:
         access_token: ${{ secrets.LINE_ACCESS_TOKEN }}
-        message: ${{ format('{0} {1} "%0D%0A" {2}', github.workflow,  job.status, 'https://choutinghsiao.github.io/AuthorizeApp/')}}
+        message: ${{ format('{0} {1} n {2}', github.workflow,  job.status, 'https://choutinghsiao.github.io/AuthorizeApp/')}}
