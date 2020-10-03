@@ -60,13 +60,13 @@ describe('MainComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it(`should have as title 'Authorize'`, () => {
+  it(`should show title Authorize`, () => {
     fixture = TestBed.createComponent(MainComponent);
     const app = fixture.debugElement.componentInstance;
     expect(app.title).toEqual('Authorize');
   });
 
-  it('should render title', () => {
+  it('should show text Hello!!', () => {
     fixture = TestBed.createComponent(MainComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
