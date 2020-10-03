@@ -6,17 +6,22 @@ describe('workspace-project App', () => {
 
   beforeEach(() => {
     page = new AppPage();
+    page.navigateTo();
   });
 
-  it('should display login page', () => {
-    page.navigateTo();
-    page.takeScreenshot();
-    expect(page.getTitleText()).toEqual('Auth');
+  it('should display login title', () => {
+    page.initPage();
+    page.takeScreenshot('initPage');
   });
 
   it('should display Main page', () => {
     page.login();
-    page.takeScreenshot();
+    page.takeScreenshot('mainPage');
+  });
+
+  it('should display User page', () => {
+    page.userPage();
+    page.takeScreenshot('userPage');
   });
 
   afterEach(async () => {
