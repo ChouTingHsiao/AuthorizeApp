@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Menu } from '@shared/Model/menu.model';
 import { MenuService } from '@services/menu/menu.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-main',
@@ -12,13 +13,13 @@ export class MainComponent implements OnInit {
 
   title = 'Authorize';
 
-  menus: Menu[];
+  menus: Observable<Menu[]>;
 
   constructor(private router: Router,
               private menuService: MenuService) { }
 
   ngOnInit() {
-    this.menuService.getByAuth().subscribe((Menus) => this.menus = Menus);
+    this.menus = this.menuService.getByAuth();
   }
 
   Logout() {
