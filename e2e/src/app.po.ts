@@ -20,13 +20,12 @@ export class AppPage {
     passwordInput.sendKeys('ADMIN');
     element(by.css('input#btn_Login')).click();
     browser.switchTo().alert().accept();
-  }
-
-  userPage() {
     const navigate = element.all(by.css('button.dark-theme.mat-icon-button')).first();
     this.waitIsVisible(navigate);
     navigate.click();
+  }
 
+  userPage() {
     const userButton = element(by.css('a#User'));
     this.waitIsVisible(userButton);
     userButton.click();
