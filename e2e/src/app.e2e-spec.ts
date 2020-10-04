@@ -10,12 +10,12 @@ describe('workspace-project App', () => {
   });
 
   it('should display login title', () => {
-    page.initPage();
-    page.takeScreenshot('initPage');
+    page.loginPage();
+    page.takeScreenshot('loginPage');
   });
 
   it('should display Main page', () => {
-    page.login();
+    page.mainPage();
     page.takeScreenshot('mainPage');
   });
 
