@@ -6,10 +6,10 @@ describe('workspace-project App', () => {
 
   beforeEach(() => {
     page = new AppPage();
-    page.navigateTo();
   });
 
   it('should display login title', () => {
+    page.navigateTo();
     page.loginPage();
     page.takeScreenshot('loginPage');
   });
@@ -22,6 +22,26 @@ describe('workspace-project App', () => {
   it('should display User page', () => {
     page.userPage();
     page.takeScreenshot('userPage');
+  });
+
+  it('should display Role page', () => {
+    page.rolePage();
+    page.takeScreenshot('rolePage');
+  });
+
+  it('should display Group page', () => {
+    page.groupPage();
+    page.takeScreenshot('groupPage');
+  });
+
+  it('should display Program page', () => {
+    page.programPage();
+    page.takeScreenshot('programPage');
+  });
+
+  it('should display Menu page', () => {
+    page.menuPage();
+    page.takeScreenshot('menuPage');
   });
 
   afterEach(async () => {

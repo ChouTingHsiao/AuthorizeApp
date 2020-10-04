@@ -32,6 +32,30 @@ export class AppPage {
     userButton.click();
   }
 
+  rolePage() {
+    const roleButton = element(by.css('a#Role'));
+    this.waitIsVisible(roleButton);
+    roleButton.click();
+  }
+
+  groupPage() {
+    const groupButton = element(by.css('a#Group'));
+    this.waitIsVisible(groupButton);
+    groupButton.click();
+  }
+
+  programPage() {
+    const programButton = element(by.css('a#Program'));
+    this.waitIsVisible(programButton);
+    programButton.click();
+  }
+
+  menuPage() {
+    const menuButton = element(by.css('a#Menu'));
+    this.waitIsVisible(menuButton);
+    menuButton.click();
+  }
+
   waitIsVisible(htmlElement: ElementFinder) {
     const EC = protractor.ExpectedConditions;
     const isVisible = EC.visibilityOf(htmlElement);
