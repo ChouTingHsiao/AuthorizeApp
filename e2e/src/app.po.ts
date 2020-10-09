@@ -117,7 +117,7 @@ export class AppPage {
     const remarkInput = element(by.css('input[placeholder="remark"]'));
     remarkInput.sendKeys('TEST');
 
-    const linkInput = element(by.css('input[placeholder="link"]'));
+    const linkInput = element(by.css('input[placeholder="linkTag"]'));
     linkInput.sendKeys('TEST');
 
     const selectButton = element(by.css('mat-select.mat-select-empty'));
