@@ -2,6 +2,6 @@ export interface Program {
     id: string;
     name: string;
     remark: string;
-    link: string;
+    linkTag: string;
     auth: string;
 }

@@ -64,7 +64,7 @@ export class MenuService {
       AuthMenu = Menus.filter( x => x.program === '' || AuthProgramMap.includes(x.program));
 
       AuthProgram.forEach(x => {
-        AuthMenu.find(y => y.program === x.id).link = x.link;
+        AuthMenu.find(y => y.program === x.id).linkTag = x.linkTag;
       });
 
     });

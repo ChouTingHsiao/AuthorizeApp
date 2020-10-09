@@ -1,6 +1,6 @@
 export interface Menu {
     id: string;
     name: string;
-    link?: string;
+    linkTag?: string;
     program: string;
 }

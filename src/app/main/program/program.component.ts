@@ -63,11 +63,11 @@ export class ProgramComponent implements OnInit {
           cell: (element: Program) => `${ element.remark }`
         },
         {
-          header: 'Link',
-          columnDef: 'link',
+          header: 'LinkTag',
+          columnDef: 'linkTag',
           type: ColumnEnum.string,
           selector: ColumnEnum.input,
-          cell: (element: Program) => `${ element.link }`
+          cell: (element: Program) => `${ element.linkTag }`
         },
         {
           header: 'Auth',
