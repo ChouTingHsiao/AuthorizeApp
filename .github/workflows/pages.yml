@@ -18,6 +18,10 @@ jobs:
       with:
         node-version: 12.8
 
+    - name: update
+      id: update
+      run: apt-get update
+
     - name: install
       id: install
       run: npm install
