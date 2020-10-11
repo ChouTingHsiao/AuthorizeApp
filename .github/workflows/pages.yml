@@ -20,7 +20,7 @@ jobs:
 
     - name: update
       id: update
-      run: sudo apt-get update
+      run: sudo apt-get update && sudo apt-get upgrade
 
     - name: install
       id: install
