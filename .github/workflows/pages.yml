@@ -18,10 +18,6 @@ jobs:
       with:
         node-version: 12.8
 
-    - name: update
-      id: update
-      run: sudo apt-get update && sudo apt-get upgrade
-
     - name: install
       id: install
       run: npm install
