@@ -1,4 +1,4 @@
-import { browser, by, element, ElementFinder, protractor } from 'protractor';
+import { browser, by, element, ElementFinder, promise, protractor } from 'protractor';
 import { writeScreenShot } from './utility/imageHelper';
 
 export class AppPage {
@@ -33,6 +33,8 @@ export class AppPage {
     this.waitIsVisible(userButton);
     userButton.click();
 
+    const prevToatalText = element(by.css('.mat-paginator-range-label')).getText();
+
     const addButton = element.all(by.css('button.mat-raised-button.mat-button-base')).get(0);
     this.waitIsVisible(addButton);
     addButton.click();
@@ -53,12 +55,17 @@ export class AppPage {
     const dialogAddButton = element.all(by.css('button.mat-button.mat-button-base')).get(0);
     this.waitIsVisible(dialogAddButton);
     dialogAddButton.click();
+
+    this.checkTotalCount(prevToatalText);
+
   }
 
   rolePage() {
     const roleButton = element(by.css('a#Role'));
     this.waitIsVisible(roleButton);
     roleButton.click();
+
+    const prevToatalText = element(by.css('.mat-paginator-range-label')).getText();
 
     const addButton = element.all(by.css('button.mat-raised-button.mat-button-base')).get(0);
     this.waitIsVisible(addButton);
@@ -73,12 +80,17 @@ export class AppPage {
     const dialogAddButton = element.all(by.css('button.mat-button.mat-button-base')).get(0);
     this.waitIsVisible(dialogAddButton);
     dialogAddButton.click();
+
+    this.checkTotalCount(prevToatalText);
+
   }
 
   groupPage() {
     const groupButton = element(by.css('a#Group'));
     this.waitIsVisible(groupButton);
     groupButton.click();
+
+    const prevToatalText = element(by.css('.mat-paginator-range-label')).getText();
 
     const addButton = element.all(by.css('button.mat-raised-button.mat-button-base')).get(0);
     this.waitIsVisible(addButton);
@@ -100,12 +112,17 @@ export class AppPage {
     const dialogAddButton = element.all(by.css('button.mat-button.mat-button-base')).get(0);
     this.waitIsVisible(dialogAddButton);
     dialogAddButton.click();
+
+    this.checkTotalCount(prevToatalText);
+
   }
 
   programPage() {
     const programButton = element(by.css('a#Program'));
     this.waitIsVisible(programButton);
     programButton.click();
+
+    const prevToatalText = element(by.css('.mat-paginator-range-label')).getText();
 
     const addButton = element.all(by.css('button.mat-raised-button.mat-button-base')).get(0);
     this.waitIsVisible(addButton);
@@ -130,12 +147,17 @@ export class AppPage {
     const dialogAddButton = element.all(by.css('button.mat-button.mat-button-base')).get(0);
     this.waitIsVisible(dialogAddButton);
     dialogAddButton.click();
+
+    this.checkTotalCount(prevToatalText);
+
   }
 
   menuPage() {
     const menuButton = element(by.css('a#Menu'));
     this.waitIsVisible(menuButton);
     menuButton.click();
+
+    const prevToatalText = element(by.css('.mat-paginator-range-label')).getText();
 
     const addButton = element.all(by.css('button.mat-raised-button.mat-button-base')).get(0);
     this.waitIsVisible(addButton);
@@ -154,6 +176,22 @@ export class AppPage {
     const dialogAddButton = element.all(by.css('button.mat-button.mat-button-base')).get(0);
     this.waitIsVisible(dialogAddButton);
     dialogAddButton.click();
+
+    this.checkTotalCount(prevToatalText);
+
+  }
+
+  checkTotalCount(prevToatalText: promise.Promise<string>) {
+
+    const nowToatalText = element(by.css('.mat-paginator-range-label')).getText();
+
+    prevToatalText.then((x) => {
+      const prevToatal = parseInt( x.split(' ')[4], 10);
+      nowToatalText.then((y) => {
+        const nowToatal = parseInt( y.split(' ')[4], 10);
+        expect(nowToatal).toBe(prevToatal + 1);
+      });
+    });
   }
 
   waitIsVisible(htmlElement: ElementFinder) {
