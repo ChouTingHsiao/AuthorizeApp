@@ -19,8 +19,6 @@ export function maintainReducer<T>(tableName: string) {
   });
   // const initialState = [];
 
-  console.log(initialState);
-
   function reducer(state: State<T>  = initialState, action: MaintainSuccessActions<T>) {
     switch (action.type) {
 
