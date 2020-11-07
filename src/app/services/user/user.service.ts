@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { User } from '@shared/Model/user.model';
 import { TableEnum } from '@shared/Enum/table.enum';
+import { OpenDB, GetAll, TableInit, TableAdd, TableUpdate, TableDelete } from '@shared/Dexie/authorize.dexie';
 import { Observable } from 'rxjs';
+import Dexie from 'dexie';
 
 @Injectable({
   providedIn: 'root'
@@ -13,17 +15,18 @@ export class UserService {
     { id: '2', name: 'USER', password: 'USER', role: '2' }
   ];
 
-  constructor() { }
+  private db: Promise<Dexie>;
+
+  constructor() {
+    this.db = OpenDB();
+  }
 
   getAll(): Observable<User[]> {
     return new Observable(subscriber => {
 
-      if (!localStorage.getItem(TableEnum.Users)) {
-        localStorage.setItem(TableEnum.Users, JSON.stringify(this.Users));
-      }
-
-      subscriber.next(JSON.parse(localStorage.getItem(TableEnum.Users)));
-      subscriber.complete();
+      TableInit(this.db, TableEnum.Users, this.Users).then(() => {
+        GetAll(this.db, TableEnum.Users, subscriber);
+      });
 
     });
   }
@@ -31,20 +34,13 @@ export class UserService {
   create(user: User): Observable<User[]> {
     return new Observable(subscriber => {
 
-      const dataList: User[] = JSON.parse(localStorage.getItem(TableEnum.Users));
-
-      user.id = (dataList.length + 1).toString();
-
       if (!user.role) {
         user.role = '';
       }
 
-      dataList.push(user);
-
-      localStorage.setItem(TableEnum.Users, JSON.stringify(dataList));
-
-      subscriber.next(dataList);
-      subscriber.complete();
+      TableAdd(this.db, TableEnum.Users, user).then(() => {
+        GetAll(this.db, TableEnum.Users, subscriber);
+      });
 
     });
   }
@@ -52,16 +48,9 @@ export class UserService {
   update(user: User): Observable<User[]> {
     return new Observable(subscriber => {
 
-      let dataList: User[] = JSON.parse(localStorage.getItem(TableEnum.Users));
-
-      dataList = dataList.filter(x => x.id !== user.id);
-
-      dataList.push(user);
-
-      localStorage.setItem(TableEnum.Users, JSON.stringify(dataList));
-
-      subscriber.next(dataList);
-      subscriber.complete();
+      TableUpdate(this.db, TableEnum.Users, user.id, user).then(() => {
+        GetAll(this.db, TableEnum.Users, subscriber);
+      });
 
     });
   }
@@ -69,14 +58,9 @@ export class UserService {
   delete(user: User): Observable<User[]> {
     return new Observable(subscriber => {
 
-      let dataList: User[] = JSON.parse(localStorage.getItem(TableEnum.Users));
-
-      dataList = dataList.filter(x => x.id !== user.id);
-
-      localStorage.setItem(TableEnum.Users, JSON.stringify(dataList));
-
-      subscriber.next(dataList);
-      subscriber.complete();
+      TableDelete(this.db, TableEnum.Users, user.id).then(() => {
+        GetAll(this.db, TableEnum.Users, subscriber);
+      });
 
     });
   }

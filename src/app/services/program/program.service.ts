@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Program } from '@shared/Model/program.model';
 import { TableEnum } from '@shared/Enum/table.enum';
+import { OpenDB, GetAll, TableInit, TableAdd, TableUpdate, TableDelete } from '@shared/Dexie/authorize.dexie';
 import { Observable } from 'rxjs';
+import Dexie from 'dexie';
+
 
 @Injectable({
   providedIn: 'root'
@@ -16,17 +19,18 @@ export class ProgramService {
     { id: '5', name: 'Menu', remark: '選單', linkTag: 'Menu', auth: '' },
   ];
 
-  constructor() { }
+  private db: Promise<Dexie>;
+
+  constructor() {
+    this.db = OpenDB();
+  }
 
   getAll(): Observable<Program[]> {
     return new Observable(subscriber => {
 
-      if (!localStorage.getItem(TableEnum.Programs)) {
-        localStorage.setItem(TableEnum.Programs, JSON.stringify(this.Programs));
-      }
-
-      subscriber.next(JSON.parse(localStorage.getItem(TableEnum.Programs)));
-      subscriber.complete();
+      TableInit(this.db, TableEnum.Programs, this.Programs).then(() => {
+        GetAll(this.db, TableEnum.Programs, subscriber);
+      });
 
     });
   }
@@ -34,20 +38,13 @@ export class ProgramService {
   create(program: Program): Observable<Program[]> {
     return new Observable(subscriber => {
 
-      const dataList: Program[] = JSON.parse(localStorage.getItem(TableEnum.Programs));
-
-      program.id = (dataList.length + 1).toString();
-
       if (!program.auth) {
         program.auth = '';
       }
 
-      dataList.push(program);
-
-      localStorage.setItem(TableEnum.Programs, JSON.stringify(dataList));
-
-      subscriber.next(dataList);
-      subscriber.complete();
+      TableAdd(this.db, TableEnum.Programs, program).then(() => {
+        GetAll(this.db, TableEnum.Programs, subscriber);
+      });
 
     });
   }
@@ -55,16 +52,9 @@ export class ProgramService {
   update(program: Program): Observable<Program[]> {
     return new Observable(subscriber => {
 
-      let dataList: Program[] = JSON.parse(localStorage.getItem(TableEnum.Programs));
-
-      dataList = dataList.filter(x => x.id !== program.id);
-
-      dataList.push(program);
-
-      localStorage.setItem(TableEnum.Programs, JSON.stringify(dataList));
-
-      subscriber.next(dataList);
-      subscriber.complete();
+      TableUpdate(this.db, TableEnum.Programs, program.id, program).then(() => {
+        GetAll(this.db, TableEnum.Programs, subscriber);
+      });
 
     });
   }
@@ -72,14 +62,9 @@ export class ProgramService {
   delete(program: Program): Observable<Program[]> {
     return new Observable(subscriber => {
 
-      let dataList: Program[] = JSON.parse(localStorage.getItem(TableEnum.Programs));
-
-      dataList = dataList.filter(x => x.id !== program.id);
-
-      localStorage.setItem(TableEnum.Programs, JSON.stringify(dataList));
-
-      subscriber.next(dataList);
-      subscriber.complete();
+      TableDelete(this.db, TableEnum.Programs, program.id).then(() => {
+        GetAll(this.db, TableEnum.Programs, subscriber);
+      });
 
     });
   }

@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Group } from '@shared/Model/group.model';
 import { TableEnum } from '@shared/Enum/table.enum';
+import { OpenDB, GetAll, TableInit, TableAdd, TableUpdate, TableDelete } from '@shared/Dexie/authorize.dexie';
 import { Observable } from 'rxjs';
+import Dexie from 'dexie';
 
 @Injectable({
   providedIn: 'root'
@@ -12,17 +14,18 @@ export class GroupService {
     { id: '1', name: '管理員群組', role: ['1']}
   ];
 
-  constructor() { }
+  private db: Promise<Dexie>;
+
+  constructor() {
+    this.db = OpenDB();
+  }
 
   getAll(): Observable<Group[]> {
     return new Observable(subscriber => {
 
-      if (!localStorage.getItem(TableEnum.Groups)) {
-        localStorage.setItem(TableEnum.Groups, JSON.stringify(this.Groups));
-      }
-
-      subscriber.next(JSON.parse(localStorage.getItem(TableEnum.Groups)));
-      subscriber.complete();
+      TableInit(this.db, TableEnum.Groups, this.Groups).then(() => {
+        GetAll(this.db, TableEnum.Groups, subscriber);
+      });
 
     });
   }
@@ -30,22 +33,13 @@ export class GroupService {
   create(group: Group): Observable<Group[]> {
     return new Observable(subscriber => {
 
-      const dataList: Group[] = JSON.parse(localStorage.getItem(TableEnum.Groups));
-
-      group.id = (dataList.length + 1).toString();
-
       if (!group.role) {
         group.role = [''];
       }
 
-      dataList.push(group);
-
-      console.log(group);
-
-      localStorage.setItem(TableEnum.Groups, JSON.stringify(dataList));
-
-      subscriber.next(dataList);
-      subscriber.complete();
+      TableAdd(this.db, TableEnum.Groups, group).then(() => {
+        GetAll(this.db, TableEnum.Groups, subscriber);
+      });
 
     });
   }
@@ -53,16 +47,9 @@ export class GroupService {
   update(group: Group): Observable<Group[]> {
     return new Observable(subscriber => {
 
-      let dataList: Group[] = JSON.parse(localStorage.getItem(TableEnum.Groups));
-
-      dataList = dataList.filter(x => x.id !== group.id);
-
-      dataList.push(group);
-
-      localStorage.setItem(TableEnum.Groups, JSON.stringify(dataList));
-
-      subscriber.next(dataList);
-      subscriber.complete();
+      TableUpdate(this.db, TableEnum.Groups, group.id, group).then(() => {
+        GetAll(this.db, TableEnum.Groups, subscriber);
+      });
 
     });
   }
@@ -70,14 +57,9 @@ export class GroupService {
   delete(group: Group): Observable<Group[]> {
     return new Observable(subscriber => {
 
-      let dataList: Group[] = JSON.parse(localStorage.getItem(TableEnum.Groups));
-
-      dataList = dataList.filter(x => x.id !== group.id);
-
-      localStorage.setItem(TableEnum.Groups, JSON.stringify(dataList));
-
-      subscriber.next(dataList);
-      subscriber.complete();
+      TableDelete(this.db, TableEnum.Groups, group.id).then(() => {
+        GetAll(this.db, TableEnum.Groups, subscriber);
+      });
 
     });
   }

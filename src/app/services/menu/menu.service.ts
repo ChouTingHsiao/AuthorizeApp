@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Menu } from '@shared/Model/menu.model';
 import { TableEnum } from '@shared/Enum/table.enum';
+import { OpenDB, GetAll, TableInit, TableAdd, TableUpdate, TableDelete } from '@shared/Dexie/authorize.dexie';
 import { Observable } from 'rxjs';
+import Dexie from 'dexie';
 import { RoleService } from '@services/role/role.service';
 import { GroupService } from '@services/group/group.service';
 import { ProgramService } from '@services/program/program.service';
@@ -20,28 +22,29 @@ export class MenuService {
     { id: '5', name: 'Menu', program: '5'},
   ];
 
+  private db: Promise<Dexie>;
+
   constructor(private roleService: RoleService,
               private groupService: GroupService,
-              private programService: ProgramService) { }
+              private programService: ProgramService) {
+      this.db = OpenDB();
+  }
 
   getAll(): Observable<Menu[]> {
     return new Observable(subscriber => {
 
-      if (!localStorage.getItem(TableEnum.Menus)) {
-        localStorage.setItem(TableEnum.Menus, JSON.stringify(this.Menus));
-      }
-
-      subscriber.next(JSON.parse(localStorage.getItem(TableEnum.Menus)));
-      subscriber.complete();
+      TableInit(this.db, TableEnum.Menus, this.Menus).then(() => {
+        GetAll(this.db, TableEnum.Menus, subscriber);
+      });
 
     });
   }
 
   getByAuth(): Observable<Menu[]> {
 
-    let AuthMenu: Menu[];
+    return new Observable(subscriber => {
 
-    this.getAll().pipe(
+      this.getAll().pipe(
       switchMap(Menus => this.programService.getAll().pipe(
         switchMap(Programs => this.groupService.getAll().pipe(
           switchMap(Groups => this.roleService.getAll().pipe(
@@ -50,6 +53,8 @@ export class MenuService {
         ))
       ))
     ).subscribe(({ Menus, Programs, Groups, Roles }) => {
+
+      let AuthMenu: Menu[];
 
       const Auth: string =  localStorage.getItem('Auth');
 
@@ -67,12 +72,10 @@ export class MenuService {
         AuthMenu.find(y => y.program === x.id).linkTag = x.linkTag;
       });
 
-    });
-
-    return new Observable(subscriber => {
-
       subscriber.next(AuthMenu);
       subscriber.complete();
+
+    });
 
     });
 
@@ -81,20 +84,13 @@ export class MenuService {
   create(menu: Menu): Observable<Menu[]> {
     return new Observable(subscriber => {
 
-      const dataList: Menu[] = JSON.parse(localStorage.getItem(TableEnum.Menus));
-
-      menu.id = (dataList.length + 1).toString();
-
       if (!menu.program) {
         menu.program = '';
       }
 
-      dataList.push(menu);
-
-      localStorage.setItem(TableEnum.Menus, JSON.stringify(dataList));
-
-      subscriber.next(dataList);
-      subscriber.complete();
+      TableAdd(this.db, TableEnum.Menus, menu).then(() => {
+        GetAll(this.db, TableEnum.Menus, subscriber);
+      });
 
     });
   }
@@ -102,16 +98,9 @@ export class MenuService {
   update(menu: Menu): Observable<Menu[]> {
     return new Observable(subscriber => {
 
-      let dataList: Menu[] = JSON.parse(localStorage.getItem(TableEnum.Menus));
-
-      dataList = dataList.filter(x => x.id !== menu.id);
-
-      dataList.push(menu);
-
-      localStorage.setItem(TableEnum.Menus, JSON.stringify(dataList));
-
-      subscriber.next(dataList);
-      subscriber.complete();
+      TableUpdate(this.db, TableEnum.Menus, menu.id, menu).then(() => {
+        GetAll(this.db, TableEnum.Menus, subscriber);
+      });
 
     });
   }
@@ -119,14 +108,9 @@ export class MenuService {
   delete(menu: Menu): Observable<Menu[]> {
     return new Observable(subscriber => {
 
-      let dataList: Menu[] = JSON.parse(localStorage.getItem(TableEnum.Menus));
-
-      dataList = dataList.filter(x => x.id !== menu.id);
-
-      localStorage.setItem(TableEnum.Menus, JSON.stringify(dataList));
-
-      subscriber.next(dataList);
-      subscriber.complete();
+      TableDelete(this.db, TableEnum.Users, menu.id).then(() => {
+        GetAll(this.db, TableEnum.Users, subscriber);
+      });
 
     });
   }
