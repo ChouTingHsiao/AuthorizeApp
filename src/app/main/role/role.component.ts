@@ -7,6 +7,7 @@ import { TableEnum } from '@shared/Enum/table.enum';
 import { Grid } from '@shared/Model/table.model';
 import { Role } from '@shared/Model/role.model';
 import { RolesCreate, RolesRead, RolesEdit, RolesDelete} from '@shared/ngrx/Actions/role.action';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-role',
@@ -17,9 +18,7 @@ export class RoleComponent implements OnInit {
 
   tableComponent: TableComponent;
 
-  myGrid: Grid;
-
-  Roles: Role[];
+  myGrid: Observable<Grid>;
 
   constructor(private store: Store<any>) { }
 
@@ -29,89 +28,107 @@ export class RoleComponent implements OnInit {
   }
 
   loadGrid() {
-    this.myGrid =  {
-      tableName: TableEnum.Roles,
-      dataSource: this.store.select(TableEnum.Roles),
-      sort: { active: 'id', direction: 'asc' },
-      columns: [
-        {
-          header: 'Id',
-          columnDef: 'id',
-          type: ColumnEnum.string,
-          selector: ColumnEnum.label,
-          visible: false,
-          cell: (element: Role) => `${ element.id }`
+
+    this.myGrid = new Observable(subscriber => {
+
+      const grid = {
+        tableName: TableEnum.Roles,
+        dataSource: this.store.select(TableEnum.Roles),
+        sort: { active: 'id', direction: 'asc' },
+        columns: [
+          {
+            header: 'Id',
+            columnDef: 'id',
+            type: ColumnEnum.string,
+            selector: ColumnEnum.label,
+            visible: false,
+            cell: (element: Role) => `${ element.id }`
+          },
+          {
+            header: 'Name',
+            columnDef: 'name',
+            type: ColumnEnum.string,
+            selector: ColumnEnum.input,
+            cell: (element: Role) => `${ element.name }`
+          },
+          {
+            header: 'Remark',
+            columnDef: 'remark',
+            type: ColumnEnum.string,
+            selector: ColumnEnum.input,
+            cell: (element: Role) => `${ element.remark }`
+          },
+        ],
+        create: () => {
+
+          this.tableComponent.openDialog({
+            title: '新增頁面',
+            button: [DialogEnum.btnCreate, DialogEnum.btnCancel],
+            method: DialogEnum.create,
+            confirm: () => {
+              this.store.dispatch( new RolesCreate<Role>(
+                TableEnum.Roles,
+                [],
+                this.tableComponent.dialogComponent.getData() as Role )
+              );
+            }
+          });
+
         },
-        {
-          header: 'Name',
-          columnDef: 'name',
-          type: ColumnEnum.string,
-          selector: ColumnEnum.input,
-          cell: (element: Role) => `${ element.name }`
+        edit: (event: any) => {
+
+          this.myGrid.subscribe(x => {
+
+            const element = event.target as HTMLElement;
+
+            const nextNode = element.closest('td').nextSibling as HTMLElement;
+
+            const data =  this.tableComponent.dataSource.data.filter(y => y.id === nextNode.innerHTML.trim());
+
+            this.tableComponent.openDialog({
+              title: '修改頁面',
+              button: [DialogEnum.btnEdit, DialogEnum.btnCancel],
+              method: DialogEnum.edit,
+              data:  data[0],
+              confirm: () => {
+                this.store.dispatch( new RolesEdit<Role>(
+                  TableEnum.Roles,
+                  [],
+                  this.tableComponent.dialogComponent.getData() as Role )
+                );
+              }
+            });
+
+          });
+
         },
-        {
-          header: 'Remark',
-          columnDef: 'remark',
-          type: ColumnEnum.string,
-          selector: ColumnEnum.input,
-          cell: (element: Role) => `${ element.remark }`
-        },
-      ],
-      create: () => {
-        this.store.dispatch( new RolesCreate<Role>(
-          TableEnum.Roles,
-          [],
-          this.tableComponent.dialogComponent.getData() as Role )
-        );
-      },
-      createDialog: () => {
-        this.tableComponent.openDialog({
-          title: '新增頁面',
-          button: [DialogEnum.btnCreate, DialogEnum.btnCancel],
-          method: DialogEnum.create,
-          data:  '',
-        });
-      },
-      edit: () => {
-        this.store.dispatch( new RolesEdit<Role>(
-          TableEnum.Roles,
-          [],
-          this.tableComponent.dialogComponent.getData() as Role )
-        );
-      },
-      editDialog: (event: any) => {
+        delete: (event: any) => {
 
-        const element = event.target as HTMLElement;
+          const element = event.target as HTMLElement;
 
-        const nextNode = element.closest('td').nextSibling as HTMLElement;
+          const nextNode = element.closest('td').nextSibling as HTMLElement;
 
-        const data =  this.myGrid.dataSource.data.filter(x => x.id === nextNode.innerHTML.trim());
+          this.store.dispatch( new RolesDelete<Role>(
+            TableEnum.Roles,
+            [],
+            {id: nextNode.innerHTML.trim()} as Role )
+          );
 
-        this.tableComponent.openDialog({
-          title: '修改頁面',
-          button: [DialogEnum.btnEdit, DialogEnum.btnCancel],
-          method: DialogEnum.edit,
-          data:  data[0],
-        });
+        }
+      };
 
-      },
-      delete: (event: any) => {
+      subscriber.next(grid);
 
-        const element = event.target as HTMLElement;
+      subscriber.complete();
 
-        const nextNode = element.closest('td').nextSibling as HTMLElement;
+    });
 
-        this.store.dispatch( new RolesDelete<Role>(
-          TableEnum.Roles,
-          [],
-          {id: nextNode.innerHTML.trim()} as Role )
-        );
-      },
-    };
   }
 
   initComponentHandler(component: TableComponent) {
+
     this.tableComponent = component;
+
   }
 
 }

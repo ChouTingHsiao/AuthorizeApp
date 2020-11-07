@@ -20,8 +20,6 @@ export interface Grid {
     sort: Sort;
     columns: Column[];
     create: () => void;
-    createDialog: () => void;
-    edit: () => void;
-    editDialog: (event: any) => void;
+    edit: (event: any) => void;
     delete: (event: any) => void;
 }

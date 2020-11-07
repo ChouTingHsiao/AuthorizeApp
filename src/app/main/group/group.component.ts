@@ -9,6 +9,7 @@ import { Role } from '@shared/Model/role.model';
 import { Group } from '@shared/Model/group.model';
 import { RoleService } from '@services/role/role.service';
 import { GroupsCreate, GroupsRead, GroupsEdit, GroupsDelete} from '@shared/ngrx/Actions/group.action';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-group',
@@ -19,111 +20,129 @@ export class GroupComponent implements OnInit {
 
   tableComponent: TableComponent;
 
-  myGrid: Grid;
-
-  Groups: Group[];
-
-  Roles: Role[];
+  myGrid: Observable<Grid>;
 
   constructor(private store: Store<any>,
               private roleService: RoleService) { }
 
   ngOnInit() {
-    this.roleService.getAll().subscribe((roles) => this.Roles = roles);
-    this.loadGrid();
-    this.store.dispatch( new GroupsRead<Group>(TableEnum.Groups) );
+
+    this.roleService.getAll().subscribe((roles) => {
+      this.loadGrid(roles);
+      this.store.dispatch( new GroupsRead<Group>(TableEnum.Groups) );
+    });
+
   }
 
-  loadGrid() {
-    this.myGrid = {
-      tableName: TableEnum.Groups,
-      dataSource: this.store.select(TableEnum.Groups),
-      sort: { active: 'id', direction: 'asc' },
-      columns: [
-        {
-          header: 'Id',
-          columnDef: 'id',
-          type: ColumnEnum.string,
-          selector: ColumnEnum.label,
-          visible: false,
-          cell: (element: Group) => `${ element.id }`
+  loadGrid(roles: Role[]) {
+
+    this.myGrid = new Observable(subscriber => {
+
+      const grid = {
+        tableName: TableEnum.Groups,
+        dataSource: this.store.select(TableEnum.Groups),
+        sort: { active: 'id', direction: 'asc' },
+        columns: [
+          {
+            header: 'Id',
+            columnDef: 'id',
+            type: ColumnEnum.string,
+            selector: ColumnEnum.label,
+            visible: false,
+            cell: (element: Group) => `${ element.id }`
+          },
+          {
+            header: 'Name',
+            columnDef: 'name',
+            type: ColumnEnum.string,
+            selector: ColumnEnum.input,
+            cell: (element: Group) => `${ element.name }`
+          },
+          {
+            header: 'Role',
+            columnDef: 'role',
+            type: ColumnEnum.string,
+            selector: ColumnEnum.multiselect,
+            source:  roles as [],
+            cell: (element: Group) => `${
+              element.role.map(x => {
+                const role = roles.filter(y => y.id === x)[0];
+                return  role ? role.name : '';
+              }).join(',')
+            }`
+          },
+        ],
+        create: () => {
+
+            this.tableComponent.openDialog({
+              title: '新增頁面',
+              button: [DialogEnum.btnCreate, DialogEnum.btnCancel],
+              method: DialogEnum.create,
+              confirm: () => {
+                this.store.dispatch( new GroupsCreate<Group>(
+                  TableEnum.Groups,
+                  [],
+                  this.tableComponent.dialogComponent.getData() as Group)
+                );
+              }
+            });
+
         },
-        {
-          header: 'Name',
-          columnDef: 'name',
-          type: ColumnEnum.string,
-          selector: ColumnEnum.input,
-          cell: (element: Group) => `${ element.name }`
+        edit: (event: any) => {
+
+          this.myGrid.subscribe(x => {
+
+            const element = event.target as HTMLElement;
+
+            const nextNode = element.closest('td').nextSibling as HTMLElement;
+
+            console.log(x.dataSource);
+
+            const data =  this.tableComponent.dataSource.data.filter(y => y.id === nextNode.innerHTML.trim());
+
+            this.tableComponent.openDialog({
+              title: '修改頁面',
+              button: [DialogEnum.btnEdit, DialogEnum.btnCancel],
+              method: DialogEnum.edit,
+              data:  data[0],
+              confirm: () => {
+                this.store.dispatch( new GroupsEdit<Group>(
+                  TableEnum.Groups,
+                  [],
+                  this.tableComponent.dialogComponent.getData() as Group)
+                );
+              }
+            });
+
+          });
+
         },
-        {
-          header: 'Role',
-          columnDef: 'role',
-          type: ColumnEnum.string,
-          selector: ColumnEnum.multiselect,
-          source:  this.Roles as [],
-          cell: (element: Group) => `${
-            element.role.map(x => {
-              const role = this.Roles.filter(y => y.id === x)[0];
-              return  role ? role.name : '';
-            }).join(',')
-          }`
-        },
-      ],
-      create: () => {
-        this.store.dispatch( new GroupsCreate<Group>(
-          TableEnum.Groups,
-          [],
-          this.tableComponent.dialogComponent.getData() as Group)
-        );
-      },
-      createDialog: () => {
-        this.tableComponent.openDialog({
-          title: '新增頁面',
-          button: [DialogEnum.btnCreate, DialogEnum.btnCancel],
-          method: DialogEnum.create,
-          data:  '',
-        });
-      },
-      edit: () => {
-        this.store.dispatch( new GroupsEdit<Group>(
-          TableEnum.Groups,
-          [],
-          this.tableComponent.dialogComponent.getData() as Group)
-        );
-      },
-      editDialog: (event: any) => {
+        delete: (event: any) => {
 
-        const element = event.target as HTMLElement;
+          const element = event.target as HTMLElement;
 
-        const nextNode = element.closest('td').nextSibling as HTMLElement;
+          const nextNode = element.closest('td').nextSibling as HTMLElement;
 
-        const data =  this.myGrid.dataSource.data.filter(x => x.id === nextNode.innerHTML.trim());
+          this.store.dispatch( new GroupsDelete<Group>(
+            TableEnum.Groups,
+            [],
+            {id: nextNode.innerHTML.trim()} as Group)
+          );
+        }
+      };
 
-        this.tableComponent.openDialog({
-          title: '修改頁面',
-          button: [DialogEnum.btnEdit, DialogEnum.btnCancel],
-          method: DialogEnum.edit,
-          data:  data[0],
-        });
+      subscriber.next(grid);
 
-      },
-      delete: (event: any) => {
+      subscriber.complete();
 
-        const element = event.target as HTMLElement;
+    });
 
-        const nextNode = element.closest('td').nextSibling as HTMLElement;
-
-        this.store.dispatch( new GroupsDelete<Group>(
-          TableEnum.Groups,
-          [],
-          {id: nextNode.innerHTML.trim()} as Group)
-        );
-      },
-    };
   }
 
   initComponentHandler(component: TableComponent) {
+
     this.tableComponent = component;
+
   }
 
 }

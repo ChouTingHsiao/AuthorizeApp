@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, OnChanges, ViewChild, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
@@ -6,36 +6,34 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '@shared/Component/dialog.component';
 import { Grid, Column } from '@shared/Model/table.model';
 import { Dialog } from '@shared/Model/dialog.model';
-import { DialogEnum } from '@shared/Enum/dialog.enum';
-import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-table',
   template:
- `<button mat-raised-button (click)="grid.createDialog()"
+ `<button mat-raised-button (click)="create()"
    style="background-color: #534B62;
         color: #D0BCD5;
         font-size: 1em;">Add</button>
   <table
   mat-table
-  matSort matSortActive="{{grid.sort.active}}"
-  matSortDirection="{{grid.sort.direction}}"
-  [dataSource]="grid.dataSource"
+  matSort matSortActive="{{(grid | async)?.sort.active}}"
+  matSortDirection="{{(grid | async)?.sort.direction}}"
+  [dataSource]="dataSource"
   (matSortChange)="sortData($event)" >
 
    <!-- Maintain Column -->
    <ng-container matColumnDef="maintain">
    <th mat-header-cell *matHeaderCellDef  style="width: 20%;"></th>
    <td mat-cell *matCellDef="let element" >
-    <button mat-raised-button color="accent" (click)="grid.editDialog($event)">Edit</button>
+    <button mat-raised-button color="accent" (click)="edit($event)">Edit</button>
     &nbsp;
-    <button mat-raised-button color="warn" (click)="grid.delete($event)">Delete</button>
+    <button mat-raised-button color="warn" (click)="delete($event)">Delete</button>
    </td>
    </ng-container>
 
    <!-- Column -->
-   <ng-container *ngFor="let column of grid.columns" matColumnDef="{{column.columnDef}}">
+   <ng-container *ngFor="let column of (grid | async)?.columns" matColumnDef="{{column.columnDef}}">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ column.header }}</th>
     <td mat-cell *matCellDef="let element">{{ column.cell(element) }}</td>
    </ng-container>
@@ -45,14 +43,14 @@ import { Observable, Subscription } from 'rxjs';
   </table>
   <mat-paginator [pageSizeOptions]="[5, 10, 20]" (page)="pageData($event)" showFirstLastButtons></mat-paginator>`
 })
-export class TableComponent implements OnInit, OnDestroy {
+export class TableComponent implements OnChanges, OnDestroy {
 
   entities = 'entities';
 
   subscription: Subscription;
 
   @Input()
-  grid: Grid;
+  grid: Observable<Grid>;
 
   @Output()
   initComponent: EventEmitter<TableComponent> = new EventEmitter();
@@ -61,86 +59,112 @@ export class TableComponent implements OnInit, OnDestroy {
 
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
+  dataSource: MatTableDataSource<any>;
+
   displayedColumns: string[];
 
   dialogComponent: DialogComponent;
 
-  constructor(public dialog: MatDialog, public store: Store<any>) {}
+  create: () => void;
 
-  ngOnInit() {
-    this.setSource();
-    this.displayedColumns = this.columnToDisplay();
-    this.initComponent.emit(this);
+  edit: (event: any) => void;
+
+  delete: (event: any) => void;
+
+  constructor(public dialog: MatDialog) {}
+
+  ngOnChanges(changes) {
+    if (changes.grid && this.grid !== undefined) {
+      this.setSource();
+    }
   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
 
-  openDialog(DialogData: Dialog) {
-
-    const dialogRef = this.dialog.open(DialogComponent);
-
-    const instance = dialogRef.componentInstance;
-
-    this.dialogComponent = instance;
-
-    instance.ColumnArray = this.dataToSchema(DialogData.data);
-
-    instance.DialogData = DialogData;
-
-    switch (DialogData.method) {
-        case DialogEnum.create:
-        instance.confirm = this.grid.create;
-        break;
-        case DialogEnum.edit:
-        instance.confirm = this.grid.edit;
-        break;
-        default:
-        break;
-    }
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
+  setSource() {
+    this.grid.subscribe(x => {
+      this.subscription = x.dataSource.subscribe((y) => {
+        const entitiesArray = this.objectToArray(y[this.entities]);
+        this.dataSource = new MatTableDataSource<any>(entitiesArray);
+        this.pageNation(x);
+      });
+      this.create = x.create;
+      this.edit = x.edit;
+      this.delete = x.delete;
+      this.displayedColumns = this.columnToDisplay(x);
+      this.initComponent.emit(this);
     });
+  }
+
+  pageNation(grid: Grid) {
+
+    grid.dataSource.sort = this.sort;
+
+    grid.dataSource.paginator = this.paginator;
 
   }
 
-  dataToSchema(data: any): Column[] {
-    this.grid.columns.forEach(x => {
-         x.value = data[x.columnDef];
-    });
-    return this.grid.columns;
-  }
+  columnToDisplay(grid: Grid): string[] {
 
-  columnToDisplay(): string[] {
     const display = ['maintain'];
-    const columnArray = this.grid.columns.map((x) => {
+
+    const columnArray = grid.columns.map((x) => {
       return  x.columnDef;
     });
+
     return display.concat(columnArray);
   }
 
-  setSource() {
-    this.subscription = this.grid.dataSource.subscribe((x) => {
-      const entitiesArray = this.objectToArray(x[this.entities]);
-      this.grid.dataSource = new MatTableDataSource<any>(entitiesArray);
-      this.pageNation();
-    });
+  openDialog(dialog: Dialog) {
+
+      this.grid.subscribe(x => {
+
+        console.log(dialog);
+
+        const dialogRef = this.dialog.open(DialogComponent);
+
+        const instance = dialogRef.componentInstance;
+
+        this.dialogComponent = instance;
+
+        instance.DialogData = dialog;
+
+        instance.ColumnArray = this.dataToSchema(dialog.data, x);
+
+        instance.ColumnArray.forEach(element => {
+          instance.dynamicAddComponent(element);
+        });
+
+        instance.confirm = dialog.confirm;
+
+        dialogRef.afterClosed().subscribe(result => {
+          console.log(`Dialog result: ${result}`);
+        });
+
+      });
+
+  }
+
+  dataToSchema(data: any, grid: Grid): Column[] {
+
+    if (data !== undefined) {
+      grid.columns.forEach(y => {
+        y.value = data[y.columnDef];
+      });
+    }
+
+    return grid.columns;
   }
 
   sortData(sort: Sort) {
-      console.log(sort.active);
-      console.log(sort.direction);
+    console.log(sort.active);
+    console.log(sort.direction);
   }
 
   pageData(page: PageEvent) {
     console.log(page);
-  }
-
-  pageNation() {
-    this.grid.dataSource.sort = this.sort;
-    this.grid.dataSource.paginator = this.paginator;
   }
 
   objectToArray(obj) {

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, AfterViewInit, ComponentFactoryResolver, ComponentFactory, ElementRef } from '@angular/core';
+import { Component, ViewChild, ComponentFactoryResolver, ComponentFactory, ElementRef } from '@angular/core';
 import { DynamicHostDirective } from '@shared/Directive/dynamichost.Directive';
 import { InputComponent } from '@shared/Component/input.component';
 import { LabelComponent } from '@shared/Component/label.component';
@@ -22,7 +22,7 @@ import { ColumnEnum } from '@shared/Enum/column.enum';
     <button mat-button [mat-dialog-close]="true">{{DialogData.button[1]}}</button>
    </mat-dialog-actions>`
 })
-export class DialogComponent implements OnInit, AfterViewInit {
+export class DialogComponent {
 
   ColumnArray: Column[];
 
@@ -37,16 +37,6 @@ export class DialogComponent implements OnInit, AfterViewInit {
   @ViewChild('content', {static: false}) content: ElementRef;
 
   constructor(private componenFactoryResolver: ComponentFactoryResolver) {}
-
-  ngOnInit() {}
-
-  ngAfterViewInit() {
-
-    this.ColumnArray.forEach(element => {
-      this.dynamicAddComponent(element);
-    });
-
-  }
 
   dynamicAddComponent(element: Column) {
 

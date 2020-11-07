@@ -9,6 +9,7 @@ import { Program } from '@shared/Model/program.model';
 import { Menu } from '@shared/Model/menu.model';
 import { ProgramService } from '@services/program/program.service';
 import { MenusCreate, MenusRead, MenusEdit, MenusDelete} from '@shared/ngrx/Actions/menu.action';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-menu',
@@ -19,109 +20,125 @@ export class MenuComponent implements OnInit {
 
   tableComponent: TableComponent;
 
-  myGrid: Grid;
-
-  Menus: Menu[];
-
-  Programs: Program[];
+  myGrid: Observable<Grid>;
 
   constructor(private store: Store<any>,
               private programService: ProgramService) { }
 
   ngOnInit() {
-    this.programService.getAll().subscribe((programs) => this.Programs = programs);
-    this.loadGrid();
-    this.store.dispatch( new MenusRead<Menu>(TableEnum.Menus) );
+
+    this.programService.getAll().subscribe((programs) => {
+      this.loadGrid(programs);
+      this.store.dispatch( new MenusRead<Menu>(TableEnum.Menus) );
+    });
+
   }
 
-  loadGrid() {
-    this.myGrid = {
-      tableName: TableEnum.Menus,
-      dataSource: this.store.select(TableEnum.Menus),
-      sort: { active: 'id', direction: 'asc' },
-      columns: [
-        {
-          header: 'Id',
-          columnDef: 'id',
-          type: ColumnEnum.string,
-          selector: ColumnEnum.label,
-          visible: false,
-          cell: (element: Menu) => `${ element.id }`
+  loadGrid(programs: Program[]) {
+
+    this.myGrid = new Observable(subscriber => {
+
+      const grid = {
+        tableName: TableEnum.Menus,
+        dataSource: this.store.select(TableEnum.Menus),
+        sort: { active: 'id', direction: 'asc' },
+        columns: [
+          {
+            header: 'Id',
+            columnDef: 'id',
+            type: ColumnEnum.string,
+            selector: ColumnEnum.label,
+            visible: false,
+            cell: (element: Menu) => `${ element.id }`
+          },
+          {
+            header: 'Name',
+            columnDef: 'name',
+            type: ColumnEnum.string,
+            selector: ColumnEnum.input,
+            cell: (element: Menu) => `${ element.name }`
+          },
+          {
+            header: 'Program',
+            columnDef: 'program',
+            type: ColumnEnum.string,
+            selector: ColumnEnum.select,
+            source: programs as [],
+            cell: (element: Menu) => `${
+              element.program === '' ? '' :
+              programs.filter(x => x.id ===  element.program)[0].name
+            }`
+          },
+        ],
+        create: () => {
+
+            this.tableComponent.openDialog({
+              title: '新增頁面',
+              button: [DialogEnum.btnCreate, DialogEnum.btnCancel],
+              method: DialogEnum.create,
+              confirm: () => {
+                this.store.dispatch( new MenusCreate<Menu>(
+                  TableEnum.Menus,
+                  [],
+                  this.tableComponent.dialogComponent.getData() as Menu)
+                );
+              }
+            });
+
         },
-        {
-          header: 'Name',
-          columnDef: 'name',
-          type: ColumnEnum.string,
-          selector: ColumnEnum.input,
-          cell: (element: Menu) => `${ element.name }`
+        edit: (event: any) => {
+
+          this.myGrid.subscribe(x => {
+
+            const element = event.target as HTMLElement;
+
+            const nextNode = element.closest('td').nextSibling as HTMLElement;
+
+            const data = this.tableComponent.dataSource.data.filter(y => y.id === nextNode.innerHTML.trim());
+
+            this.tableComponent.openDialog({
+              title: '修改頁面',
+              button: [DialogEnum.btnEdit, DialogEnum.btnCancel],
+              method: DialogEnum.edit,
+              data:  data[0],
+              confirm: () => {
+                this.store.dispatch( new MenusEdit<Menu>(
+                  TableEnum.Menus,
+                  [],
+                  this.tableComponent.dialogComponent.getData() as Menu)
+                );
+              }
+            });
+
+          });
+
         },
-        {
-          header: 'Program',
-          columnDef: 'program',
-          type: ColumnEnum.string,
-          selector: ColumnEnum.select,
-          source: this.Programs as [],
-          cell: (element: Menu) => `${
-            element.program === '' ? '' :
-            this.Programs.filter(x => x.id ===  element.program)[0].name
-          }`
-        },
-      ],
-      create: () => {
-        this.store.dispatch( new MenusCreate<Menu>(
-          TableEnum.Menus,
-          [],
-          this.tableComponent.dialogComponent.getData() as Menu)
-        );
-      },
-      createDialog: () => {
-        this.tableComponent.openDialog({
-          title: '新增頁面',
-          button: [DialogEnum.btnCreate, DialogEnum.btnCancel],
-          method: DialogEnum.create,
-          data:  '',
-        });
-      },
-      edit: () => {
-        this.store.dispatch( new MenusEdit<Menu>(
-          TableEnum.Menus,
-          [],
-          this.tableComponent.dialogComponent.getData() as Menu)
-        );
-      },
-      editDialog: (event: any) => {
+        delete: (event: any) => {
 
-        const element = event.target as HTMLElement;
+          const element = event.target as HTMLElement;
 
-        const nextNode = element.closest('td').nextSibling as HTMLElement;
+          const nextNode = element.closest('td').nextSibling as HTMLElement;
 
-        const data =  this.myGrid.dataSource.data.filter(x => x.id === nextNode.innerHTML.trim());
+          this.store.dispatch( new MenusDelete<Menu>(
+            TableEnum.Menus,
+            [],
+            {id: nextNode.innerHTML.trim()} as Menu)
+          );
 
-        this.tableComponent.openDialog({
-          title: '修改頁面',
-          button: [DialogEnum.btnEdit, DialogEnum.btnCancel],
-          method: DialogEnum.edit,
-          data:  data[0],
-        });
+        }
+      };
 
-      },
-      delete: (event: any) => {
+      subscriber.next(grid);
 
-        const element = event.target as HTMLElement;
+      subscriber.complete();
 
-        const nextNode = element.closest('td').nextSibling as HTMLElement;
-
-        this.store.dispatch( new MenusDelete<Menu>(
-          TableEnum.Menus,
-          [],
-          {id: nextNode.innerHTML.trim()} as Menu)
-        );
-      },
-    };
+    });
   }
 
   initComponentHandler(component: TableComponent) {
+
     this.tableComponent = component;
+
   }
 
 }
