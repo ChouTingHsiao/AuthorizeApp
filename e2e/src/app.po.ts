@@ -21,7 +21,18 @@ export class AppPage {
     passwordInput.sendKeys('ADMIN');
 
     element(by.css('input#btn_Login')).click();
-    browser.switchTo().alert().accept();
+
+    browser.wait(() => {
+      return browser.switchTo().alert().then(
+        (x) => {
+          x.accept();
+          return true;
+        },
+        () => {
+          return false;
+        }
+      );
+  });
 
     const navigate = element.all(by.css('button.dark-theme.mat-icon-button')).first();
     this.waitIsVisible(navigate);
