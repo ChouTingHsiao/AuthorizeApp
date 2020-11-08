@@ -5,11 +5,11 @@ function OpenDB(): Promise<Dexie> {
     const AuthorizeDb = new Dexie('Authorize');
 
     AuthorizeDb.version(1).stores({
-      Groups: '++id, name, role',
-      Menus: '++id, name, program',
-      Programs: '++id, name, remark, linkTag, auth',
+      Users: '++id, name, password, role',
       Roles: '++id, name, remark',
-      Users: '++id, name, password, role'
+      Groups: '++id, name, role',
+      Programs: '++id, name, remark, linkTag, auth',
+      Menus: '++id, name, program'
     });
 
     return AuthorizeDb.open();
@@ -27,7 +27,7 @@ function TableInit(db: Promise<Dexie>, table: string, data: any[]): Promise<void
                     });
                 }
             });
-    }
+}
 
 function GetAll(db: Promise<Dexie>, table: string, subscriber: Subscriber<any>) {
     db.then( x => {
