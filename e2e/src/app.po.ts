@@ -44,6 +44,8 @@ export class AppPage {
     this.waitIsVisible(userButton);
     userButton.click();
 
+    browser.sleep(1000);
+
     const prevToatalText = element(by.css('.mat-paginator-range-label')).getText();
 
     const addButton = element.all(by.css('button.mat-raised-button.mat-button-base')).get(0);
@@ -76,6 +78,8 @@ export class AppPage {
     this.waitIsVisible(roleButton);
     roleButton.click();
 
+    browser.sleep(1000);
+
     const prevToatalText = element(by.css('.mat-paginator-range-label')).getText();
 
     const addButton = element.all(by.css('button.mat-raised-button.mat-button-base')).get(0);
@@ -100,6 +104,8 @@ export class AppPage {
     const groupButton = element(by.css('a#Group'));
     this.waitIsVisible(groupButton);
     groupButton.click();
+
+    browser.sleep(1000);
 
     const prevToatalText = element(by.css('.mat-paginator-range-label')).getText();
 
@@ -132,6 +138,8 @@ export class AppPage {
     const programButton = element(by.css('a#Program'));
     this.waitIsVisible(programButton);
     programButton.click();
+
+    browser.sleep(1000);
 
     const prevToatalText = element(by.css('.mat-paginator-range-label')).getText();
 
@@ -167,6 +175,8 @@ export class AppPage {
     const menuButton = element(by.css('a#Menu'));
     this.waitIsVisible(menuButton);
     menuButton.click();
+
+    browser.sleep(1000);
 
     const prevToatalText = element(by.css('.mat-paginator-range-label')).getText();
 
