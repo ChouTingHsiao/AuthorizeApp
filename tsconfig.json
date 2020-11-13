@@ -21,7 +21,6 @@
     "paths": {
       "@services/*": ["src/app/services/*"],
       "@shared/*": ["src/app/_shared/*"],
-      "@utility/*": ["src/app/_utility/*"],
       "@src/*": ["src/*"]
     }
   },
