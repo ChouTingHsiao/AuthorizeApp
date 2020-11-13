@@ -81,28 +81,24 @@ export class RoleComponent implements OnInit {
         },
         edit: (event: any): void => {
 
-          this.myGrid.subscribe(x => {
+          const element = event.target as HTMLElement;
 
-            const element = event.target as HTMLElement;
+          const nextNode = element.closest('td').nextSibling as HTMLElement;
 
-            const nextNode = element.closest('td').nextSibling as HTMLElement;
+          const data =  this.tableComponent.dataSource.data.filter(y => y.id === nextNode.innerHTML.trim());
 
-            const data =  this.tableComponent.dataSource.data.filter(y => y.id === nextNode.innerHTML.trim());
-
-            this.tableComponent.openDialog({
-              title: '修改頁面',
-              button: [DialogEnum.btnEdit, DialogEnum.btnCancel],
-              method: DialogEnum.edit,
-              data:  data[0],
-              confirm: () => {
-                this.store.dispatch( new RolesEdit<Role>(
-                  TableEnum.Roles,
-                  [],
-                  this.tableComponent.dialogComponent.getData() as Role )
-                );
-              }
-            });
-
+          this.tableComponent.openDialog({
+            title: '修改頁面',
+            button: [DialogEnum.btnEdit, DialogEnum.btnCancel],
+            method: DialogEnum.edit,
+            data:  data[0],
+            confirm: () => {
+              this.store.dispatch( new RolesEdit<Role>(
+                TableEnum.Roles,
+                [],
+                this.tableComponent.dialogComponent.getData() as Role )
+              );
+            }
           });
 
         },
