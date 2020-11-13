@@ -85,7 +85,7 @@ export class TableComponent implements OnChanges, OnDestroy {
 
   setSource() {
     this.grid.subscribe(x => {
-      this.subscription = x.dataSource.subscribe((y) => {
+      this.subscription = x.read().subscribe((y) => {
         const entitiesArray = this.objectToArray(y[this.entities]);
         this.dataSource = new MatTableDataSource<any>(entitiesArray);
         this.pageNation();

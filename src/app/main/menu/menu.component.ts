@@ -40,7 +40,6 @@ export class MenuComponent implements OnInit {
 
       const grid = {
         tableName: TableEnum.Menus,
-        dataSource: this.store.select(TableEnum.Menus),
         sort: { active: 'id', direction: 'asc' },
         columns: [
           {
@@ -70,7 +69,12 @@ export class MenuComponent implements OnInit {
             }`
           },
         ],
-        create: () => {
+        read: (): Observable<any> => {
+
+          return this.store.select(TableEnum.Menus);
+
+        },
+        create: (): void => {
 
             this.tableComponent.openDialog({
               title: '新增頁面',
@@ -86,7 +90,7 @@ export class MenuComponent implements OnInit {
             });
 
         },
-        edit: (event: any) => {
+        edit: (event: any): void => {
 
           this.myGrid.subscribe(x => {
 
@@ -113,7 +117,7 @@ export class MenuComponent implements OnInit {
           });
 
         },
-        delete: (event: any) => {
+        delete: (event: any): void => {
 
           const element = event.target as HTMLElement;
 

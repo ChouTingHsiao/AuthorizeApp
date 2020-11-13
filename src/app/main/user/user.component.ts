@@ -40,7 +40,6 @@ export class UserComponent implements OnInit {
 
       const grid = {
         tableName: TableEnum.Users,
-        dataSource: this.store.select(TableEnum.Users),
         sort: { active: 'id', direction: 'asc' },
         columns: [
           {
@@ -77,7 +76,12 @@ export class UserComponent implements OnInit {
             }`
           },
         ],
-        create: () => {
+        read: (): Observable<any> => {
+
+          return this.store.select(TableEnum.Users);
+
+        },
+        create: (): void => {
 
           this.tableComponent.openDialog({
             title: '新增頁面',
@@ -93,7 +97,7 @@ export class UserComponent implements OnInit {
           });
 
         },
-        edit: (event: any) => {
+        edit: (event: any): void => {
 
           this.myGrid.subscribe(x => {
 
@@ -120,7 +124,7 @@ export class UserComponent implements OnInit {
           });
 
         },
-        delete: (event: any) => {
+        delete: (event: any): void => {
 
           const element = event.target as HTMLElement;
 

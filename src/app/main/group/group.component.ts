@@ -40,7 +40,6 @@ export class GroupComponent implements OnInit {
 
       const grid = {
         tableName: TableEnum.Groups,
-        dataSource: this.store.select(TableEnum.Groups),
         sort: { active: 'id', direction: 'asc' },
         columns: [
           {
@@ -72,7 +71,12 @@ export class GroupComponent implements OnInit {
             }`
           },
         ],
-        create: () => {
+        read: (): Observable<any> => {
+
+          return this.store.select(TableEnum.Groups);
+
+        },
+        create: (): void => {
 
             this.tableComponent.openDialog({
               title: '新增頁面',
@@ -88,15 +92,13 @@ export class GroupComponent implements OnInit {
             });
 
         },
-        edit: (event: any) => {
+        edit: (event: any): void => {
 
           this.myGrid.subscribe(x => {
 
             const element = event.target as HTMLElement;
 
             const nextNode = element.closest('td').nextSibling as HTMLElement;
-
-            console.log(x.dataSource);
 
             const data =  this.tableComponent.dataSource.data.filter(y => y.id === nextNode.innerHTML.trim());
 
@@ -117,7 +119,7 @@ export class GroupComponent implements OnInit {
           });
 
         },
-        delete: (event: any) => {
+        delete: (event: any): void => {
 
           const element = event.target as HTMLElement;
 

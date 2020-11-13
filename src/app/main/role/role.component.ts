@@ -33,7 +33,6 @@ export class RoleComponent implements OnInit {
 
       const grid = {
         tableName: TableEnum.Roles,
-        dataSource: this.store.select(TableEnum.Roles),
         sort: { active: 'id', direction: 'asc' },
         columns: [
           {
@@ -59,7 +58,12 @@ export class RoleComponent implements OnInit {
             cell: (element: Role) => `${ element.remark }`
           },
         ],
-        create: () => {
+        read: (): Observable<any> => {
+
+          return this.store.select(TableEnum.Roles);
+
+        },
+        create: (): void => {
 
           this.tableComponent.openDialog({
             title: '新增頁面',
@@ -75,7 +79,7 @@ export class RoleComponent implements OnInit {
           });
 
         },
-        edit: (event: any) => {
+        edit: (event: any): void => {
 
           this.myGrid.subscribe(x => {
 
@@ -102,7 +106,7 @@ export class RoleComponent implements OnInit {
           });
 
         },
-        delete: (event: any) => {
+        delete: (event: any): void => {
 
           const element = event.target as HTMLElement;
 

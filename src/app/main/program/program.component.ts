@@ -40,7 +40,6 @@ export class ProgramComponent implements OnInit {
 
       const grid = {
         tableName: TableEnum.Programs,
-        dataSource: this.store.select(TableEnum.Programs),
         sort: { active: 'id', direction: 'asc' },
         columns: [
           {
@@ -84,7 +83,12 @@ export class ProgramComponent implements OnInit {
             }`
           },
         ],
-        create: () => {
+        read: (): Observable<any> => {
+
+          return this.store.select(TableEnum.Programs);
+
+        },
+        create: (): void => {
 
           this.tableComponent.openDialog({
             title: '新增頁面',
@@ -100,7 +104,7 @@ export class ProgramComponent implements OnInit {
           });
 
         },
-        edit: (event: any) => {
+        edit: (event: any): void => {
 
           this.myGrid.subscribe(x => {
 
@@ -127,7 +131,7 @@ export class ProgramComponent implements OnInit {
           });
 
         },
-        delete: (event: any) => {
+        delete: (event: any): void => {
 
           const element = event.target as HTMLElement;
 

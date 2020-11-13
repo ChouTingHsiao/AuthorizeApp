@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs';
 export interface Column {
     header: string;
     columnDef: string;
@@ -16,9 +17,9 @@ export interface Sort {
 
 export interface Grid {
     tableName: string;
-    dataSource?: any;
     sort: Sort;
     columns: Column[];
+    read: () => Observable<any>;
     create: () => void;
     edit: (event: any) => void;
     delete: (event: any) => void;
