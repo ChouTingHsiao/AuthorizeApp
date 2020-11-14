@@ -12,9 +12,8 @@ import { Observable, Subscription } from 'rxjs';
   selector: 'app-table',
   template:
  `<button mat-raised-button (click)="create()"
-   style="background-color: #534B62;
-        color: #D0BCD5;
-        font-size: 1em;">Add</button>
+  class="dark-theme"
+   style="font-size: 1em;">Add</button>
   <table
   mat-table
   matSort matSortActive="{{(grid | async)?.sort.active}}"
@@ -41,7 +40,8 @@ import { Observable, Subscription } from 'rxjs';
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
-  <mat-paginator [pageSizeOptions]="[5, 10, 20]" (page)="pageData($event)" showFirstLastButtons></mat-paginator>`
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" (page)="pageData($event)" showFirstLastButtons></mat-paginator>`,
+  styleUrls: ['../CSS/main.css']
 })
 export class TableComponent implements OnChanges, OnDestroy {
 
