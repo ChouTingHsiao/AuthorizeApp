@@ -8,7 +8,7 @@ import { Grid } from '@shared/Model/table.model';
 import { Program } from '@shared/Model/program.model';
 import { Menu } from '@shared/Model/menu.model';
 import { ProgramService } from '@services/program/program.service';
-import { MenusCreate, MenusRead, MenusEdit, MenusDelete} from '@shared/ngrx/Actions/menu.action';
+import { Read, Create, Edit, Delete} from '@shared/ngrx/Actions/maintain.action';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -29,7 +29,7 @@ export class MenuComponent implements OnInit {
 
     this.programService.getAll().subscribe((programs) => {
       this.loadGrid(programs);
-      this.store.dispatch( new MenusRead<Menu>(TableEnum.Menus) );
+      this.store.dispatch( new Read<Menu>(TableEnum.Menus) );
     });
 
   }
@@ -81,7 +81,7 @@ export class MenuComponent implements OnInit {
               button: [DialogEnum.btnCreate, DialogEnum.btnCancel],
               method: DialogEnum.create,
               confirm: () => {
-                this.store.dispatch( new MenusCreate<Menu>(
+                this.store.dispatch( new Create<Menu>(
                   TableEnum.Menus,
                   [],
                   this.tableComponent.dialogComponent.getData() as Menu)
@@ -104,7 +104,7 @@ export class MenuComponent implements OnInit {
             method: DialogEnum.edit,
             data:  data[0],
             confirm: () => {
-              this.store.dispatch( new MenusEdit<Menu>(
+              this.store.dispatch( new Edit<Menu>(
                 TableEnum.Menus,
                 [],
                 this.tableComponent.dialogComponent.getData() as Menu)
@@ -119,7 +119,7 @@ export class MenuComponent implements OnInit {
 
           const nextNode = element.closest('td').nextSibling as HTMLElement;
 
-          this.store.dispatch( new MenusDelete<Menu>(
+          this.store.dispatch( new Delete<Menu>(
             TableEnum.Menus,
             [],
             {id: nextNode.innerHTML.trim()} as Menu)

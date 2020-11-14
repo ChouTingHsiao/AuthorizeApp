@@ -8,7 +8,7 @@ import { Grid } from '@shared/Model/table.model';
 import { Role } from '@shared/Model/role.model';
 import { Group } from '@shared/Model/group.model';
 import { RoleService } from '@services/role/role.service';
-import { GroupsCreate, GroupsRead, GroupsEdit, GroupsDelete} from '@shared/ngrx/Actions/group.action';
+import { Read, Create, Edit, Delete} from '@shared/ngrx/Actions/maintain.action';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -29,7 +29,7 @@ export class GroupComponent implements OnInit {
 
     this.roleService.getAll().subscribe((roles) => {
       this.loadGrid(roles);
-      this.store.dispatch( new GroupsRead<Group>(TableEnum.Groups) );
+      this.store.dispatch( new Read<Group>(TableEnum.Groups) );
     });
 
   }
@@ -83,7 +83,7 @@ export class GroupComponent implements OnInit {
               button: [DialogEnum.btnCreate, DialogEnum.btnCancel],
               method: DialogEnum.create,
               confirm: () => {
-                this.store.dispatch( new GroupsCreate<Group>(
+                this.store.dispatch( new Create<Group>(
                   TableEnum.Groups,
                   [],
                   this.tableComponent.dialogComponent.getData() as Group)
@@ -106,7 +106,7 @@ export class GroupComponent implements OnInit {
             method: DialogEnum.edit,
             data:  data[0],
             confirm: () => {
-              this.store.dispatch( new GroupsEdit<Group>(
+              this.store.dispatch( new Edit<Group>(
                 TableEnum.Groups,
                 [],
                 this.tableComponent.dialogComponent.getData() as Group)
@@ -121,7 +121,7 @@ export class GroupComponent implements OnInit {
 
           const nextNode = element.closest('td').nextSibling as HTMLElement;
 
-          this.store.dispatch( new GroupsDelete<Group>(
+          this.store.dispatch( new Delete<Group>(
             TableEnum.Groups,
             [],
             {id: nextNode.innerHTML.trim()} as Group)

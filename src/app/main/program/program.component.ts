@@ -8,7 +8,7 @@ import { Grid } from '@shared/Model/table.model';
 import { Group } from '@shared/Model/group.model';
 import { Program } from '@shared/Model/program.model';
 import { GroupService } from '@services/group/group.service';
-import { ProgramsCreate, ProgramsRead, ProgramsEdit, ProgramsDelete} from '@shared/ngrx/Actions/program.action';
+import { Read, Create, Edit, Delete} from '@shared/ngrx/Actions/maintain.action';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -29,7 +29,7 @@ export class ProgramComponent implements OnInit {
 
     this.groupService.getAll().subscribe((groups) => {
       this.loadGrid(groups);
-      this.store.dispatch( new ProgramsRead<Program>(TableEnum.Programs) );
+      this.store.dispatch( new Read<Program>(TableEnum.Programs) );
     });
 
   }
@@ -95,7 +95,7 @@ export class ProgramComponent implements OnInit {
             button: [DialogEnum.btnCreate, DialogEnum.btnCancel],
             method: DialogEnum.create,
             confirm: () => {
-              this.store.dispatch( new ProgramsCreate<Program>(
+              this.store.dispatch( new Create<Program>(
                 TableEnum.Programs,
                 [],
                 this.tableComponent.dialogComponent.getData() as Program )
@@ -118,7 +118,7 @@ export class ProgramComponent implements OnInit {
             method: DialogEnum.edit,
             data:  data[0],
             confirm: () => {
-              this.store.dispatch( new ProgramsEdit<Program>(
+              this.store.dispatch( new Edit<Program>(
                 TableEnum.Programs,
                 [],
                 this.tableComponent.dialogComponent.getData() as Program )
@@ -133,7 +133,7 @@ export class ProgramComponent implements OnInit {
 
           const nextNode = element.closest('td').nextSibling as HTMLElement;
 
-          this.store.dispatch( new ProgramsDelete<Program>(
+          this.store.dispatch( new Delete<Program>(
             TableEnum.Programs,
             [],
             {id: nextNode.innerHTML.trim()} as Program )

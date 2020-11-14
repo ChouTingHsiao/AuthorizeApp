@@ -8,7 +8,7 @@ import { Grid } from '@shared/Model/table.model';
 import { User } from '@shared/Model/user.model';
 import { Role } from '@shared/Model/role.model';
 import { RoleService } from '@services/role/role.service';
-import { UsersCreate, UsersRead, UsersEdit, UsersDelete} from '@shared/ngrx/Actions/user.action';
+import { Read, Create, Edit, Delete} from '@shared/ngrx/Actions/maintain.action';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -29,7 +29,7 @@ export class UserComponent implements OnInit {
 
     this.roleService.getAll().subscribe((roles) => {
       this.loadGrid(roles);
-      this.store.dispatch( new UsersRead<User>(TableEnum.Users) );
+      this.store.dispatch( new Read<User>(TableEnum.Users) );
     });
 
   }
@@ -88,7 +88,7 @@ export class UserComponent implements OnInit {
             button: [DialogEnum.btnCreate, DialogEnum.btnCancel],
             method: DialogEnum.create,
             confirm: () => {
-              this.store.dispatch( new UsersCreate<User>(
+              this.store.dispatch( new Create<User>(
                 TableEnum.Users,
                 [],
                 this.tableComponent.dialogComponent.getData() as User )
@@ -111,7 +111,7 @@ export class UserComponent implements OnInit {
             method: DialogEnum.edit,
             data:  userData[0],
             confirm: () => {
-              this.store.dispatch( new UsersEdit<User>(
+              this.store.dispatch( new Edit<User>(
                 TableEnum.Users,
                 [],
                 this.tableComponent.dialogComponent.getData() as User )
@@ -126,7 +126,7 @@ export class UserComponent implements OnInit {
 
           const nextNode = element.closest('td').nextSibling as HTMLElement;
 
-          this.store.dispatch( new UsersDelete<User>(
+          this.store.dispatch( new Delete<User>(
             TableEnum.Users,
             [],
             {id: nextNode.innerHTML.trim()} as User )

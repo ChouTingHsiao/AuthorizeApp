@@ -6,7 +6,7 @@ import { ColumnEnum } from '@shared/Enum/column.enum';
 import { TableEnum } from '@shared/Enum/table.enum';
 import { Grid } from '@shared/Model/table.model';
 import { Role } from '@shared/Model/role.model';
-import { RolesCreate, RolesRead, RolesEdit, RolesDelete} from '@shared/ngrx/Actions/role.action';
+import { Read, Create, Edit, Delete} from '@shared/ngrx/Actions/maintain.action';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -24,7 +24,7 @@ export class RoleComponent implements OnInit {
 
   ngOnInit() {
     this.loadGrid();
-    this.store.dispatch( new RolesRead<Role>(TableEnum.Roles) );
+    this.store.dispatch( new Read<Role>(TableEnum.Roles) );
   }
 
   loadGrid() {
@@ -70,7 +70,7 @@ export class RoleComponent implements OnInit {
             button: [DialogEnum.btnCreate, DialogEnum.btnCancel],
             method: DialogEnum.create,
             confirm: () => {
-              this.store.dispatch( new RolesCreate<Role>(
+              this.store.dispatch( new Create<Role>(
                 TableEnum.Roles,
                 [],
                 this.tableComponent.dialogComponent.getData() as Role )
@@ -93,7 +93,7 @@ export class RoleComponent implements OnInit {
             method: DialogEnum.edit,
             data:  data[0],
             confirm: () => {
-              this.store.dispatch( new RolesEdit<Role>(
+              this.store.dispatch( new Edit<Role>(
                 TableEnum.Roles,
                 [],
                 this.tableComponent.dialogComponent.getData() as Role )
@@ -108,7 +108,7 @@ export class RoleComponent implements OnInit {
 
           const nextNode = element.closest('td').nextSibling as HTMLElement;
 
-          this.store.dispatch( new RolesDelete<Role>(
+          this.store.dispatch( new Delete<Role>(
             TableEnum.Roles,
             [],
             {id: nextNode.innerHTML.trim()} as Role )
