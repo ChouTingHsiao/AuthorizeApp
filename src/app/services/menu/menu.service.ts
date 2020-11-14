@@ -109,7 +109,7 @@ export class MenuService {
     return new Observable(subscriber => {
 
       TableDelete(this.db, TableEnum.Users, menu.id).then(() => {
-        GetAll(this.db, TableEnum.Users, subscriber);
+        GetAll(this.db, TableEnum.Menus, subscriber);
       });
 
     });
