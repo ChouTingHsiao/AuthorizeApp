@@ -108,7 +108,7 @@ export class MenuService {
   delete(menu: Menu): Observable<Menu[]> {
     return new Observable(subscriber => {
 
-      TableDelete(this.db, TableEnum.Users, menu.id).then(() => {
+      TableDelete(this.db, TableEnum.Menus, menu.id).then(() => {
         GetAll(this.db, TableEnum.Menus, subscriber);
       });
 
