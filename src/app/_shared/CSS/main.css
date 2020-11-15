@@ -1,17 +1,17 @@
     
-    .dark-theme{
-        background-color: #35284A;
-        color: white;
-    }
+.dark-theme{
+    background-color: #35284A;
+    color: white;
+}
 
-    .theme-center{
-        text-align: center;
-    }
+.theme-center{
+    text-align: center;
+}
 
-    .display-none{
-        display: none;
-    }
+.display-none{
+    display: none;
+}
 
-    table {
-        width: 100%;
-    }
+table {
+    width: 100%;
+}
