@@ -62,7 +62,7 @@ export class MenuComponent implements OnInit {
             columnDef: 'program',
             type: ColumnEnum.string,
             selector: ColumnEnum.select,
-            source: programs as [],
+            source: this.store.select(TableEnum.Programs),
             cell: (element: Menu) => `${
               element.program === '' ? '' :
               programs.filter(x => x.id ===  element.program)[0].name
@@ -91,6 +91,8 @@ export class MenuComponent implements OnInit {
 
         },
         edit: (event: any): void => {
+
+          this.store.dispatch( new Read<Program>(TableEnum.Programs) );
 
           const element = event.target as HTMLElement;
 

@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '@shared/Component/dialog.component';
 import { Grid, Column } from '@shared/Model/table.model';
 import { Dialog } from '@shared/Model/dialog.model';
+import { objectToArray } from '@shared/Method/object.method';
 import { Observable, Subscription } from 'rxjs';
 
 @Component({
@@ -86,7 +87,7 @@ export class TableComponent implements OnChanges, OnDestroy {
   setSource() {
     this.grid.subscribe(x => {
       this.subscription = x.read().subscribe((y) => {
-        const entitiesArray = this.objectToArray(y[this.entities]);
+        const entitiesArray = objectToArray(y[this.entities]);
         this.dataSource = new MatTableDataSource<any>(entitiesArray);
         this.pageNation();
       });
@@ -124,23 +125,6 @@ export class TableComponent implements OnChanges, OnDestroy {
 
   pageData(page: PageEvent) {
     console.log(page);
-  }
-
-  objectToArray(obj) {
-
-    const keys = Object.keys(obj);
-
-    const length = keys.length - 1;
-
-    let key = '';
-
-    const array = [];
-
-    for (let i = 0; i <= length; i++) {
-        key =  keys[i];
-        array.push(obj[key]);
-    }
-    return array;
   }
 
   openDialog(dialog: Dialog) {

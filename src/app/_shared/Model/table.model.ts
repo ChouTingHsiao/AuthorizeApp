@@ -4,7 +4,7 @@ export interface Column {
     columnDef: string;
     type: string;
     selector: string;
-    source?: [];
+    source?: Observable<any>;
     visible?: boolean;
     value?: string;
     cell: any;
