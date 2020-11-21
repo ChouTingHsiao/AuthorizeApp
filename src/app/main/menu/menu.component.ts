@@ -29,7 +29,6 @@ export class MenuComponent implements OnInit {
 
     this.programService.getAll().subscribe((programs) => {
       this.loadGrid(programs);
-      this.store.dispatch( new Read<Menu>(TableEnum.Menus) );
     });
 
   }
@@ -76,6 +75,8 @@ export class MenuComponent implements OnInit {
         ],
         read: (): Observable<any> => {
 
+          this.store.dispatch( new Read<Menu>(TableEnum.Menus) );
+
           return this.store.select(TableEnum.Menus);
 
         },
@@ -120,15 +121,21 @@ export class MenuComponent implements OnInit {
         },
         delete: (event: any): void => {
 
-          const element = event.target as HTMLElement;
+          const isCanDelete = confirm('Are you sure you want to delete this?');
 
-          const nextNode = element.closest('td').nextSibling as HTMLElement;
+          if (isCanDelete) {
 
-          this.store.dispatch( new Delete<Menu>(
-            TableEnum.Menus,
-            [],
-            {id: nextNode.innerHTML.trim()} as Menu)
-          );
+            const element = event.target as HTMLElement;
+
+            const nextNode = element.closest('td').nextSibling as HTMLElement;
+
+            this.store.dispatch( new Delete<Menu>(
+              TableEnum.Menus,
+              [],
+              {id: nextNode.innerHTML.trim()} as Menu)
+            );
+
+          }
 
         }
       };
@@ -138,6 +145,7 @@ export class MenuComponent implements OnInit {
       subscriber.complete();
 
     });
+
   }
 
   initComponentHandler(component: TableComponent) {

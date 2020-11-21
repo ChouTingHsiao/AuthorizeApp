@@ -29,7 +29,6 @@ export class UserComponent implements OnInit {
 
     this.roleService.getAll().subscribe((roles) => {
       this.loadGrid(roles);
-      this.store.dispatch( new Read<User>(TableEnum.Users) );
     });
 
   }
@@ -83,6 +82,8 @@ export class UserComponent implements OnInit {
         ],
         read: (): Observable<any> => {
 
+          this.store.dispatch( new Read<User>(TableEnum.Users) );
+
           return this.store.select(TableEnum.Users);
 
         },
@@ -127,15 +128,21 @@ export class UserComponent implements OnInit {
         },
         delete: (event: any): void => {
 
-          const element = event.target as HTMLElement;
+          const isCanDelete = confirm('Are you sure you want to delete this?');
 
-          const nextNode = element.closest('td').nextSibling as HTMLElement;
+          if (isCanDelete) {
 
-          this.store.dispatch( new Delete<User>(
-            TableEnum.Users,
-            [],
-            {id: nextNode.innerHTML.trim()} as User )
-          );
+            const element = event.target as HTMLElement;
+
+            const nextNode = element.closest('td').nextSibling as HTMLElement;
+
+            this.store.dispatch( new Delete<User>(
+              TableEnum.Users,
+              [],
+              {id: nextNode.innerHTML.trim()} as User )
+            );
+
+          }
 
         }
       };
@@ -145,6 +152,7 @@ export class UserComponent implements OnInit {
       subscriber.complete();
 
     });
+
   }
 
   initComponentHandler(component: TableComponent) {

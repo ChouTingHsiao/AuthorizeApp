@@ -29,7 +29,6 @@ export class ProgramComponent implements OnInit {
 
     this.groupService.getAll().subscribe((groups) => {
       this.loadGrid(groups);
-      this.store.dispatch( new Read<Program>(TableEnum.Programs) );
     });
 
   }
@@ -90,6 +89,8 @@ export class ProgramComponent implements OnInit {
         ],
         read: (): Observable<any> => {
 
+          this.store.dispatch( new Read<Program>(TableEnum.Programs) );
+
           return this.store.select(TableEnum.Programs);
 
         },
@@ -134,15 +135,22 @@ export class ProgramComponent implements OnInit {
         },
         delete: (event: any): void => {
 
-          const element = event.target as HTMLElement;
+          const isCanDelete = confirm('Are you sure you want to delete this?');
 
-          const nextNode = element.closest('td').nextSibling as HTMLElement;
+          if (isCanDelete) {
 
-          this.store.dispatch( new Delete<Program>(
-            TableEnum.Programs,
-            [],
-            {id: nextNode.innerHTML.trim()} as Program )
-          );
+            const element = event.target as HTMLElement;
+
+            const nextNode = element.closest('td').nextSibling as HTMLElement;
+
+            this.store.dispatch( new Delete<Program>(
+              TableEnum.Programs,
+              [],
+              {id: nextNode.innerHTML.trim()} as Program )
+            );
+
+          }
+
         }
       };
 
@@ -158,4 +166,5 @@ export class ProgramComponent implements OnInit {
     this.tableComponent = component;
 
   }
+
 }

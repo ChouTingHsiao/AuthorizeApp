@@ -24,7 +24,6 @@ export class RoleComponent implements OnInit {
 
   ngOnInit() {
     this.loadGrid();
-    this.store.dispatch( new Read<Role>(TableEnum.Roles) );
   }
 
   loadGrid() {
@@ -59,6 +58,8 @@ export class RoleComponent implements OnInit {
           },
         ],
         read: (): Observable<any> => {
+
+          this.store.dispatch( new Read<Role>(TableEnum.Roles) );
 
           return this.store.select(TableEnum.Roles);
 
@@ -104,15 +105,21 @@ export class RoleComponent implements OnInit {
         },
         delete: (event: any): void => {
 
-          const element = event.target as HTMLElement;
+          const isCanDelete = confirm('Are you sure you want to delete this?');
 
-          const nextNode = element.closest('td').nextSibling as HTMLElement;
+          if (isCanDelete) {
 
-          this.store.dispatch( new Delete<Role>(
-            TableEnum.Roles,
-            [],
-            {id: nextNode.innerHTML.trim()} as Role )
-          );
+            const element = event.target as HTMLElement;
+
+            const nextNode = element.closest('td').nextSibling as HTMLElement;
+
+            this.store.dispatch( new Delete<Role>(
+              TableEnum.Roles,
+              [],
+              {id: nextNode.innerHTML.trim()} as Role )
+            );
+
+          }
 
         }
       };

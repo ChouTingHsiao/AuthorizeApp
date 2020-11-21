@@ -29,7 +29,6 @@ export class GroupComponent implements OnInit {
 
     this.roleService.getAll().subscribe((roles) => {
       this.loadGrid(roles);
-      this.store.dispatch( new Read<Group>(TableEnum.Groups) );
     });
 
   }
@@ -78,6 +77,8 @@ export class GroupComponent implements OnInit {
         ],
         read: (): Observable<any> => {
 
+          this.store.dispatch( new Read<Group>(TableEnum.Groups) );
+
           return this.store.select(TableEnum.Groups);
 
         },
@@ -122,15 +123,22 @@ export class GroupComponent implements OnInit {
         },
         delete: (event: any): void => {
 
-          const element = event.target as HTMLElement;
+          const isCanDelete = confirm('Are you sure you want to delete this?');
 
-          const nextNode = element.closest('td').nextSibling as HTMLElement;
+          if (isCanDelete) {
 
-          this.store.dispatch( new Delete<Group>(
-            TableEnum.Groups,
-            [],
-            {id: nextNode.innerHTML.trim()} as Group)
-          );
+            const element = event.target as HTMLElement;
+
+            const nextNode = element.closest('td').nextSibling as HTMLElement;
+
+            this.store.dispatch( new Delete<Group>(
+              TableEnum.Groups,
+              [],
+              {id: nextNode.innerHTML.trim()} as Group)
+            );
+
+          }
+
         }
       };
 
