@@ -69,7 +69,12 @@ export class UserComponent implements OnInit {
             columnDef: 'role',
             type: ColumnEnum.string,
             selector: ColumnEnum.select,
-            source: this.store.select(TableEnum.Roles),
+            source: (): Observable<any> => {
+
+              this.store.dispatch( new Read<Role>(TableEnum.Roles) );
+
+              return this.store.select(TableEnum.Roles);
+            },
             cell: (element: User) => `${
               element.role === '' ? '' :
               roles.filter(x => x.id ===  element.role)[0].name
@@ -98,8 +103,6 @@ export class UserComponent implements OnInit {
 
         },
         edit: (event: any): void => {
-
-          this.store.dispatch( new Read<Role>(TableEnum.Roles) );
 
           const element = event.target as HTMLElement;
 

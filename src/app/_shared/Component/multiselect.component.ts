@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Column } from '@shared/Model/table.model';
 import { entityToArray } from '@shared/Method/object.method';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-multiselect',
@@ -9,7 +10,7 @@ import { entityToArray } from '@shared/Method/object.method';
    <mat-label>{{column.columnDef}}</mat-label>
    <mat-select multiple [(ngModel)]="column.value" name="{{column.columnDef}}">
     <mat-option [value]="default">--</mat-option>
-    <mat-option *ngFor="let data of entityToArray(column.source| async)" [value]="data.id">
+    <mat-option *ngFor="let data of entityToArray(source | async)" [value]="data.id">
       {{data.name}}
     </mat-option>
    </mat-select>
@@ -22,9 +23,13 @@ export class MultiSelectComponent implements OnInit {
 
   column: Column;
 
+  source: Observable<any>;
+
   entityToArray = (x: any ): any[] => entityToArray(x);
 
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.source = this.column.source();
+  }
 }

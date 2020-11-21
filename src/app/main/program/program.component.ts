@@ -76,7 +76,12 @@ export class ProgramComponent implements OnInit {
             columnDef: 'auth',
             type: ColumnEnum.string,
             selector: ColumnEnum.select,
-            source: this.store.select(TableEnum.Groups),
+            source: (): Observable<any> => {
+
+              this.store.dispatch( new Read<Group>(TableEnum.Groups) );
+
+              return this.store.select(TableEnum.Groups);
+            },
             cell: (element: Program) => `${
               element.auth === '' ? '' :
               groups.filter(x => x.id ===  element.auth)[0].name
@@ -105,8 +110,6 @@ export class ProgramComponent implements OnInit {
 
         },
         edit: (event: any): void => {
-
-          this.store.dispatch( new Read<Group>(TableEnum.Groups) );
 
           const element = event.target as HTMLElement;
 

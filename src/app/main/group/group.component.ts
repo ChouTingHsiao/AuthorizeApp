@@ -62,7 +62,12 @@ export class GroupComponent implements OnInit {
             columnDef: 'role',
             type: ColumnEnum.string,
             selector: ColumnEnum.multiselect,
-            source:  this.store.select(TableEnum.Roles),
+            source: (): Observable<any> => {
+
+              this.store.dispatch( new Read<Role>(TableEnum.Roles) );
+
+              return this.store.select(TableEnum.Roles);
+            },
             cell: (element: Group) => `${
               element.role.map(x => {
                 const role = roles.filter(y => y.id === x)[0];
@@ -93,8 +98,6 @@ export class GroupComponent implements OnInit {
 
         },
         edit: (event: any): void => {
-
-          this.store.dispatch( new Read<Role>(TableEnum.Roles) );
 
           const element = event.target as HTMLElement;
 
