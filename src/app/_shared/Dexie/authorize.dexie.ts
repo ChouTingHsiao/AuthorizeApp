@@ -40,10 +40,12 @@ function GetAll(db: Promise<Dexie>, table: string, subscriber: Subscriber<any>) 
 
 function TableAdd(db: Promise<Dexie>, table: string, data: any): Promise<void> {
     return  db.then(x => {
-              return x.table(table).count();
+              return x.table(table).toArray();
             }).then(x => {
 
-                data.id = (x + 1).toString();
+                const idArray = x.map(obj => parseInt(obj.id, 0));
+
+                data.id = (Math.max(...idArray) + 1).toString();
 
                 db.then( y => {
                     y.table(table).add(data).catch(Dexie.BulkError, (e) => {
