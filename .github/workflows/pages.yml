@@ -20,7 +20,7 @@ jobs:
 
     - name: update chrome
       id: update
-      run: sudo apt-get upgrade google-chrome-stable -y
+      run: sudo apt-get update && sudo apt-get upgrade google-chrome-stable -y
 
     - name: install
       id: install
