@@ -18,6 +18,10 @@ jobs:
       with:
         node-version: 12.8
 
+    - name: update chrome
+      id: update
+      run: sudo apt-get upgrade google-chrome-stable -y
+
     - name: install
       id: install
       run: npm install
