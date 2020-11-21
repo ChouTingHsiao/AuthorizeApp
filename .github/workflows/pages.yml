@@ -18,10 +18,6 @@ jobs:
       with:
         node-version: 12.8
 
-    - name: update chrome
-      id: update
-      run: sudo apt-get update && sudo apt-get upgrade google-chrome-stable -y
-
     - name: install
       id: install
       run: npm install
@@ -30,9 +26,13 @@ jobs:
       id: test
       run: npm test
 
+    - name: update chrome
+      id: update
+      run: npx webdriver-manager clean && npx webdriver-manager update --versions.chrome 86.0.4240.22
+
     - name: e2e
       id: e2e
-      run: npm run e2e
+      run: npm run e2e --no-webdriver-update
 
     - name: Build and Deploy
       id: Ngh
