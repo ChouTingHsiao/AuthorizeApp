@@ -1,11 +1,11 @@
 @import '../_shared/CSS/main.css';
 
 @media screen and (max-width: 900px){
-  .toolbar-header {
-    height: 2em !important;
+  mat-toolbar.toolbar-header {
+    height: 2em;
   }
-  .toolbar-container{
-    margin-top: 6% !important;
+  mat-sidenav-container.toolbar-container{
+    margin-top: 6%;
   }
 }
 
