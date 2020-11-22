@@ -5,11 +5,11 @@ function OpenDB(): Promise<Dexie> {
     const AuthorizeDb = new Dexie('Authorize');
 
     AuthorizeDb.version(1).stores({
-      Users: '++id, name, password, role',
-      Roles: '++id, name, remark',
-      Groups: '++id, name, role',
-      Programs: '++id, name, remark, linkTag, auth',
-      Menus: '++id, name, program'
+      Users: 'id, name, password, role',
+      Roles: 'id, name, remark',
+      Groups: 'id, name, role',
+      Programs: 'id, name, remark, linkTag, auth',
+      Menus: 'id, name, program'
     });
 
     return AuthorizeDb.open();
