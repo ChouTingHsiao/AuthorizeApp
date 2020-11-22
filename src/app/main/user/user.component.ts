@@ -103,43 +103,37 @@ export class UserComponent implements OnInit {
           });
 
         },
-        edit: (event: any): void => {
-
-          const element = event.target as HTMLElement;
-
-          const nextNode = element.closest('td').nextSibling as HTMLElement;
-
-          const userData =  this.tableComponent.dataSource.data.filter(y => y.id === nextNode.innerHTML.trim());
+        edit: (element: User): void => {
 
           this.tableComponent.openDialog({
             title: '修改頁面',
             button: [DialogEnum.btnEdit, DialogEnum.btnCancel],
             method: DialogEnum.edit,
-            data:  userData[0],
+            data: element,
             confirm: () => {
-              this.store.dispatch( new Edit<User>(
-                TableEnum.Users,
-                [],
-                this.tableComponent.dialogComponent.getData() as User )
+              this.store.dispatch(
+                new Edit<User>(
+                  TableEnum.Users,
+                  [],
+                  this.tableComponent.dialogComponent.getData() as User
+                )
               );
             }
           });
 
         },
-        delete: (event: any): void => {
+        delete: (element: User): void => {
 
           const isCanDelete = confirm('Are you sure you want to delete this?');
 
           if (isCanDelete) {
 
-            const element = event.target as HTMLElement;
-
-            const nextNode = element.closest('td').nextSibling as HTMLElement;
-
-            this.store.dispatch( new Delete<User>(
-              TableEnum.Users,
-              [],
-              {id: nextNode.innerHTML.trim()} as User )
+            this.store.dispatch(
+              new Delete<User>(
+                TableEnum.Users,
+                [],
+                element
+              )
             );
 
           }

@@ -26,16 +26,19 @@ import { Observable, Subscription } from 'rxjs';
    <ng-container matColumnDef="maintain">
    <th mat-header-cell *matHeaderCellDef  style="width: 20%;"></th>
    <td mat-cell *matCellDef="let element" >
-    <button mat-raised-button color="accent" (click)="edit($event)">Edit</button>
+    <button mat-raised-button color="accent" (click)="edit(element, $event)">Edit</button>
     &nbsp;
-    <button mat-raised-button color="warn" (click)="delete($event)">Delete</button>
+    <button mat-raised-button color="warn" (click)="delete(element, $event)">Delete</button>
    </td>
    </ng-container>
 
    <!-- Column -->
    <ng-container *ngFor="let column of (grid | async)?.columns" matColumnDef="{{column.columnDef}}">
+
     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ column.header }}</th>
+
     <td mat-cell *matCellDef="let element">{{ column.cell(element) }}</td>
+
    </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -68,9 +71,9 @@ export class TableComponent implements OnChanges, OnDestroy {
 
   create: () => void;
 
-  edit: (event: any) => void;
+  edit: (element: any, event: any) => void;
 
-  delete: (event: any) => void;
+  delete: (element: any, event: any) => void;
 
   constructor(public dialog: MatDialog, private changeRef: ChangeDetectorRef) {}
 
@@ -111,7 +114,7 @@ export class TableComponent implements OnChanges, OnDestroy {
 
     const display = ['maintain'];
 
-    const columnArray = grid.columns.map((x) => {
+    const columnArray = grid.columns.filter(data => !(data.visible === false)).map((x) => {
       return  x.columnDef;
     });
 

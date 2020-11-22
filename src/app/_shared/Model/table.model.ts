@@ -21,6 +21,6 @@ export interface Grid {
     columns: Column[];
     read: () => Observable<any>;
     create: () => void;
-    edit: (event: any) => void;
-    delete: (event: any) => void;
+    edit: (element: any, event?: any) => void;
+    delete: (element: any, event?: any) => void;
 }

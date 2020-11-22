@@ -80,43 +80,37 @@ export class RoleComponent implements OnInit {
           });
 
         },
-        edit: (event: any): void => {
-
-          const element = event.target as HTMLElement;
-
-          const nextNode = element.closest('td').nextSibling as HTMLElement;
-
-          const data =  this.tableComponent.dataSource.data.filter(y => y.id === nextNode.innerHTML.trim());
+        edit: (element: Role): void => {
 
           this.tableComponent.openDialog({
             title: '修改頁面',
             button: [DialogEnum.btnEdit, DialogEnum.btnCancel],
             method: DialogEnum.edit,
-            data:  data[0],
+            data: element,
             confirm: () => {
-              this.store.dispatch( new Edit<Role>(
-                TableEnum.Roles,
-                [],
-                this.tableComponent.dialogComponent.getData() as Role )
+              this.store.dispatch(
+                new Edit<Role>(
+                  TableEnum.Roles,
+                  [],
+                  this.tableComponent.dialogComponent.getData() as Role
+                )
               );
             }
           });
 
         },
-        delete: (event: any): void => {
+        delete: (element: Role): void => {
 
           const isCanDelete = confirm('Are you sure you want to delete this?');
 
           if (isCanDelete) {
 
-            const element = event.target as HTMLElement;
-
-            const nextNode = element.closest('td').nextSibling as HTMLElement;
-
-            this.store.dispatch( new Delete<Role>(
-              TableEnum.Roles,
-              [],
-              {id: nextNode.innerHTML.trim()} as Role )
+            this.store.dispatch(
+              new Delete<Role>(
+                TableEnum.Roles,
+                [],
+                element
+              )
             );
 
           }
