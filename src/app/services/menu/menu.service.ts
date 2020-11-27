@@ -67,7 +67,8 @@ export class MenuService {
       const AuthMenu: Menu[] = Menus.filter( x => x.program === '' || AuthProgramMap.includes(x.program));
 
       AuthMenu.forEach(x => {
-        x.linkTag = AuthProgram.find(y => y.id === x.program).linkTag;
+        const program = AuthProgram.find(y => y.id === x.program);
+        x.linkTag = program ? program.linkTag : '/';
       });
 
       subscriber.next(AuthMenu);
