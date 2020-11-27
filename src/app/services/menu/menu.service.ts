@@ -54,8 +54,6 @@ export class MenuService {
       ))
     ).subscribe(({ Menus, Programs, Groups, Roles }) => {
 
-      let AuthMenu: Menu[];
-
       const Auth: string =  localStorage.getItem('Auth');
 
       const roleId: string = Roles.filter(x => x.name === Auth)[0].id;
@@ -66,10 +64,10 @@ export class MenuService {
 
       const AuthProgramMap = AuthProgram.map(x => x.id);
 
-      AuthMenu = Menus.filter( x => x.program === '' || AuthProgramMap.includes(x.program));
+      const AuthMenu: Menu[] = Menus.filter( x => x.program === '' || AuthProgramMap.includes(x.program));
 
-      AuthProgram.forEach(x => {
-        AuthMenu.find(y => y.program === x.id).linkTag = x.linkTag;
+      AuthMenu.forEach(x => {
+        x.linkTag = AuthProgram.find(y => y.id === x.program).linkTag;
       });
 
       subscriber.next(AuthMenu);
