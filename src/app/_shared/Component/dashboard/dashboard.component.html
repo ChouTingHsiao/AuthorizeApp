@@ -20,8 +20,8 @@
         </mat-card-header>
         <mat-divider></mat-divider>
         <mat-card-content class="theme-left container">
-          <p>
-          &nbsp;&nbsp;{{Role}}
+          <p *ngFor="let group of (Groups | async)" >
+            &nbsp;&nbsp;{{group.name}}
           </p>
         </mat-card-content>
     </mat-card>
@@ -34,7 +34,7 @@
       <mat-divider></mat-divider>
       <mat-card-content class="theme-left container">
         <p *ngFor="let menu of (Menus | async)" >
-        &nbsp;&nbsp;{{menu.linkTag}}
+          &nbsp;&nbsp;{{menu.linkTag}}
         </p>
       </mat-card-content>
   </mat-card>

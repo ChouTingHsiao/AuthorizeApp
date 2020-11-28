@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import { Group } from '@shared/Model/group.model';
 import { TableEnum } from '@shared/Enum/table.enum';
 import { OpenDB, GetAll, TableInit, TableAdd, TableUpdate, TableDelete } from '@shared/Dexie/authorize.dexie';
+import { RoleService } from '@services/role/role.service';
 import { Observable } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 import Dexie from 'dexie';
 
 @Injectable({
@@ -16,7 +18,7 @@ export class GroupService {
 
   private db: Promise<Dexie>;
 
-  constructor() {
+  constructor(private roleService: RoleService) {
     this.db = OpenDB();
   }
 
@@ -29,6 +31,30 @@ export class GroupService {
           subscriber.complete();
         });
       });
+
+    });
+  }
+
+  getByAuth(): Observable<Group[]> {
+    return new Observable(subscriber => {
+
+      this.getAll().pipe(
+        switchMap(Groups => this.roleService.getAll().pipe(
+          map(Roles => ({ Groups, Roles }))
+        ))
+      ).subscribe(({ Groups, Roles }) => {
+
+        const Auth: string =  localStorage.getItem('Auth');
+
+        const roleId: string = Roles.filter(x => x.name === Auth)[0].id;
+
+        const AuthGroup = Groups.filter( x => x.role.includes(roleId));
+
+        subscriber.next(AuthGroup);
+        subscriber.complete();
+
+      });
+
 
     });
   }
