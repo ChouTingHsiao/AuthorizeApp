@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginGuard } from '@shared/Guard/LoginGuard';
 import { AuthGuard } from '@shared/Guard/AuthGuard';
+import { DashboardComponent } from '@shared/Component/dashboard/dashboard.component';
 import { MainComponent } from './main.component';
 import { UserComponent } from './user/user.component';
 import { RoleComponent } from './role/role.component';
@@ -22,7 +23,8 @@ const routes: Routes = [
           {  path: 'Group', component: GroupComponent, canActivate: [AuthGuard]  },
           {  path: 'Program', component: ProgramComponent, canActivate: [AuthGuard]  },
           {  path: 'Menu', component: MenuComponent, canActivate: [AuthGuard]  },
-          {  path: '**', redirectTo: '/Main'  }
+          {  path: 'Dashboard', component: DashboardComponent, canActivate: [LoginGuard] },
+          {  path: '**', redirectTo: '/Main/Dashboard'  }
     ]
   },
   {  path: '**', redirectTo: '/Main' }
