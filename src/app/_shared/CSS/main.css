@@ -8,6 +8,14 @@
     text-align: center;
 }
 
+.theme-left{
+    text-align: left;
+}
+
+.theme-right{
+    text-align: right;
+}
+
 .display-none{
     display: none;
 }
