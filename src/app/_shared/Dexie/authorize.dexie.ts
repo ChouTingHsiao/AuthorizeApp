@@ -22,7 +22,7 @@ function TableInit(db: Promise<Dexie>, table: string, data: any[]): Promise<void
                 if (x < 1) {
                     db.then( y => {
                         y.table(table).bulkAdd(data).catch(Dexie.BulkError, (e) => {
-                            console.error('bulkAdd did not succeed.');
+                            console.error(`${table} bulkAdd did not succeed.`);
                         });
                     });
                 }
@@ -46,7 +46,7 @@ function TableAdd(db: Promise<Dexie>, table: string, data: any): Promise<void> {
 
                 db.then( y => {
                     y.table(table).add(data).catch(Dexie.BulkError, (e) => {
-                        console.error('add not succeed.');
+                        console.error(`${table} add not succeed.`);
                     });
                 });
 
@@ -56,7 +56,7 @@ function TableAdd(db: Promise<Dexie>, table: string, data: any): Promise<void> {
 function TableUpdate(db: Promise<Dexie>, table: string, id: string, data: any): Promise<void> {
     return  db.then( x => {
                 x.table(table).update(id, data).catch(Dexie.BulkError, (e) => {
-                    console.error('add not succeed.');
+                    console.error(`${table} add not succeed.`);
                 });
             });
 }
@@ -64,7 +64,7 @@ function TableUpdate(db: Promise<Dexie>, table: string, id: string, data: any): 
 function TableDelete(db: Promise<Dexie>, table: string, id: string): Promise<void> {
     return  db.then( x => {
                 x.table(table).delete(id).catch(Dexie.BulkError, (e) => {
-                    console.error('add not succeed.');
+                    console.error(`${table} add not succeed.`);
                 });
             });
 }
