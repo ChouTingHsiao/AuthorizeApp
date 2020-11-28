@@ -4,7 +4,7 @@ import { BrowserAnimationsModule  } from '@angular/platform-browser/animations';
 
 import { GroupComponent } from './group.component';
 
-import { TableComponent } from '@shared/Component/table.component';
+import { TableComponent } from '@shared/Component/table/table.component';
 
 import { MatTableModule } from '@angular/material/table';
 

@@ -1,0 +1,33 @@
+<button mat-raised-button (click)="create()"
+  class="dark-theme"
+   style="font-size: 1em;">Add</button>
+  <table
+  mat-table
+  matSort matSortActive="{{(grid | async)?.sort.active}}"
+  matSortDirection="{{(grid | async)?.sort.direction}}"
+  [dataSource]="dataSource"
+  (matSortChange)="sortData($event)" >
+
+   <!-- Maintain Column -->
+   <ng-container matColumnDef="maintain">
+   <th mat-header-cell *matHeaderCellDef  style="width: 20%;"></th>
+   <td mat-cell *matCellDef="let element" >
+    <button mat-raised-button color="accent" (click)="edit(element, $event)">Edit</button>
+    &nbsp;
+    <button mat-raised-button color="warn" (click)="delete(element, $event)">Delete</button>
+   </td>
+   </ng-container>
+
+   <!-- Column -->
+   <ng-container *ngFor="let column of (grid | async)?.columns" matColumnDef="{{column.columnDef}}">
+
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ column.header }}</th>
+
+    <td mat-cell *matCellDef="let element">{{ column.cell(element) }}</td>
+
+   </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" (page)="pageData($event)" showFirstLastButtons></mat-paginator>

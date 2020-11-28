@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { TableComponent } from '@shared/Component/table.component';
+import { TableComponent } from '@shared/Component/table/table.component';
 import { DialogEnum } from '@shared/Enum/dialog.enum';
 import { ColumnEnum } from '@shared/Enum/column.enum';
 import { TableEnum } from '@shared/Enum/table.enum';

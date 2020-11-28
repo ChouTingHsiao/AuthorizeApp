@@ -19,7 +19,7 @@ import { InputComponent } from '@shared/Component/input.component';
 import { LabelComponent } from '@shared/Component/label.component';
 import { SelectComponent } from '@shared/Component/select.component';
 import { MultiSelectComponent } from '@shared/Component/multiselect.component';
-import { TableComponent } from '@shared/Component/table.component';
+import { TableComponent } from '@shared/Component/table/table.component';
 import { MainComponent } from './main.component';
 import { UserComponent } from './user/user.component';
 import { RoleComponent } from './role/role.component';
