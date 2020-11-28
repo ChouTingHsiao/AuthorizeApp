@@ -7,7 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { MainRoutingModule } from './main/main-routing.module';
 
 import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from '@shared/Component/login/login.component';
 import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
 
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
