@@ -26,7 +26,7 @@ import { RoleComponent } from './role/role.component';
 import { GroupComponent } from './group/group.component';
 import { ProgramComponent } from './program/program.component';
 import { DynamicHostDirective } from '@shared/Directive/dynamichost.Directive';
-import { UnauthorizeComponent } from './unauthorize/unauthorize.component';
+import { UnauthorizeComponent } from '@shared/Component/unauthorize/unauthorize.component';
 import { MenuComponent } from './menu/menu.component';
 import { DashboardComponent } from '@shared/Component/dashboard/dashboard.component';
 
