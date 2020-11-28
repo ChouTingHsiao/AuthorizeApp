@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import { Program } from '@shared/Model/program.model';
 import { TableEnum } from '@shared/Enum/table.enum';
 import { OpenDB, GetAll, TableInit, TableAdd, TableUpdate, TableDelete } from '@shared/Dexie/authorize.dexie';
+import { GroupService } from '@services/group/group.service';
 import { Observable } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 import Dexie from 'dexie';
 
 
@@ -21,7 +23,7 @@ export class ProgramService {
 
   private db: Promise<Dexie>;
 
-  constructor() {
+  constructor(private groupService: GroupService) {
     this.db = OpenDB();
   }
 
@@ -34,6 +36,28 @@ export class ProgramService {
           subscriber.complete();
         });
       });
+
+    });
+  }
+
+  getByAuth(): Observable<Program[]> {
+    return new Observable(subscriber => {
+
+      this.getAll().pipe(
+        switchMap(Programs => this.groupService.getByAuth().pipe(
+          map(Groups => ({ Programs, Groups }))
+        ))
+      ).subscribe(({ Programs, Groups }) => {
+
+        const AuthGroupMap = Groups.map(x => x.id);
+
+        const AuthProgram = Programs.filter( x => x.auth === '' || AuthGroupMap.includes(x.auth));
+
+        subscriber.next(AuthProgram);
+        subscriber.complete();
+
+      });
+
 
     });
   }
