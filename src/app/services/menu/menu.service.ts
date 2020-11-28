@@ -48,29 +48,17 @@ export class MenuService {
     return new Observable(subscriber => {
 
       this.getAll().pipe(
-      switchMap(Menus => this.programService.getAll().pipe(
-        switchMap(Programs => this.groupService.getAll().pipe(
-          switchMap(Groups => this.roleService.getAll().pipe(
-            map(Roles => ({ Menus, Programs, Groups, Roles }))
-          ))
-        ))
+      switchMap(Menus => this.programService.getByAuth().pipe(
+        map(Programs => ({ Menus, Programs }))
       ))
-    ).subscribe(({ Menus, Programs, Groups, Roles }) => {
+    ).subscribe(({ Menus, Programs }) => {
 
-      const Auth: string =  localStorage.getItem('Auth');
-
-      const roleId: string = Roles.filter(x => x.name === Auth)[0].id;
-
-      const AuthGroupMap = Groups.filter( x => x.role.includes(roleId)).map(x => x.id);
-
-      const AuthProgram = Programs.filter( x => x.auth === '' || AuthGroupMap.includes(x.auth));
-
-      const AuthProgramMap = AuthProgram.map(x => x.id);
+      const AuthProgramMap = Programs.map(x => x.id);
 
       const AuthMenu: Menu[] = Menus.filter( x => x.program === '' || AuthProgramMap.includes(x.program));
 
       AuthMenu.forEach(x => {
-        const program = AuthProgram.find(y => y.id === x.program);
+        const program = Programs.find(y => y.id === x.program);
         x.linkTag = program ? program.linkTag : '/';
       });
 
