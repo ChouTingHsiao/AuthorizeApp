@@ -14,7 +14,7 @@ import { ProgramEffects } from '@shared/ngrx/Effects/program.effects';
 import { MenuEffects } from '@shared/ngrx/Effects/menu.effects';
 
 import { MainRoutingModule } from './main-routing.module';
-import { DialogComponent } from '@shared/Component/dialog.component';
+import { DialogComponent } from '@shared/Component/dialog/dialog.component';
 import { InputComponent } from '@shared/Component/input.component';
 import { LabelComponent } from '@shared/Component/label.component';
 import { SelectComponent } from '@shared/Component/select.component';

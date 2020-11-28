@@ -10,17 +10,8 @@ import { ColumnEnum } from '@shared/Enum/column.enum';
 
 @Component({
   selector: 'app-dialog',
-  template:
-  `<h2 mat-dialog-title>{{DialogData.title}}</h2>
-
-   <mat-dialog-content  #content class="mat-typography">
-      <ng-container appDynamicHost></ng-container>
-   </mat-dialog-content>
-
-   <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close (click)="confirm()">{{DialogData.button[0]}}</button>
-    <button mat-button [mat-dialog-close]="true">{{DialogData.button[1]}}</button>
-   </mat-dialog-actions>`
+  templateUrl: './dialog.component.html',
+  styleUrls: ['./dialog.component.scss']
 })
 export class DialogComponent {
 

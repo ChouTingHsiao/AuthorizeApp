@@ -3,7 +3,7 @@ import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '@shared/Component/dialog.component';
+import { DialogComponent } from '@shared/Component/dialog/dialog.component';
 import { Grid, Column } from '@shared/Model/table.model';
 import { Dialog } from '@shared/Model/dialog.model';
 import { objectToArray } from '@shared/Method/object.method';
