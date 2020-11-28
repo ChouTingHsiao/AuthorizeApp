@@ -3,11 +3,8 @@ import { Column } from '@shared/Model/table.model';
 
 @Component({
   selector: 'app-input',
-  template:
-  `<mat-form-field>
-  <input matInput placeholder={{column.columnDef}} [(ngModel)]="column.value">
-  </mat-form-field>
-  <br/>`
+  templateUrl: './input.component.html',
+  styleUrls: ['./input.component.scss']
 })
 export class InputComponent implements OnInit {
 
