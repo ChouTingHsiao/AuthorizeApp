@@ -16,7 +16,7 @@ import { MenuEffects } from '@shared/ngrx/Effects/menu.effects';
 import { MainRoutingModule } from './main-routing.module';
 import { DialogComponent } from '@shared/Component/dialog/dialog.component';
 import { InputComponent } from '@shared/Component/input/input.component';
-import { LabelComponent } from '@shared/Component/label.component';
+import { LabelComponent } from '@shared/Component/label/label.component';
 import { SelectComponent } from '@shared/Component/select.component';
 import { MultiSelectComponent } from '@shared/Component/multiselect.component';
 import { TableComponent } from '@shared/Component/table/table.component';

@@ -3,11 +3,8 @@ import { Column } from '@shared/Model/table.model';
 
 @Component({
   selector: 'app-label',
-  template:
-  `<label [style.display]="visible">
-   {{column.value}}
-   </label>
-   <br/>`
+  templateUrl: './label.component.html',
+  styleUrls: ['./label.component.scss']
 })
 export class LabelComponent implements OnInit {
 
