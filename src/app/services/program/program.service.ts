@@ -29,13 +29,17 @@ export class ProgramService {
     return new Observable(subscriber => {
 
       TableInit(this.db, TableEnum.Programs, this.Programs).then(() => {
-        GetAll(this.db, TableEnum.Programs, subscriber);
+        GetAll(this.db, TableEnum.Programs).then(x => {
+          subscriber.next(x);
+          subscriber.complete();
+        });
       });
 
     });
   }
 
   create(program: Program): Observable<Program[]> {
+
     return new Observable(subscriber => {
 
       if (!program.auth) {
@@ -43,17 +47,24 @@ export class ProgramService {
       }
 
       TableAdd(this.db, TableEnum.Programs, program).then(() => {
-        GetAll(this.db, TableEnum.Programs, subscriber);
+        GetAll(this.db, TableEnum.Programs).then(x => {
+          subscriber.next(x);
+          subscriber.complete();
+        });
       });
 
     });
+
   }
 
   update(program: Program): Observable<Program[]> {
     return new Observable(subscriber => {
 
       TableUpdate(this.db, TableEnum.Programs, program.id, program).then(() => {
-        GetAll(this.db, TableEnum.Programs, subscriber);
+        GetAll(this.db, TableEnum.Programs).then(x => {
+          subscriber.next(x);
+          subscriber.complete();
+        });
       });
 
     });
@@ -63,7 +74,10 @@ export class ProgramService {
     return new Observable(subscriber => {
 
       TableDelete(this.db, TableEnum.Programs, program.id).then(() => {
-        GetAll(this.db, TableEnum.Programs, subscriber);
+        GetAll(this.db, TableEnum.Programs).then(x => {
+          subscriber.next(x);
+          subscriber.complete();
+        });
       });
 
     });

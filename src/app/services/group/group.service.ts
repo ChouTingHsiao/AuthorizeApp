@@ -24,7 +24,10 @@ export class GroupService {
     return new Observable(subscriber => {
 
       TableInit(this.db, TableEnum.Groups, this.Groups).then(() => {
-        GetAll(this.db, TableEnum.Groups, subscriber);
+        GetAll(this.db, TableEnum.Groups).then(x => {
+          subscriber.next(x);
+          subscriber.complete();
+        });
       });
 
     });
@@ -38,7 +41,10 @@ export class GroupService {
       }
 
       TableAdd(this.db, TableEnum.Groups, group).then(() => {
-        GetAll(this.db, TableEnum.Groups, subscriber);
+        GetAll(this.db, TableEnum.Groups).then(x => {
+          subscriber.next(x);
+          subscriber.complete();
+        });
       });
 
     });
@@ -48,7 +54,10 @@ export class GroupService {
     return new Observable(subscriber => {
 
       TableUpdate(this.db, TableEnum.Groups, group.id, group).then(() => {
-        GetAll(this.db, TableEnum.Groups, subscriber);
+        GetAll(this.db, TableEnum.Groups).then(x => {
+          subscriber.next(x);
+          subscriber.complete();
+        });
       });
 
     });
@@ -58,7 +67,10 @@ export class GroupService {
     return new Observable(subscriber => {
 
       TableDelete(this.db, TableEnum.Groups, group.id).then(() => {
-        GetAll(this.db, TableEnum.Groups, subscriber);
+        GetAll(this.db, TableEnum.Groups).then(x => {
+          subscriber.next(x);
+          subscriber.complete();
+        });
       });
 
     });

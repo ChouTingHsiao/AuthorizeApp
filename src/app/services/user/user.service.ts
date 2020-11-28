@@ -25,7 +25,10 @@ export class UserService {
     return new Observable(subscriber => {
 
       TableInit(this.db, TableEnum.Users, this.Users).then(() => {
-        GetAll(this.db, TableEnum.Users, subscriber);
+        GetAll(this.db, TableEnum.Users).then(x => {
+          subscriber.next(x);
+          subscriber.complete();
+        });
       });
 
     });
@@ -39,7 +42,10 @@ export class UserService {
       }
 
       TableAdd(this.db, TableEnum.Users, user).then(() => {
-        GetAll(this.db, TableEnum.Users, subscriber);
+        GetAll(this.db, TableEnum.Users).then(x => {
+          subscriber.next(x);
+          subscriber.complete();
+        });
       });
 
     });
@@ -49,7 +55,10 @@ export class UserService {
     return new Observable(subscriber => {
 
       TableUpdate(this.db, TableEnum.Users, user.id, user).then(() => {
-        GetAll(this.db, TableEnum.Users, subscriber);
+        GetAll(this.db, TableEnum.Users).then(x => {
+          subscriber.next(x);
+          subscriber.complete();
+        });
       });
 
     });
@@ -59,7 +68,10 @@ export class UserService {
     return new Observable(subscriber => {
 
       TableDelete(this.db, TableEnum.Users, user.id).then(() => {
-        GetAll(this.db, TableEnum.Users, subscriber);
+        GetAll(this.db, TableEnum.Users).then(x => {
+          subscriber.next(x);
+          subscriber.complete();
+        });
       });
 
     });

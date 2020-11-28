@@ -29,12 +29,9 @@ function TableInit(db: Promise<Dexie>, table: string, data: any[]): Promise<void
             });
 }
 
-function GetAll(db: Promise<Dexie>, table: string, subscriber: Subscriber<any>) {
-    db.then( x => {
-        x.table(table).toArray().then((y) => {
-          subscriber.next(y);
-          subscriber.complete();
-        });
+function GetAll(db: Promise<Dexie>, table: string): Promise<any[]> {
+    return db.then( x => {
+       return x.table(table).toArray();
     });
 }
 

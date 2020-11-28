@@ -34,7 +34,10 @@ export class MenuService {
     return new Observable(subscriber => {
 
       TableInit(this.db, TableEnum.Menus, this.Menus).then(() => {
-        GetAll(this.db, TableEnum.Menus, subscriber);
+        GetAll(this.db, TableEnum.Menus).then(x => {
+          subscriber.next(x);
+          subscriber.complete();
+        });
       });
 
     });
@@ -88,7 +91,10 @@ export class MenuService {
       }
 
       TableAdd(this.db, TableEnum.Menus, menu).then(() => {
-        GetAll(this.db, TableEnum.Menus, subscriber);
+        GetAll(this.db, TableEnum.Menus).then(x => {
+          subscriber.next(x);
+          subscriber.complete();
+        });
       });
 
     });
@@ -98,7 +104,10 @@ export class MenuService {
     return new Observable(subscriber => {
 
       TableUpdate(this.db, TableEnum.Menus, menu.id, menu).then(() => {
-        GetAll(this.db, TableEnum.Menus, subscriber);
+        GetAll(this.db, TableEnum.Menus).then(x => {
+          subscriber.next(x);
+          subscriber.complete();
+        });
       });
 
     });
@@ -108,7 +117,10 @@ export class MenuService {
     return new Observable(subscriber => {
 
       TableDelete(this.db, TableEnum.Menus, menu.id).then(() => {
-        GetAll(this.db, TableEnum.Menus, subscriber);
+        GetAll(this.db, TableEnum.Menus).then(x => {
+          subscriber.next(x);
+          subscriber.complete();
+        });
       });
 
     });

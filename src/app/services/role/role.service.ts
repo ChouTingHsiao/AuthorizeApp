@@ -25,7 +25,10 @@ export class RoleService {
     return new Observable(subscriber => {
 
       TableInit(this.db, TableEnum.Roles, this.Roles).then(() => {
-        GetAll(this.db, TableEnum.Roles, subscriber);
+        GetAll(this.db, TableEnum.Roles).then(x => {
+          subscriber.next(x);
+          subscriber.complete();
+        });
       });
 
     });
@@ -35,7 +38,10 @@ export class RoleService {
     return new Observable(subscriber => {
 
       TableAdd(this.db, TableEnum.Roles, role).then(() => {
-        GetAll(this.db, TableEnum.Roles, subscriber);
+        GetAll(this.db, TableEnum.Roles).then(x => {
+          subscriber.next(x);
+          subscriber.complete();
+        });
       });
 
     });
@@ -45,7 +51,10 @@ export class RoleService {
     return new Observable(subscriber => {
 
       TableUpdate(this.db, TableEnum.Roles, role.id, role).then(() => {
-        GetAll(this.db, TableEnum.Roles, subscriber);
+        GetAll(this.db, TableEnum.Roles).then(x => {
+          subscriber.next(x);
+          subscriber.complete();
+        });
       });
 
     });
@@ -55,7 +64,10 @@ export class RoleService {
     return new Observable(subscriber => {
 
       TableDelete(this.db, TableEnum.Roles, role.id).then(() => {
-        GetAll(this.db, TableEnum.Roles, subscriber);
+        GetAll(this.db, TableEnum.Roles).then(x => {
+          subscriber.next(x);
+          subscriber.complete();
+        });
       });
 
     });
