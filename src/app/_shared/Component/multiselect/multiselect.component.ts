@@ -5,17 +5,8 @@ import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-multiselect',
-  template:
-  `<mat-form-field>
-   <mat-label>{{column.columnDef}}</mat-label>
-   <mat-select multiple [(ngModel)]="column.value" name="{{column.columnDef}}">
-    <mat-option [value]="default">--</mat-option>
-    <mat-option *ngFor="let data of entityToArray(source | async)" [value]="data.id">
-      {{data.name}}
-    </mat-option>
-   </mat-select>
-   </mat-form-field>
-   <br/>`
+  templateUrl: './multiselect.component.html',
+  styleUrls: ['./multiselect.component.scss']
 })
 export class MultiSelectComponent implements OnInit {
 
