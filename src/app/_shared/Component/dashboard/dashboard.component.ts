@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Program } from '@shared/Model/program.model';
 import { Group } from '@shared/Model/group.model';
-import { MenuService } from '@services/menu/menu.service';
 import { GroupService } from '@services/group/group.service';
 import { ProgramService } from '@services/program/program.service';
 import { Observable } from 'rxjs';
@@ -19,8 +18,8 @@ export class DashboardComponent implements OnInit {
 
   Programs: Observable<Program[]>;
 
-  constructor(private programService: ProgramService,
-              private groupService: GroupService) { }
+  constructor(private groupService: GroupService,
+              private programService: ProgramService) { }
 
   ngOnInit() {
     this.Role = localStorage.getItem('Auth');
