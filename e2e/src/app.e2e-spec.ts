@@ -1,5 +1,6 @@
 import { AppPage } from './app.po';
 import { browser, logging} from 'protractor';
+import { takeScreenshot } from './utility/imageHelper';
 
 describe('workspace-project App', () => {
   let page: AppPage;
@@ -11,37 +12,37 @@ describe('workspace-project App', () => {
   it('should display login title', () => {
     page.navigateTo();
     page.loginPage();
-    page.takeScreenshot('loginPage');
+    takeScreenshot('loginPage');
   });
 
   it('should display Main page', () => {
     page.mainPage();
-    page.takeScreenshot('mainPage');
+    takeScreenshot('mainPage');
   });
 
   it('should display User page', () => {
     page.userPage();
-    page.takeScreenshot('userPage');
+    takeScreenshot('userPage');
   });
 
   it('should display Role page', () => {
     page.rolePage();
-    page.takeScreenshot('rolePage');
+    takeScreenshot('rolePage');
   });
 
   it('should display Group page', () => {
     page.groupPage();
-    page.takeScreenshot('groupPage');
+    takeScreenshot('groupPage');
   });
 
   it('should display Program page', () => {
     page.programPage();
-    page.takeScreenshot('programPage');
+    takeScreenshot('programPage');
   });
 
   it('should display Menu page', () => {
     page.menuPage();
-    page.takeScreenshot('menuPage');
+    takeScreenshot('menuPage');
   });
 
   afterEach(async () => {

@@ -1,5 +1,5 @@
-// at the top of the test spec:
-const fs = require('fs');
+import { browser } from 'protractor';
+import * as fs from 'fs';
 
 function NotExist(filename: string): boolean {
     fs.exists(filename, (exists: boolean) => {
@@ -45,4 +45,10 @@ function writeScreenShot(data, filename) {
 
 }
 
-export  { writeScreenShot };
+function takeScreenshot(imgName: string) {
+    browser.takeScreenshot().then(data =>
+      writeScreenShot(data, `${imgName}.png`)
+    );
+}
+
+export  { takeScreenshot };
