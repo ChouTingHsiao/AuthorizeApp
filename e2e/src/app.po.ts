@@ -1,5 +1,6 @@
 import { browser, by, element, promise } from 'protractor';
-import { waitIsVisible, waitIsPresence } from './utility/protractorHelper';
+import { takeScreenshot } from './utility/imageHelper';
+import { waitIsVisible, waitIsVisibleToClick, waitIsPresence, waitAlertToClick } from './utility/protractorHelper';
 
 export class AppPage {
 
@@ -28,17 +29,7 @@ export class AppPage {
 
     element(by.css('input#btn_Login')).click();
 
-    browser.wait(() => {
-      return browser.switchTo().alert().then(
-        (x) => {
-          x.accept();
-          return true;
-        },
-        () => {
-          return false;
-        }
-      );
-    });
+    waitAlertToClick();
 
     const navigate = element.all(by.css('button.dark-theme.mat-icon-button')).first();
     waitIsVisible(navigate);
@@ -49,16 +40,12 @@ export class AppPage {
   userPage() {
 
     const userButton = element(by.css('a#User'));
-    waitIsVisible(userButton);
-    userButton.click();
+    waitIsVisibleToClick(userButton);
 
-    const prevToatal = element(by.css('.mat-paginator-range-label'));
-    waitIsPresence(prevToatal);
-    const prevToatalText = prevToatal.getText();
+    const beforeAddRange = this.getPageRange();
 
     const addButton = element.all(by.css('button.mat-raised-button.mat-button-base')).get(0);
-    waitIsVisible(addButton);
-    addButton.click();
+    waitIsVisibleToClick(addButton);
 
     const nameInput = element(by.css('input[placeholder="name"]'));
     nameInput.sendKeys('TEST');
@@ -67,33 +54,29 @@ export class AppPage {
     passwordInput.sendKeys('TEST');
 
     const selectButton = element(by.css('mat-select.mat-select-empty'));
-    waitIsVisible(selectButton);
-    selectButton.click();
+    waitIsVisibleToClick(selectButton);
 
     const checkButton = element.all(by.css('mat-option')).get(2);
     checkButton.click();
 
     const dialogAddButton = element.all(by.css('button.mat-button.mat-button-base')).get(0);
-    waitIsVisible(dialogAddButton);
-    dialogAddButton.click();
+    waitIsVisibleToClick(dialogAddButton);
 
-    this.checkTotalCount(prevToatalText);
+    this.checkTotalCount(beforeAddRange, 1);
+
+    this.deleteMethodTest();
 
   }
 
   rolePage() {
 
     const roleButton = element(by.css('a#Role'));
-    waitIsVisible(roleButton);
-    roleButton.click();
+    waitIsVisibleToClick(roleButton);
 
-    const prevToatal = element(by.css('.mat-paginator-range-label'));
-    waitIsPresence(prevToatal);
-    const prevToatalText = prevToatal.getText();
+    const beforeAddRange = this.getPageRange();
 
     const addButton = element.all(by.css('button.mat-raised-button.mat-button-base')).get(0);
-    waitIsVisible(addButton);
-    addButton.click();
+    waitIsVisibleToClick(addButton);
 
     const nameInput = element(by.css('input[placeholder="name"]'));
     nameInput.sendKeys('TEST');
@@ -102,61 +85,54 @@ export class AppPage {
     passwordInput.sendKeys('TEST');
 
     const dialogAddButton = element.all(by.css('button.mat-button.mat-button-base')).get(0);
-    waitIsVisible(dialogAddButton);
-    dialogAddButton.click();
+    waitIsVisibleToClick(dialogAddButton);
 
-    this.checkTotalCount(prevToatalText);
+    this.checkTotalCount(beforeAddRange, 1);
+
+    this.deleteMethodTest();
 
   }
 
   groupPage() {
 
     const groupButton = element(by.css('a#Group'));
-    waitIsVisible(groupButton);
-    groupButton.click();
+    waitIsVisibleToClick(groupButton);
 
-    const prevToatal = element(by.css('.mat-paginator-range-label'));
-    waitIsPresence(prevToatal);
-    const prevToatalText = prevToatal.getText();
+    const beforeAddRange = this.getPageRange();
 
     const addButton = element.all(by.css('button.mat-raised-button.mat-button-base')).get(0);
-    waitIsVisible(addButton);
-    addButton.click();
+    waitIsVisibleToClick(addButton);
 
     const nameInput = element(by.css('input[placeholder="name"]'));
     nameInput.sendKeys('TEST');
 
     const selectButton = element(by.css('mat-select.mat-select-empty'));
-    waitIsVisible(selectButton);
-    selectButton.click();
+    waitIsVisibleToClick(selectButton);
 
     const checkButton = element.all(by.css('mat-option')).get(2);
-    checkButton.click();
-    const dialogTitle = element(by.css('.mat-dialog-title'));
+    waitIsVisibleToClick(checkButton);
 
+    const dialogTitle = element(by.css('.mat-dialog-title'));
     browser.actions().mouseMove(dialogTitle).click().perform();
 
     const dialogAddButton = element.all(by.css('button.mat-button.mat-button-base')).get(0);
-    waitIsVisible(dialogAddButton);
-    dialogAddButton.click();
+    waitIsVisibleToClick(dialogAddButton);
 
-    this.checkTotalCount(prevToatalText);
+    this.checkTotalCount(beforeAddRange, 1);
+
+    this.deleteMethodTest();
 
   }
 
   programPage() {
 
     const programButton = element(by.css('a#Program'));
-    waitIsVisible(programButton);
-    programButton.click();
+    waitIsVisibleToClick(programButton);
 
-    const prevToatal = element(by.css('.mat-paginator-range-label'));
-    waitIsPresence(prevToatal);
-    const prevToatalText = prevToatal.getText();
+    const beforeAddRange = this.getPageRange();
 
     const addButton = element.all(by.css('button.mat-raised-button.mat-button-base')).get(0);
-    waitIsVisible(addButton);
-    addButton.click();
+    waitIsVisibleToClick(addButton);
 
     const nameInput = element(by.css('input[placeholder="name"]'));
     nameInput.sendKeys('TEST');
@@ -168,61 +144,78 @@ export class AppPage {
     linkInput.sendKeys('TEST');
 
     const selectButton = element(by.css('mat-select.mat-select-empty'));
-    waitIsVisible(selectButton);
-    selectButton.click();
+    waitIsVisibleToClick(selectButton);
 
-    const checkButton = element.all(by.css('mat-option')).get(1);
-    checkButton.click();
+    browser.sleep(2000);
+    takeScreenshot('test');
+
+    const checkButton = element.all(by.css('mat-option')).get(0);
+    waitIsVisibleToClick(checkButton);
 
     const dialogAddButton = element.all(by.css('button.mat-button.mat-button-base')).get(0);
-    waitIsVisible(dialogAddButton);
-    dialogAddButton.click();
+    waitIsVisibleToClick(dialogAddButton);
 
-    this.checkTotalCount(prevToatalText);
+    this.checkTotalCount(beforeAddRange, 1);
 
   }
 
   menuPage() {
 
     const menuButton = element(by.css('a#Menu'));
-    waitIsVisible(menuButton);
-    menuButton.click();
+    waitIsVisibleToClick(menuButton);
 
-    const prevToatal = element(by.css('.mat-paginator-range-label'));
-    waitIsPresence(prevToatal);
-    const prevToatalText = prevToatal.getText();
+    const beforeAddRange = this.getPageRange();
 
     const addButton = element.all(by.css('button.mat-raised-button.mat-button-base')).get(0);
-    waitIsVisible(addButton);
-    addButton.click();
+    waitIsVisibleToClick(addButton);
 
     const nameInput = element(by.css('input[placeholder="name"]'));
     nameInput.sendKeys('TEST');
 
     const selectButton = element(by.css('mat-select.mat-select-empty'));
-    waitIsVisible(selectButton);
-    selectButton.click();
+    waitIsVisibleToClick(selectButton);
 
-    const checkButton = element.all(by.css('mat-option')).get(2);
-    checkButton.click();
+    const checkButton = element.all(by.css('mat-option')).get(0);
+    waitIsVisibleToClick(checkButton);
 
     const dialogAddButton = element.all(by.css('button.mat-button.mat-button-base')).get(0);
-    waitIsVisible(dialogAddButton);
-    dialogAddButton.click();
+    waitIsVisibleToClick(dialogAddButton);
 
-    this.checkTotalCount(prevToatalText);
+    this.checkTotalCount(beforeAddRange, 1);
 
   }
 
-  checkTotalCount(prevToatalText: promise.Promise<string>) {
+  deleteMethodTest() {
+    const beforeDeleteRange = this.getPageRange();
 
-    const nowToatalText = element(by.css('.mat-paginator-range-label')).getText();
+    const deleteButton = element.all(by.css('button.mat-raised-button.mat-button-base.mat-warn')).last();
 
-    prevToatalText.then((x) => {
-      const prevToatal = parseInt( x.split(' ')[4], 10);
-      nowToatalText.then((y) => {
+    waitIsVisibleToClick(deleteButton);
+
+    waitAlertToClick();
+
+    this.checkTotalCount(beforeDeleteRange, -1);
+  }
+
+  getPageRange(): promise.Promise<string> {
+
+    const prevToatal = element(by.css('.mat-paginator-range-label'));
+
+    waitIsPresence(prevToatal);
+
+    return prevToatal.getText();
+
+  }
+
+  checkTotalCount(beforeRange: promise.Promise<string>, count: number) {
+
+    const nowRange = element(by.css('.mat-paginator-range-label')).getText();
+
+    beforeRange.then((x) => {
+      const beforeToatal = parseInt( x.split(' ')[4], 10);
+      nowRange.then((y) => {
         const nowToatal = parseInt( y.split(' ')[4], 10);
-        expect(nowToatal).toBe(prevToatal + 1);
+        expect(nowToatal).toBe(beforeToatal + count);
       });
     });
 
