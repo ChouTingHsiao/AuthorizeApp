@@ -1,5 +1,5 @@
 import { MaintainSuccessActions,
-         CREATE_SUCCESS, READ_SUCCESS, EDIT_SUCCESS, DELETE_SUCCESS} from '@shared/ngrx/Actions/maintain.action';
+         CREATE_SUCCESS, READ_SUCCESS, EDIT_SUCCESS, DELETE_SUCCESS} from '@shared/Ngrx/Actions/maintain.action';
 import { EntityState, EntityAdapter, createEntityAdapter, Update } from '@ngrx/entity';
 
 interface State<T> extends EntityState<T> {

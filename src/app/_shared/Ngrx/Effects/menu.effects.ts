@@ -6,7 +6,7 @@ import { TableEnum } from '@shared/Enum/table.enum';
 import { DialogEnum } from '@shared/Enum/dialog.enum';
 import { Menu } from '@shared/Model/menu.model';
 import { MenuService } from '@services/menu/menu.service';
-import { CreateSuccess, ReadSuccess, EditSuccess, DeleteSuccess} from '@shared/ngrx/Actions/maintain.action';
+import { CreateSuccess, ReadSuccess, EditSuccess, DeleteSuccess} from '@shared/Ngrx/Actions/maintain.action';
 
 @Injectable()
 export class MenuEffects {

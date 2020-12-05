@@ -5,7 +5,7 @@ import { map, mergeMap, catchError } from 'rxjs/operators';
 import { TableEnum } from '@shared/Enum/table.enum';
 import { DialogEnum } from '@shared/Enum/dialog.enum';
 import { User } from '@shared/Model/user.model';
-import { CreateSuccess, ReadSuccess, EditSuccess, DeleteSuccess } from '@shared/ngrx/Actions/maintain.action';
+import { CreateSuccess, ReadSuccess, EditSuccess, DeleteSuccess } from '@shared/Ngrx/Actions/maintain.action';
 import { UserService } from '@services/user/user.service';
 
 @Injectable()

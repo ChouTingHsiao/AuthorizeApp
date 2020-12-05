@@ -8,7 +8,7 @@ import { Grid } from '@shared/Model/table.model';
 import { Program } from '@shared/Model/program.model';
 import { Menu } from '@shared/Model/menu.model';
 import { ProgramService } from '@services/program/program.service';
-import { Read, Create, Edit, Delete} from '@shared/ngrx/Actions/maintain.action';
+import { Read, Create, Edit, Delete} from '@shared/Ngrx/Actions/maintain.action';
 import { Observable } from 'rxjs';
 
 @Component({

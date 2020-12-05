@@ -6,7 +6,7 @@ import { TableEnum } from '@shared/Enum/table.enum';
 import { DialogEnum } from '@shared/Enum/dialog.enum';
 import { Group } from '@shared/Model/group.model';
 import { GroupService } from '@services/group/group.service';
-import { CreateSuccess, ReadSuccess, EditSuccess, DeleteSuccess} from '@shared/ngrx/Actions/maintain.action';
+import { CreateSuccess, ReadSuccess, EditSuccess, DeleteSuccess} from '@shared/Ngrx/Actions/maintain.action';
 
 @Injectable()
 export class GroupEffects {

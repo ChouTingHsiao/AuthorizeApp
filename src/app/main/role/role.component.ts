@@ -6,7 +6,7 @@ import { ColumnEnum } from '@shared/Enum/column.enum';
 import { TableEnum } from '@shared/Enum/table.enum';
 import { Grid } from '@shared/Model/table.model';
 import { Role } from '@shared/Model/role.model';
-import { Read, Create, Edit, Delete} from '@shared/ngrx/Actions/maintain.action';
+import { Read, Create, Edit, Delete} from '@shared/Ngrx/Actions/maintain.action';
 import { Observable } from 'rxjs';
 
 @Component({

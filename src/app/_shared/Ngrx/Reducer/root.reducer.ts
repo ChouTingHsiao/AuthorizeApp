@@ -1,5 +1,5 @@
 import { InjectionToken } from '@angular/core';
-import { maintainReducer} from '@shared/ngrx/Reducer/maintain.reducer';
+import { maintainReducer} from '@shared/Ngrx/Reducer/maintain.reducer';
 import { TableEnum } from '@shared/Enum/table.enum';
 import { Group } from '@shared/Model/group.model';
 import { Program } from '@shared/Model/program.model';
