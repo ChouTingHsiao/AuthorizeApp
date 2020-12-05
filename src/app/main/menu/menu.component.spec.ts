@@ -20,7 +20,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 
 import { StoreModule } from '@ngrx/store';
 
-import { ROOT_REDUCER } from '@shared/ngrx/Reducer/root.reducer';
+import { ROOT_REDUCER } from '@shared/Ngrx/Reducer/root.reducer';
 
 describe('MenuComponent', () => {
   let component: MenuComponent;
