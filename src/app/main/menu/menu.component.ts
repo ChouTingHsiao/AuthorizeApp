@@ -75,9 +75,9 @@ export class MenuComponent implements OnInit {
 
                 const isNotAuthEmpty = element.program !== '';
 
-                const isNotAuthNotFound = authProgram !== undefined;
+                const isAuthFound = authProgram !== undefined && authProgram.length > 0;
 
-                if (isNotAuthEmpty && isNotAuthNotFound) {
+                if (isNotAuthEmpty && isAuthFound) {
                   authProgramName = authProgram[0].name;
                 }
 

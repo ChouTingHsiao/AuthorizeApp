@@ -89,9 +89,9 @@ export class ProgramComponent implements OnInit {
 
               const isNotAuthEmpty = element.auth !== '';
 
-              const isNotAuthNotFound = authGroup !== undefined;
+              const isAuthFound = authGroup !== undefined && authGroup.length > 0;
 
-              if (isNotAuthEmpty && isNotAuthNotFound) {
+              if (isNotAuthEmpty && isAuthFound) {
                 authGroupName = authGroup[0].name;
               }
 
