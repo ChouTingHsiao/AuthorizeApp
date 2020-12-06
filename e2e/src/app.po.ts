@@ -190,6 +190,11 @@ export class AppPage {
   }
 
   deleteMethodTest() {
+
+    const nextButton = element.all(by.css('button.mat-paginator-navigation-next')).get(0);
+
+    waitIsVisibleToClick(nextButton);
+
     const beforeDeleteRange = this.getPageRange();
 
     const deleteButton = element.all(by.css('button.mat-raised-button.mat-button-base.mat-warn')).last();
