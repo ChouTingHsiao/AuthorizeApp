@@ -67,10 +67,23 @@ export class MenuComponent implements OnInit {
 
               return this.store.select(TableEnum.Programs);
             },
-            cell: (element: Menu) => `${
-              element.program === '' ? '' :
-              programs.filter(x => x.id ===  element.program)[0].name
-            }`
+            cell: (element: Menu): string => {
+
+                let authProgramName = '';
+
+                const authProgram = programs.filter(x => x.id ===  element.program);
+
+                const isNotAuthEmpty = element.program !== '';
+
+                const isNotAuthNotFound = authProgram !== undefined;
+
+                if (isNotAuthEmpty && isNotAuthNotFound) {
+                  authProgramName = authProgram[0].name;
+                }
+
+                return authProgramName;
+
+            }
           },
         ],
         read: (): Observable<any> => {

@@ -71,8 +71,8 @@ export class ProgramComponent implements OnInit {
             cell: (element: Program) => `${ element.linkTag }`
           },
           {
-            header: 'Auth',
-            columnDef: 'auth',
+            header: 'AuthGroup',
+            columnDef: 'authGroup',
             type: ColumnEnum.string,
             selector: ColumnEnum.select,
             source: (): Observable<any> => {
@@ -81,10 +81,23 @@ export class ProgramComponent implements OnInit {
 
               return this.store.select(TableEnum.Groups);
             },
-            cell: (element: Program) => `${
-              element.auth === '' ? '' :
-              groups.filter(x => x.id ===  element.auth)[0].name
-            }`
+            cell: (element: Program): string => {
+
+              let authGroupName = '';
+
+              const authGroup = groups.filter(x => x.id ===  element.auth);
+
+              const isNotAuthEmpty = element.auth !== '';
+
+              const isNotAuthNotFound = authGroup !== undefined;
+
+              if (isNotAuthEmpty && isNotAuthNotFound) {
+                authGroupName = authGroup[0].name;
+              }
+
+              return authGroupName;
+
+            }
           },
         ],
         read: (): Observable<any> => {
