@@ -157,6 +157,8 @@ export class AppPage {
 
     this.checkTotalCount(beforeAddRange, 1);
 
+    this.deleteMethodTest();
+
   }
 
   menuPage() {
@@ -182,6 +184,8 @@ export class AppPage {
     waitIsVisibleToClick(dialogAddButton);
 
     this.checkTotalCount(beforeAddRange, 1);
+
+    this.deleteMethodTest();
 
   }
 
