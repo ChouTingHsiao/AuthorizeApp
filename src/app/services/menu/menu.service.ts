@@ -7,7 +7,6 @@ import Dexie from 'dexie';
 import { RoleService } from '@services/role/role.service';
 import { GroupService } from '@services/group/group.service';
 import { ProgramService } from '@services/program/program.service';
-import { map, switchMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -43,29 +42,25 @@ export class MenuService {
     });
   }
 
-  getByAuth(): Observable<Menu[]> {
+  getByAuth(menu: Menu[]): Observable<Menu[]> {
 
     return new Observable(subscriber => {
 
-      this.getAll().pipe(
-      switchMap(Menus => this.programService.getByAuth().pipe(
-        map(Programs => ({ Menus, Programs }))
-      ))
-    ).subscribe(({ Menus, Programs }) => {
+      this.programService.getByAuth().subscribe((Programs) => {
 
-      const AuthProgramMap = Programs.map(x => x.id);
+        const AuthProgramMap = Programs.map(x => x.id);
 
-      const AuthMenu: Menu[] = Menus.filter( x => x.program === '' || AuthProgramMap.includes(x.program));
+        const AuthMenu: Menu[] = menu.filter( x => x.program === '' || AuthProgramMap.includes(x.program));
 
-      AuthMenu.forEach(x => {
-        const program = Programs.find(y => y.id === x.program);
-        x.linkTag = program ? program.linkTag : '/';
+        AuthMenu.forEach(x => {
+          const program = Programs.find(y => y.id === x.program);
+          x.linkTag = program ? program.linkTag : '/';
+        });
+
+        subscriber.next(AuthMenu);
+        subscriber.complete();
+
       });
-
-      subscriber.next(AuthMenu);
-      subscriber.complete();
-
-    });
 
     });
 
