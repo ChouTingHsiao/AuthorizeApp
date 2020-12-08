@@ -6,7 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '@shared/Component/dialog/dialog.component';
 import { Grid, Column } from '@shared/Model/table.model';
 import { Dialog } from '@shared/Model/dialog.model';
-import { objectToArray } from '@shared/Method/object.method';
+import { entityToArray } from '@shared/Method/object.method';
 import { Observable, Subscription } from 'rxjs';
 
 @Component({
@@ -15,8 +15,6 @@ import { Observable, Subscription } from 'rxjs';
   styleUrls: ['./table.component.scss']
 })
 export class TableComponent implements OnChanges, OnDestroy {
-
-  entities = 'entities';
 
   subscription: Subscription;
 
@@ -57,7 +55,7 @@ export class TableComponent implements OnChanges, OnDestroy {
   setSource() {
     this.grid.subscribe(x => {
       this.subscription = x.read().subscribe((y) => {
-        const entitiesArray = objectToArray(y[this.entities]);
+        const entitiesArray = entityToArray(y);
         this.dataSource = new MatTableDataSource<any>(entitiesArray);
         this.pageNation();
       });
