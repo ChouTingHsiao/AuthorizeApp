@@ -16,7 +16,7 @@ function OpenDB(): Promise<Dexie> {
       Programs: 'id, name, remark, linkTag, auth',
       Menus: 'id, name, program'
     });
-    
+
     const Users: User[] = [
         { id: '1', name: 'ADMIN', password: 'ADMIN', role: '1' },
         { id: '2', name: 'USER', password: 'USER', role: '2' }
@@ -28,7 +28,7 @@ function OpenDB(): Promise<Dexie> {
         { id: '1', name: 'ADMIN', remark: '管理員' },
         { id: '2', name: 'USER', remark: '一般使用者' }
     ];
-    
+
     TableInit(AuthorizeDb, TableEnum.Roles, Roles);
 
     const Programs: Program[] = [
@@ -54,9 +54,9 @@ function OpenDB(): Promise<Dexie> {
     const Groups: Group[] = [
         { id: '1', name: '管理員群組', role: ['1']}
     ];
-    
+
     TableInit(AuthorizeDb, TableEnum.Groups, Groups);
-    
+
     return AuthorizeDb.open();
 }
 
@@ -70,16 +70,16 @@ function TableInit(db: Dexie, table: string, data: any[]): void {
                     console.error(`${table} bulkAdd fail. ${e}`);
                 });
             }
-        })
+        });
 
     }).then(result => {
-    
-        console.info(`transaction success: ${result}`);
-    
+
+        console.log(`transaction success: ${result}`);
+
     }).catch(error => {
-    
+
         console.error(`transaction fail: ${error}`);
-    
+
     });
 }
 

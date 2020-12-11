@@ -4,8 +4,6 @@ import { TableEnum } from '@shared/Enum/table.enum';
 import { OpenDB, GetAll, TableAdd, TableUpdate, TableDelete } from '@shared/Dexie/authorize.dexie';
 import { Observable } from 'rxjs';
 import Dexie from 'dexie';
-import { RoleService } from '@services/role/role.service';
-import { GroupService } from '@services/group/group.service';
 import { ProgramService } from '@services/program/program.service';
 
 @Injectable({
@@ -15,9 +13,7 @@ export class MenuService {
 
   private db: Promise<Dexie>;
 
-  constructor(private roleService: RoleService,
-              private groupService: GroupService,
-              private programService: ProgramService) {
+  constructor(private programService: ProgramService) {
       this.db = OpenDB();
   }
 
