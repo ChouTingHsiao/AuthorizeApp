@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Role } from '@shared/Model/role.model';
 import { TableEnum } from '@shared/Enum/table.enum';
-import { OpenDB, GetAll, TableInit, TableAdd, TableUpdate, TableDelete } from '@shared/Dexie/authorize.dexie';
+import { OpenDB, GetAll, TableAdd, TableUpdate, TableDelete } from '@shared/Dexie/authorize.dexie';
 import { Observable } from 'rxjs';
 import Dexie from 'dexie';
 
@@ -9,11 +9,6 @@ import Dexie from 'dexie';
   providedIn: 'root'
 })
 export class RoleService {
-
-  Roles: Role[] = [
-    { id: '1', name: 'ADMIN', remark: '管理員' },
-    { id: '2', name: 'USER', remark: '一般使用者' }
-  ];
 
   private db: Promise<Dexie>;
 
@@ -24,12 +19,10 @@ export class RoleService {
   getAll(): Observable<Role[]> {
     return new Observable(subscriber => {
 
-      TableInit(this.db, TableEnum.Roles, this.Roles).then(() => {
         GetAll(this.db, TableEnum.Roles).then(x => {
           subscriber.next(x);
           subscriber.complete();
         });
-      });
 
     });
   }

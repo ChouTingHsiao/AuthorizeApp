@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Group } from '@shared/Model/group.model';
 import { TableEnum } from '@shared/Enum/table.enum';
-import { OpenDB, GetAll, TableInit, TableAdd, TableUpdate, TableDelete } from '@shared/Dexie/authorize.dexie';
+import { OpenDB, GetAll, TableAdd, TableUpdate, TableDelete } from '@shared/Dexie/authorize.dexie';
 import { RoleService } from '@services/role/role.service';
 import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
@@ -12,10 +12,6 @@ import Dexie from 'dexie';
 })
 export class GroupService {
 
-  Groups: Group[] = [
-    { id: '1', name: '管理員群組', role: ['1']}
-  ];
-
   private db: Promise<Dexie>;
 
   constructor(private roleService: RoleService) {
@@ -25,12 +21,10 @@ export class GroupService {
   getAll(): Observable<Group[]> {
     return new Observable(subscriber => {
 
-      TableInit(this.db, TableEnum.Groups, this.Groups).then(() => {
         GetAll(this.db, TableEnum.Groups).then(x => {
           subscriber.next(x);
           subscriber.complete();
         });
-      });
 
     });
   }

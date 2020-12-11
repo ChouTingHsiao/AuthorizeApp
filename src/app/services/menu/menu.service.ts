@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Menu } from '@shared/Model/menu.model';
 import { TableEnum } from '@shared/Enum/table.enum';
-import { OpenDB, GetAll, TableInit, TableAdd, TableUpdate, TableDelete } from '@shared/Dexie/authorize.dexie';
+import { OpenDB, GetAll, TableAdd, TableUpdate, TableDelete } from '@shared/Dexie/authorize.dexie';
 import { Observable } from 'rxjs';
 import Dexie from 'dexie';
 import { RoleService } from '@services/role/role.service';
@@ -12,14 +12,6 @@ import { ProgramService } from '@services/program/program.service';
   providedIn: 'root'
 })
 export class MenuService {
-
-  Menus: Menu[] = [
-    { id: '1', name: 'User', program: '1'},
-    { id: '2', name: 'Role', program: '2'},
-    { id: '3', name: 'Group', program: '3'},
-    { id: '4', name: 'Program', program: '4'},
-    { id: '5', name: 'Menu', program: '5'},
-  ];
 
   private db: Promise<Dexie>;
 
@@ -32,12 +24,10 @@ export class MenuService {
   getAll(): Observable<Menu[]> {
     return new Observable(subscriber => {
 
-      TableInit(this.db, TableEnum.Menus, this.Menus).then(() => {
         GetAll(this.db, TableEnum.Menus).then(x => {
           subscriber.next(x);
           subscriber.complete();
         });
-      });
 
     });
   }

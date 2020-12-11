@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Program } from '@shared/Model/program.model';
 import { TableEnum } from '@shared/Enum/table.enum';
-import { OpenDB, GetAll, TableInit, TableAdd, TableUpdate, TableDelete } from '@shared/Dexie/authorize.dexie';
+import { OpenDB, GetAll, TableAdd, TableUpdate, TableDelete } from '@shared/Dexie/authorize.dexie';
 import { GroupService } from '@services/group/group.service';
 import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
@@ -13,14 +13,6 @@ import Dexie from 'dexie';
 })
 export class ProgramService {
 
-  Programs: Program[] = [
-    { id: '1', name: 'User', remark: '使用者', linkTag: 'User', auth: '1' },
-    { id: '2', name: 'Role', remark: '角色', linkTag: 'Role', auth: '1' },
-    { id: '3', name: 'Group', remark: '群組', linkTag: 'Group', auth: '' },
-    { id: '4', name: 'Program', remark: '程式', linkTag: 'Program', auth: '' },
-    { id: '5', name: 'Menu', remark: '選單', linkTag: 'Menu', auth: '' },
-  ];
-
   private db: Promise<Dexie>;
 
   constructor(private groupService: GroupService) {
@@ -30,12 +22,10 @@ export class ProgramService {
   getAll(): Observable<Program[]> {
     return new Observable(subscriber => {
 
-      TableInit(this.db, TableEnum.Programs, this.Programs).then(() => {
         GetAll(this.db, TableEnum.Programs).then(x => {
           subscriber.next(x);
           subscriber.complete();
         });
-      });
 
     });
   }

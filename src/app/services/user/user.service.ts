@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { User } from '@shared/Model/user.model';
 import { TableEnum } from '@shared/Enum/table.enum';
-import { OpenDB, GetAll, TableInit, TableAdd, TableUpdate, TableDelete } from '@shared/Dexie/authorize.dexie';
+import { OpenDB, GetAll, TableAdd, TableUpdate, TableDelete } from '@shared/Dexie/authorize.dexie';
 import { Observable } from 'rxjs';
 import Dexie from 'dexie';
 
@@ -9,11 +9,6 @@ import Dexie from 'dexie';
   providedIn: 'root'
 })
 export class UserService {
-
-  Users: User[] = [
-    { id: '1', name: 'ADMIN', password: 'ADMIN', role: '1' },
-    { id: '2', name: 'USER', password: 'USER', role: '2' }
-  ];
 
   private db: Promise<Dexie>;
 
@@ -24,11 +19,9 @@ export class UserService {
   getAll(): Observable<User[]> {
     return new Observable(subscriber => {
 
-      TableInit(this.db, TableEnum.Users, this.Users).then(() => {
-        GetAll(this.db, TableEnum.Users).then(x => {
-          subscriber.next(x);
-          subscriber.complete();
-        });
+      GetAll(this.db, TableEnum.Users).then(x => {
+        subscriber.next(x);
+        subscriber.complete();
       });
 
     });
