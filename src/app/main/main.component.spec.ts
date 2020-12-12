@@ -18,9 +18,48 @@ import { MenuService } from '@services/menu/menu.service';
 
 import { of } from 'rxjs';
 
+import { provideMockStore } from '@ngrx/store/testing';
+
 describe('MainComponent', () => {
   let component: MainComponent;
   let fixture: ComponentFixture<MainComponent>;
+
+  const initialState = {
+    Menus: {
+      ids: ['1', '2', '3', '4', '5'],
+      entities: {
+        1: {
+          id: '1',
+          name: 'User',
+          program: '1'
+        },
+        2: {
+          id: '2',
+          name: 'Role',
+          program: '2'
+        },
+        3: {
+          id: '3',
+          name: 'Group',
+          program: '3',
+          linkTag: 'Group'
+        },
+        4: {
+          id: '4',
+          name: 'Program',
+          program: '4',
+          linkTag: 'Program'
+        },
+        5: {
+          id: '5',
+          name: 'Menu',
+          program: '5',
+          linkTag: 'Menu'
+        }
+      },
+      selectedUserId: null
+    }
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -30,12 +69,12 @@ describe('MainComponent', () => {
         MatIconModule,
         MatToolbarModule,
         MatSidenavModule,
-        RouterTestingModule
+        RouterTestingModule,
       ],
       declarations: [ MainComponent ],
       providers: [
-        {provide: MenuService, useValue:
-          {
+        {
+          provide: MenuService, useValue: {
             getByAuth: () => of( [
               { id: '1', name: 'User', program: '1'},
               { id: '2', name: 'Role', program: '2'},
@@ -44,7 +83,8 @@ describe('MainComponent', () => {
               { id: '5', name: 'Menu', program: '5'},
             ])
           }
-        }
+        },
+        provideMockStore({ initialState }),
       ]
     })
     .compileComponents();
