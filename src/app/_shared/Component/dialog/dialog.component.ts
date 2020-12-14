@@ -25,7 +25,7 @@ export class DialogComponent {
 
   @ViewChild(DynamicHostDirective, {static: true}) dynamicComponentLoader: DynamicHostDirective;
 
-  @ViewChild('content', {static: false}) content: ElementRef;
+  @ViewChild('content') content: ElementRef;
 
   constructor(private componenFactoryResolver: ComponentFactoryResolver) {}
 
