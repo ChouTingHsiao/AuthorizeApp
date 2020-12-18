@@ -22,6 +22,10 @@ jobs:
       id: install
       run: npm install
 
+    - name: Lint
+      id: Lint
+      run: npx ng lint
+
     - name: test
       id: test
       run: npm test
