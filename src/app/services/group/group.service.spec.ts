@@ -6,7 +6,7 @@ describe('GroupService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: GroupService = TestBed.get(GroupService);
+    const service: GroupService = TestBed.inject(GroupService);
     expect(service).toBeTruthy();
   });
 });

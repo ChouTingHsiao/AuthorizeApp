@@ -2,11 +2,12 @@ import { browser } from 'protractor';
 import * as fs from 'fs';
 
 function NotExist(filename: string): boolean {
-    fs.exists(filename, (exists: boolean) => {
-        if (exists) {
+    fs.access(filename, fs.constants.R_OK || fs.constants.W_OK, (err) => {
+        if (err) {
             return false;
         }
     });
+
     return true;
 }
 
@@ -23,7 +24,7 @@ function createDic(filepath: string): Promise<boolean> {
 
 function writeFile(data: string, filename: string) {
     const stream = fs.createWriteStream(filename);
-    stream.write(new Buffer(data, 'base64'));
+    stream.write(Buffer.from(data, 'base64'));
     stream.end();
 }
 
