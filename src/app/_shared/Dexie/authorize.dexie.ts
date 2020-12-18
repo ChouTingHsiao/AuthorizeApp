@@ -72,10 +72,6 @@ function TableInit(db: Dexie, table: string, data: any[]): void {
             }
         });
 
-    }).then(result => {
-
-        console.log(`transaction success: ${result}`);
-
     }).catch(error => {
 
         console.error(`transaction fail: ${error}`);
