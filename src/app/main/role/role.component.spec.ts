@@ -41,9 +41,6 @@ describe('RoleComponent', () => {
       declarations: [
         RoleComponent,
         TableComponent
-      ],
-      providers: [
-        TableComponent
       ]
     })
     .compileComponents();

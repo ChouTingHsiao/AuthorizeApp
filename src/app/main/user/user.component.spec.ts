@@ -22,6 +22,10 @@ import { StoreModule } from '@ngrx/store';
 
 import { ROOT_REDUCER } from '@shared/Ngrx/Reducer/root.reducer';
 
+import { of } from 'rxjs';
+
+import { RoleService } from '@services/role/role.service';
+
 describe('UserComponent', () => {
   let component: UserComponent;
   let fixture: ComponentFixture<UserComponent>;
@@ -43,7 +47,14 @@ describe('UserComponent', () => {
         TableComponent
       ],
       providers: [
-        TableComponent
+        {
+          provide: RoleService, useValue: {
+            getAll: () => of( [
+              { id: '1', name: 'ADMIN', remark: '管理員' },
+              { id: '2', name: 'USER', remark: '一般使用者' }
+            ])
+          }
+        }
       ]
     })
     .compileComponents();

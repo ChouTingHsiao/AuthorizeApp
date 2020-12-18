@@ -22,6 +22,10 @@ import { StoreModule } from '@ngrx/store';
 
 import { ROOT_REDUCER } from '@shared/Ngrx/Reducer/root.reducer';
 
+import { of } from 'rxjs';
+
+import { GroupService } from '@services/group/group.service';
+
 describe('ProgramComponent', () => {
   let component: ProgramComponent;
   let fixture: ComponentFixture<ProgramComponent>;
@@ -43,7 +47,13 @@ describe('ProgramComponent', () => {
         TableComponent
       ],
       providers: [
-        TableComponent
+        {
+          provide: GroupService, useValue: {
+            getAll: () => of( [
+              { id: '1', name: '管理員群組', role: ['1']}
+            ])
+          }
+        }
       ]
     })
     .compileComponents();

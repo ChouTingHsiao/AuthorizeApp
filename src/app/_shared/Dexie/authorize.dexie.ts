@@ -36,7 +36,7 @@ function OpenDB(): Promise<Dexie> {
         { id: '2', name: 'Role', remark: '角色', linkTag: 'Role', auth: '1' },
         { id: '3', name: 'Group', remark: '群組', linkTag: 'Group', auth: '' },
         { id: '4', name: 'Program', remark: '程式', linkTag: 'Program', auth: '' },
-        { id: '5', name: 'Menu', remark: '選單', linkTag: 'Menu', auth: '' },
+        { id: '5', name: 'Menu', remark: '選單', linkTag: 'Menu', auth: '' }
     ];
 
     TableInit(AuthorizeDb, TableEnum.Programs, Programs);
@@ -46,7 +46,7 @@ function OpenDB(): Promise<Dexie> {
         { id: '2', name: 'Role', program: '2'},
         { id: '3', name: 'Group', program: '3'},
         { id: '4', name: 'Program', program: '4'},
-        { id: '5', name: 'Menu', program: '5'},
+        { id: '5', name: 'Menu', program: '5'}
     ];
 
     TableInit(AuthorizeDb, TableEnum.Menus, Menus);
