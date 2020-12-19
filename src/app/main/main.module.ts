@@ -1,27 +1,12 @@
-import { NgModule } from '@angular/core';
+import { NgModule  } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MaterialModule  } from '@src/material-module';
+import { BrowserModule  } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
 import { BrowserAnimationsModule  } from '@angular/platform-browser/animations';
 
-import { StoreModule } from '@ngrx/store';
-import { EffectsModule } from '@ngrx/effects';
-import { ROOT_REDUCER } from '@shared/Ngrx/Reducer/root.reducer';
-import { UserEffects } from '@shared/Ngrx/Effects/user.effects';
-import { RoleEffects } from '@shared/Ngrx/Effects/role.effects';
-import { GroupEffects } from '@shared/Ngrx/Effects/group.effects';
-import { ProgramEffects } from '@shared/Ngrx/Effects/program.effects';
-import { MenuEffects } from '@shared/Ngrx/Effects/menu.effects';
+import { MaterialModule  } from '@src/material-module';
 
-import { DynamicHostDirective } from '@shared/Directive/dynamichost.Directive';
 import { UnauthorizeComponent } from '@shared/Component/unauthorize/unauthorize.component';
-import { DashboardComponent } from '@shared/Component/dashboard/dashboard.component';
-import { DialogComponent } from '@shared/Component/dialog/dialog.component';
-import { InputComponent } from '@shared/Component/input/input.component';
-import { LabelComponent } from '@shared/Component/label/label.component';
-import { SelectComponent } from '@shared/Component/select/select.component';
-import { MultiSelectComponent } from '@shared/Component/multiselect/multiselect.component';
-import { TableComponent } from '@shared/Component/table/table.component';
 
 import { MainRoutingModule } from './main-routing.module';
 import { MainComponent } from './main.component';
@@ -30,40 +15,42 @@ import { RoleComponent } from './role/role.component';
 import { GroupComponent } from './group/group.component';
 import { ProgramComponent } from './program/program.component';
 import { MenuComponent } from './menu/menu.component';
+import { DashboardComponent } from '@shared/Component/dashboard/dashboard.component';
+
+import { DynamicHostDirective } from '@shared/Directive/dynamichost.Directive';
+import { DialogComponent } from '@shared/Component/dialog/dialog.component';
+import { InputComponent } from '@shared/Component/input/input.component';
+import { LabelComponent } from '@shared/Component/label/label.component';
+import { SelectComponent } from '@shared/Component/select/select.component';
+import { MultiSelectComponent } from '@shared/Component/multiselect/multiselect.component';
+import { TableComponent } from '@shared/Component/table/table.component';
 
 @NgModule({
   declarations: [
+    UnauthorizeComponent,
     MainComponent,
     UserComponent,
     RoleComponent,
     GroupComponent,
     ProgramComponent,
+    MenuComponent,
+    DashboardComponent,
+    DynamicHostDirective,
     DialogComponent,
     InputComponent,
     LabelComponent,
     SelectComponent,
     MultiSelectComponent,
-    TableComponent,
-    DynamicHostDirective,
-    UnauthorizeComponent,
-    MenuComponent,
-    DashboardComponent
+    TableComponent
   ],
   imports: [
     CommonModule,
-    MainRoutingModule,
-    MaterialModule,
+    BrowserModule,
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    EffectsModule.forRoot([
-      UserEffects,
-      RoleEffects,
-      GroupEffects,
-      ProgramEffects,
-      MenuEffects,
-    ]),
-    StoreModule.forRoot(ROOT_REDUCER),
+    MainRoutingModule,
+    MaterialModule
   ],
   entryComponents: [
     DialogComponent,
@@ -72,6 +59,6 @@ import { MenuComponent } from './menu/menu.component';
     SelectComponent,
     MultiSelectComponent,
     TableComponent
-  ]
+  ],
 })
 export class MainModule { }

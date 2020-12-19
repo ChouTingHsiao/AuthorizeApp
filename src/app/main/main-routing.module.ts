@@ -13,21 +13,21 @@ import { ProgramComponent } from './program/program.component';
 import { MenuComponent } from './menu/menu.component';
 
 const routes: Routes = [
-  {  path: '',   redirectTo: '/Main', pathMatch: 'full'  },
-  {  path: 'Login', component: LoginComponent  },
-  {  path: '401', component: UnauthorizeComponent  },
-  {  path: 'Main', component: MainComponent, canActivate: [LoginGuard],
+  {
+    path: '',
+    component: MainComponent,
+    canActivate: [LoginGuard],
     children: [
-          {  path: 'User', component: UserComponent, canActivate: [AuthGuard] },
-          {  path: 'Role', component: RoleComponent, canActivate: [AuthGuard]  },
-          {  path: 'Group', component: GroupComponent, canActivate: [AuthGuard]  },
-          {  path: 'Program', component: ProgramComponent, canActivate: [AuthGuard]  },
-          {  path: 'Menu', component: MenuComponent, canActivate: [AuthGuard]  },
-          {  path: 'Dashboard', component: DashboardComponent, canActivate: [LoginGuard] },
-          {  path: '**', redirectTo: '/Main/Dashboard'  }
+      { path: 'User', component: UserComponent, canActivate: [AuthGuard] },
+      { path: 'Role', component: RoleComponent, canActivate: [AuthGuard] },
+      { path: 'Group', component: GroupComponent, canActivate: [AuthGuard] },
+      { path: 'Program', component: ProgramComponent, canActivate: [AuthGuard] },
+      { path: 'Menu', component: MenuComponent, canActivate: [AuthGuard] },
+      { path: 'Dashboard', component: DashboardComponent, canActivate: [LoginGuard] },
+      { path: '', redirectTo: 'Dashboard' },
+      { path: '**', redirectTo: 'Dashboard' },
     ]
   },
-  {  path: '**', redirectTo: '/Main' }
 ];
 
 @NgModule({
