@@ -4,7 +4,7 @@ import { BrowserModule  } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
 import { BrowserAnimationsModule  } from '@angular/platform-browser/animations';
 
-import { MaterialModule  } from '@src/material-module';
+import { MaterialModule  } from '@shared/Material/material.module';
 
 import { UnauthorizeComponent } from '@shared/Component/unauthorize/unauthorize.component';
 

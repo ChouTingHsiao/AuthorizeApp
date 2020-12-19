@@ -1,14 +1,14 @@
-import { NgModule  } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BrowserModule  } from '@angular/platform-browser';
-import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
-import { BrowserAnimationsModule  } from '@angular/platform-browser/animations';
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { environment } from '../environments/environment';
 
 import { AppRoutingModule } from './app-routing.module';
 
-import { MaterialModule  } from '@src/material-module';
+import { MaterialModule } from '@shared/Material/material.module';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from '@shared/Component/login/login.component';
