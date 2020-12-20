@@ -20,46 +20,13 @@ import { of } from 'rxjs';
 
 import { provideMockStore } from '@ngrx/store/testing';
 
+import { Menus, MenusState } from '@shared/Dexie/data';
+
 describe('MainComponent', () => {
   let component: MainComponent;
   let fixture: ComponentFixture<MainComponent>;
 
-  const initialState = {
-    Menus: {
-      ids: ['1', '2', '3', '4', '5'],
-      entities: {
-        1: {
-          id: '1',
-          name: 'User',
-          program: '1'
-        },
-        2: {
-          id: '2',
-          name: 'Role',
-          program: '2'
-        },
-        3: {
-          id: '3',
-          name: 'Group',
-          program: '3',
-          linkTag: 'Group'
-        },
-        4: {
-          id: '4',
-          name: 'Program',
-          program: '4',
-          linkTag: 'Program'
-        },
-        5: {
-          id: '5',
-          name: 'Menu',
-          program: '5',
-          linkTag: 'Menu'
-        }
-      },
-      selectedUserId: null
-    }
-  };
+  const initialState = MenusState;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -75,13 +42,7 @@ describe('MainComponent', () => {
       providers: [
         {
           provide: MenuService, useValue: {
-            getByAuth: () => of( [
-              { id: '1', name: 'User', program: '1'},
-              { id: '2', name: 'Role', program: '2'},
-              { id: '3', name: 'Group', program: '3'},
-              { id: '4', name: 'Program', program: '4'},
-              { id: '5', name: 'Menu', program: '5'},
-            ])
+            getByAuth: () => of ( Menus )
           }
         },
         provideMockStore({ initialState }),

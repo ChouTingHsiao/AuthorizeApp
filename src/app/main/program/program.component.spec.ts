@@ -26,6 +26,8 @@ import { of } from 'rxjs';
 
 import { GroupService } from '@services/group/group.service';
 
+import { Groups } from '@shared/Dexie/data';
+
 describe('ProgramComponent', () => {
   let component: ProgramComponent;
   let fixture: ComponentFixture<ProgramComponent>;
@@ -49,9 +51,7 @@ describe('ProgramComponent', () => {
       providers: [
         {
           provide: GroupService, useValue: {
-            getAll: () => of( [
-              { id: '1', name: '管理員群組', role: ['1']}
-            ])
+            getAll: () => of ( Groups )
           }
         }
       ]

@@ -26,6 +26,8 @@ import { of } from 'rxjs';
 
 import { ProgramService } from '@services/program/program.service';
 
+import { Programs } from '@shared/Dexie/data';
+
 describe('MenuComponent', () => {
   let component: MenuComponent;
   let fixture: ComponentFixture<MenuComponent>;
@@ -49,13 +51,7 @@ describe('MenuComponent', () => {
       providers: [
         {
           provide: ProgramService, useValue: {
-            getAll: () => of( [
-              { id: '1', name: 'User', remark: '使用者', linkTag: 'User', auth: '1' },
-              { id: '2', name: 'Role', remark: '角色', linkTag: 'Role', auth: '1' },
-              { id: '3', name: 'Group', remark: '群組', linkTag: 'Group', auth: '' },
-              { id: '4', name: 'Program', remark: '程式', linkTag: 'Program', auth: '' },
-              { id: '5', name: 'Menu', remark: '選單', linkTag: 'Menu', auth: '' }
-            ])
+            getAll: () => of ( Programs )
           }
         }
       ]

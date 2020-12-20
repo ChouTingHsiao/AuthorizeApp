@@ -4,11 +4,10 @@ import { BrowserModule  } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
 import { BrowserAnimationsModule  } from '@angular/platform-browser/animations';
 
+import { MainRoutingModule } from './main-routing.module';
+
 import { MaterialModule  } from '@shared/Material/material.module';
 
-import { UnauthorizeComponent } from '@shared/Component/unauthorize/unauthorize.component';
-
-import { MainRoutingModule } from './main-routing.module';
 import { MainComponent } from './main.component';
 import { UserComponent } from './user/user.component';
 import { RoleComponent } from './role/role.component';
@@ -16,6 +15,7 @@ import { GroupComponent } from './group/group.component';
 import { ProgramComponent } from './program/program.component';
 import { MenuComponent } from './menu/menu.component';
 import { DashboardComponent } from '@shared/Component/dashboard/dashboard.component';
+import { UnauthorizeComponent } from '@shared/Component/unauthorize/unauthorize.component';
 
 import { DynamicHostDirective } from '@shared/Directive/dynamichost.Directive';
 import { DialogComponent } from '@shared/Component/dialog/dialog.component';
@@ -41,7 +41,7 @@ import { TableComponent } from '@shared/Component/table/table.component';
     LabelComponent,
     SelectComponent,
     MultiSelectComponent,
-    TableComponent
+    TableComponent,
   ],
   imports: [
     CommonModule,
@@ -50,7 +50,7 @@ import { TableComponent } from '@shared/Component/table/table.component';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     MainRoutingModule,
-    MaterialModule
+    MaterialModule,
   ],
   entryComponents: [
     DialogComponent,
@@ -58,7 +58,7 @@ import { TableComponent } from '@shared/Component/table/table.component';
     LabelComponent,
     SelectComponent,
     MultiSelectComponent,
-    TableComponent
+    TableComponent,
   ],
 })
 export class MainModule { }

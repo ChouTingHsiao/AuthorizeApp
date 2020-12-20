@@ -26,7 +26,7 @@ import { MenuEffects } from '@shared/Ngrx/Effects/menu.effects';
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
   ],
   imports: [
     CommonModule,

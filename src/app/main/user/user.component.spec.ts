@@ -26,6 +26,8 @@ import { of } from 'rxjs';
 
 import { RoleService } from '@services/role/role.service';
 
+import { Roles } from '@shared/Dexie/data';
+
 describe('UserComponent', () => {
   let component: UserComponent;
   let fixture: ComponentFixture<UserComponent>;
@@ -49,10 +51,7 @@ describe('UserComponent', () => {
       providers: [
         {
           provide: RoleService, useValue: {
-            getAll: () => of( [
-              { id: '1', name: 'ADMIN', remark: '管理員' },
-              { id: '2', name: 'USER', remark: '一般使用者' }
-            ])
+            getAll: () => of ( Roles )
           }
         }
       ]
