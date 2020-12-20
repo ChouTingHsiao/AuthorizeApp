@@ -19,10 +19,10 @@ import { DashboardComponent } from '@shared/Component/dashboard/dashboard.compon
 
 import { DynamicHostDirective } from '@shared/Directive/dynamichost.Directive';
 import { DialogComponent } from '@shared/Component/dialog/dialog.component';
-import { InputComponent } from '@shared/Component/input/input.component';
-import { LabelComponent } from '@shared/Component/label/label.component';
-import { SelectComponent } from '@shared/Component/select/select.component';
-import { MultiSelectComponent } from '@shared/Component/multiselect/multiselect.component';
+import { InputComponent } from '@shared/Component/dialog/input/input.component';
+import { LabelComponent } from '@shared/Component/dialog/label/label.component';
+import { SelectComponent } from '@shared/Component/dialog/select/select.component';
+import { MultiSelectComponent } from '@shared/Component/dialog/multiselect/multiselect.component';
 import { TableComponent } from '@shared/Component/table/table.component';
 
 @NgModule({
