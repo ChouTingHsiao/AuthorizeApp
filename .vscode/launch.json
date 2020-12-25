@@ -19,6 +19,19 @@
             "program": "${workspaceRoot}/node_modules/protractor/bin/protractor",
             "args": ["${workspaceRoot}/e2e/protractor.conf.js"],
             "port": 9229
-       }
+        },
+        {
+            "type": "pwa-chrome",
+            "request": "attach",
+            "name": "Karma",
+            "address": "localhost",
+            "port": 9222,
+            "timeout": 600000,
+            "sourceMaps": true,
+            "webRoot": "${workspaceFolder}",
+            "pathMapping": {
+              "/_karma_webpack_": "${workspaceFolder}"
+            }
+        },
     ]
 }
