@@ -48,10 +48,10 @@ export class AppPage {
     waitIsVisibleToClick(addButton);
 
     const nameInput = element(by.css('input[placeholder="name"]'));
-    nameInput.sendKeys('TEST');
+    nameInput.sendKeys('TEST1');
 
     const passwordInput = element(by.css('input[placeholder="password"]'));
-    passwordInput.sendKeys('TEST');
+    passwordInput.sendKeys('TEST1');
 
     const selectButton = element(by.css('mat-select.mat-select-empty'));
     waitIsVisibleToClick(selectButton);
@@ -59,10 +59,23 @@ export class AppPage {
     const checkButton = element.all(by.css('mat-option')).get(2);
     checkButton.click();
 
-    const dialogAddButton = element.all(by.css('button.mat-button.mat-button-base')).get(0);
-    waitIsVisibleToClick(dialogAddButton);
+    const dialogConfirmButton = element.all(by.css('button.mat-button.mat-button-base')).get(0);
+    waitIsVisibleToClick(dialogConfirmButton);
 
     this.checkTotalCount(beforeAddRange, 1);
+
+    const editButton = element.all(by.css('button.mat-raised-button.mat-button-base.mat-accent')).last();
+    waitIsVisibleToClick(editButton);
+
+    const newName = 'TEST2';
+
+    nameInput.clear();
+    nameInput.sendKeys(newName);
+    waitIsVisibleToClick(dialogConfirmButton);
+
+    const table = element.all(by.css('app-table tbody tr')).last();
+    const currentName = table.all(by.css('.mat-column-name')).first().getText();
+    expect(currentName).toBe(newName);
 
     this.deleteMethodTest();
 
@@ -79,15 +92,28 @@ export class AppPage {
     waitIsVisibleToClick(addButton);
 
     const nameInput = element(by.css('input[placeholder="name"]'));
-    nameInput.sendKeys('TEST');
+    nameInput.sendKeys('TEST1');
 
     const passwordInput = element(by.css('input[placeholder="remark"]'));
-    passwordInput.sendKeys('TEST');
+    passwordInput.sendKeys('TEST1');
 
-    const dialogAddButton = element.all(by.css('button.mat-button.mat-button-base')).get(0);
-    waitIsVisibleToClick(dialogAddButton);
+    const dialogConfirmButton = element.all(by.css('button.mat-button.mat-button-base')).get(0);
+    waitIsVisibleToClick(dialogConfirmButton);
 
     this.checkTotalCount(beforeAddRange, 1);
+
+    const editButton = element.all(by.css('button.mat-raised-button.mat-button-base.mat-accent')).last();
+    waitIsVisibleToClick(editButton);
+
+    const newName = 'TEST2';
+
+    nameInput.clear();
+    nameInput.sendKeys(newName);
+    waitIsVisibleToClick(dialogConfirmButton);
+
+    const table = element.all(by.css('app-table tbody tr')).last();
+    const currentName = table.all(by.css('.mat-column-name')).first().getText();
+    expect(currentName).toBe(newName);
 
     this.deleteMethodTest();
 
@@ -104,7 +130,7 @@ export class AppPage {
     waitIsVisibleToClick(addButton);
 
     const nameInput = element(by.css('input[placeholder="name"]'));
-    nameInput.sendKeys('TEST');
+    nameInput.sendKeys('TEST1');
 
     const selectButton = element(by.css('mat-select.mat-select-empty'));
     waitIsVisibleToClick(selectButton);
@@ -115,10 +141,23 @@ export class AppPage {
     const dialogTitle = element(by.css('.mat-dialog-title'));
     browser.actions().mouseMove(dialogTitle).click().perform();
 
-    const dialogAddButton = element.all(by.css('button.mat-button.mat-button-base')).get(0);
-    waitIsVisibleToClick(dialogAddButton);
+    const dialogConfirmButton = element.all(by.css('button.mat-button.mat-button-base')).get(0);
+    waitIsVisibleToClick(dialogConfirmButton);
 
     this.checkTotalCount(beforeAddRange, 1);
+
+    const editButton = element.all(by.css('button.mat-raised-button.mat-button-base.mat-accent')).last();
+    waitIsVisibleToClick(editButton);
+
+    const newName = 'TEST2';
+
+    nameInput.clear();
+    nameInput.sendKeys(newName);
+    waitIsVisibleToClick(dialogConfirmButton);
+
+    const table = element.all(by.css('app-table tbody tr')).last();
+    const currentName = table.all(by.css('.mat-column-name')).first().getText();
+    expect(currentName).toBe(newName);
 
     this.deleteMethodTest();
 
@@ -135,27 +174,37 @@ export class AppPage {
     waitIsVisibleToClick(addButton);
 
     const nameInput = element(by.css('input[placeholder="name"]'));
-    nameInput.sendKeys('TEST');
+    nameInput.sendKeys('TEST1');
 
     const remarkInput = element(by.css('input[placeholder="remark"]'));
-    remarkInput.sendKeys('TEST');
+    remarkInput.sendKeys('TEST1');
 
     const linkInput = element(by.css('input[placeholder="linkTag"]'));
-    linkInput.sendKeys('TEST');
+    linkInput.sendKeys('TEST1');
 
     const selectButton = element(by.css('mat-select.mat-select-empty'));
     waitIsVisibleToClick(selectButton);
 
-    browser.sleep(2000);
-    takeScreenshot('test');
-
     const checkButton = element.all(by.css('mat-option')).get(0);
     waitIsVisibleToClick(checkButton);
 
-    const dialogAddButton = element.all(by.css('button.mat-button.mat-button-base')).get(0);
-    waitIsVisibleToClick(dialogAddButton);
+    const dialogConfirmButton = element.all(by.css('button.mat-button.mat-button-base')).get(0);
+    waitIsVisibleToClick(dialogConfirmButton);
 
     this.checkTotalCount(beforeAddRange, 1);
+
+    const editButton = element.all(by.css('button.mat-raised-button.mat-button-base.mat-accent')).last();
+    waitIsVisibleToClick(editButton);
+
+    const newName = 'TEST2';
+
+    nameInput.clear();
+    nameInput.sendKeys(newName);
+    waitIsVisibleToClick(dialogConfirmButton);
+
+    const table = element.all(by.css('app-table tbody tr')).last();
+    const currentName = table.all(by.css('.mat-column-name')).first().getText();
+    expect(currentName).toBe(newName);
 
     this.deleteMethodTest();
 
@@ -172,7 +221,7 @@ export class AppPage {
     waitIsVisibleToClick(addButton);
 
     const nameInput = element(by.css('input[placeholder="name"]'));
-    nameInput.sendKeys('TEST');
+    nameInput.sendKeys('TEST1');
 
     const selectButton = element(by.css('mat-select.mat-select-empty'));
     waitIsVisibleToClick(selectButton);
@@ -180,10 +229,23 @@ export class AppPage {
     const checkButton = element.all(by.css('mat-option')).get(0);
     waitIsVisibleToClick(checkButton);
 
-    const dialogAddButton = element.all(by.css('button.mat-button.mat-button-base')).get(0);
-    waitIsVisibleToClick(dialogAddButton);
+    const dialogConfirmButton = element.all(by.css('button.mat-button.mat-button-base')).get(0);
+    waitIsVisibleToClick(dialogConfirmButton);
 
     this.checkTotalCount(beforeAddRange, 1);
+
+    const editButton = element.all(by.css('button.mat-raised-button.mat-button-base.mat-accent')).last();
+    waitIsVisibleToClick(editButton);
+
+    const newName = 'TEST2';
+
+    nameInput.clear();
+    nameInput.sendKeys(newName);
+    waitIsVisibleToClick(dialogConfirmButton);
+
+    const table = element.all(by.css('app-table tbody tr')).last();
+    const currentName = table.all(by.css('.mat-column-name')).first().getText();
+    expect(currentName).toBe(newName);
 
     this.deleteMethodTest();
 
