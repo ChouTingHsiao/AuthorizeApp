@@ -15,10 +15,6 @@ export class AppPage {
     const loginTitle = element(by.css('.form-title p')).getText() as Promise<string>;
     expect(loginTitle).toEqual('Auth');
 
-  }
-
-  mainPage() {
-
     const accountInput = element(by.css('input#Account'));
     accountInput.clear();
     accountInput.sendKeys('ADMIN');
@@ -30,6 +26,10 @@ export class AppPage {
     element(by.css('input#btn_Login')).click();
 
     waitAlertToClick();
+
+  }
+
+  mainPage() {
 
     const navigate = element.all(by.css('button.dark-theme.mat-icon-button')).first();
     waitIsVisible(navigate);

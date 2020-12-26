@@ -9,7 +9,7 @@ describe('workspace-project App', () => {
     page = new AppPage();
   });
 
-  it('should display login title', () => {
+  it('should display login page', () => {
     page.navigateTo();
     page.loginPage();
     takeScreenshot('loginPage');
