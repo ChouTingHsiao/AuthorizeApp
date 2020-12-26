@@ -1,8 +1,12 @@
 import { AppPage } from './app.po';
 import { browser, logging} from 'protractor';
 import { takeScreenshot } from './utility/imageHelper';
+import Dexie from 'dexie';
 
 describe('workspace-project App', () => {
+
+  Dexie.delete('Authorize');
+
   let page: AppPage;
 
   beforeEach(() => {
