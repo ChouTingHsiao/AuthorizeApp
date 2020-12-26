@@ -1,29 +1,24 @@
-import { NgModule  } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BrowserModule  } from '@angular/platform-browser';
-import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
-import { BrowserAnimationsModule  } from '@angular/platform-browser/animations';
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MainRoutingModule } from './main-routing.module';
 
-import { MaterialModule  } from '@shared/Material/material.module';
+import { MaterialModule } from '@shared/Material/material.module';
 
-import { MainComponent } from './main.component';
-import { UserComponent } from './user/user.component';
-import { RoleComponent } from './role/role.component';
-import { GroupComponent } from './group/group.component';
-import { ProgramComponent } from './program/program.component';
-import { MenuComponent } from './menu/menu.component';
+import { MainComponent } from '@main/main.component';
+import { UserComponent } from '@main/user/user.component';
+import { RoleComponent } from '@main/role/role.component';
+import { GroupComponent } from '@main/group/group.component';
+import { ProgramComponent } from '@main/program/program.component';
+import { MenuComponent } from '@main/menu/menu.component';
+
 import { DashboardComponent } from '@shared/Component/dashboard/dashboard.component';
 import { UnauthorizeComponent } from '@shared/Component/unauthorize/unauthorize.component';
 
-import { DynamicHostDirective } from '@shared/Directive/dynamichost.Directive';
-import { DialogComponent } from '@shared/Component/dialog/dialog.component';
-import { InputComponent } from '@shared/Component/dialog/input/input.component';
-import { LabelComponent } from '@shared/Component/dialog/label/label.component';
-import { SelectComponent } from '@shared/Component/dialog/select/select.component';
-import { MultiSelectComponent } from '@shared/Component/dialog/multiselect/multiselect.component';
-import { TableComponent } from '@shared/Component/table/table.component';
+import { TableModule } from '@shared/Component/table/table.module';
 
 @NgModule({
   declarations: [
@@ -35,13 +30,6 @@ import { TableComponent } from '@shared/Component/table/table.component';
     ProgramComponent,
     MenuComponent,
     DashboardComponent,
-    DynamicHostDirective,
-    DialogComponent,
-    InputComponent,
-    LabelComponent,
-    SelectComponent,
-    MultiSelectComponent,
-    TableComponent,
   ],
   imports: [
     CommonModule,
@@ -51,14 +39,7 @@ import { TableComponent } from '@shared/Component/table/table.component';
     BrowserAnimationsModule,
     MainRoutingModule,
     MaterialModule,
-  ],
-  entryComponents: [
-    DialogComponent,
-    InputComponent,
-    LabelComponent,
-    SelectComponent,
-    MultiSelectComponent,
-    TableComponent,
+    TableModule,
   ],
 })
 export class MainModule { }

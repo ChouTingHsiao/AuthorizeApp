@@ -19,9 +19,10 @@
       "dom"
     ],
     "paths": {
-      "@services/*": ["src/app/services/*"],
+      "@src/*": ["src/*"],
       "@shared/*": ["src/app/_shared/*"],
-      "@src/*": ["src/*"]
+      "@main/*": ["src/app/main/*"],
+      "@services/*": ["src/app/services/*"],
     }
   },
   "angularCompilerOptions": {
