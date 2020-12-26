@@ -1,9 +1,9 @@
 import { Component, ViewChild, ComponentFactoryResolver, ComponentFactory, ElementRef } from '@angular/core';
 import { DynamicHostDirective } from '@shared/Directive/dynamichost.Directive';
-import { InputComponent } from '@shared/Component/dialog/input/input.component';
-import { LabelComponent } from '@shared/Component/dialog/label/label.component';
-import { SelectComponent } from '@shared/Component/dialog/select/select.component';
-import { MultiSelectComponent } from '@shared/Component/dialog/multiselect/multiselect.component';
+import { InputComponent } from '@src/app/_shared/Component/table/dialog/input/input.component';
+import { LabelComponent } from '@src/app/_shared/Component/table/dialog/label/label.component';
+import { SelectComponent } from '@src/app/_shared/Component/table/dialog/select/select.component';
+import { MultiSelectComponent } from '@src/app/_shared/Component/table/dialog/multiselect/multiselect.component';
 import { Column } from '@shared/Model/table.model';
 import { Dialog } from '@shared/Model/dialog.model';
 import { ColumnEnum } from '@shared/Enum/column.enum';

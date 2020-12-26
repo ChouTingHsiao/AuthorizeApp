@@ -7,11 +7,11 @@ import { BrowserAnimationsModule  } from '@angular/platform-browser/animations';
 import { MaterialModule  } from '@shared/Material/material.module';
 
 import { DynamicHostDirective } from '@shared/Directive/dynamichost.Directive';
-import { DialogComponent } from '@shared/Component/dialog/dialog.component';
-import { InputComponent } from '@shared/Component/dialog/input/input.component';
-import { LabelComponent } from '@shared/Component/dialog/label/label.component';
-import { SelectComponent } from '@shared/Component/dialog/select/select.component';
-import { MultiSelectComponent } from '@shared/Component/dialog/multiselect/multiselect.component';
+import { DialogComponent } from '@src/app/_shared/Component/table/dialog/dialog.component';
+import { InputComponent } from '@src/app/_shared/Component/table/dialog/input/input.component';
+import { LabelComponent } from '@src/app/_shared/Component/table/dialog/label/label.component';
+import { SelectComponent } from '@src/app/_shared/Component/table/dialog/select/select.component';
+import { MultiSelectComponent } from '@src/app/_shared/Component/table/dialog/multiselect/multiselect.component';
 import { TableComponent } from '@shared/Component/table/table.component';
 
 @NgModule({

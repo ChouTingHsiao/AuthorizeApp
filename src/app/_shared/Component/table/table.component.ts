@@ -3,7 +3,7 @@ import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '@shared/Component/dialog/dialog.component';
+import { DialogComponent } from '@src/app/_shared/Component/table/dialog/dialog.component';
 import { Grid, Column } from '@shared/Model/table.model';
 import { Dialog } from '@shared/Model/dialog.model';
 import { entityToArray } from '@shared/Method/object.method';
@@ -40,7 +40,7 @@ export class TableComponent implements OnChanges, OnDestroy {
 
   delete: (element: any, event: any) => void;
 
-  constructor(public dialog: MatDialog) {}
+  constructor(public matDialog: MatDialog) {}
 
   ngOnChanges(changes) {
     if (changes.grid && this.grid !== undefined) {
@@ -99,7 +99,7 @@ export class TableComponent implements OnChanges, OnDestroy {
 
     this.grid.subscribe(x => {
 
-      const dialogRef = this.dialog.open(DialogComponent);
+      const dialogRef = this.matDialog.open(DialogComponent);
 
       const instance = dialogRef.componentInstance;
 
