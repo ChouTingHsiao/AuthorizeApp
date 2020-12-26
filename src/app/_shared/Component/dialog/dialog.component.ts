@@ -21,6 +21,8 @@ export class DialogComponent {
 
   DialogData: Dialog;
 
+  confirm: () => void;
+
   id: string;
 
   @ViewChild(DynamicHostDirective, {static: true}) dynamicComponentLoader: DynamicHostDirective;
@@ -64,8 +66,6 @@ export class DialogComponent {
 
     componentRef.changeDetectorRef.detectChanges();
   }
-
-  confirm() {}
 
   getData(): any {
     const data = {};

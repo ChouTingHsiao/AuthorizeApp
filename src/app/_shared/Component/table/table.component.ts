@@ -40,7 +40,7 @@ export class TableComponent implements OnChanges, OnDestroy {
 
   delete: (element: any, event: any) => void;
 
-  constructor(public dialog: MatDialog, private changeRef: ChangeDetectorRef) {}
+  constructor(public dialog: MatDialog) {}
 
   ngOnChanges(changes) {
     if (changes.grid && this.grid !== undefined) {
