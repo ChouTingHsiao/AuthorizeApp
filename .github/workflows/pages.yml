@@ -32,7 +32,7 @@ jobs:
 
     - name: update chrome
       id: update
-      run: npx webdriver-manager clean && npx webdriver-manager update --versions.chrome ChromeDriver 86.0.4240.22
+      run: npx webdriver-manager clean && npx webdriver-manager update --versions.chrome 86.0.4240.22
 
     - name: e2e
       id: e2e
