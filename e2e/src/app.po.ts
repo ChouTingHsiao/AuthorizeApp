@@ -23,13 +23,12 @@ export class AppPage {
     passwordInput.clear();
     passwordInput.sendKeys('ADMIN');
 
-    element(by.css('input#btn_Login')).click();
-
-    waitAlertToClick();
-
   }
 
   mainPage() {
+
+    element(by.css('input#btn_Login')).click();
+    waitAlertToClick();
 
     const navigate = element.all(by.css('button.dark-theme.mat-icon-button')).first();
     waitIsVisible(navigate);
@@ -64,6 +63,8 @@ export class AppPage {
 
     this.checkTotalCount(beforeAddRange, 1);
 
+    this.clickLastButton();
+
     const editButton = element.all(by.css('button.mat-raised-button.mat-button-base.mat-accent')).last();
     waitIsVisibleToClick(editButton);
 
@@ -77,7 +78,7 @@ export class AppPage {
     const currentName = table.all(by.css('.mat-column-name')).first().getText();
     expect(currentName).toBe(newName);
 
-    this.deleteMethodTest();
+    this.deleteLastData();
 
   }
 
@@ -102,6 +103,8 @@ export class AppPage {
 
     this.checkTotalCount(beforeAddRange, 1);
 
+    this.clickLastButton();
+
     const editButton = element.all(by.css('button.mat-raised-button.mat-button-base.mat-accent')).last();
     waitIsVisibleToClick(editButton);
 
@@ -115,7 +118,7 @@ export class AppPage {
     const currentName = table.all(by.css('.mat-column-name')).first().getText();
     expect(currentName).toBe(newName);
 
-    this.deleteMethodTest();
+    this.deleteLastData();
 
   }
 
@@ -146,6 +149,8 @@ export class AppPage {
 
     this.checkTotalCount(beforeAddRange, 1);
 
+    this.clickLastButton();
+
     const editButton = element.all(by.css('button.mat-raised-button.mat-button-base.mat-accent')).last();
     waitIsVisibleToClick(editButton);
 
@@ -159,7 +164,7 @@ export class AppPage {
     const currentName = table.all(by.css('.mat-column-name')).first().getText();
     expect(currentName).toBe(newName);
 
-    this.deleteMethodTest();
+    this.deleteLastData();
 
   }
 
@@ -193,6 +198,8 @@ export class AppPage {
 
     this.checkTotalCount(beforeAddRange, 1);
 
+    this.clickLastButton();
+
     const editButton = element.all(by.css('button.mat-raised-button.mat-button-base.mat-accent')).last();
     waitIsVisibleToClick(editButton);
 
@@ -206,7 +213,7 @@ export class AppPage {
     const currentName = table.all(by.css('.mat-column-name')).first().getText();
     expect(currentName).toBe(newName);
 
-    this.deleteMethodTest();
+    this.deleteLastData();
 
   }
 
@@ -234,6 +241,8 @@ export class AppPage {
 
     this.checkTotalCount(beforeAddRange, 1);
 
+    this.clickLastButton();
+
     const editButton = element.all(by.css('button.mat-raised-button.mat-button-base.mat-accent')).last();
     waitIsVisibleToClick(editButton);
 
@@ -247,22 +256,23 @@ export class AppPage {
     const currentName = table.all(by.css('.mat-column-name')).first().getText();
     expect(currentName).toBe(newName);
 
-    this.deleteMethodTest();
+    this.deleteLastData();
 
   }
 
-  deleteMethodTest() {
+  clickLastButton() {
 
-    const nextButton = element.all(by.css('button.mat-paginator-navigation-next')).get(0);
+    const lastButton = element.all(by.css('button.mat-paginator-navigation-last')).get(0);
+    waitIsVisibleToClick(lastButton);
 
-    waitIsVisibleToClick(nextButton);
+  }
+
+  deleteLastData() {
 
     const beforeDeleteRange = this.getPageRange();
 
     const deleteButton = element.all(by.css('button.mat-raised-button.mat-button-base.mat-warn')).last();
-
     waitIsVisibleToClick(deleteButton);
-
     waitAlertToClick();
 
     this.checkTotalCount(beforeDeleteRange, -1);
@@ -271,7 +281,6 @@ export class AppPage {
   getPageRange(): promise.Promise<string> {
 
     const prevToatal = element(by.css('.mat-paginator-range-label'));
-
     waitIsPresence(prevToatal);
 
     return prevToatal.getText();
