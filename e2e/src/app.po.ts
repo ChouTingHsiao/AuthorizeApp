@@ -74,7 +74,7 @@ export class AppPage {
     nameInput.sendKeys(newName);
     waitIsVisibleToClick(dialogConfirmButton);
 
-    const table = element.all(by.css('app-table tbody tr')).last();
+    const table = element.all(by.css('app-table tbody tr:not(.detail-row)')).last();
     const currentName = table.all(by.css('.mat-column-name')).first().getText();
     expect(currentName).toBe(newName);
 
@@ -114,7 +114,7 @@ export class AppPage {
     nameInput.sendKeys(newName);
     waitIsVisibleToClick(dialogConfirmButton);
 
-    const table = element.all(by.css('app-table tbody tr')).last();
+    const table = element.all(by.css('app-table tbody tr:not(.detail-row)')).last();
     const currentName = table.all(by.css('.mat-column-name')).first().getText();
     expect(currentName).toBe(newName);
 
@@ -160,7 +160,7 @@ export class AppPage {
     nameInput.sendKeys(newName);
     waitIsVisibleToClick(dialogConfirmButton);
 
-    const table = element.all(by.css('app-table tbody tr')).last();
+    const table = element.all(by.css('app-table tbody tr:not(.detail-row)')).last();
     const currentName = table.all(by.css('.mat-column-name')).first().getText();
     expect(currentName).toBe(newName);
 
@@ -209,7 +209,7 @@ export class AppPage {
     nameInput.sendKeys(newName);
     waitIsVisibleToClick(dialogConfirmButton);
 
-    const table = element.all(by.css('app-table tbody tr')).last();
+    const table = element.all(by.css('app-table tbody tr:not(.detail-row)')).last();
     const currentName = table.all(by.css('.mat-column-name')).first().getText();
     expect(currentName).toBe(newName);
 
@@ -252,7 +252,7 @@ export class AppPage {
     nameInput.sendKeys(newName);
     waitIsVisibleToClick(dialogConfirmButton);
 
-    const table = element.all(by.css('app-table tbody tr')).last();
+    const table = element.all(by.css('app-table tbody tr:not(.detail-row)')).last();
     const currentName = table.all(by.css('.mat-column-name')).first().getText();
     expect(currentName).toBe(newName);
 
