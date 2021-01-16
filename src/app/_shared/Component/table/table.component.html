@@ -1,33 +1,46 @@
-<button mat-raised-button (click)="create()"
-  class="dark-theme"
-   style="font-size: 1em;">Add</button>
-  <table
-  mat-table
-  matSort matSortActive="{{(grid | async)?.sort.active}}"
-  matSortDirection="{{(grid | async)?.sort.direction}}"
-  [dataSource]="dataSource"
-  (matSortChange)="sortData($event)" >
+<button mat-raised-button (click)="create()" class="dark-theme" style="font-size: 1em;">Add</button>
+<table
+mat-table
+matSort matSortActive="{{(grid | async)?.sort.active}}"
+matSortDirection="{{(grid | async)?.sort.direction}}"
+[dataSource]="dataSource"
+multiTemplateDataRows
+(matSortChange)="sortData($event)">
 
-   <!-- Maintain Column -->
-   <ng-container matColumnDef="maintain">
-   <th mat-header-cell *matHeaderCellDef  style="width: 20%;"></th>
-   <td mat-cell *matCellDef="let element" >
-    <button mat-raised-button color="accent" (click)="edit(element, $event)">Edit</button>
-    &nbsp;
-    <button mat-raised-button color="warn" (click)="delete(element, $event)">Delete</button>
-   </td>
-   </ng-container>
+  <!-- Maintain Column -->
+  <ng-container matColumnDef="maintain">
+    <th mat-header-cell *matHeaderCellDef  style="width: 20%;"></th>
+    <td mat-cell *matCellDef="let element" >
+      <button *ngIf="isHasDetail" mat-icon-button (click)="currentElement = currentElement === element ? null : element">
+        <mat-icon>{{ element == currentElement ? 'arrow_drop_down' : 'arrow_right' }}</mat-icon>
+      </button>
+      <button mat-raised-button color="accent" (click)="edit(element, $event)">Edit</button>&nbsp;
+      <button mat-raised-button color="warn" (click)="delete(element, $event)">Delete</button>
+    </td>
+  </ng-container>
 
-   <!-- Column -->
-   <ng-container *ngFor="let column of (grid | async)?.columns" matColumnDef="{{column.columnDef}}">
+  <!-- Column -->
+  <ng-container *ngFor="let column of (grid | async)?.columns" matColumnDef="{{column.columnDef}}">
 
     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ column.header }}</th>
 
     <td mat-cell *matCellDef="let element">{{ column.cell(element) }}</td>
 
-   </ng-container>
+  </ng-container>
 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
-  <mat-paginator [pageSizeOptions]="[5, 10, 20]" (page)="pageData($event)" showFirstLastButtons></mat-paginator>
+  <ng-container *ngIf="isHasDetail" matColumnDef="expandedDetail">
+    <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+      <div [@detailExpand]=" element == currentElement ? 'expanded' : 'collapsed'" class="element-detail">
+        <div *ngIf="element == currentElement" style="width: 100%;padding: 5px;">
+          <app-detail [detail]="(grid | async)?.detail(element)" (initComponent)="initComponentHandler($event)"></app-detail>
+        </div>
+      </div>
+    </td>
+  </ng-container>
+
+<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+<tr mat-row *matRowDef="let element; columns: displayedColumns;" ></tr>
+<tr mat-row *matRowDef="let row; columns: isHasDetail ? ['expandedDetail'] : []" class="detail-row"></tr>
+
+</table>
+<mat-paginator [pageSizeOptions]="[5, 10, 20]" (page)="pageData($event)" showFirstLastButtons></mat-paginator>

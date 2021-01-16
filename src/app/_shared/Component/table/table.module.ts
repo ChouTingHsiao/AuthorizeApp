@@ -13,6 +13,7 @@ import { LabelComponent } from '@src/app/_shared/Component/table/dialog/label/la
 import { SelectComponent } from '@src/app/_shared/Component/table/dialog/select/select.component';
 import { MultiSelectComponent } from '@src/app/_shared/Component/table/dialog/multiselect/multiselect.component';
 import { TableComponent } from '@shared/Component/table/table.component';
+import { DetailComponent } from '@shared/Component/table/detail.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { TableComponent } from '@shared/Component/table/table.component';
     SelectComponent,
     MultiSelectComponent,
     TableComponent,
+    DetailComponent,
   ],
   imports: [
     CommonModule,

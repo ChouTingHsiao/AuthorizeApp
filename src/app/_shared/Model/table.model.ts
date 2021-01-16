@@ -19,8 +19,19 @@ export interface Grid {
     tableName: string;
     sort: Sort;
     columns: Column[];
+    detail?: (element: any) => Observable<Detail>;
     read: () => Observable<any>;
     create: () => void;
     edit: (element: any, event?: any) => void;
     delete: (element: any, event?: any) => void;
+}
+
+export interface Detail {
+    tableName: string;
+    sort: Sort;
+    columns: Column[];
+    read?: () => Observable<any>;
+    create?: () => void;
+    edit?: (element: any, event?: any) => void;
+    delete?: (element: any, event?: any) => void;
 }

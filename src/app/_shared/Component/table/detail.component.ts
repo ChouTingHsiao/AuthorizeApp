@@ -1,4 +1,4 @@
-import { Component, OnChanges, ViewChild, Input, Output, EventEmitter, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
@@ -14,7 +14,7 @@ import { Observable, Subscription } from 'rxjs';
   templateUrl: './detail.component.html',
   styleUrls: ['./detail.component.scss']
 })
-export class DetailComponent implements OnChanges, OnDestroy {
+export class DetailComponent implements OnInit, OnDestroy {
 
   subscription: Subscription;
 
@@ -42,22 +42,25 @@ export class DetailComponent implements OnChanges, OnDestroy {
 
   constructor(public matDialog: MatDialog) {}
 
-  ngOnChanges(changes) {
-    if (changes.detail && this.detail !== undefined) {
-      this.setSource();
-    }
+  ngOnInit() {
+
+    this.setSource();
+
   }
 
   ngOnDestroy() {
+
     this.subscription.unsubscribe();
+
   }
 
   setSource() {
+
     this.detail.subscribe(x => {
       this.subscription = x.read().subscribe((y) => {
-        const entitiesArray = entityToArray(y);
-        this.dataSource = new MatTableDataSource<any>(entitiesArray);
-        this.pageNation();
+          const entitiesArray = entityToArray(y);
+          this.dataSource = new MatTableDataSource<any>(entitiesArray);
+          this.pageNation();
       });
       this.create = x.create;
       this.edit = x.edit;
@@ -65,6 +68,7 @@ export class DetailComponent implements OnChanges, OnDestroy {
       this.displayedColumns = this.columnToDisplay(x);
       this.initComponent.emit(this);
     });
+
   }
 
   pageNation() {

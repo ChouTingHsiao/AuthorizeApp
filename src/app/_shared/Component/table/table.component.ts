@@ -8,11 +8,22 @@ import { Grid, Column } from '@shared/Model/table.model';
 import { Dialog } from '@shared/Model/dialog.model';
 import { entityToArray } from '@shared/Method/object.method';
 import { Observable, Subscription } from 'rxjs';
-
+import { animate, state, style, transition, trigger} from '@angular/animations';
+import { DetailComponent } from './detail.component';
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
-  styleUrls: ['./table.component.scss']
+  styleUrls: ['./table.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition(
+        'expanded <=> collapsed',
+        animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')
+      )
+    ])
+  ]
 })
 export class TableComponent implements OnChanges, OnDestroy {
 
@@ -24,6 +35,11 @@ export class TableComponent implements OnChanges, OnDestroy {
   @Output()
   initComponent: EventEmitter<TableComponent> = new EventEmitter();
 
+  @Output()
+  detailComponent: EventEmitter<DetailComponent> = new EventEmitter();
+
+  dialogComponent: DialogComponent;
+
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
   @ViewChild(MatSort, {static: true}) sort: MatSort;
@@ -32,7 +48,9 @@ export class TableComponent implements OnChanges, OnDestroy {
 
   displayedColumns: string[];
 
-  dialogComponent: DialogComponent;
+  isHasDetail: boolean;
+
+  currentElement: any;
 
   create: () => void;
 
@@ -59,6 +77,7 @@ export class TableComponent implements OnChanges, OnDestroy {
         this.dataSource = new MatTableDataSource<any>(entitiesArray);
         this.pageNation();
       });
+      this.isHasDetail = x.detail != null;
       this.create = x.create;
       this.edit = x.edit;
       this.delete = x.delete;
@@ -132,6 +151,12 @@ export class TableComponent implements OnChanges, OnDestroy {
     }
 
     return grid.columns;
+
+  }
+
+  initComponentHandler(component: DetailComponent) {
+
+    this.detailComponent.emit(component);
 
   }
 
