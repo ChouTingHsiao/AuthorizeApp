@@ -1,6 +1,4 @@
-<button mat-raised-button (click)="create()"
-  class="dark-theme"
-   style="font-size: 1em;">Add</button>
+<button id="btnAdd" mat-raised-button (click)="create()" class="dark-theme" style="font-size: 1em;">Add</button>
   <table
   mat-table
   matSort matSortActive="{{(detail | async)?.sort.active}}"
@@ -12,9 +10,8 @@
    <ng-container matColumnDef="maintain">
    <th mat-header-cell *matHeaderCellDef  style="width: 20%;"></th>
    <td mat-cell *matCellDef="let element" >
-    <button mat-raised-button color="accent" (click)="edit(element, $event)">Edit</button>
-    &nbsp;
-    <button mat-raised-button color="warn" (click)="delete(element, $event)">Delete</button>
+    <button id="btnEdit" mat-raised-button color="accent" (click)="edit(element, $event)">Edit</button>&nbsp;
+    <button id="btnDelete" mat-raised-button color="warn" (click)="delete(element, $event)">Delete</button>
    </td>
    </ng-container>
 

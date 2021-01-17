@@ -1,3 +1,7 @@
 <mat-card>
-  <app-table [grid]="myGrid" (initComponent)="initComponentHandler($event)"></app-table>
+  <app-table 
+  [grid]="myGrid" 
+  (initComponent)="initComponentHandler($event)" 
+  (detailComponent)="initDetailComponentHandler($event)">
+  </app-table>
 </mat-card>

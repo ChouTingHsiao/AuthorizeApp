@@ -1,8 +1,9 @@
 import { User } from '@shared/Model/user.model';
 import { Role } from '@shared/Model/role.model';
+import { Group } from '@shared/Model/group.model';
 import { Program } from '@shared/Model/program.model';
 import { Menu } from '@shared/Model/menu.model';
-import { Group } from '@shared/Model/group.model';
+import { Button } from '@shared/Model/button.model';
 
 const Users: User[] = [
     { id: '1', name: 'ADMIN', password: 'ADMIN', role: '1' },
@@ -12,6 +13,10 @@ const Users: User[] = [
 const Roles: Role[] = [
     { id: '1', name: 'ADMIN', remark: '管理員' },
     { id: '2', name: 'USER', remark: '一般使用者' },
+];
+
+const Groups: Group[] = [
+  { id: '1', name: '管理員群組', role: ['1']},
 ];
 
 const Programs: Program[] = [
@@ -67,8 +72,10 @@ const MenusState = {
     }
 };
 
-const Groups: Group[] = [
-    { id: '1', name: '管理員群組', role: ['1']},
+const Buttons: Button[] = [
+  { id: '1', name: 'btnAdd', remark: '新增', program: '1'},
+  { id: '2', name: 'btnEdit', remark: '修改', program: '1'},
+  { id: '3', name: 'btnDelete', remark: '刪除', program: '1'},
 ];
 
-export { Users, Roles, Programs, Menus, MenusState, Groups };
+export { Users, Roles, Programs, Menus, MenusState, Groups, Buttons };

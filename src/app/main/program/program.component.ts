@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { TableComponent } from '@shared/Component/table/table.component';
+import { DetailComponent } from '@shared/Component/table/detail.component';
 import { DialogEnum } from '@shared/Enum/dialog.enum';
 import { ColumnEnum } from '@shared/Enum/column.enum';
 import { TableEnum } from '@shared/Enum/table.enum';
-import { Grid } from '@shared/Model/table.model';
+import { Grid, Detail } from '@shared/Model/table.model';
 import { Group } from '@shared/Model/group.model';
 import { Program } from '@shared/Model/program.model';
+import { Button } from '@shared/Model/button.model';
 import { GroupService } from '@services/group/group.service';
 import { Read, Create, Edit, Delete} from '@shared/Ngrx/Actions/maintain.action';
 import { Observable } from 'rxjs';
@@ -19,6 +21,8 @@ import { Observable } from 'rxjs';
 export class ProgramComponent implements OnInit {
 
   tableComponent: TableComponent;
+
+  detailComponent: DetailComponent;
 
   myGrid: Observable<Grid>;
 
@@ -100,6 +104,119 @@ export class ProgramComponent implements OnInit {
             }
           },
         ],
+        detail: (): Observable<Detail> => {
+
+          return new Observable(detailSubscriber => {
+
+            const detail = {
+              tableName: TableEnum.Buttons,
+              sort: { active: 'id', direction: 'asc' },
+              columns: [
+                {
+                  header: 'Id',
+                  columnDef: 'id',
+                  type: ColumnEnum.string,
+                  selector: ColumnEnum.label,
+                  visible: false,
+                  cell: (element: Button) => `${ element.id }`
+                },
+                {
+                  header: 'Name',
+                  columnDef: 'name',
+                  type: ColumnEnum.string,
+                  selector: ColumnEnum.input,
+                  cell: (element: Button) => `${ element.name }`
+                },
+                {
+                  header: 'Remark',
+                  columnDef: 'remark',
+                  type: ColumnEnum.string,
+                  selector: ColumnEnum.input,
+                  cell: (element: Button) => `${ element.remark }`
+                },
+                {
+                  header: 'Program',
+                  columnDef: 'program',
+                  type: ColumnEnum.string,
+                  selector: ColumnEnum.select,
+                  source: (): Observable<any> => {
+
+                    this.store.dispatch( new Read<Program>(TableEnum.Programs) );
+
+                    return this.store.select(TableEnum.Programs);
+                  },
+                  cell: (element: Button) => `${
+                    element.program
+                  }`
+                },
+              ],
+              read: (): Observable<any> => {
+
+                this.store.dispatch( new Read<Button>(TableEnum.Buttons) );
+
+                return this.store.select(TableEnum.Buttons);
+
+              },
+              create: (): void => {
+
+                this.detailComponent.openDialog({
+                  title: '新增頁面',
+                  button: [DialogEnum.btnCreate, DialogEnum.btnCancel],
+                  method: DialogEnum.create,
+                  confirm: () => {
+                    this.store.dispatch( new Create<Button>(
+                      TableEnum.Buttons,
+                      [],
+                      this.detailComponent.dialogComponent.getData() as Button )
+                    );
+                  }
+                });
+
+              },
+              edit: (element: Button): void => {
+
+                this.detailComponent.openDialog({
+                  title: '修改頁面',
+                  button: [DialogEnum.btnEdit, DialogEnum.btnCancel],
+                  method: DialogEnum.edit,
+                  data: element,
+                  confirm: () => {
+                    this.store.dispatch(
+                      new Edit<Button>(
+                        TableEnum.Buttons,
+                        [],
+                        this.detailComponent.dialogComponent.getData() as Button
+                      )
+                    );
+                  }
+                });
+
+              },
+              delete: (element: Button): void => {
+
+                const isCanDelete = confirm('Are you sure you want to delete this?');
+
+                if (isCanDelete) {
+
+                  this.store.dispatch(
+                    new Delete<Button>(
+                      TableEnum.Buttons,
+                      [],
+                      element
+                    )
+                  );
+
+                }
+
+              }
+            };
+
+            detailSubscriber.next(detail);
+            detailSubscriber.complete();
+
+          });
+
+        },
         read: (): Observable<any> => {
 
           this.store.dispatch( new Read<Program>(TableEnum.Programs) );
@@ -171,6 +288,12 @@ export class ProgramComponent implements OnInit {
   initComponentHandler(component: TableComponent) {
 
     this.tableComponent = component;
+
+  }
+
+  initDetailComponentHandler(component: DetailComponent) {
+
+    this.detailComponent = component;
 
   }
 

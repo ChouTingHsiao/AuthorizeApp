@@ -8,6 +8,7 @@ import { RoleEffects } from '@shared/Ngrx/Effects/role.effects';
 import { GroupEffects } from '@shared/Ngrx/Effects/group.effects';
 import { ProgramEffects } from '@shared/Ngrx/Effects/program.effects';
 import { MenuEffects } from '@shared/Ngrx/Effects/menu.effects';
+import { ButtonEffects } from '@shared/Ngrx/Effects/button.effects';
 import { environment } from '../../../environments/environment';
 
 @NgModule({
@@ -18,11 +19,12 @@ import { environment } from '../../../environments/environment';
             GroupEffects,
             ProgramEffects,
             MenuEffects,
+            ButtonEffects,
         ]),
         StoreModule.forRoot(ROOT_REDUCER),
         StoreDevtoolsModule.instrument({
-        maxAge: 25,
-        logOnly: environment.production,
+            maxAge: 25,
+            logOnly: environment.production,
         }),
     ]
 })

@@ -4,4 +4,5 @@ export enum TableEnum {
   Groups = 'Groups',
   Programs = 'Programs',
   Menus = 'Menus',
+  Buttons = 'Buttons',
 }
