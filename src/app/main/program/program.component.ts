@@ -75,8 +75,8 @@ export class ProgramComponent implements OnInit {
             cell: (element: Program) => `${ element.linkTag }`
           },
           {
-            header: 'AuthGroup',
-            columnDef: 'authGroup',
+            header: 'Auth',
+            columnDef: 'auth',
             type: ColumnEnum.string,
             selector: ColumnEnum.select,
             source: (): Observable<any> => {
