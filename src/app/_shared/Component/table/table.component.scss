@@ -2,9 +2,12 @@
 
 tr.detail-row {
     height: 0;
+    background-color: gray;
 }
 
 .element-detail {
     overflow: hidden;
     display: flex;
+    padding-left: 2.4%;
+    padding-right: 2.4%;
 }
