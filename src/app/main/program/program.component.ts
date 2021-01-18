@@ -141,9 +141,8 @@ export class ProgramComponent implements OnInit {
                   selector: ColumnEnum.select,
                   source: (): Observable<any> => {
 
-                    this.store.dispatch( new Read<Program>(TableEnum.Programs) );
-
                     return this.store.select(TableEnum.Programs);
+
                   },
                   cell: (element: Button) => `${
                     element.program
