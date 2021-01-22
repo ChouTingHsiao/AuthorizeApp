@@ -14,21 +14,29 @@ export class ButtonService {
   private db: Promise<Dexie>;
 
   constructor() {
+
     this.db = OpenDB();
+
   }
 
   getAll(): Observable<Button[]> {
+
     return new Observable(subscriber => {
 
       GetAll(this.db, TableEnum.Buttons).then(x => {
+
         subscriber.next(x);
+
         subscriber.complete();
+
       });
 
     });
+
   }
 
   getByProgramId(program: Program): Observable<Button[]> {
+
     return new Observable(subscriber => {
 
       GetAll(this.db, TableEnum.Buttons).then((x: Button[])  => {
@@ -42,44 +50,67 @@ export class ButtonService {
       });
 
     });
+
   }
 
   create(button: Button): Observable<Button[]> {
+
     return new Observable(subscriber => {
 
       TableAdd(this.db, TableEnum.Buttons, button).then(() => {
+
         GetAll(this.db, TableEnum.Buttons).then(x => {
+
           subscriber.next(x);
+
           subscriber.complete();
+
         });
+
       });
 
     });
+
   }
 
   update(button: Button): Observable<Button[]> {
+
     return new Observable(subscriber => {
 
       TableUpdate(this.db, TableEnum.Buttons, button.id, button).then(() => {
+
         GetAll(this.db, TableEnum.Buttons).then(x => {
+
           subscriber.next(x);
+
           subscriber.complete();
+
         });
+
       });
 
     });
+
   }
 
   delete(button: Button): Observable<Button[]> {
+
     return new Observable(subscriber => {
 
       TableDelete(this.db, TableEnum.Buttons, button.id).then(() => {
+
         GetAll(this.db, TableEnum.Buttons).then(x => {
+
           subscriber.next(x);
+
           subscriber.complete();
+
         });
+
       });
 
     });
+
   }
+
 }

@@ -15,21 +15,29 @@ export class GroupService {
   private db: Promise<Dexie>;
 
   constructor(private roleService: RoleService) {
+
     this.db = OpenDB();
+
   }
 
   getAll(): Observable<Group[]> {
+
     return new Observable(subscriber => {
 
         GetAll(this.db, TableEnum.Groups).then(x => {
+
           subscriber.next(x);
+
           subscriber.complete();
+
         });
 
     });
+
   }
 
   getByAuth(): Observable<Group[]> {
+
     return new Observable(subscriber => {
 
       this.getAll().pipe(
@@ -45,15 +53,17 @@ export class GroupService {
         const AuthGroup = Groups.filter( x => x.role.includes(roleId));
 
         subscriber.next(AuthGroup);
+
         subscriber.complete();
 
       });
 
-
     });
+
   }
 
   create(group: Group): Observable<Group[]> {
+
     return new Observable(subscriber => {
 
       if (!group.role) {
@@ -61,39 +71,59 @@ export class GroupService {
       }
 
       TableAdd(this.db, TableEnum.Groups, group).then(() => {
+
         GetAll(this.db, TableEnum.Groups).then(x => {
+
           subscriber.next(x);
+
           subscriber.complete();
+
         });
+
       });
 
     });
+
   }
 
   update(group: Group): Observable<Group[]> {
+
     return new Observable(subscriber => {
 
       TableUpdate(this.db, TableEnum.Groups, group.id, group).then(() => {
+
         GetAll(this.db, TableEnum.Groups).then(x => {
+
           subscriber.next(x);
+
           subscriber.complete();
+
         });
+
       });
 
     });
+
   }
 
   delete(group: Group): Observable<Group[]> {
+
     return new Observable(subscriber => {
 
       TableDelete(this.db, TableEnum.Groups, group.id).then(() => {
+
         GetAll(this.db, TableEnum.Groups).then(x => {
+
           subscriber.next(x);
+
           subscriber.complete();
+
         });
+
       });
 
     });
+
   }
 
 }
