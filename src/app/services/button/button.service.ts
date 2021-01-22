@@ -4,6 +4,7 @@ import { TableEnum } from '@shared/Enum/table.enum';
 import { OpenDB, GetAll, TableAdd, TableUpdate, TableDelete } from '@shared/Dexie/authorize.dexie';
 import { Observable } from 'rxjs';
 import Dexie from 'dexie';
+import { Program } from '@src/app/_shared/Model/program.model';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +23,22 @@ export class ButtonService {
       GetAll(this.db, TableEnum.Buttons).then(x => {
         subscriber.next(x);
         subscriber.complete();
+      });
+
+    });
+  }
+
+  getByProgramId(program: Program): Observable<Button[]> {
+    return new Observable(subscriber => {
+
+      GetAll(this.db, TableEnum.Buttons).then((x: Button[])  => {
+
+        const programButton = x.filter(y => y.program === program.id);
+
+        subscriber.next(programButton);
+
+        subscriber.complete();
+
       });
 
     });
