@@ -10,10 +10,15 @@ function objectToArray(obj) {
     const array = [];
 
     for (let i = 0; i <= length; i++) {
+
         key =  keys[i];
+
         array.push(obj[key]);
+
     }
+
     return array;
+
 }
 
 
@@ -22,6 +27,7 @@ function entityToArray(entity: any) {
     const entities = 'entities';
 
     return objectToArray(entity[entities]);
+
 }
 
-export  { objectToArray, entityToArray };
+export { objectToArray, entityToArray };

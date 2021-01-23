@@ -46,4 +46,4 @@ function dataToColumn(data: any, columns: Column[]): Column[] {
 
 }
 
-export  { sortData, pageData, columnToDisplay, dataToColumn };
+export { sortData, pageData, columnToDisplay, dataToColumn };
