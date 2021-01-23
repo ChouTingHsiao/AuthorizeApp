@@ -1,15 +1,17 @@
-import { Component, OnChanges, ViewChild, Input, Output, EventEmitter, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnChanges, ViewChild, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '@src/app/_shared/Component/table/dialog/dialog.component';
-import { Grid, Column } from '@shared/Model/table.model';
+import { DialogComponent } from '@shared/Component/table/dialog/dialog.component';
+import { Grid } from '@shared/Model/table.model';
 import { Dialog } from '@shared/Model/dialog.model';
 import { entityToArray } from '@shared/Method/object.method';
 import { Observable, Subscription } from 'rxjs';
 import { animate, state, style, transition, trigger} from '@angular/animations';
+import { sortData, pageData, columnToDisplay, dataToColumn } from '@shared/Method/table.method';
 import { DetailComponent } from './detail.component';
+
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
@@ -58,6 +60,10 @@ export class TableComponent implements OnChanges, OnDestroy {
 
   delete: (element: any, event: any) => void;
 
+  sortData: (sort: Sort) => void = sortData;
+
+  pageData: (page: PageEvent) => void = pageData;
+
   constructor(public matDialog: MatDialog) {}
 
   ngOnChanges(changes) {
@@ -81,7 +87,7 @@ export class TableComponent implements OnChanges, OnDestroy {
       this.create = x.create;
       this.edit = x.edit;
       this.delete = x.delete;
-      this.displayedColumns = this.columnToDisplay(x);
+      this.displayedColumns = columnToDisplay(x.columns);
       this.initComponent.emit(this);
     });
   }
@@ -92,26 +98,6 @@ export class TableComponent implements OnChanges, OnDestroy {
 
     this.dataSource.paginator = this.paginator;
 
-  }
-
-  columnToDisplay(grid: Grid): string[] {
-
-    const display = ['maintain'];
-
-    const columnArray = grid.columns.filter(data => !(data.visible === false)).map((x) => {
-      return  x.columnDef;
-    });
-
-    return display.concat(columnArray);
-  }
-
-  sortData(sort: Sort) {
-    console.log(sort.active);
-    console.log(sort.direction);
-  }
-
-  pageData(page: PageEvent) {
-    console.log(page);
   }
 
   openDialog(dialog: Dialog) {
@@ -126,7 +112,7 @@ export class TableComponent implements OnChanges, OnDestroy {
 
       instance.DialogData = dialog;
 
-      instance.ColumnArray = this.dataToSchema(dialog.data, x);
+      instance.ColumnArray = dataToColumn(dialog.data, x.columns);
 
       instance.ColumnArray.forEach(element => {
         instance.dynamicAddComponent(element);
@@ -139,18 +125,6 @@ export class TableComponent implements OnChanges, OnDestroy {
       });
 
     });
-
-  }
-
-  dataToSchema(data: any, grid: Grid): Column[] {
-
-    if (data !== undefined) {
-      grid.columns.forEach(y => {
-        y.value = data[y.columnDef];
-      });
-    }
-
-    return grid.columns;
 
   }
 
