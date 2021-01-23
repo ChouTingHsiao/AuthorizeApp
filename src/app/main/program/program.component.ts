@@ -281,16 +281,4 @@ export class ProgramComponent implements OnInit {
 
   }
 
-  initComponentHandler(component: TableComponent) {
-
-    this.tableComponent = component;
-
-  }
-
-  initDetailComponentHandler(component: DetailComponent) {
-
-    this.detailComponent = component;
-
-  }
-
 }

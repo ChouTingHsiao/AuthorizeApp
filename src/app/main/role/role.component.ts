@@ -126,10 +126,4 @@ export class RoleComponent implements OnInit {
 
   }
 
-  initComponentHandler(component: TableComponent) {
-
-    this.tableComponent = component;
-
-  }
-
 }

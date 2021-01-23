@@ -144,10 +144,4 @@ export class GroupComponent implements OnInit {
 
   }
 
-  initComponentHandler(component: TableComponent) {
-
-    this.tableComponent = component;
-
-  }
-
 }

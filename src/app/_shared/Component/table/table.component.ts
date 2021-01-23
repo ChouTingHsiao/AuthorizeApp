@@ -35,12 +35,10 @@ export class TableComponent implements OnChanges, OnDestroy {
   grid: Observable<Grid>;
 
   @Output()
-  initComponent: EventEmitter<TableComponent> = new EventEmitter();
+  tableComponent: EventEmitter<TableComponent> = new EventEmitter();
 
   @Output()
   detailComponent: EventEmitter<DetailComponent> = new EventEmitter();
-
-  dialogComponent: DialogComponent;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
@@ -53,6 +51,8 @@ export class TableComponent implements OnChanges, OnDestroy {
   isHasDetail: boolean;
 
   currentElement: any;
+
+  dialogComponent: DialogComponent;
 
   create: () => void;
 
@@ -88,7 +88,7 @@ export class TableComponent implements OnChanges, OnDestroy {
       this.edit = x.edit;
       this.delete = x.delete;
       this.displayedColumns = columnToDisplay(x.columns);
-      this.initComponent.emit(this);
+      this.tableComponent.emit(this);
     });
   }
 
@@ -128,7 +128,7 @@ export class TableComponent implements OnChanges, OnDestroy {
 
   }
 
-  initComponentHandler(component: DetailComponent) {
+  initDetailHandler(component: DetailComponent) {
 
     this.detailComponent.emit(component);
 

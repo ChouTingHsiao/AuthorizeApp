@@ -155,10 +155,4 @@ export class MenuComponent implements OnInit {
 
   }
 
-  initComponentHandler(component: TableComponent) {
-
-    this.tableComponent = component;
-
-  }
-
 }

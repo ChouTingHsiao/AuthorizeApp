@@ -149,10 +149,4 @@ export class UserComponent implements OnInit {
 
   }
 
-  initComponentHandler(component: TableComponent) {
-
-    this.tableComponent = component;
-
-  }
-
 }

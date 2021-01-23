@@ -23,7 +23,7 @@ export class DetailComponent implements OnInit, OnDestroy {
   detail: Observable<Detail>;
 
   @Output()
-  initComponent: EventEmitter<DetailComponent> = new EventEmitter();
+  detailComponent: EventEmitter<DetailComponent> = new EventEmitter();
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
@@ -71,7 +71,7 @@ export class DetailComponent implements OnInit, OnDestroy {
       this.edit = x.edit;
       this.delete = x.delete;
       this.displayedColumns = columnToDisplay(x.columns);
-      this.initComponent.emit(this);
+      this.detailComponent.emit(this);
     });
 
   }
