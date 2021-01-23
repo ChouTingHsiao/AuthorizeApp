@@ -104,7 +104,7 @@ export class ProgramComponent implements OnInit {
             }
           },
         ],
-        detail: (): Observable<Detail> => {
+        detail: (program: Program): Observable<Detail> => {
 
           return new Observable(detailSubscriber => {
 
@@ -134,24 +134,15 @@ export class ProgramComponent implements OnInit {
                   selector: ColumnEnum.input,
                   cell: (element: Button) => `${ element.remark }`
                 },
-                {
-                  header: 'Program',
-                  columnDef: 'program',
-                  type: ColumnEnum.string,
-                  selector: ColumnEnum.select,
-                  source: (): Observable<any> => {
-
-                    return this.store.select(TableEnum.Programs);
-
-                  },
-                  cell: (element: Button) => `${
-                    element.program
-                  }`
-                },
               ],
               read: (): Observable<any> => {
 
-                this.store.dispatch( new Read<Button>(TableEnum.Buttons) );
+                this.store.dispatch( new Read<Button>(
+                  `${TableEnum.Programs}.${TableEnum.Buttons}`,
+                    [],
+                    { program: program.id } as Button
+                  )
+                );
 
                 return this.store.select(TableEnum.Buttons);
 
@@ -163,22 +154,28 @@ export class ProgramComponent implements OnInit {
                   button: [DialogEnum.btnCreate, DialogEnum.btnCancel],
                   method: DialogEnum.create,
                   confirm: () => {
+
+                    const buttonData = this.detailComponent.dialogComponent.getData() as Button;
+
+                    buttonData.program = program.id;
+
                     this.store.dispatch( new Create<Button>(
                       TableEnum.Buttons,
                       [],
-                      this.detailComponent.dialogComponent.getData() as Button )
+                      buttonData)
                     );
+
                   }
                 });
 
               },
-              edit: (element: Button): void => {
+              edit: (button: Button): void => {
 
                 this.detailComponent.openDialog({
                   title: '修改頁面',
                   button: [DialogEnum.btnEdit, DialogEnum.btnCancel],
                   method: DialogEnum.edit,
-                  data: element,
+                  data: button,
                   confirm: () => {
                     this.store.dispatch(
                       new Edit<Button>(
@@ -191,7 +188,7 @@ export class ProgramComponent implements OnInit {
                 });
 
               },
-              delete: (element: Button): void => {
+              delete: (button: Button): void => {
 
                 const isCanDelete = confirm('Are you sure you want to delete this?');
 
@@ -201,7 +198,7 @@ export class ProgramComponent implements OnInit {
                     new Delete<Button>(
                       TableEnum.Buttons,
                       [],
-                      element
+                      button
                     )
                   );
 

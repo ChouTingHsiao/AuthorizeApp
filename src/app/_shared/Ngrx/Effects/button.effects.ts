@@ -23,6 +23,16 @@ export class ButtonEffects {
     )
   );
 
+  loadProgramButtons$ = createEffect(() => this.actions$.pipe(
+    ofType(`${TableEnum.Programs}.${TableEnum.Buttons}.${DialogEnum.read}`),
+    mergeMap((x) => this.buttonService.getByProgramId(x[this.newData])
+      .pipe(
+        map(Buttons => ( new ReadSuccess<Button>(TableEnum.Buttons, Buttons) )),
+        catchError(() => EMPTY)
+      ))
+    )
+  );
+
   createButton$ = createEffect(() => this.actions$.pipe(
     ofType(`${TableEnum.Buttons}.${DialogEnum.create}`),
     mergeMap((x) => this.buttonService.create(x[this.newData])
