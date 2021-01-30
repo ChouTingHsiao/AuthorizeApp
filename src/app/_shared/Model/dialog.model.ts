@@ -3,5 +3,4 @@ export interface Dialog {
     button: string[];
     method: string;
     data?: any;
-    confirm?: () => void;
 }

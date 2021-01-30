@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { TableComponent } from '@shared/Component/table/table.component';
+import { Dialog } from '@shared/Model/dialog.model';
+import { DialogComponent } from '@shared/Component/table/dialog/dialog.component';
 import { DialogEnum } from '@shared/Enum/dialog.enum';
 import { ColumnEnum } from '@shared/Enum/column.enum';
 import { TableEnum } from '@shared/Enum/table.enum';
@@ -18,7 +19,7 @@ import { Observable } from 'rxjs';
 })
 export class GroupComponent implements OnInit {
 
-  tableComponent: TableComponent;
+  openTableDialog: (dialog: Dialog) => DialogComponent;
 
   myGrid: Observable<Grid>;
 
@@ -84,37 +85,44 @@ export class GroupComponent implements OnInit {
         },
         create: (): void => {
 
-            this.tableComponent.openDialog({
-              title: '新增頁面',
-              button: [DialogEnum.btnCreate, DialogEnum.btnCancel],
-              method: DialogEnum.create,
-              confirm: () => {
-                this.store.dispatch( new Create<Group>(
-                  TableEnum.Groups,
-                  [],
-                  this.tableComponent.dialogComponent.getData() as Group)
-                );
-              }
-            });
+          const dialog: DialogComponent = this.openTableDialog({
+            title: '新增頁面',
+            button: [DialogEnum.btnCreate, DialogEnum.btnCancel],
+            method: DialogEnum.create,
+            data: {} as Group,
+          });
+
+          dialog.confirm = (): void => {
+
+            this.store.dispatch( new Create<Group>(
+              TableEnum.Groups,
+              [],
+              dialog.getData() as Group)
+            );
+
+          };
 
         },
         edit: (element: Group): void => {
 
-          this.tableComponent.openDialog({
+          const dialog: DialogComponent = this.openTableDialog({
             title: '修改頁面',
             button: [DialogEnum.btnEdit, DialogEnum.btnCancel],
             method: DialogEnum.edit,
             data: element,
-            confirm: () => {
-              this.store.dispatch(
-                new Edit<Group>(
-                  TableEnum.Groups,
-                  [],
-                  this.tableComponent.dialogComponent.getData() as Group
-                )
-              );
-            }
           });
+
+          dialog.confirm = (): void => {
+
+            this.store.dispatch(
+              new Edit<Group>(
+                TableEnum.Groups,
+                [],
+                dialog.getData() as Group
+              )
+            );
+
+          };
 
         },
         delete: (element: Group): void => {

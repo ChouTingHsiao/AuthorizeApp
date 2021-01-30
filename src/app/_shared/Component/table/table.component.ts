@@ -4,13 +4,12 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '@shared/Component/table/dialog/dialog.component';
-import { Grid } from '@shared/Model/table.model';
+import { Grid, Column } from '@shared/Model/table.model';
 import { Dialog } from '@shared/Model/dialog.model';
 import { entityToArray } from '@shared/Method/object.method';
 import { Observable, Subscription } from 'rxjs';
-import { animate, state, style, transition, trigger} from '@angular/animations';
-import { sortData, pageData, columnToDisplay, dataToColumn } from '@shared/Method/table.method';
-import { DetailComponent } from './detail.component';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { sortData, pageData, columnToDisplay, openDialog } from '@shared/Method/table.method';
 
 @Component({
   selector: 'app-table',
@@ -35,10 +34,10 @@ export class TableComponent implements OnChanges, OnDestroy {
   grid: Observable<Grid>;
 
   @Output()
-  tableComponent: EventEmitter<TableComponent> = new EventEmitter();
+  openTableDialog: EventEmitter<(dialog: Dialog) => DialogComponent> = new EventEmitter();
 
   @Output()
-  detailComponent: EventEmitter<DetailComponent> = new EventEmitter();
+  openDetailDialog: EventEmitter<(dialog: Dialog) => DialogComponent> = new EventEmitter();
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
@@ -47,6 +46,8 @@ export class TableComponent implements OnChanges, OnDestroy {
   dataSource: MatTableDataSource<any>;
 
   displayedColumns: string[];
+
+  columns: Column[];
 
   isHasDetail: boolean;
 
@@ -83,12 +84,13 @@ export class TableComponent implements OnChanges, OnDestroy {
         this.dataSource = new MatTableDataSource<any>(entitiesArray);
         this.pageNation();
       });
-      this.isHasDetail = x.detail != null;
       this.create = x.create;
       this.edit = x.edit;
       this.delete = x.delete;
+      this.isHasDetail = x.detail != null;
+      this.columns = x.columns;
       this.displayedColumns = columnToDisplay(x.columns);
-      this.tableComponent.emit(this);
+      this.openTableDialog.emit(openDialog(this.matDialog, x.columns));
     });
   }
 
@@ -100,37 +102,9 @@ export class TableComponent implements OnChanges, OnDestroy {
 
   }
 
-  openDialog(dialog: Dialog) {
+  initDetailHandler(openDetailDialog: (dialog: Dialog) => DialogComponent) {
 
-    this.grid.subscribe(x => {
-
-      const dialogRef = this.matDialog.open(DialogComponent);
-
-      const instance = dialogRef.componentInstance;
-
-      this.dialogComponent = instance;
-
-      instance.DialogData = dialog;
-
-      instance.ColumnArray = dataToColumn(dialog.data, x.columns);
-
-      instance.ColumnArray.forEach(element => {
-        instance.dynamicAddComponent(element);
-      });
-
-      instance.confirm = dialog.confirm;
-
-      dialogRef.afterClosed().subscribe(result => {
-        console.log(`Dialog result: ${result}`);
-      });
-
-    });
-
-  }
-
-  initDetailHandler(component: DetailComponent) {
-
-    this.detailComponent.emit(component);
+    this.openDetailDialog.emit(openDetailDialog);
 
   }
 

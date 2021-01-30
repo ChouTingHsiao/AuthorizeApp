@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { TableComponent } from '@shared/Component/table/table.component';
+import { Dialog } from '@shared/Model/dialog.model';
+import { DialogComponent } from '@shared/Component/table/dialog/dialog.component';
 import { DialogEnum } from '@shared/Enum/dialog.enum';
 import { ColumnEnum } from '@shared/Enum/column.enum';
 import { TableEnum } from '@shared/Enum/table.enum';
@@ -18,7 +19,7 @@ import { Observable } from 'rxjs';
 })
 export class UserComponent implements OnInit {
 
-  tableComponent: TableComponent;
+  openTableDialog: (dialog: Dialog) => DialogComponent;
 
   myGrid: Observable<Grid>;
 
@@ -89,37 +90,43 @@ export class UserComponent implements OnInit {
         },
         create: (): void => {
 
-          this.tableComponent.openDialog({
+          const dialog: DialogComponent = this.openTableDialog({
             title: '新增頁面',
             button: [DialogEnum.btnCreate, DialogEnum.btnCancel],
             method: DialogEnum.create,
-            confirm: () => {
-              this.store.dispatch( new Create<User>(
-                TableEnum.Users,
-                [],
-                this.tableComponent.dialogComponent.getData() as User )
-              );
-            }
+            data: {} as User,
           });
+
+          dialog.confirm = (): void => {
+
+            this.store.dispatch( new Create<User>(
+              TableEnum.Users,
+              [],
+              dialog.getData() as User )
+            );
+
+          };
 
         },
         edit: (element: User): void => {
 
-          this.tableComponent.openDialog({
+          const dialog: DialogComponent = this.openTableDialog({
             title: '修改頁面',
             button: [DialogEnum.btnEdit, DialogEnum.btnCancel],
             method: DialogEnum.edit,
             data: element,
-            confirm: () => {
-              this.store.dispatch(
-                new Edit<User>(
-                  TableEnum.Users,
-                  [],
-                  this.tableComponent.dialogComponent.getData() as User
-                )
-              );
-            }
           });
+
+          dialog.confirm = (): void => {
+
+            this.store.dispatch(
+              new Edit<User>(
+                TableEnum.Users,
+                [],
+                dialog.getData() as User
+              )
+            );
+          };
 
         },
         delete: (element: User): void => {

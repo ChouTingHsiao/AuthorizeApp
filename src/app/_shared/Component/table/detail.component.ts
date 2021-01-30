@@ -7,7 +7,7 @@ import { DialogComponent } from '@shared/Component/table/dialog/dialog.component
 import { Detail } from '@shared/Model/table.model';
 import { Dialog } from '@shared/Model/dialog.model';
 import { entityToArray } from '@shared/Method/object.method';
-import { sortData, pageData, columnToDisplay, dataToColumn } from '@shared/Method/table.method';
+import { sortData, pageData, columnToDisplay, openDialog } from '@shared/Method/table.method';
 import { Observable, Subscription } from 'rxjs';
 
 @Component({
@@ -23,7 +23,8 @@ export class DetailComponent implements OnInit, OnDestroy {
   detail: Observable<Detail>;
 
   @Output()
-  detailComponent: EventEmitter<DetailComponent> = new EventEmitter();
+  openDetailDialog: EventEmitter<(dialog: Dialog) => DialogComponent> = new EventEmitter();
+
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
@@ -71,7 +72,7 @@ export class DetailComponent implements OnInit, OnDestroy {
       this.edit = x.edit;
       this.delete = x.delete;
       this.displayedColumns = columnToDisplay(x.columns);
-      this.detailComponent.emit(this);
+      this.openDetailDialog.emit(openDialog(this.matDialog, x.columns));
     });
 
   }
@@ -81,34 +82,6 @@ export class DetailComponent implements OnInit, OnDestroy {
     this.dataSource.sort = this.sort;
 
     this.dataSource.paginator = this.paginator;
-
-  }
-
-  openDialog(dialog: Dialog) {
-
-    this.detail.subscribe(x => {
-
-      const dialogRef = this.matDialog.open(DialogComponent);
-
-      const instance = dialogRef.componentInstance;
-
-      this.dialogComponent = instance;
-
-      instance.DialogData = dialog;
-
-      instance.ColumnArray = dataToColumn(dialog.data, x.columns);
-
-      instance.ColumnArray.forEach(element => {
-        instance.dynamicAddComponent(element);
-      });
-
-      instance.confirm = dialog.confirm;
-
-      dialogRef.afterClosed().subscribe(result => {
-        console.log(`Dialog result: ${result}`);
-      });
-
-    });
 
   }
 

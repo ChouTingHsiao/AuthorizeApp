@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { TableComponent } from '@shared/Component/table/table.component';
-import { DetailComponent } from '@shared/Component/table/detail.component';
+import { Dialog } from '@shared/Model/dialog.model';
+import { DialogComponent } from '@shared/Component/table/dialog/dialog.component';
 import { DialogEnum } from '@shared/Enum/dialog.enum';
 import { ColumnEnum } from '@shared/Enum/column.enum';
 import { TableEnum } from '@shared/Enum/table.enum';
@@ -20,9 +20,9 @@ import { Observable } from 'rxjs';
 })
 export class ProgramComponent implements OnInit {
 
-  tableComponent: TableComponent;
+  openTableDialog: (dialog: Dialog) => DialogComponent;
 
-  detailComponent: DetailComponent;
+  openDetailDialog: (dialog: Dialog) => DialogComponent;
 
   myGrid: Observable<Grid>;
 
@@ -149,43 +149,48 @@ export class ProgramComponent implements OnInit {
               },
               create: (): void => {
 
-                this.detailComponent.openDialog({
+                const dialog: DialogComponent = this.openDetailDialog({
                   title: '新增頁面',
                   button: [DialogEnum.btnCreate, DialogEnum.btnCancel],
                   method: DialogEnum.create,
-                  confirm: () => {
-
-                    const buttonData = this.detailComponent.dialogComponent.getData() as Button;
-
-                    buttonData.program = program.id;
-
-                    this.store.dispatch( new Create<Button>(
-                      TableEnum.Buttons,
-                      [],
-                      buttonData)
-                    );
-
-                  }
+                  data: {} as Button,
                 });
+
+                dialog.confirm = (): void => {
+
+                  const buttonData = dialog.getData() as Button;
+
+                  buttonData.program = program.id;
+
+                  this.store.dispatch( new Create<Button>(
+                    TableEnum.Buttons,
+                    [],
+                    buttonData)
+                  );
+
+                };
 
               },
               edit: (button: Button): void => {
 
-                this.detailComponent.openDialog({
+                const dialog: DialogComponent = this.openDetailDialog({
                   title: '修改頁面',
                   button: [DialogEnum.btnEdit, DialogEnum.btnCancel],
                   method: DialogEnum.edit,
                   data: button,
-                  confirm: () => {
-                    this.store.dispatch(
-                      new Edit<Button>(
-                        TableEnum.Buttons,
-                        [],
-                        this.detailComponent.dialogComponent.getData() as Button
-                      )
-                    );
-                  }
                 });
+
+                dialog.confirm = (): void => {
+
+                  this.store.dispatch(
+                    new Edit<Button>(
+                      TableEnum.Buttons,
+                      [],
+                      dialog.getData() as Button
+                    )
+                  );
+
+                };
 
               },
               delete: (button: Button): void => {
@@ -222,37 +227,40 @@ export class ProgramComponent implements OnInit {
         },
         create: (): void => {
 
-          this.tableComponent.openDialog({
+          const dialog: DialogComponent = this.openTableDialog({
             title: '新增頁面',
             button: [DialogEnum.btnCreate, DialogEnum.btnCancel],
             method: DialogEnum.create,
-            confirm: () => {
-              this.store.dispatch( new Create<Program>(
-                TableEnum.Programs,
-                [],
-                this.tableComponent.dialogComponent.getData() as Program )
-              );
-            }
+            data: {} as Program,
           });
+
+          dialog.confirm = (): void => {
+            this.store.dispatch( new Create<Program>(
+              TableEnum.Programs,
+              [],
+              dialog.getData() as Program )
+            );
+          };
 
         },
         edit: (element: Program): void => {
 
-          this.tableComponent.openDialog({
+          const dialog: DialogComponent = this.openTableDialog({
             title: '修改頁面',
             button: [DialogEnum.btnEdit, DialogEnum.btnCancel],
             method: DialogEnum.edit,
             data: element,
-            confirm: () => {
-              this.store.dispatch(
-                new Edit<Program>(
-                  TableEnum.Programs,
-                  [],
-                  this.tableComponent.dialogComponent.getData() as Program
-                )
-              );
-            }
           });
+
+          dialog.confirm = (): void => {
+            this.store.dispatch(
+              new Edit<Program>(
+                TableEnum.Programs,
+                [],
+                dialog.getData() as Program
+              )
+            );
+          };
 
         },
         delete: (element: Program): void => {

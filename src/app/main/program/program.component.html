@@ -1,7 +1,7 @@
 <mat-card>
   <app-table 
   [grid]="myGrid" 
-  (tableComponent)="tableComponent=$event" 
-  (detailComponent)="detailComponent=$event">
+  (openTableDialog)="openTableDialog=$event" 
+  (openDetailDialog)="openDetailDialog=$event">
   </app-table>
 </mat-card>

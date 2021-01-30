@@ -1,6 +1,9 @@
 import { Sort } from '@angular/material/sort';
 import { PageEvent } from '@angular/material/paginator';
 import { Column } from '@shared/Model/table.model';
+import { MatDialog } from '@angular/material/dialog';
+import { Dialog } from '@shared/Model/dialog.model';
+import { DialogComponent } from '@shared/Component/table/dialog/dialog.component';
 
 function sortData(sort: Sort) {
 
@@ -46,4 +49,29 @@ function dataToColumn(data: any, columns: Column[]): Column[] {
 
 }
 
-export { sortData, pageData, columnToDisplay, dataToColumn };
+function openDialog( matDialog: MatDialog, columns: Column[]): (dialog: Dialog) => DialogComponent  {
+
+    return ( dialog: Dialog ): DialogComponent => {
+
+        const dialogRef = matDialog.open(DialogComponent);
+
+        const instance = dialogRef.componentInstance;
+
+        instance.DialogData = dialog;
+
+        instance.ColumnArray = dataToColumn(dialog.data, columns);
+
+        instance.ColumnArray.forEach(element => {
+          instance.dynamicAddComponent(element);
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+          console.log(`Dialog result: ${result}`);
+        });
+
+        return instance;
+    };
+
+}
+
+export { sortData, pageData, columnToDisplay, dataToColumn, openDialog };
