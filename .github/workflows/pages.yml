@@ -4,7 +4,7 @@ on:
     branches:
       - master
 jobs:
-  environment-build:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
 
@@ -22,29 +22,13 @@ jobs:
       id: install
       run: npm install
 
-  Lint:
-    runs-on: ubuntu-latest
-    steps:
-
     - name: Lint
       id: Lint
       run: npx ng lint
 
-    needs: environment-build
-
-  test:
-    runs-on: ubuntu-latest
-    steps:
-
     - name: test
       id: test
       run: npm test
-
-    needs: environment-build
-  
-  e2e:
-    runs-on: ubuntu-latest
-    steps:
 
     - name: update chrome
       id: update
@@ -53,12 +37,6 @@ jobs:
     - name: e2e
       id: e2e
       run: npx ng e2e --no-webdriver-update
-    
-    needs: environment-build
-
-  build-and-deploy:
-    runs-on: ubuntu-latest
-    steps:
 
     - name: Build and Deploy
       id: Ngh
@@ -75,5 +53,3 @@ jobs:
       with:
         access_token: ${{ secrets.LINE_ACCESS_TOKEN }}
         message: ${{ format('{0} {1} n {2}', github.workflow,  job.status, 'https://choutinghsiao.github.io/AuthorizeApp/')}}
-    
-    needs: [Lint, test, e2e]
