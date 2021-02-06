@@ -28,11 +28,11 @@ const Programs: Program[] = [
 ];
 
 const Menus: Menu[] = [
-    { id: '1', name: 'User', program: '1'},
-    { id: '2', name: 'Role', program: '2'},
-    { id: '3', name: 'Group', program: '3'},
-    { id: '4', name: 'Program', program: '4'},
-    { id: '5', name: 'Menu', program: '5'},
+    { id: '1', name: 'User', program: '1', buttons: ['1'] },
+    { id: '2', name: 'Role', program: '2', buttons: [] },
+    { id: '3', name: 'Group', program: '3', buttons: [] },
+    { id: '4', name: 'Program', program: '4', buttons: [] },
+    { id: '5', name: 'Menu', program: '5', buttons: [] },
 ];
 
 const MenusState = {
