@@ -52,8 +52,8 @@ export class AppPage {
     const passwordInput = element(by.css('input[placeholder="password"]'));
     passwordInput.sendKeys('TEST1');
 
-    const selectButton = element(by.css('mat-select.mat-select-empty'));
-    waitIsVisibleToClick(selectButton);
+    const roleSelect = element(by.css('mat-select[ng-reflect-name="role"]'));
+    waitIsVisibleToClick(roleSelect);
 
     const checkButton = element.all(by.css('mat-option')).get(2);
     checkButton.click();
@@ -135,8 +135,8 @@ export class AppPage {
     const nameInput = element(by.css('input[placeholder="name"]'));
     nameInput.sendKeys('TEST1');
 
-    const selectButton = element(by.css('mat-select.mat-select-empty'));
-    waitIsVisibleToClick(selectButton);
+    const rolesMultiSelect = element(by.css('mat-select[ng-reflect-name="roles"]'));
+    waitIsVisibleToClick(rolesMultiSelect);
 
     const checkButton = element.all(by.css('mat-option')).get(2);
     waitIsVisibleToClick(checkButton);
@@ -187,8 +187,8 @@ export class AppPage {
     const linkInput = element(by.css('input[placeholder="linkTag"]'));
     linkInput.sendKeys('TEST1');
 
-    const selectButton = element(by.css('mat-select.mat-select-empty'));
-    waitIsVisibleToClick(selectButton);
+    const authSelect = element(by.css('mat-select[ng-reflect-name="auth"]'));
+    waitIsVisibleToClick(authSelect);
 
     const checkButton = element.all(by.css('mat-option')).get(0);
     waitIsVisibleToClick(checkButton);
@@ -230,8 +230,8 @@ export class AppPage {
     const nameInput = element(by.css('input[placeholder="name"]'));
     nameInput.sendKeys('TEST1');
 
-    const selectButton = element(by.css('mat-select.mat-select-empty'));
-    waitIsVisibleToClick(selectButton);
+    const programSelect = element(by.css('mat-select[ng-reflect-name="program"]'));
+    waitIsVisibleToClick(programSelect);
 
     const checkButton = element.all(by.css('mat-option')).get(0);
     waitIsVisibleToClick(checkButton);
