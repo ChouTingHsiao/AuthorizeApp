@@ -58,8 +58,8 @@ export class GroupComponent implements OnInit {
             cell: (element: Group) => `${ element.name }`
           },
           {
-            header: 'Role',
-            columnDef: 'role',
+            header: 'Roles',
+            columnDef: 'roles',
             type: ColumnEnum.string,
             selector: ColumnEnum.multiselect,
             source: (): Observable<any> => {
