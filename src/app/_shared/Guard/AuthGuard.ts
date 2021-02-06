@@ -40,7 +40,7 @@ export class AuthGuard implements CanActivate {
 
         const group = Groups.filter(x => x.id === Program[0].auth)[0];
 
-        const AuthName = group.role.map(x => Roles.filter(y => y.id === x)[0].name ).join(',');
+        const AuthName = group.roles.map(x => Roles.filter(y => y.id === x)[0].name ).join(',');
 
         loggedIn = AuthName.includes(Auth);
 

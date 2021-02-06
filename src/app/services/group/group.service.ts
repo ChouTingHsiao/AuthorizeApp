@@ -50,7 +50,7 @@ export class GroupService {
 
         const roleId: string = Roles.filter(x => x.name === Auth)[0].id;
 
-        const AuthGroup = Groups.filter( x => x.role.includes(roleId));
+        const AuthGroup = Groups.filter( x => x.roles.includes(roleId));
 
         subscriber.next(AuthGroup);
 
@@ -66,8 +66,8 @@ export class GroupService {
 
     return new Observable(subscriber => {
 
-      if (!group.role) {
-        group.role = [''];
+      if (!group.roles) {
+        group.roles = [''];
       }
 
       TableAdd(this.db, TableEnum.Groups, group).then(() => {

@@ -69,7 +69,7 @@ export class GroupComponent implements OnInit {
               return this.store.select(TableEnum.Roles);
             },
             cell: (element: Group) => `${
-              element.role.map(x => {
+              element.roles.map(x => {
                 const role = roles.filter(y => y.id === x)[0];
                 return  role ? role.name : '';
               }).join(',')
