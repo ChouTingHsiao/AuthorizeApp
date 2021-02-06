@@ -1,8 +1,10 @@
 <button id="btnAdd" mat-raised-button (click)="create()" class="dark-theme" style="font-size: 1em;">Add</button>
 <table
 mat-table
-matSort matSortActive="{{(grid | async)?.sort.active}}"
-matSortDirection="{{(grid | async)?.sort.direction}}"
+matSort 
+matSortActive="{{(tableSort | async)?.active}}"
+matSortDirection="{{(tableSort | async)?.direction}}"
+matSortDisableClear
 [dataSource]="dataSource"
 multiTemplateDataRows
 (matSortChange)="sortData($event)">

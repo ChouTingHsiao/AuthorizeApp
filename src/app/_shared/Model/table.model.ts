@@ -10,14 +10,14 @@ export interface Column {
     cell: any;
 }
 
-export interface Sort {
+export interface TableSort {
     active: string;
     direction: string;
 }
 
 export interface Grid {
     tableName: string;
-    sort: Sort;
+    sort: TableSort;
     columns: Column[];
     detail?: (element: any) => Observable<Detail>;
     read: () => Observable<any>;
@@ -28,7 +28,7 @@ export interface Grid {
 
 export interface Detail {
     tableName: string;
-    sort: Sort;
+    sort: TableSort;
     columns: Column[];
     read?: () => Observable<any>;
     create?: () => void;

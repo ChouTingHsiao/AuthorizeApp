@@ -4,7 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '@shared/Component/table/dialog/dialog.component';
-import { Grid, Column } from '@shared/Model/table.model';
+import { Grid, Column, TableSort } from '@shared/Model/table.model';
 import { Dialog } from '@shared/Model/dialog.model';
 import { entityToArray } from '@shared/Method/object.method';
 import { Observable, Subscription } from 'rxjs';
@@ -45,9 +45,11 @@ export class TableComponent implements OnChanges, OnDestroy {
 
   dataSource: MatTableDataSource<any>;
 
-  displayedColumns: string[];
+  tableSort: Observable<TableSort>;
 
   columns: Column[];
+
+  displayedColumns: string[];
 
   isHasDetail: boolean;
 
@@ -88,6 +90,10 @@ export class TableComponent implements OnChanges, OnDestroy {
       this.edit = x.edit;
       this.delete = x.delete;
       this.isHasDetail = x.detail != null;
+      this.tableSort =  new Observable(subscriber => {
+        subscriber.next(x.sort);
+        subscriber.next();
+      });
       this.columns = x.columns;
       this.displayedColumns = columnToDisplay(x.columns);
       this.openTableDialog.emit(openDialog(this.matDialog, x.columns));
