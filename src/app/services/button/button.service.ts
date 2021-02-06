@@ -35,13 +35,13 @@ export class ButtonService {
 
   }
 
-  getByProgramId(button: Button): Observable<Button[]> {
+  getByProgramId(programId: string): Observable<Button[]> {
 
     return new Observable(subscriber => {
 
       GetAll(this.db, TableEnum.Buttons).then((x: Button[])  => {
 
-        const programButton = x.filter(y => y.program === button.program);
+        const programButton = x.filter(y => y.program === programId);
 
         subscriber.next(programButton);
 

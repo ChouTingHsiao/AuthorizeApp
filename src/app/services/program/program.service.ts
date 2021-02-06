@@ -6,7 +6,8 @@ import { GroupService } from '@services/group/group.service';
 import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import Dexie from 'dexie';
-
+import { ButtonService } from '@services/button/button.service';
+import { Button } from '@shared/Model/button.model';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,8 @@ export class ProgramService {
 
   private db: Promise<Dexie>;
 
-  constructor(private groupService: GroupService) {
+  constructor(private groupService: GroupService,
+              private buttonService: ButtonService) {
 
     this.db = OpenDB();
 
@@ -25,9 +27,15 @@ export class ProgramService {
 
     return new Observable(subscriber => {
 
-        GetAll(this.db, TableEnum.Programs).then(x => {
+        GetAll(this.db, TableEnum.Programs).then( (programs: Program[]) => {
 
-          subscriber.next(x);
+          programs.forEach(program => {
+            this.buttonService.getByProgramId(program.id).subscribe(buttons => {
+              program.buttons = buttons;
+            });
+          });
+
+          subscriber.next(programs);
 
           subscriber.complete();
 

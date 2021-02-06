@@ -11,6 +11,7 @@ import { Menu } from '@shared/Model/menu.model';
 import { ProgramService } from '@services/program/program.service';
 import { Read, Create, Edit, Delete} from '@shared/Ngrx/Actions/maintain.action';
 import { Observable } from 'rxjs';
+import { Button } from '@shared/Model/button.model';
 
 @Component({
   selector: 'app-menu',
@@ -83,6 +84,42 @@ export class MenuComponent implements OnInit {
                 }
 
                 return authProgramName;
+
+            }
+          },
+          {
+            header: 'Button',
+            columnDef: 'buttons',
+            type: ColumnEnum.string,
+            selector: ColumnEnum.multiselect,
+            source: (): Observable<any> => {
+
+              this.store.dispatch( new Read<Button>(TableEnum.Buttons) );
+
+              return this.store.select(TableEnum.Buttons);
+
+            },
+            cell: (element: Menu) => {
+
+              const programButtons = programs.filter(x => x.id === element.program);
+
+              if (programButtons.length > 0 &&
+                  programButtons[0].buttons &&
+                  programButtons[0].buttons.length > 0) {
+
+                return `${
+                  element.buttons.map(x => {
+
+                    const button = programButtons[0].buttons.filter(y => y.id === x);
+
+                    return  button === undefined ? '' :  button[0].name;
+
+                  }).join(',')
+                }`;
+
+              }
+
+              return '';
 
             }
           },
