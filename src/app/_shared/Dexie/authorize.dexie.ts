@@ -8,7 +8,7 @@ function OpenDB(): Promise<Dexie> {
     AuthorizeDb.version(1).stores({
       Users: 'id, name, password, role',
       Roles: 'id, name, remark',
-      Groups: 'id, name, role',
+      Groups: 'id, name, roles',
       Programs: 'id, name, remark, linkTag, auth',
       Menus: 'id, name, program',
       Buttons: 'id, name, remark, program',
