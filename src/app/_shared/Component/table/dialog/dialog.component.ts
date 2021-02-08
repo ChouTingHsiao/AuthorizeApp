@@ -19,7 +19,7 @@ export class DialogComponent {
 
   ColumnArray: Column[];
 
-  InputArray: InputComponent[] = [];
+  InputArray: any[] = [];
 
   DialogData: Dialog;
 
