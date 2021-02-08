@@ -59,6 +59,8 @@ function openDialog( matDialog: MatDialog, columns: Column[]): (dialog: Dialog) 
 
         instance.DialogData = dialog;
 
+        instance.onChanges = dialog.onChanges;
+
         instance.ColumnArray = dataToColumn(dialog.data, columns);
 
         instance.ColumnArray.forEach(element => {

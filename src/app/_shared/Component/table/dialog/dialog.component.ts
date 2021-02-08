@@ -15,6 +15,8 @@ import { ColumnEnum } from '@shared/Enum/column.enum';
 })
 export class DialogComponent {
 
+  onChanges: (event) => void;
+
   ColumnArray: Column[];
 
   InputArray: InputComponent[] = [];
@@ -59,6 +61,16 @@ export class DialogComponent {
     const componentRef = viewContainerRef.createComponent(componentFactory);
 
     const instance = componentRef.instance;
+
+    if (this.onChanges) {
+
+      instance.onChanges = this.onChanges;
+
+    } else {
+
+      instance.onChanges = (): void => {};
+      
+    }
 
     this.InputArray.push(instance);
 

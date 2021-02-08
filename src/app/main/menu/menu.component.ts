@@ -138,6 +138,9 @@ export class MenuComponent implements OnInit {
             button: [DialogEnum.btnCreate, DialogEnum.btnCancel],
             method: DialogEnum.create,
             data: {} as Menu,
+            onChanges: (event) => {
+              console.log(event);
+            }
           });
 
           dialog.confirm = (): void => {

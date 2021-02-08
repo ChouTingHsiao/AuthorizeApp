@@ -1,6 +1,6 @@
 <mat-form-field>
   <mat-label>{{column.columnDef}}</mat-label>
-  <mat-select [(ngModel)]="column.value" name="{{column.columnDef}}">
+  <mat-select [(ngModel)]="column.value" name="{{column.columnDef}}" (selectionChange)="onChanges($event)">
    <mat-option [value]="default">--</mat-option>
    <mat-option *ngFor="let data of entityToArray(source | async)" [value]="data.id">
      {{data.name}}
