@@ -72,16 +72,18 @@ export class RoleComponent implements OnInit {
             button: [DialogEnum.btnCreate, DialogEnum.btnCancel],
             method: DialogEnum.create,
             data: {} as Role,
+            confirm: (): void => {
+
+              this.store.dispatch(
+                new Create<Role>(
+                  TableEnum.Roles,
+                  [],
+                  dialog.getData() as Role
+                )
+              );
+
+            },
           });
-
-          dialog.confirm = (): void => {
-
-            this.store.dispatch( new Create<Role>(
-              TableEnum.Roles,
-              [],
-              dialog.getData() as Role )
-            );
-          };
 
         },
         edit: (element: Role): void => {
@@ -91,19 +93,18 @@ export class RoleComponent implements OnInit {
             button: [DialogEnum.btnEdit, DialogEnum.btnCancel],
             method: DialogEnum.edit,
             data: element,
+            confirm: (): void => {
+
+              this.store.dispatch(
+                new Edit<Role>(
+                  TableEnum.Roles,
+                  [],
+                  dialog.getData() as Role
+                )
+              );
+
+            },
           });
-
-          dialog.confirm = (): void => {
-
-            this.store.dispatch(
-              new Edit<Role>(
-                TableEnum.Roles,
-                [],
-                dialog.getData() as Role
-              )
-            );
-
-          };
 
         },
         delete: (element: Role): void => {

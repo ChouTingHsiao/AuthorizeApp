@@ -141,18 +141,19 @@ export class MenuComponent implements OnInit {
             onChanges: (event) => {
               console.log(event);
               dialog.ComponentDictionary.buttons.source = this.store.select(TableEnum.Buttons);
+            },
+            confirm: (): void => {
+
+              this.store.dispatch(
+                new Create<Menu>(
+                  TableEnum.Menus,
+                  [],
+                  dialog.getData() as Menu
+                )
+              );
+
             }
           });
-
-          dialog.confirm = (): void => {
-
-            this.store.dispatch( new Create<Menu>(
-              TableEnum.Menus,
-              [],
-              dialog.getData() as Menu)
-            );
-
-          };
 
         },
         edit: (element: Menu): void => {
@@ -162,19 +163,18 @@ export class MenuComponent implements OnInit {
             button: [DialogEnum.btnEdit, DialogEnum.btnCancel],
             method: DialogEnum.edit,
             data: element,
+            confirm: (): void => {
+
+              this.store.dispatch(
+                new Edit<Menu>(
+                  TableEnum.Menus,
+                  [],
+                  dialog.getData() as Menu
+                )
+              );
+
+            },
           });
-
-          dialog.confirm = (): void => {
-
-            this.store.dispatch(
-              new Edit<Menu>(
-                TableEnum.Menus,
-                [],
-                dialog.getData() as Menu
-              )
-            );
-
-          };
 
         },
         delete: (element: Menu): void => {

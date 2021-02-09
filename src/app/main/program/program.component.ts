@@ -232,15 +232,18 @@ export class ProgramComponent implements OnInit {
             button: [DialogEnum.btnCreate, DialogEnum.btnCancel],
             method: DialogEnum.create,
             data: {} as Program,
-          });
+            confirm: (): void => {
 
-          dialog.confirm = (): void => {
-            this.store.dispatch( new Create<Program>(
-              TableEnum.Programs,
-              [],
-              dialog.getData() as Program )
-            );
-          };
+              this.store.dispatch(
+                new Create<Program>(
+                  TableEnum.Programs,
+                  [],
+                  dialog.getData() as Program
+                )
+              );
+
+            },
+          });
 
         },
         edit: (element: Program): void => {
@@ -250,17 +253,16 @@ export class ProgramComponent implements OnInit {
             button: [DialogEnum.btnEdit, DialogEnum.btnCancel],
             method: DialogEnum.edit,
             data: element,
+            confirm: (): void => {
+              this.store.dispatch(
+                new Edit<Program>(
+                  TableEnum.Programs,
+                  [],
+                  dialog.getData() as Program
+                )
+              );
+            },
           });
-
-          dialog.confirm = (): void => {
-            this.store.dispatch(
-              new Edit<Program>(
-                TableEnum.Programs,
-                [],
-                dialog.getData() as Program
-              )
-            );
-          };
 
         },
         delete: (element: Program): void => {

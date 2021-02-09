@@ -90,17 +90,18 @@ export class GroupComponent implements OnInit {
             button: [DialogEnum.btnCreate, DialogEnum.btnCancel],
             method: DialogEnum.create,
             data: {} as Group,
+            confirm: (): void => {
+
+              this.store.dispatch(
+                new Create<Group>(
+                  TableEnum.Groups,
+                  [],
+                  dialog.getData() as Group
+                )
+              );
+
+            },
           });
-
-          dialog.confirm = (): void => {
-
-            this.store.dispatch( new Create<Group>(
-              TableEnum.Groups,
-              [],
-              dialog.getData() as Group)
-            );
-
-          };
 
         },
         edit: (element: Group): void => {
@@ -110,19 +111,18 @@ export class GroupComponent implements OnInit {
             button: [DialogEnum.btnEdit, DialogEnum.btnCancel],
             method: DialogEnum.edit,
             data: element,
+            confirm: (): void => {
+
+              this.store.dispatch(
+                new Edit<Group>(
+                  TableEnum.Groups,
+                  [],
+                  dialog.getData() as Group
+                )
+              );
+
+            },
           });
-
-          dialog.confirm = (): void => {
-
-            this.store.dispatch(
-              new Edit<Group>(
-                TableEnum.Groups,
-                [],
-                dialog.getData() as Group
-              )
-            );
-
-          };
 
         },
         delete: (element: Group): void => {

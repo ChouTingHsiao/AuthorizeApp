@@ -61,6 +61,8 @@ function openDialog( matDialog: MatDialog, columns: Column[]): (dialog: Dialog) 
 
         instance.onChanges = dialog.onChanges;
 
+        instance.confirm = dialog.confirm;
+
         instance.ColumnArray = dataToColumn(dialog.data, columns);
 
         instance.ColumnArray.forEach(element => {

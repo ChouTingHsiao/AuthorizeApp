@@ -95,17 +95,18 @@ export class UserComponent implements OnInit {
             button: [DialogEnum.btnCreate, DialogEnum.btnCancel],
             method: DialogEnum.create,
             data: {} as User,
+            confirm: (): void => {
+
+              this.store.dispatch(
+                new Create<User>(
+                  TableEnum.Users,
+                  [],
+                  dialog.getData() as User
+                )
+              );
+
+            },
           });
-
-          dialog.confirm = (): void => {
-
-            this.store.dispatch( new Create<User>(
-              TableEnum.Users,
-              [],
-              dialog.getData() as User )
-            );
-
-          };
 
         },
         edit: (element: User): void => {
@@ -115,18 +116,18 @@ export class UserComponent implements OnInit {
             button: [DialogEnum.btnEdit, DialogEnum.btnCancel],
             method: DialogEnum.edit,
             data: element,
+            confirm: (): void => {
+
+              this.store.dispatch(
+                new Edit<User>(
+                  TableEnum.Users,
+                  [],
+                  dialog.getData() as User
+                )
+              );
+
+            },
           });
-
-          dialog.confirm = (): void => {
-
-            this.store.dispatch(
-              new Edit<User>(
-                TableEnum.Users,
-                [],
-                dialog.getData() as User
-              )
-            );
-          };
 
         },
         delete: (element: User): void => {
