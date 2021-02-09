@@ -19,7 +19,7 @@ export class DialogComponent {
 
   ColumnArray: Column[];
 
-  InputArray: any[] = [];
+  ComponentDictionary: { [key: string]: any; } = {};
 
   DialogData: Dialog;
 
@@ -60,33 +60,37 @@ export class DialogComponent {
 
     const componentRef = viewContainerRef.createComponent(componentFactory);
 
-    const instance = componentRef.instance;
+    const component = componentRef.instance;
 
     if (this.onChanges) {
 
-      instance.onChanges = this.onChanges;
+      component.onChanges = this.onChanges;
 
     } else {
 
-      instance.onChanges = (): void => {};
+      component.onChanges = (): void => {};
 
     }
 
-    this.InputArray.push(instance);
+    this.ComponentDictionary[element.columnDef] = component;
 
-    instance.column = element;
+    component.column = element;
 
     componentRef.changeDetectorRef.detectChanges();
   }
 
   getData(): any {
+
     const data = {};
 
-    this.InputArray.forEach(element => {
-      data[element.column.columnDef] = element.column.value;
-    });
+    for (const [key, component] of Object.entries(this.ComponentDictionary)) {
+
+      data[key] = component.column.value;
+
+    }
 
     return data;
+
   }
 
 }

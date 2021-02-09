@@ -140,7 +140,7 @@ export class MenuComponent implements OnInit {
             data: {} as Menu,
             onChanges: (event) => {
               console.log(event);
-              dialog.InputArray[3].source = this.store.select(TableEnum.Buttons);
+              dialog.ComponentDictionary.buttons.source = this.store.select(TableEnum.Buttons);
             }
           });
 
