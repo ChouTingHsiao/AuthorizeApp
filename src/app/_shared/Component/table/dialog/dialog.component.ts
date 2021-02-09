@@ -69,7 +69,7 @@ export class DialogComponent {
     } else {
 
       instance.onChanges = (): void => {};
-      
+
     }
 
     this.InputArray.push(instance);
