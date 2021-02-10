@@ -51,8 +51,6 @@ function clone(obj: any): any {
 
     const cloneObj: any = {};
 
-    console.log('a');
-
     for (const attribute in obj) {
 
         if ( Array.isArray(obj[attribute]) ) {
