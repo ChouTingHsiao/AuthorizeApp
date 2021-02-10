@@ -94,8 +94,6 @@ export class MenuComponent implements OnInit {
             selector: ColumnEnum.multiselect,
             source: (): Observable<any> => {
 
-              this.store.dispatch( new Read<Button>(TableEnum.Buttons) );
-
               return this.store.select(TableEnum.Buttons);
 
             },
@@ -137,8 +135,18 @@ export class MenuComponent implements OnInit {
             method: DialogEnum.create,
             data: {} as Menu,
             onChanges: (event) => {
-              console.log(event);
-              dialog.ComponentDictionary.buttons.source = this.store.select(TableEnum.Buttons);
+
+              if ( event.source.ngControl.name === 'program' ) {
+
+                this.store.dispatch( new Read<Button>(
+                  `${TableEnum.Programs}.${TableEnum.Buttons}`,
+                    [],
+                    { program: event.value } as Button
+                  )
+                );
+
+              }
+
             },
             confirm: (): void => {
 
@@ -156,11 +164,36 @@ export class MenuComponent implements OnInit {
         },
         edit: (element: Menu): void => {
 
+          console.log(element.program);
+
+          this.store.dispatch( new Read<Button>(
+            `${TableEnum.Programs}.${TableEnum.Buttons}`,
+              [],
+              { program: element.program } as Button
+            )
+          );
+
           const dialog: DialogComponent = this.openTableDialog({
             title: '修改頁面',
             button: [DialogEnum.btnEdit, DialogEnum.btnCancel],
             method: DialogEnum.edit,
             data: element,
+            onChanges: (event) => {
+
+              console.log(event);
+
+              if ( event.source.ngControl.name === 'program' ) {
+
+                this.store.dispatch( new Read<Button>(
+                  `${TableEnum.Programs}.${TableEnum.Buttons}`,
+                    [],
+                    { program: event.value } as Button
+                  )
+                );
+
+              }
+
+            },
             confirm: (): void => {
 
               this.store.dispatch(
