@@ -21,7 +21,6 @@ function objectToArray(obj) {
 
 }
 
-
 function entityToArray(entity: any) {
 
     const entities = 'entities';
@@ -30,4 +29,50 @@ function entityToArray(entity: any) {
 
 }
 
-export { objectToArray, entityToArray };
+function cloneArray(array: any[]): any[] {
+
+    let newArray: any[] = [];
+
+    if (typeof array[0]  === 'object' ) {
+
+        array.forEach(val => newArray.push(Object.assign({}, val)));
+
+    } else {
+
+        newArray = Object.assign([], array);
+
+    }
+
+    return newArray;
+
+}
+
+function clone(obj: any): any {
+
+    const cloneObj: any = {};
+
+    console.log('a');
+
+    for (const attribute in obj) {
+
+        if ( Array.isArray(obj[attribute]) ) {
+
+            cloneObj[attribute] = cloneArray(obj[attribute]);
+
+        } else if (typeof obj[attribute] === 'object') {
+
+            cloneObj[attribute] = clone(obj[attribute]);
+
+        } else {
+
+            cloneObj[attribute] = obj[attribute];
+
+        }
+
+    }
+
+    return cloneObj;
+
+}
+
+export { objectToArray, entityToArray, clone };
