@@ -110,7 +110,7 @@ export class MenuComponent implements OnInit {
 
                     const button = programButtons[0].buttons.filter(y => y.id === x);
 
-                    return  button === undefined ? '' :  button[0].name;
+                    return  button === undefined ? '' :  button[0].remark;
 
                   }).join(',')
                 }`;
