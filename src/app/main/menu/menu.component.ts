@@ -126,8 +126,6 @@ export class MenuComponent implements OnInit {
         ],
         read: (): Observable<any> => {
 
-          this.store.dispatch( new Read<Menu>(TableEnum.Menus) );
-
           return this.store.select(TableEnum.Menus);
 
         },
