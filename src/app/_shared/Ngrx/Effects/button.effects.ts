@@ -17,7 +17,7 @@ export class ButtonEffects {
     ofType(`${TableEnum.Buttons}.${DialogEnum.read}`),
     mergeMap(() => this.buttonService.getAll()
       .pipe(
-        map(Buttons => ( new ReadSuccess<Button>(TableEnum.Buttons, Buttons) )),
+        map(buttons => ( new ReadSuccess<Button>(TableEnum.Buttons, buttons) )),
         catchError(() => EMPTY)
       ))
     )
@@ -27,7 +27,7 @@ export class ButtonEffects {
     ofType(`${TableEnum.Programs}.${TableEnum.Buttons}.${DialogEnum.read}`),
     mergeMap((x) => this.buttonService.getByProgramId(x[this.newData].program)
       .pipe(
-        map(Buttons => ( new ReadSuccess<Button>(TableEnum.Buttons, Buttons) )),
+        map(buttons => ( new ReadSuccess<Button>(TableEnum.Buttons, buttons) )),
         catchError(() => EMPTY)
       ))
     )
@@ -37,7 +37,7 @@ export class ButtonEffects {
     ofType(`${TableEnum.Buttons}.${DialogEnum.create}`),
     mergeMap((x) => this.buttonService.create(x[this.newData])
       .pipe(
-        map(Buttons => ( new CreateSuccess<Button>(TableEnum.Buttons, Buttons, x[this.newData]) )),
+        map(button => ( new CreateSuccess<Button>(TableEnum.Buttons, [], button) )),
         catchError(() => EMPTY)
       ))
     )
@@ -47,7 +47,7 @@ export class ButtonEffects {
     ofType(`${TableEnum.Buttons}.${DialogEnum.edit}`),
     mergeMap((x) => this.buttonService.update(x[this.newData])
       .pipe(
-        map(Buttons => ( new EditSuccess<Button>(TableEnum.Buttons, Buttons, x[this.newData]) )),
+        map(button => ( new EditSuccess<Button>(TableEnum.Buttons, [], button) )),
         catchError(() => EMPTY)
       ))
     )
@@ -57,7 +57,7 @@ export class ButtonEffects {
     ofType(`${TableEnum.Buttons}.${DialogEnum.delete}`),
     mergeMap((x) => this.buttonService.delete(x[this.newData])
       .pipe(
-        map(Buttons => ( new DeleteSuccess<Button>(TableEnum.Buttons, Buttons, x[this.newData]) )),
+        map(button => ( new DeleteSuccess<Button>(TableEnum.Buttons, [], button) )),
         catchError(() => EMPTY)
       ))
     )

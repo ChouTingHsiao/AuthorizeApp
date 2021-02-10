@@ -5,6 +5,7 @@ import { OpenDB, GetAll, TableAdd, TableUpdate, TableDelete } from '@shared/Dexi
 import { RoleService } from '@services/role/role.service';
 import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
+import { clone } from '@shared/Method/object.method';
 import Dexie from 'dexie';
 
 @Injectable({
@@ -62,23 +63,21 @@ export class GroupService {
 
   }
 
-  create(group: Group): Observable<Group[]> {
+  create(group: Group): Observable<Group> {
 
     return new Observable(subscriber => {
 
-      if (!group.roles) {
-        group.roles = [''];
+      const cloneGroup = clone(group);
+
+      if (!cloneGroup.roles) {
+        cloneGroup.roles = [''];
       }
 
-      TableAdd(this.db, TableEnum.Groups, group).then(() => {
+      TableAdd(this.db, TableEnum.Groups, cloneGroup).then(() => {
 
-        GetAll(this.db, TableEnum.Groups).then(x => {
+        subscriber.next(cloneGroup);
 
-          subscriber.next(x);
-
-          subscriber.complete();
-
-        });
+        subscriber.complete();
 
       });
 
@@ -86,19 +85,15 @@ export class GroupService {
 
   }
 
-  update(group: Group): Observable<Group[]> {
+  update(group: Group): Observable<Group> {
 
     return new Observable(subscriber => {
 
       TableUpdate(this.db, TableEnum.Groups, group.id, group).then(() => {
 
-        GetAll(this.db, TableEnum.Groups).then(x => {
+        subscriber.next(group);
 
-          subscriber.next(x);
-
-          subscriber.complete();
-
-        });
+        subscriber.complete();
 
       });
 
@@ -106,19 +101,15 @@ export class GroupService {
 
   }
 
-  delete(group: Group): Observable<Group[]> {
+  delete(group: Group): Observable<Group> {
 
     return new Observable(subscriber => {
 
       TableDelete(this.db, TableEnum.Groups, group.id).then(() => {
 
-        GetAll(this.db, TableEnum.Groups).then(x => {
+        subscriber.next(group);
 
-          subscriber.next(x);
-
-          subscriber.complete();
-
-        });
+        subscriber.complete();
 
       });
 

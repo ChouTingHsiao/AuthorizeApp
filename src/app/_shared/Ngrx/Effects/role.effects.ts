@@ -17,7 +17,7 @@ export class RoleEffects {
     ofType(`${TableEnum.Roles}.${DialogEnum.read}`),
     mergeMap(() => this.roleService.getAll()
       .pipe(
-        map(Roles => ( new ReadSuccess<Role>(TableEnum.Roles, Roles) )),
+        map(roles => ( new ReadSuccess<Role>(TableEnum.Roles, roles) )),
         catchError(() => EMPTY)
       ))
     )
@@ -27,7 +27,7 @@ export class RoleEffects {
     ofType(`${TableEnum.Roles}.${DialogEnum.create}`),
     mergeMap((x) => this.roleService.create(x[this.newData])
       .pipe(
-        map(Roles => ( new CreateSuccess<Role>(TableEnum.Roles, Roles, x[this.newData]) )),
+        map(role => ( new CreateSuccess<Role>(TableEnum.Roles, [], role) )),
         catchError(() => EMPTY)
       ))
     )
@@ -37,7 +37,7 @@ export class RoleEffects {
     ofType(`${TableEnum.Roles}.${DialogEnum.edit}`),
     mergeMap((x) => this.roleService.update(x[this.newData])
       .pipe(
-        map(Roles => ( new EditSuccess<Role>(TableEnum.Roles, Roles, x[this.newData]) )),
+        map(role => ( new EditSuccess<Role>(TableEnum.Roles, [], role) )),
         catchError(() => EMPTY)
       ))
     )
@@ -47,7 +47,7 @@ export class RoleEffects {
     ofType(`${TableEnum.Roles}.${DialogEnum.delete}`),
     mergeMap((x) => this.roleService.delete(x[this.newData])
       .pipe(
-        map(Roles => ( new DeleteSuccess<Role>(TableEnum.Roles, Roles, x[this.newData]) )),
+        map(role => ( new DeleteSuccess<Role>(TableEnum.Roles, [], role) )),
         catchError(() => EMPTY)
       ))
     )

@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { Menu } from '@shared/Model/menu.model';
 import { TableEnum } from '@shared/Enum/table.enum';
 import { OpenDB, GetAll, TableAdd, TableUpdate, TableDelete } from '@shared/Dexie/authorize.dexie';
-import { Observable } from 'rxjs';
-import Dexie from 'dexie';
 import { ProgramService } from '@services/program/program.service';
+import { Observable } from 'rxjs';
+import { clone } from '@shared/Method/object.method';
+import Dexie from 'dexie';
 
 @Injectable({
   providedIn: 'root'
@@ -23,11 +24,23 @@ export class MenuService {
 
     return new Observable(subscriber => {
 
-        GetAll(this.db, TableEnum.Menus).then(x => {
+        GetAll(this.db, TableEnum.Menus).then(menus => {
 
-          subscriber.next(x);
+          this.programService.getAll().subscribe((programs) => {
 
-          subscriber.complete();
+            menus.forEach( menu => {
+
+              const LinkedProgram = programs.find( program => program.id === menu.program);
+
+              menu.linkTag = LinkedProgram ? LinkedProgram.linkTag : '/';
+
+            });
+
+            subscriber.next(menus);
+
+            subscriber.complete();
+
+          });
 
         });
 
@@ -45,14 +58,6 @@ export class MenuService {
 
         const AuthMenu: Menu[] = menu.filter( x => x.program === '' || AuthProgramMap.includes(x.program));
 
-        AuthMenu.forEach(x => {
-
-          const program = Programs.find(y => y.id === x.program);
-
-          x.linkTag = program ? program.linkTag : '/';
-
-        });
-
         subscriber.next(AuthMenu);
 
         subscriber.complete();
@@ -63,25 +68,23 @@ export class MenuService {
 
   }
 
-  create(menu: Menu): Observable<Menu[]> {
+  create(menu: Menu): Observable<Menu> {
 
     return new Observable(subscriber => {
 
-      if (!menu.program) {
+      const cloneMenu = clone(menu);
 
-        menu.program = '';
+      if (!cloneMenu.program) {
+
+        cloneMenu.program = '';
 
       }
 
-      TableAdd(this.db, TableEnum.Menus, menu).then(() => {
+      TableAdd(this.db, TableEnum.Menus, cloneMenu).then(() => {
 
-        GetAll(this.db, TableEnum.Menus).then(x => {
+        subscriber.next(cloneMenu);
 
-          subscriber.next(x);
-
-          subscriber.complete();
-
-        });
+        subscriber.complete();
 
       });
 
@@ -89,19 +92,15 @@ export class MenuService {
 
   }
 
-  update(menu: Menu): Observable<Menu[]> {
+  update(menu: Menu): Observable<Menu> {
 
     return new Observable(subscriber => {
 
       TableUpdate(this.db, TableEnum.Menus, menu.id, menu).then(() => {
 
-        GetAll(this.db, TableEnum.Menus).then(x => {
+        subscriber.next(menu);
 
-          subscriber.next(x);
-
-          subscriber.complete();
-
-        });
+        subscriber.complete();
 
       });
 
@@ -109,19 +108,15 @@ export class MenuService {
 
   }
 
-  delete(menu: Menu): Observable<Menu[]> {
+  delete(menu: Menu): Observable<Menu> {
 
     return new Observable(subscriber => {
 
       TableDelete(this.db, TableEnum.Menus, menu.id).then(() => {
 
-        GetAll(this.db, TableEnum.Menus).then(x => {
+        subscriber.next(menu);
 
-          subscriber.next(x);
-
-          subscriber.complete();
-
-        });
+        subscriber.complete();
 
       });
 

@@ -3,11 +3,11 @@ import { Program } from '@shared/Model/program.model';
 import { TableEnum } from '@shared/Enum/table.enum';
 import { OpenDB, GetAll, TableAdd, TableUpdate, TableDelete } from '@shared/Dexie/authorize.dexie';
 import { GroupService } from '@services/group/group.service';
+import { ButtonService } from '@services/button/button.service';
 import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
+import { clone } from '@shared/Method/object.method';
 import Dexie from 'dexie';
-import { ButtonService } from '@services/button/button.service';
-import { Button } from '@shared/Model/button.model';
 
 @Injectable({
   providedIn: 'root'
@@ -29,15 +29,21 @@ export class ProgramService {
 
         GetAll(this.db, TableEnum.Programs).then( (programs: Program[]) => {
 
-          programs.forEach(program => {
-            this.buttonService.getByProgramId(program.id).subscribe(buttons => {
-              program.buttons = buttons;
+          this.buttonService.getAll().subscribe( buttons => {
+
+            programs.forEach( program => {
+
+              const LinkedButtons = buttons.filter( button => button.program === program.id);
+
+              program.buttons = LinkedButtons;
+
             });
+
+            subscriber.next(programs);
+
+            subscriber.complete();
+
           });
-
-          subscriber.next(programs);
-
-          subscriber.complete();
 
         });
 
@@ -69,25 +75,23 @@ export class ProgramService {
 
   }
 
-  create(program: Program): Observable<Program[]> {
+  create(program: Program): Observable<Program> {
 
     return new Observable(subscriber => {
 
-      if (!program.auth) {
+      const cloneProgram = clone(program);
 
-        program.auth = '';
+      if (!cloneProgram.auth) {
+
+        cloneProgram.auth = '';
 
       }
 
-      TableAdd(this.db, TableEnum.Programs, program).then(() => {
+      TableAdd(this.db, TableEnum.Programs, cloneProgram).then(() => {
 
-        GetAll(this.db, TableEnum.Programs).then(x => {
+        subscriber.next(cloneProgram);
 
-          subscriber.next(x);
-
-          subscriber.complete();
-
-        });
+        subscriber.complete();
 
       });
 
@@ -95,19 +99,15 @@ export class ProgramService {
 
   }
 
-  update(program: Program): Observable<Program[]> {
+  update(program: Program): Observable<Program> {
 
     return new Observable(subscriber => {
 
       TableUpdate(this.db, TableEnum.Programs, program.id, program).then(() => {
 
-        GetAll(this.db, TableEnum.Programs).then(x => {
+        subscriber.next(program);
 
-          subscriber.next(x);
-
-          subscriber.complete();
-
-        });
+        subscriber.complete();
 
       });
 
@@ -115,19 +115,15 @@ export class ProgramService {
 
   }
 
-  delete(program: Program): Observable<Program[]> {
+  delete(program: Program): Observable<Program> {
 
     return new Observable(subscriber => {
 
       TableDelete(this.db, TableEnum.Programs, program.id).then(() => {
 
-        GetAll(this.db, TableEnum.Programs).then(x => {
+        subscriber.next(program);
 
-          subscriber.next(x);
-
-          subscriber.complete();
-
-        });
+        subscriber.complete();
 
       });
 

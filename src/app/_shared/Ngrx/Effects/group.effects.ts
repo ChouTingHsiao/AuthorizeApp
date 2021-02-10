@@ -17,7 +17,7 @@ export class GroupEffects {
     ofType(`${TableEnum.Groups}.${DialogEnum.read}`),
     mergeMap(() => this.groupService.getAll()
       .pipe(
-        map(Groups => ( new ReadSuccess<Group>(TableEnum.Groups, Groups) )),
+        map(groups => ( new ReadSuccess<Group>(TableEnum.Groups, groups) )),
         catchError(() => EMPTY)
       ))
     )
@@ -27,7 +27,7 @@ export class GroupEffects {
     ofType(`${TableEnum.Groups}.${DialogEnum.create}`),
     mergeMap((x) => this.groupService.create(x[this.newData])
       .pipe(
-        map(Groups => ( new CreateSuccess<Group>(TableEnum.Groups, Groups, x[this.newData]) )),
+        map(group => ( new CreateSuccess<Group>(TableEnum.Groups, [], group) )),
         catchError(() => EMPTY)
       ))
     )
@@ -37,7 +37,7 @@ export class GroupEffects {
     ofType(`${TableEnum.Groups}.${DialogEnum.edit}`),
     mergeMap((x) => this.groupService.update(x[this.newData])
       .pipe(
-        map(Groups => ( new EditSuccess<Group>(TableEnum.Groups, Groups, x[this.newData]) )),
+        map(group => ( new EditSuccess<Group>(TableEnum.Groups, [], group) )),
         catchError(() => EMPTY)
       ))
     )
@@ -47,7 +47,7 @@ export class GroupEffects {
     ofType(`${TableEnum.Groups}.${DialogEnum.delete}`),
     mergeMap((x) => this.groupService.delete(x[this.newData])
       .pipe(
-        map(Groups => ( new DeleteSuccess<Group>(TableEnum.Groups, Groups, x[this.newData]) )),
+        map(group => ( new DeleteSuccess<Group>(TableEnum.Groups, [], group) )),
         catchError(() => EMPTY)
       ))
     )

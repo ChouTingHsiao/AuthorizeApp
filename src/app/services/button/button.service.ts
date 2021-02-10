@@ -3,8 +3,8 @@ import { Button } from '@shared/Model/button.model';
 import { TableEnum } from '@shared/Enum/table.enum';
 import { OpenDB, GetAll, TableAdd, TableUpdate, TableDelete } from '@shared/Dexie/authorize.dexie';
 import { Observable } from 'rxjs';
+import { clone } from '@shared/Method/object.method';
 import Dexie from 'dexie';
-import { Program } from '@src/app/_shared/Model/program.model';
 
 @Injectable({
   providedIn: 'root'
@@ -53,19 +53,17 @@ export class ButtonService {
 
   }
 
-  create(button: Button): Observable<Button[]> {
+  create(button: Button): Observable<Button> {
 
     return new Observable(subscriber => {
 
-      TableAdd(this.db, TableEnum.Buttons, button).then(() => {
+      const cloneButton = clone(button);
 
-        GetAll(this.db, TableEnum.Buttons).then(x => {
+      TableAdd(this.db, TableEnum.Buttons, cloneButton).then(() => {
 
-          subscriber.next(x);
+        subscriber.next(cloneButton);
 
-          subscriber.complete();
-
-        });
+        subscriber.complete();
 
       });
 
@@ -73,19 +71,15 @@ export class ButtonService {
 
   }
 
-  update(button: Button): Observable<Button[]> {
+  update(button: Button): Observable<Button> {
 
     return new Observable(subscriber => {
 
       TableUpdate(this.db, TableEnum.Buttons, button.id, button).then(() => {
 
-        GetAll(this.db, TableEnum.Buttons).then(x => {
+        subscriber.next(button);
 
-          subscriber.next(x);
-
-          subscriber.complete();
-
-        });
+        subscriber.complete();
 
       });
 
@@ -93,19 +87,15 @@ export class ButtonService {
 
   }
 
-  delete(button: Button): Observable<Button[]> {
+  delete(button: Button): Observable<Button> {
 
     return new Observable(subscriber => {
 
       TableDelete(this.db, TableEnum.Buttons, button.id).then(() => {
 
-        GetAll(this.db, TableEnum.Buttons).then(x => {
+        subscriber.next(button);
 
-          subscriber.next(x);
-
-          subscriber.complete();
-
-        });
+        subscriber.complete();
 
       });
 

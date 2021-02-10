@@ -3,6 +3,7 @@ import { Role } from '@shared/Model/role.model';
 import { TableEnum } from '@shared/Enum/table.enum';
 import { OpenDB, GetAll, TableAdd, TableUpdate, TableDelete } from '@shared/Dexie/authorize.dexie';
 import { Observable } from 'rxjs';
+import { clone } from '@shared/Method/object.method';
 import Dexie from 'dexie';
 
 @Injectable({
@@ -34,19 +35,17 @@ export class RoleService {
 
   }
 
-  create(role: Role): Observable<Role[]> {
+  create(role: Role): Observable<Role> {
 
     return new Observable(subscriber => {
 
-      TableAdd(this.db, TableEnum.Roles, role).then(() => {
+      const cloneRole = clone(role);
 
-        GetAll(this.db, TableEnum.Roles).then(x => {
+      TableAdd(this.db, TableEnum.Roles, cloneRole).then(() => {
 
-          subscriber.next(x);
+        subscriber.next(cloneRole);
 
-          subscriber.complete();
-
-        });
+        subscriber.complete();
 
       });
 
@@ -54,19 +53,15 @@ export class RoleService {
 
   }
 
-  update(role: Role): Observable<Role[]> {
+  update(role: Role): Observable<Role> {
 
     return new Observable(subscriber => {
 
       TableUpdate(this.db, TableEnum.Roles, role.id, role).then(() => {
 
-        GetAll(this.db, TableEnum.Roles).then(x => {
+        subscriber.next(role);
 
-          subscriber.next(x);
-
-          subscriber.complete();
-
-        });
+        subscriber.complete();
 
       });
 
@@ -74,19 +69,15 @@ export class RoleService {
 
   }
 
-  delete(role: Role): Observable<Role[]> {
+  delete(role: Role): Observable<Role> {
 
     return new Observable(subscriber => {
 
       TableDelete(this.db, TableEnum.Roles, role.id).then(() => {
 
-        GetAll(this.db, TableEnum.Roles).then(x => {
+        subscriber.next(role);
 
-          subscriber.next(x);
-
-          subscriber.complete();
-
-        });
+        subscriber.complete();
 
       });
 

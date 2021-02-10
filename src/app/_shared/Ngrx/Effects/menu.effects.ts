@@ -27,7 +27,7 @@ export class MenuEffects {
     ofType(`${TableEnum.Menus}.${DialogEnum.create}`),
     mergeMap((x) => this.menuService.create(x[this.newData])
       .pipe(
-        map(menus => ( new CreateSuccess<Menu>(TableEnum.Menus, menus, x[this.newData]) )),
+        map(menu => ( new CreateSuccess<Menu>(TableEnum.Menus, [], menu) )),
         catchError(() => EMPTY)
       ))
     )
@@ -37,7 +37,7 @@ export class MenuEffects {
     ofType(`${TableEnum.Menus}.${DialogEnum.edit}`),
     mergeMap((x) => this.menuService.update(x[this.newData])
       .pipe(
-        map(menus => ( new EditSuccess<Menu>(TableEnum.Menus, menus, x[this.newData]) )),
+        map(menu => ( new EditSuccess<Menu>(TableEnum.Menus, [], menu) )),
         catchError(() => EMPTY)
       ))
     )
@@ -47,7 +47,7 @@ export class MenuEffects {
     ofType(`${TableEnum.Menus}.${DialogEnum.delete}`),
     mergeMap((x) => this.menuService.delete(x[this.newData])
       .pipe(
-        map(menus => ( new DeleteSuccess<Menu>(TableEnum.Menus, menus, x[this.newData]) )),
+        map(menu => ( new DeleteSuccess<Menu>(TableEnum.Menus, [], menu) )),
         catchError(() => EMPTY)
       ))
     )
