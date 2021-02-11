@@ -4,7 +4,6 @@ mat-table
 matSort 
 matSortActive="{{(tableSort | async)?.active}}"
 matSortDirection="{{(tableSort | async)?.direction}}"
-matSortDisableClear
 [dataSource]="dataSource"
 multiTemplateDataRows
 (matSortChange)="sortData($event)">
