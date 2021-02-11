@@ -1,4 +1,4 @@
-import { Component, OnChanges, ViewChild, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, OnChanges, ViewChild, Input, Output, EventEmitter, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
@@ -15,6 +15,7 @@ import { sortData, pageData, columnToDisplay, openDialog } from '@shared/Method/
   selector: 'app-table',
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     trigger('detailExpand', [
       state('collapsed', style({ height: '0px', minHeight: '0' })),
