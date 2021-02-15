@@ -83,9 +83,11 @@ export class MenuService {
 
           this.programService.getButtonByProgram(linkMenu.program).subscribe((buttons) => {
 
-            const linkButtons: Button[] = buttons.filter( x => linkMenu.buttons.includes(x.id));
+            buttons.forEach( button => {
+              button.isEnable = linkMenu.buttons.includes(button.id);
+            });
 
-            subscriber.next(linkButtons);
+            subscriber.next(buttons);
 
             subscriber.complete();
 
