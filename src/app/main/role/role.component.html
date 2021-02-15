@@ -1,3 +1,5 @@
-<mat-card>
-  <app-table [grid]="myGrid" (openTableDialog)="openTableDialog=$event" ></app-table>
-</mat-card>
+<div *appAuthorize>
+  <mat-card>
+    <app-table [grid]="myGrid" (openTableDialog)="openTableDialog=$event" ></app-table>
+  </mat-card>
+</div>
