@@ -19,6 +19,7 @@ import { DashboardComponent } from '@shared/Component/dashboard/dashboard.compon
 import { UnauthorizeComponent } from '@shared/Component/unauthorize/unauthorize.component';
 
 import { TableModule } from '@shared/Component/table/table.module';
+import { DirectiveModule } from '@shared/Directive/Directive.module';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { TableModule } from '@shared/Component/table/table.module';
     MainRoutingModule,
     MaterialModule,
     TableModule,
+    DirectiveModule,
   ],
 })
 export class MainModule { }
