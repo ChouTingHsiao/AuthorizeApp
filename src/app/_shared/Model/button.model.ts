@@ -3,4 +3,5 @@ export interface Button {
     name: string;
     remark: string;
     program: string;
+    isEnable?: boolean;
 }
