@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Menu } from '@shared/Model/menu.model';
+import { Button } from '@shared/Model/button.model';
 import { TableEnum } from '@shared/Enum/table.enum';
 import { OpenDB, GetAll, TableAdd, TableUpdate, TableDelete } from '@shared/Dexie/authorize.dexie';
 import { ProgramService } from '@services/program/program.service';
@@ -61,6 +62,42 @@ export class MenuService {
         subscriber.next(AuthMenu);
 
         subscriber.complete();
+
+      });
+
+    });
+
+  }
+
+  getByLink(linkName: string): Observable<Button[]> {
+
+    return new Observable(subscriber => {
+
+      this.getAll().subscribe((menu) => {
+
+        const linkMenus: Menu[] = menu.filter( x => x.name === linkName);
+
+        const linkMenu: Menu = linkMenus.length < 1 ? null : linkMenus[0] ;
+
+        if (linkMenu !== null) {
+
+          this.programService.getButtonByProgram(linkMenu.program).subscribe((buttons) => {
+
+            const linkButtons: Button[] = buttons.filter( x => linkMenu.buttons.includes(x.id));
+
+            subscriber.next(linkButtons);
+
+            subscriber.complete();
+
+          });
+
+        } else {
+
+          subscriber.next(null);
+
+          subscriber.complete();
+
+        }
 
       });
 
