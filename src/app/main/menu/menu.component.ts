@@ -164,8 +164,6 @@ export class MenuComponent implements OnInit {
         },
         edit: (element: Menu): void => {
 
-          console.log(element.program);
-
           this.store.dispatch( new Read<Button>(
             `${TableEnum.Programs}.${TableEnum.Buttons}`,
               [],
@@ -179,8 +177,6 @@ export class MenuComponent implements OnInit {
             method: DialogEnum.edit,
             data: element,
             onChanges: (event) => {
-
-              console.log(event);
 
               if ( event.source.ngControl.name === 'program' ) {
 
