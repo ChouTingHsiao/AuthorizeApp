@@ -26,12 +26,7 @@ export class AuthorizeDirective implements OnInit, AfterViewChecked {
 
       });
 
-      console.log(this.AuthorizeDictionary);
-
     });
-
-
-    // console.log(this.templateRef.elementRef.nativeElement.ownerDocument.querySelectorAll('button'));
 
   }
 
@@ -41,11 +36,15 @@ export class AuthorizeDirective implements OnInit, AfterViewChecked {
 
       if (!isEnable) {
 
-        const elements: HTMLButtonElement [] = this.templateRef.elementRef.nativeElement.ownerDocument.querySelectorAll(`#${key}`);
+        const elements: HTMLButtonElement[] = this.templateRef
+                                                  .elementRef
+                                                  .nativeElement
+                                                  .ownerDocument
+                                                  .querySelectorAll(`#${key}:not([disabled])`);
 
         elements.forEach( element => {
 
-          console.log(element.disabled = true );
+          element.disabled = true;
 
         });
 
