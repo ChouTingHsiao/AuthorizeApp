@@ -1,4 +1,5 @@
 import { Directive, OnInit, AfterViewChecked, TemplateRef, ViewContainerRef } from '@angular/core';
+import { Router  } from '@angular/router';
 import { MenuService } from '@services/menu/menu.service';
 
 @Directive({
@@ -8,7 +9,8 @@ export class AuthorizeDirective implements OnInit, AfterViewChecked {
 
   AuthorizeDictionary: { [key: string]: any; } = {};
 
-  constructor(private templateRef: TemplateRef<any>,
+  constructor(private router: Router,
+              private templateRef: TemplateRef<any>,
               private viewContainer: ViewContainerRef,
               private menuService: MenuService) { }
 
@@ -16,7 +18,7 @@ export class AuthorizeDirective implements OnInit, AfterViewChecked {
 
     this.viewContainer.createEmbeddedView(this.templateRef);
 
-    const linkName =  window.location.pathname.split('/')[2];
+    const linkName =  this.router.url.split('/')[2];
 
     this.menuService.getByLink(linkName).subscribe(buttons => {
 
