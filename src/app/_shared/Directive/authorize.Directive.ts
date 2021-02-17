@@ -44,9 +44,6 @@ export class AuthorizeDirective implements OnInit, AfterViewChecked {
                                                   .ownerDocument
                                                   .querySelectorAll(`#${key}:not([disabled])`);
 
-
-        console.log(elements);
-
         elements.forEach( element => {
 
           element.disabled = true;
