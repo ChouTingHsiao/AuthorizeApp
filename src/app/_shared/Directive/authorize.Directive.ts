@@ -42,7 +42,7 @@ export class AuthorizeDirective implements OnInit, AfterViewChecked {
                                                   .elementRef
                                                   .nativeElement
                                                   .ownerDocument
-                                                  .querySelectorAll(`#${key}:not([disabled])`);
+                                                  .querySelectorAll(`button#${key}:not([disabled]):not(.detail button)`);
 
         elements.forEach( element => {
 
