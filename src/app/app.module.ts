@@ -6,12 +6,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 
+import { MaterialModule } from '@shared/Material/material.module';
+import { NgrxModule } from '@shared/Ngrx/ngrx.module';
+
 import { AppComponent } from './app.component';
 import { LoginComponent } from '@shared/Component/login/login.component';
-
-import { MaterialModule } from '@shared/Material/material.module';
-
-import { NgrxModule } from '@shared/Ngrx/ngrx.module';
 
 @NgModule({
   declarations: [

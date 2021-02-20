@@ -1,8 +1,6 @@
 import { NgModule  } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BrowserModule  } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
-import { BrowserAnimationsModule  } from '@angular/platform-browser/animations';
 
 import { MaterialModule  } from '@shared/Material/material.module';
 
@@ -28,10 +26,8 @@ import { DetailComponent } from '@shared/Component/table/detail.component';
   ],
   imports: [
     CommonModule,
-    BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    BrowserAnimationsModule,
     MaterialModule,
   ],
   exports: [
