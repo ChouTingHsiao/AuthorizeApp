@@ -3,8 +3,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { LoginGuard } from '@shared/Guard/LoginGuard';
 import { AuthGuard } from '@shared/Guard/AuthGuard';
 import { DashboardComponent } from '@shared/Component/dashboard/dashboard.component';
-import { UnauthorizeComponent } from '@shared/Component/unauthorize/unauthorize.component';
-import { LoginComponent } from '@shared/Component/login/login.component';
 import { MainComponent } from './main.component';
 import { UserComponent } from './user/user.component';
 import { RoleComponent } from './role/role.component';

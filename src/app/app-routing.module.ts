@@ -1,12 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AppComponent } from './app.component';
-import { LoginGuard } from '@shared/Guard/LoginGuard';
 import { LoginComponent } from '@shared/Component/login/login.component';
-import { MainComponent } from './main/main.component';
-import { MainModule } from './main/main.module';
 import { UnauthorizeComponent } from '@shared/Component/unauthorize/unauthorize.component';
-
+import { MainModule } from './main/main.module';
 
 const routes: Routes = [
   { path: 'Login', component: LoginComponent },
