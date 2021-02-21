@@ -10,8 +10,8 @@ const routes: Routes = [
     path: 'Main',
     loadChildren: () => import('./main/main.module').then(m => m.MainModule)
   },
-  { path: '', redirectTo: '/Main', pathMatch: 'full' },
-  { path: '**', redirectTo: '/Main' }
+  { path: '', redirectTo: 'Main', pathMatch: 'full' },
+  { path: '**', redirectTo: 'Main' }
 ];
 
 @NgModule({
