@@ -1,10 +1,10 @@
 <mat-toolbar class="toolbar-header dark-theme">
-    <button class="dark-theme" mat-icon-button (click)="sideNav.toggle()">
+    <button class="dark-theme" mat-icon-button (click)="sideNav.toggle()" aria-label="Menu">
         <mat-icon>{{ sideNav.opened ? 'close' : 'menu' }}</mat-icon>
     </button>&nbsp;
     <span [routerLink]="['Main']">{{title}}</span>
     <span class="toolbar-seprator"></span>
-    <button class="dark-theme" mat-icon-button (click)="Logout()" >
+    <button class="dark-theme" mat-icon-button (click)="Logout()" aria-label="Logout">
       <mat-icon>exit_to_app</mat-icon>
     </button>
 </mat-toolbar>
