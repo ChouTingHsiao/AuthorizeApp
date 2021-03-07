@@ -22,9 +22,6 @@ import { provideMockStore } from '@ngrx/store/testing';
 
 import { Menus, MenusState } from '@shared/Dexie/data';
 
-import { ServiceWorkerModule } from '@angular/service-worker';
-import { environment } from '../../environments/environment';
-
 describe('MainComponent', () => {
   let component: MainComponent;
   let fixture: ComponentFixture<MainComponent>;
@@ -40,7 +37,6 @@ describe('MainComponent', () => {
         MatToolbarModule,
         MatSidenavModule,
         RouterTestingModule,
-        ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
       ],
       declarations: [ MainComponent ],
       providers: [

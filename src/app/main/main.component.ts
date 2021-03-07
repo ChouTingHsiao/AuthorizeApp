@@ -21,19 +21,8 @@ export class MainComponent implements OnInit {
   menus: Observable<Menu[]>;
 
   constructor(private router: Router,
-              private swPush: SwPush,
               private store: Store<any>,
-              private menuService: MenuService) {
-
-    this.swPush.notificationClicks.subscribe(({action, notification}) => {
-
-      console.log(action);
-
-      console.log(notification);
-
-    });
-
-  }
+              private menuService: MenuService) {}
 
   ngOnInit() {
 
