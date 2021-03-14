@@ -17,7 +17,7 @@ import { Observable } from 'rxjs';
 })
 export class RoleComponent implements OnInit {
 
-  openTableDialog: (dialog: Dialog) => DialogComponent;
+  openTableDialog: (dialog: Dialog) => any;
 
   myGrid: Observable<Grid>;
 

@@ -23,7 +23,7 @@ export class DetailComponent implements OnInit, OnDestroy {
   detail: Observable<Detail>;
 
   @Output()
-  openDetailDialog: EventEmitter<(dialog: Dialog) => DialogComponent> = new EventEmitter();
+  openDetailDialog: EventEmitter<(dialog: Dialog) => any> = new EventEmitter();
 
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;

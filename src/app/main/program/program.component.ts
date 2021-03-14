@@ -20,9 +20,9 @@ import { Observable } from 'rxjs';
 })
 export class ProgramComponent implements OnInit {
 
-  openTableDialog: (dialog: Dialog) => DialogComponent;
+  openTableDialog: (dialog: Dialog) => any;
 
-  openDetailDialog: (dialog: Dialog) => DialogComponent;
+  openDetailDialog: (dialog: Dialog) => any;
 
   myGrid: Observable<Grid>;
 

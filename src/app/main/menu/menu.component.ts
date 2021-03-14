@@ -20,7 +20,7 @@ import { Button } from '@shared/Model/button.model';
 })
 export class MenuComponent implements OnInit {
 
-  openTableDialog: (dialog: Dialog) => DialogComponent;
+  openTableDialog: (dialog: Dialog) => any;
 
   myGrid: Observable<Grid>;
 

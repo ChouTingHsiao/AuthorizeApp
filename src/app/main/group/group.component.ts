@@ -19,7 +19,7 @@ import { Observable } from 'rxjs';
 })
 export class GroupComponent implements OnInit {
 
-  openTableDialog: (dialog: Dialog) => DialogComponent;
+  openTableDialog: (dialog: Dialog) => any;
 
   myGrid: Observable<Grid>;
 

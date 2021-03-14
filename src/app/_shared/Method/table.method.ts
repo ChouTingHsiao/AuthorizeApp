@@ -49,7 +49,7 @@ function dataToColumn(data: any, columns: Column[]): Column[] {
 
 }
 
-function openDialog( matDialog: MatDialog, columns: Column[]): (dialog: Dialog) => DialogComponent  {
+function openDialog( matDialog: MatDialog, columns: Column[]): (dialog: Dialog) => any {
 
     return ( dialog: Dialog ): DialogComponent => {
 

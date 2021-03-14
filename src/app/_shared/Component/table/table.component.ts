@@ -35,10 +35,10 @@ export class TableComponent implements OnChanges, OnDestroy {
   grid: Observable<Grid>;
 
   @Output()
-  openTableDialog: EventEmitter<(dialog: Dialog) => DialogComponent> = new EventEmitter();
+  openTableDialog: EventEmitter<(dialog: Dialog) => any> = new EventEmitter();
 
   @Output()
-  openDetailDialog: EventEmitter<(dialog: Dialog) => DialogComponent> = new EventEmitter();
+  openDetailDialog: EventEmitter<(dialog: Dialog) => any> = new EventEmitter();
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
