@@ -46,9 +46,7 @@ jobs:
        BRANCH: gh-pages
        FOLDER: dist/authorize-example
        BUILD_SCRIPT: npx ng build --prod --base-href https://choutinghsiao.github.io/AuthorizeApp/
-  
-  notify-by-line:
-    needs: [build-and-deploy]
+
     - name: Notify
       id: Notify
       uses: snow-actions/line-notify@v1.0.0
