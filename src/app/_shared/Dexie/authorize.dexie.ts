@@ -1,6 +1,6 @@
 import Dexie from 'dexie';
 import { TableEnum } from '@shared/Enum/table.enum';
-import { Users, Roles, Programs, Menus, Groups, Buttons } from '@shared/Dexie/data';
+import { Users, Roles, Groups, GroupPrograms, Programs, Buttons, Menus } from '@shared/Dexie/data';
 
 function OpenDB(): Promise<Dexie> {
     const AuthorizeDb = new Dexie('Authorize');
@@ -9,9 +9,10 @@ function OpenDB(): Promise<Dexie> {
       Users: 'id, name, password, role',
       Roles: 'id, name, remark',
       Groups: 'id, name, role',
+      GroupPrograms: 'id, name, program, buttons, group',
       Programs: 'id, name, remark, linkTag, auth',
-      Menus: 'id, name, program, buttons',
       Buttons: 'id, name, remark, program',
+      Menus: 'id, name, program, buttons',
     });
 
     TableInit(AuthorizeDb, TableEnum.Users, Users);
@@ -20,11 +21,13 @@ function OpenDB(): Promise<Dexie> {
 
     TableInit(AuthorizeDb, TableEnum.Groups, Groups);
 
+    TableInit(AuthorizeDb, TableEnum.GroupPrograms, GroupPrograms);
+
     TableInit(AuthorizeDb, TableEnum.Programs, Programs);
 
-    TableInit(AuthorizeDb, TableEnum.Menus, Menus);
-
     TableInit(AuthorizeDb, TableEnum.Buttons, Buttons);
+
+    TableInit(AuthorizeDb, TableEnum.Menus, Menus);
 
     return AuthorizeDb.open();
 }
