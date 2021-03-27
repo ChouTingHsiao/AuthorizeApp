@@ -1,7 +1,7 @@
 import { User } from '@shared/Model/user.model';
 import { Role } from '@shared/Model/role.model';
 import { Group } from '@shared/Model/group.model';
-import { GroupProgram } from '@shared/Model/GroupProgram.model';
+import { GroupProgram } from '@shared/Model/groupProgram.model';
 import { Program } from '@shared/Model/program.model';
 import { Button } from '@shared/Model/button.model';
 import { Menu } from '@shared/Model/menu.model';

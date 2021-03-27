@@ -6,9 +6,10 @@ import { ROOT_REDUCER } from '@shared/Ngrx/Reducer/root.reducer';
 import { UserEffects } from '@shared/Ngrx/Effects/user.effects';
 import { RoleEffects } from '@shared/Ngrx/Effects/role.effects';
 import { GroupEffects } from '@shared/Ngrx/Effects/group.effects';
+import { GroupProgramEffects } from '@shared/Ngrx/Effects/groupProgram.effects';
 import { ProgramEffects } from '@shared/Ngrx/Effects/program.effects';
-import { MenuEffects } from '@shared/Ngrx/Effects/menu.effects';
 import { ButtonEffects } from '@shared/Ngrx/Effects/button.effects';
+import { MenuEffects } from '@shared/Ngrx/Effects/menu.effects';
 import { environment } from '../../../environments/environment';
 
 @NgModule({
@@ -17,9 +18,10 @@ import { environment } from '../../../environments/environment';
             UserEffects,
             RoleEffects,
             GroupEffects,
+            GroupProgramEffects,
             ProgramEffects,
-            MenuEffects,
             ButtonEffects,
+            MenuEffects,
         ]),
         StoreModule.forRoot(ROOT_REDUCER, {
             runtimeChecks: {
