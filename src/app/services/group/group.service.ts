@@ -47,9 +47,9 @@ export class GroupService {
         ))
       ).subscribe(({ Groups, Roles }) => {
 
-        const Auth: string =  localStorage.getItem('Auth');
+        const userRole: string =  localStorage.getItem('UserRole');
 
-        const roleId: string = Roles.filter(x => x.name === Auth)[0].id;
+        const roleId: string = Roles.filter(x => x.name === userRole)[0].id;
 
         const AuthGroup = Groups.filter( x => x.roles.includes(roleId));
 

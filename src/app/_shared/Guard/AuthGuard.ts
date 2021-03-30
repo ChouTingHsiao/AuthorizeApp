@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot  } from '@angular/router';
-import { RoleService } from '@services/role/role.service';
+import { MenuService } from '@services/menu/menu.service';
 import { GroupService } from '@services/group/group.service';
-import { ProgramService } from '@services/program/program.service';
+import { GroupProgramService } from '@services/groupProgram/groupProgram.service';
 import { map, switchMap } from 'rxjs/operators';
 
 @Injectable({
@@ -11,9 +11,9 @@ import { map, switchMap } from 'rxjs/operators';
 export class AuthGuard implements CanActivate {
 
     constructor(private router: Router,
-                private roleService: RoleService,
+                private menuService: MenuService,
                 private groupService: GroupService,
-                private programService: ProgramService) {}
+                private groupProgramService: GroupProgramService) {}
 
     canActivate(
        next: ActivatedRouteSnapshot,
@@ -22,27 +22,25 @@ export class AuthGuard implements CanActivate {
 
     let loggedIn = true;
 
-    this.programService.getAll().pipe(
-      switchMap(Programs => this.groupService.getAll().pipe(
-        switchMap(Groups => this.roleService.getAll().pipe(
-          map(Roles => ({ Programs, Groups, Roles }))
+    this.menuService.getAll().pipe(
+      switchMap( menus => this.groupService.getAll().pipe(
+        switchMap( groups => this.groupProgramService.getAll().pipe(
+          map(groupPrograms => ({ menus, groups, groupPrograms}))
         ))
       ))
-    ).subscribe(({ Programs, Groups, Roles }) => {
+    ).subscribe(({ menus, groups, groupPrograms }) => {
 
-      const Auth: string =  localStorage.getItem('Auth');
+      const UserGroup: string =  localStorage.getItem('UserGroup');
+
+      const groupId = groups.filter(x => x.name === UserGroup)[0].id;
 
       const ProgramName =  state.url.split('/')[2];
 
-      const Program = Programs.filter( x => x.name === ProgramName);
+      const menu = menus.filter( x => x.linkTag === ProgramName)
 
-      if (Program[0] && Program[0].auth.length > 0) {
+      if (menu[0] && menu[0].program.length > 0) {
 
-        const group = Groups.filter(x => x.id === Program[0].auth)[0];
-
-        const AuthName = group.roles.map(x => Roles.filter(y => y.id === x)[0].name ).join(',');
-
-        loggedIn = AuthName.includes(Auth);
+        loggedIn = groupPrograms.filter( x => x.group === groupId && x.program === menu[0].program).length > 0;
 
         if (!loggedIn) {
           console.log('Not Auth');
