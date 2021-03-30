@@ -49,9 +49,7 @@ export class GroupService {
 
         const userRole: string =  localStorage.getItem('UserRole');
 
-        const roleId: string = Roles.filter(x => x.name === userRole)[0].id;
-
-        const AuthGroup = Groups.filter( x => x.roles.includes(roleId));
+        const AuthGroup = Groups.filter( x => x.roles.includes(userRole));
 
         subscriber.next(AuthGroup);
 

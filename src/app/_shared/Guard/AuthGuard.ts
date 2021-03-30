@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot  } from '@angular/router';
 import { MenuService } from '@services/menu/menu.service';
-import { GroupService } from '@services/group/group.service';
 import { GroupProgramService } from '@services/groupProgram/groupProgram.service';
 import { map, switchMap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -12,44 +12,48 @@ export class AuthGuard implements CanActivate {
 
     constructor(private router: Router,
                 private menuService: MenuService,
-                private groupService: GroupService,
                 private groupProgramService: GroupProgramService) {}
 
     canActivate(
        next: ActivatedRouteSnapshot,
        state: RouterStateSnapshot
-    ): boolean {
+    ): Observable<boolean> {
 
-    let loggedIn = true;
+    return new Observable( subscriber => {
 
-    this.menuService.getAll().pipe(
-      switchMap( menus => this.groupService.getAll().pipe(
-        switchMap( groups => this.groupProgramService.getAll().pipe(
-          map(groupPrograms => ({ menus, groups, groupPrograms}))
-        ))
-      ))
-    ).subscribe(({ menus, groups, groupPrograms }) => {
+      let loggedIn = false;
 
-      const UserGroup: string =  localStorage.getItem('UserGroup');
 
-      const groupId = groups.filter(x => x.name === UserGroup)[0].id;
+      this.menuService.getAll().pipe(
+          switchMap( menus => this.groupProgramService.getAll().pipe(
+            map(groupPrograms => ({ menus, groupPrograms }))
+          ))
+      ).subscribe(({ menus, groupPrograms }) => {
 
-      const ProgramName =  state.url.split('/')[2];
+        const UserGroup: string =  localStorage.getItem('UserGroup');
 
-      const menu = menus.filter( x => x.linkTag === ProgramName)
+        const ProgramName =  state.url.split('/')[2];
 
-      if (menu[0] && menu[0].program.length > 0) {
+        const menu = menus.filter( x => x.linkTag === ProgramName);
 
-        loggedIn = groupPrograms.filter( x => x.group === groupId && x.program === menu[0].program).length > 0;
+        if (menu[0] && menu[0].program.length > 0) {
+
+          loggedIn = groupPrograms.filter( x => x.group === UserGroup && x.program === menu[0].program).length > 0;
+
+        }
 
         if (!loggedIn) {
           console.log('Not Auth');
           this.router.navigate(['/401']);
         }
-      }
-    });
 
-    return loggedIn;
+        subscriber.next(loggedIn);
+
+        subscriber.complete();
+
+      });
+
+    });
 
   }
 }

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Program } from '@shared/Model/program.model';
-import { Button } from '@shared/Model/button.model';
 import { TableEnum } from '@shared/Enum/table.enum';
 import { OpenDB, GetAll, TableAdd, TableUpdate, TableDelete } from '@shared/Dexie/authorize.dexie';
 import { GroupService } from '@services/group/group.service';
@@ -67,22 +66,6 @@ export class ProgramService {
         const AuthProgram = Programs.filter( x => x.auth === '' || AuthGroupMap.includes(x.auth));
 
         subscriber.next(AuthProgram);
-
-        subscriber.complete();
-
-      });
-
-    });
-
-  }
-
-  getButtonByProgram(programId: string): Observable<Button[]> {
-
-    return new Observable(subscriber => {
-
-      this.buttonService.getByProgramId(programId).subscribe((buttons) => {
-
-        subscriber.next(buttons);
 
         subscriber.complete();
 

@@ -22,7 +22,7 @@ export class DashboardComponent implements OnInit {
               private programService: ProgramService) { }
 
   ngOnInit() {
-    this.Role = localStorage.getItem('Auth');
+    this.Role = localStorage.getItem('UserRole');
     this.Groups = this.groupService.getByAuth();
     this.Programs = this.programService.getByAuth();
   }

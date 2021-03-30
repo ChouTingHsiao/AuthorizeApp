@@ -1,6 +1,6 @@
 import { Directive, OnInit, AfterViewChecked, TemplateRef, ViewContainerRef } from '@angular/core';
 import { Router  } from '@angular/router';
-import { MenuService } from '@services/menu/menu.service';
+import { GroupProgramService } from '@services/groupProgram/groupProgram.service';
 
 @Directive({
   selector: '[appAuthorize]'
@@ -12,7 +12,7 @@ export class AuthorizeDirective implements OnInit, AfterViewChecked {
   constructor(private router: Router,
               private templateRef: TemplateRef<any>,
               private viewContainer: ViewContainerRef,
-              private menuService: MenuService) { }
+              private groupProgramService: GroupProgramService) { }
 
   ngOnInit() {
 
@@ -20,7 +20,7 @@ export class AuthorizeDirective implements OnInit, AfterViewChecked {
 
     const linkName =  this.router.url.split('/')[2];
 
-    this.menuService.getByLink(linkName).subscribe(buttons => {
+    this.groupProgramService.getByLink(linkName).subscribe(buttons => {
 
       buttons.forEach(x => {
 

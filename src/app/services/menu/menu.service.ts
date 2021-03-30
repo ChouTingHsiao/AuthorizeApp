@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Menu } from '@shared/Model/menu.model';
-import { Button } from '@shared/Model/button.model';
 import { TableEnum } from '@shared/Enum/table.enum';
 import { OpenDB, GetAll, TableAdd, TableUpdate, TableDelete } from '@shared/Dexie/authorize.dexie';
-import { ProgramService } from '@services/program/program.service';
+import { GroupProgramService } from '@services/groupProgram/groupProgram.service';
 import { Observable } from 'rxjs';
 import { clone } from '@shared/Method/object.method';
 import Dexie from 'dexie';
@@ -15,7 +14,7 @@ export class MenuService {
 
   private db: Promise<Dexie>;
 
-  constructor(private programService: ProgramService) {
+  constructor(private groupProgramService: GroupProgramService) {
 
     this.db = OpenDB();
 
@@ -27,11 +26,13 @@ export class MenuService {
 
         GetAll(this.db, TableEnum.Menus).then(menus => {
 
-          this.programService.getAll().subscribe((programs) => {
+          const UserGroup: string =  localStorage.getItem('UserGroup');
+
+          this.groupProgramService.getByGroupId(UserGroup).subscribe((groupPrograms) => {
 
             menus.forEach( menu => {
 
-              const LinkedProgram = programs.find( program => program.id === menu.program);
+              const LinkedProgram = groupPrograms.find( groupProgram => groupProgram.program === menu.program);
 
               menu.linkTag = LinkedProgram ? LinkedProgram.linkTag : '/';
 
@@ -53,53 +54,17 @@ export class MenuService {
 
     return new Observable(subscriber => {
 
-      this.programService.getByAuth().subscribe((Programs) => {
+      const UserGroup: string =  localStorage.getItem('UserGroup');
 
-        const AuthProgramMap = Programs.map(x => x.id);
+      this.groupProgramService.getByGroupId(UserGroup).subscribe((groupPrograms) => {
 
-        const AuthMenu: Menu[] = menu.filter( x => x.program === '' || AuthProgramMap.includes(x.program));
+        const authGroupProgramMap = groupPrograms.map(x => x.program);
+
+        const AuthMenu: Menu[] = menu.filter( x => x.program === '' || authGroupProgramMap.includes(x.program));
 
         subscriber.next(AuthMenu);
 
         subscriber.complete();
-
-      });
-
-    });
-
-  }
-
-  getByLink(linkName: string): Observable<Button[]> {
-
-    return new Observable(subscriber => {
-
-      this.getAll().subscribe((menu) => {
-
-        const linkMenus: Menu[] = menu.filter( x => x.name === linkName);
-
-        const linkMenu: Menu = linkMenus.length < 1 ? null : linkMenus[0] ;
-
-        if (linkMenu !== null) {
-
-          this.programService.getButtonByProgram(linkMenu.program).subscribe((buttons) => {
-
-            buttons.forEach( button => {
-              button.isEnable = linkMenu.buttons.includes(button.id);
-            });
-
-            subscriber.next(buttons);
-
-            subscriber.complete();
-
-          });
-
-        } else {
-
-          subscriber.next(null);
-
-          subscriber.complete();
-
-        }
 
       });
 

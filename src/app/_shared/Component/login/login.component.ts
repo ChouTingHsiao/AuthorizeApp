@@ -41,18 +41,16 @@ export class LoginComponent implements OnInit {
       if ( user.length > 0 ) {
 
         const role = roles.filter( x => x.id === user[0].role);
-        
-        localStorage.setItem('UserRole', role[0].name);
+
+        localStorage.setItem('UserRole', role[0].id);
 
         localStorage.setItem('UserGroup', '');
 
         const group = groups.filter(x => x.roles.includes(role[0].id));
 
-        console.log(group);
+        if (group[0]) {
 
-        if(group[0]) {
-
-          localStorage.setItem('UserGroup', group[0].name);
+          localStorage.setItem('UserGroup', group[0].id);
 
         }
 

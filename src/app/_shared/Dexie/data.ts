@@ -18,14 +18,18 @@ const Roles: Role[] = [
 
 const Groups: Group[] = [
   { id: '1', name: '管理員群組', roles: ['1']},
+  { id: '2', name: '一般群組', roles: ['2']},
 ];
 
 const GroupPrograms: GroupProgram[] = [
-  { id: '1', name: 'User', program: '1', buttons: ['1', '2', '3'], group: '1' },
-  { id: '2', name: 'Role', program: '2', buttons: ['4', '5', '6'], group: '1' },
-  { id: '3', name: 'Group', program: '3', buttons: ['7', '8', '9'], group: '1' },
-  { id: '4', name: 'Program', program: '4', buttons: ['10', '11', '12'], group: '1' },
-  { id: '5', name: 'Menu', program: '5', buttons: ['13', '14', '15'], group: '1' },
+  { id: '1', name: 'User', program: '1',  linkTag: 'User', buttons: ['1', '2', '3'], group: '1' },
+  { id: '2', name: 'Role', program: '2', linkTag: 'Role', buttons: ['4', '5', '6'], group: '1' },
+  { id: '3', name: 'Group', program: '3', linkTag: 'Group', buttons: ['7', '8', '9'], group: '1' },
+  { id: '4', name: 'Program', program: '4', linkTag: 'Program', buttons: ['10', '11', '12'], group: '1' },
+  { id: '5', name: 'Menu', program: '5', linkTag: 'Menu', buttons: ['13', '14', '15'], group: '1' },
+  { id: '6', name: 'Role', program: '2', linkTag: 'Role', buttons: [], group: '2' },
+  { id: '7', name: 'Group', program: '3', linkTag: 'Group', buttons: [], group: '2' },
+  { id: '8', name: 'Program', program: '4', linkTag: 'Program', buttons: [], group: '2' },
 ];
 
 const Programs: Program[] = [

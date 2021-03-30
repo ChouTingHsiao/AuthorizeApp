@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 import { GroupProgram } from '@shared/Model/groupProgram.model';
+import { Program } from '@shared/Model/program.model';
+import { Button } from '@shared/Model/button.model';
+import { ProgramService } from '@services/program/program.service';
 import { TableEnum } from '@shared/Enum/table.enum';
 import { OpenDB, GetAll, TableAdd, TableUpdate, TableDelete } from '@shared/Dexie/authorize.dexie';
 import { Observable } from 'rxjs';
@@ -13,7 +16,7 @@ export class GroupProgramService {
 
   private db: Promise<Dexie>;
 
-  constructor() {
+  constructor(private programService: ProgramService) {
 
     this.db = OpenDB();
 
@@ -35,7 +38,7 @@ export class GroupProgramService {
 
   }
 
-  getByProgramId(groupId: string): Observable<GroupProgram[]> {
+  getByGroupId(groupId: string): Observable<GroupProgram[]> {
 
     return new Observable(subscriber => {
 
@@ -52,6 +55,83 @@ export class GroupProgramService {
     });
 
   }
+
+  getButtonByProgramId(programId: string): Observable<Button[]> {
+
+    return new Observable(subscriber => {
+
+      const UserGroup: string =  localStorage.getItem('UserGroup');
+
+      this.getByGroupId(UserGroup).subscribe((groupPrograms) => {
+
+        const authButtons: Button[] = groupPrograms.filter( x => x.program === programId)[0].buttons.map( x => {
+
+          const button: Button = {
+            id : x,
+            name : '',
+            remark : '',
+            program : '',
+            isEnable : false,
+          };
+
+          return button;
+
+        });
+
+        subscriber.next(authButtons);
+
+        subscriber.complete();
+
+      });
+
+    });
+
+  }
+
+  getByLink(linkName: string): Observable<Button[]> {
+
+    return new Observable(subscriber => {
+
+      const UserGroup: string =  localStorage.getItem('UserGroup');
+
+      this.getByGroupId(UserGroup).subscribe((groupProgram) => {
+
+        const linkGroupPrograms: GroupProgram[] = groupProgram.filter( x => x.linkTag === linkName);
+
+        const linkGroupProgram: GroupProgram = linkGroupPrograms.length < 1 ? null : linkGroupPrograms[0] ;
+
+        if (linkGroupProgram !== null) {
+
+          this.programService.getAll().subscribe((programs) => {
+
+            const program: Program = programs.filter( x => x.linkTag === linkName)[0];
+
+            console.log(program);
+
+            program.buttons.forEach( button => {
+              button.isEnable = linkGroupProgram.buttons.includes(button.id);
+            });
+
+            subscriber.next(program.buttons);
+
+            subscriber.complete();
+
+          });
+
+        } else {
+
+          subscriber.next(null);
+
+          subscriber.complete();
+
+        }
+
+      });
+
+    });
+
+  }
+
 
   create(groupProgram: GroupProgram): Observable<GroupProgram> {
 
