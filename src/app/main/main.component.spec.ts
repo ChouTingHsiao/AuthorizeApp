@@ -42,7 +42,7 @@ describe('MainComponent', () => {
       providers: [
         {
           provide: MenuService, useValue: {
-            getByAuth: () => of ( Menus )
+            getAuthMenus: () => of ( Menus )
           }
         },
         provideMockStore({ initialState }),
