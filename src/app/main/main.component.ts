@@ -29,7 +29,7 @@ export class MainComponent implements OnInit {
     this.store.dispatch( new Read<Menu>(TableEnum.Menus) );
 
     this.store.select(TableEnum.Menus).subscribe(menus => {
-      this.menus = this.menuService.getByAuth(entityToArray(menus));
+      this.menus = this.menuService.getAuthMenus(entityToArray(menus));
     });
 
   }

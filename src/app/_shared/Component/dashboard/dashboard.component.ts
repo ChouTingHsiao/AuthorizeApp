@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Program } from '@shared/Model/program.model';
+import { Role } from '@shared/Model/role.model';
+import { RoleService } from '@services/role/role.service';
 import { Group } from '@shared/Model/group.model';
 import { GroupService } from '@services/group/group.service';
-import { ProgramService } from '@services/program/program.service';
+import { GroupProgram } from '@shared/Model/groupProgram.model';
+import { GroupProgramService } from '@services/groupProgram/groupProgram.service';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -12,19 +14,28 @@ import { Observable } from 'rxjs';
 })
 export class DashboardComponent implements OnInit {
 
-  Role: string;
+  role: Observable<Role>;
 
-  Groups: Observable<Group[]>;
+  groups: Observable<Group[]>;
 
-  Programs: Observable<Program[]>;
+  groupPrograms: Observable<GroupProgram[]>;
 
   constructor(private groupService: GroupService,
-              private programService: ProgramService) { }
+              private roleService: RoleService,
+              private groupProgramService: GroupProgramService) { }
 
   ngOnInit() {
-    this.Role = localStorage.getItem('UserRole');
-    this.Groups = this.groupService.getByAuth();
-    this.Programs = this.programService.getByAuth();
+
+    const UserRole: string =  localStorage.getItem('UserRole');
+
+    this.role = this.roleService.getByRoleId(UserRole);
+
+    this.groups = this.groupService.getByAuth();
+
+    const UserGroup: string =  localStorage.getItem('UserGroup');
+
+    this.groupPrograms = this.groupProgramService.getByGroupId(UserGroup);
+
   }
 
 }

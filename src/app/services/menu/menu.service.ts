@@ -26,7 +26,7 @@ export class MenuService {
 
         GetAll(this.db, TableEnum.Menus).then(menus => {
 
-          const UserGroup: string =  localStorage.getItem('UserGroup');
+          const UserGroup: string = localStorage.getItem('UserGroup');
 
           this.groupProgramService.getByGroupId(UserGroup).subscribe((groupPrograms) => {
 
@@ -50,11 +50,11 @@ export class MenuService {
 
   }
 
-  getByAuth(menu: Menu[]): Observable<Menu[]> {
+  getAuthMenus(menu: Menu[]): Observable<Menu[]> {
 
     return new Observable(subscriber => {
 
-      const UserGroup: string =  localStorage.getItem('UserGroup');
+      const UserGroup: string = localStorage.getItem('UserGroup');
 
       this.groupProgramService.getByGroupId(UserGroup).subscribe((groupPrograms) => {
 

@@ -56,43 +56,11 @@ export class GroupProgramService {
 
   }
 
-  getButtonByProgramId(programId: string): Observable<Button[]> {
-
-    return new Observable(subscriber => {
-
-      const UserGroup: string =  localStorage.getItem('UserGroup');
-
-      this.getByGroupId(UserGroup).subscribe((groupPrograms) => {
-
-        const authButtons: Button[] = groupPrograms.filter( x => x.program === programId)[0].buttons.map( x => {
-
-          const button: Button = {
-            id : x,
-            name : '',
-            remark : '',
-            program : '',
-            isEnable : false,
-          };
-
-          return button;
-
-        });
-
-        subscriber.next(authButtons);
-
-        subscriber.complete();
-
-      });
-
-    });
-
-  }
-
   getByLink(linkName: string): Observable<Button[]> {
 
     return new Observable(subscriber => {
 
-      const UserGroup: string =  localStorage.getItem('UserGroup');
+      const UserGroup: string = localStorage.getItem('UserGroup');
 
       this.getByGroupId(UserGroup).subscribe((groupProgram) => {
 
@@ -131,7 +99,6 @@ export class GroupProgramService {
     });
 
   }
-
 
   create(groupProgram: GroupProgram): Observable<GroupProgram> {
 

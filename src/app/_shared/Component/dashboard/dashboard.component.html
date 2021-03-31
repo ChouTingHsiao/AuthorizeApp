@@ -8,7 +8,7 @@
         <mat-divider></mat-divider>
         <mat-card-content class="theme-left container">
           <p>
-          &nbsp;&nbsp;{{Role}}
+          &nbsp;&nbsp;{{ (role | async).remark }}
           </p>
         </mat-card-content>
     </mat-card>
@@ -20,7 +20,7 @@
         </mat-card-header>
         <mat-divider></mat-divider>
         <mat-card-content class="theme-left container">
-          <p *ngFor="let group of (Groups | async)" >
+          <p *ngFor="let group of (groups | async)" >
             &nbsp;&nbsp;{{group.name}}
           </p>
         </mat-card-content>
@@ -33,8 +33,8 @@
       </mat-card-header>
       <mat-divider></mat-divider>
       <mat-card-content class="theme-left container">
-        <p *ngFor="let program of (Programs | async)" >
-          &nbsp;&nbsp;{{program.linkTag}}
+        <p *ngFor="let groupPrograms of (groupPrograms | async)" >
+          &nbsp;&nbsp;{{groupPrograms.linkTag}}
         </p>
       </mat-card-content>
   </mat-card>

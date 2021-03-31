@@ -35,6 +35,26 @@ export class RoleService {
 
   }
 
+  getByRoleId(roleId: string): Observable<Role> {
+
+    return new Observable(subscriber => {
+
+        GetAll(this.db, TableEnum.Roles).then( roles => {
+
+          const authRole = roles.filter(x => x.id === roleId)[0];
+
+          console.log(authRole);
+
+          subscriber.next(authRole);
+
+          subscriber.complete();
+
+        });
+
+    });
+
+  }
+
   create(role: Role): Observable<Role> {
 
     return new Observable(subscriber => {

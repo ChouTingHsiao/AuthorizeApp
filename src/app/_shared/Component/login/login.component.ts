@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { UserService } from '@services/user/user.service';
 import { RoleService } from '@services/role/role.service';
 import { GroupService } from '@services/group/group.service';
-import { Group } from '@shared/Model/group.model';
 import { map, switchMap } from 'rxjs/operators';
 
 @Component({

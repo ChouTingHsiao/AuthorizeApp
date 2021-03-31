@@ -30,7 +30,7 @@ export class AuthGuard implements CanActivate {
           ))
       ).subscribe(({ menus, groupPrograms }) => {
 
-        const UserGroup: string =  localStorage.getItem('UserGroup');
+        const UserGroup: string = localStorage.getItem('UserGroup');
 
         const ProgramName =  state.url.split('/')[2];
 
