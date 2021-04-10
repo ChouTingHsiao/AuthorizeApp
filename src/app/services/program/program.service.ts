@@ -1,3 +1,4 @@
+import Dexie from 'dexie';
 import { Injectable } from '@angular/core';
 import { Program } from '@shared/Model/program.model';
 import { TableEnum } from '@shared/Enum/table.enum';
@@ -5,7 +6,6 @@ import { OpenDB, GetAll, TableAdd, TableUpdate, TableDelete } from '@shared/Dexi
 import { ButtonService } from '@services/button/button.service';
 import { Observable } from 'rxjs';
 import { clone } from '@shared/Method/object.method';
-import Dexie from 'dexie';
 
 @Injectable({
   providedIn: 'root'

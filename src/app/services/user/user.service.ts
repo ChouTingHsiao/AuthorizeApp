@@ -1,10 +1,10 @@
+import Dexie from 'dexie';
 import { Injectable } from '@angular/core';
 import { User } from '@shared/Model/user.model';
 import { TableEnum } from '@shared/Enum/table.enum';
 import { OpenDB, GetAll, TableAdd, TableUpdate, TableDelete } from '@shared/Dexie/authorize.dexie';
 import { Observable } from 'rxjs';
 import { clone } from '@shared/Method/object.method';
-import Dexie from 'dexie';
 
 @Injectable({
   providedIn: 'root'
@@ -23,9 +23,9 @@ export class UserService {
 
     return new Observable(subscriber => {
 
-      GetAll(this.db, TableEnum.Users).then(x => {
+      GetAll(this.db, TableEnum.Users).then( (users: User[]) => {
 
-        subscriber.next(x);
+        subscriber.next(users);
 
         subscriber.complete();
 

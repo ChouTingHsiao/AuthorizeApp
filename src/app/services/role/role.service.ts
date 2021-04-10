@@ -1,10 +1,10 @@
+import Dexie from 'dexie';
 import { Injectable } from '@angular/core';
 import { Role } from '@shared/Model/role.model';
 import { TableEnum } from '@shared/Enum/table.enum';
 import { OpenDB, GetAll, TableAdd, TableUpdate, TableDelete } from '@shared/Dexie/authorize.dexie';
 import { Observable } from 'rxjs';
 import { clone } from '@shared/Method/object.method';
-import Dexie from 'dexie';
 
 @Injectable({
   providedIn: 'root'
@@ -23,9 +23,9 @@ export class RoleService {
 
     return new Observable(subscriber => {
 
-        GetAll(this.db, TableEnum.Roles).then(x => {
+        GetAll(this.db, TableEnum.Roles).then( (roles: Role[]) => {
 
-          subscriber.next(x);
+          subscriber.next(roles);
 
           subscriber.complete();
 
@@ -39,7 +39,7 @@ export class RoleService {
 
     return new Observable(subscriber => {
 
-        GetAll(this.db, TableEnum.Roles).then( roles => {
+        GetAll(this.db, TableEnum.Roles).then( (roles: Role[]) => {
 
           const authRole = roles.filter(x => x.id === roleId)[0];
 

@@ -49,14 +49,14 @@ export class MenuComponent implements OnInit {
             type: ColumnEnum.string,
             selector: ColumnEnum.label,
             visible: false,
-            cell: (element: Menu) => `${ element.id }`
+            cell: (menuElement: Menu) => `${ menuElement.id }`
           },
           {
             header: 'Name',
             columnDef: 'name',
             type: ColumnEnum.string,
             selector: ColumnEnum.input,
-            cell: (element: Menu) => `${ element.name }`
+            cell: (menuElement: Menu) => `${ menuElement.name }`
           },
           {
             header: 'Program',
@@ -69,13 +69,13 @@ export class MenuComponent implements OnInit {
 
               return this.store.select(TableEnum.Programs);
             },
-            cell: (element: Menu): string => {
+            cell: (menuElement: Menu): string => {
 
                 let authProgramName = '';
 
-                const authProgram = programs.filter(x => x.id ===  element.program);
+                const authProgram = programs.filter(x => x.id ===  menuElement.program);
 
-                const isNotAuthEmpty = element.program !== '';
+                const isNotAuthEmpty = menuElement.program !== '';
 
                 const isAuthFound = authProgram !== undefined && authProgram.length > 0;
 
@@ -97,16 +97,16 @@ export class MenuComponent implements OnInit {
               return this.store.select(TableEnum.Buttons);
 
             },
-            cell: (element: Menu) => {
+            cell: (menuElement: Menu) => {
 
-              const programButtons = programs.filter(x => x.id === element.program);
+              const programButtons = programs.filter(x => x.id === menuElement.program);
 
               if (programButtons.length > 0 &&
                   programButtons[0].buttons &&
                   programButtons[0].buttons.length > 0) {
 
                 return `${
-                  element.buttons.map(x => {
+                  menuElement.buttons.map(x => {
 
                     const button = programButtons[0].buttons.filter(y => y.id === x);
 
@@ -162,12 +162,12 @@ export class MenuComponent implements OnInit {
           });
 
         },
-        edit: (element: Menu): void => {
+        edit: (menuElement: Menu): void => {
 
           this.store.dispatch( new Read<Button>(
             `${TableEnum.Programs}.${TableEnum.Buttons}`,
               [],
-              { program: element.program } as Button
+              { program: menuElement.program } as Button
             )
           );
 
@@ -175,7 +175,7 @@ export class MenuComponent implements OnInit {
             title: '修改頁面',
             button: [DialogEnum.btnEdit, DialogEnum.btnCancel],
             method: DialogEnum.edit,
-            data: element,
+            data: menuElement,
             onChanges: (event) => {
 
               if ( event.source.ngControl.name === 'program' ) {
@@ -204,7 +204,7 @@ export class MenuComponent implements OnInit {
           });
 
         },
-        delete: (element: Menu): void => {
+        delete: (menuElement: Menu): void => {
 
           const isCanDelete = confirm('Are you sure you want to delete this?');
 
@@ -214,7 +214,7 @@ export class MenuComponent implements OnInit {
               new Delete<Menu>(
                 TableEnum.Menus,
                 [],
-                element
+                menuElement
               )
             );
 

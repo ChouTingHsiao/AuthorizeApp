@@ -1,11 +1,12 @@
+import Dexie from 'dexie';
 import { Injectable } from '@angular/core';
 import { Menu } from '@shared/Model/menu.model';
+import { GroupProgram } from '@shared/Model/groupProgram.model';
 import { TableEnum } from '@shared/Enum/table.enum';
 import { OpenDB, GetAll, TableAdd, TableUpdate, TableDelete } from '@shared/Dexie/authorize.dexie';
 import { GroupProgramService } from '@services/groupProgram/groupProgram.service';
 import { Observable } from 'rxjs';
 import { clone } from '@shared/Method/object.method';
-import Dexie from 'dexie';
 
 @Injectable({
   providedIn: 'root'
@@ -24,15 +25,15 @@ export class MenuService {
 
     return new Observable(subscriber => {
 
-        GetAll(this.db, TableEnum.Menus).then(menus => {
+        GetAll(this.db, TableEnum.Menus).then( (menus: Menu[]) => {
 
           const UserGroup: string = localStorage.getItem('UserGroup');
 
-          this.groupProgramService.getByGroupId(UserGroup).subscribe((groupPrograms) => {
+          this.groupProgramService.getByGroupId(UserGroup).subscribe( groupPrograms => {
 
             menus.forEach( menu => {
 
-              const LinkedProgram = groupPrograms.find( groupProgram => groupProgram.program === menu.program);
+              const LinkedProgram = groupPrograms.find( authGroupProgram => authGroupProgram.program === menu.program);
 
               menu.linkTag = LinkedProgram ? LinkedProgram.linkTag : '/';
 
@@ -50,17 +51,17 @@ export class MenuService {
 
   }
 
-  getAuthMenus(menu: Menu[]): Observable<Menu[]> {
+  getAuthMenus(menus: Menu[]): Observable<Menu[]> {
 
     return new Observable(subscriber => {
 
       const UserGroup: string = localStorage.getItem('UserGroup');
 
-      this.groupProgramService.getByGroupId(UserGroup).subscribe((groupPrograms) => {
+      this.groupProgramService.getByGroupId(UserGroup).subscribe( (groupPrograms: GroupProgram[]) => {
 
-        const authGroupProgramMap = groupPrograms.map(x => x.program);
+        const authGroupProgramMap = groupPrograms.map( authGroupProgram => authGroupProgram.program);
 
-        const AuthMenu: Menu[] = menu.filter( x => x.program === '' || authGroupProgramMap.includes(x.program));
+        const AuthMenu: Menu[] = menus.filter( menu => menu.program === '' || authGroupProgramMap.includes(menu.program));
 
         subscriber.next(AuthMenu);
 

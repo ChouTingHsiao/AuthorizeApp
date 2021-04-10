@@ -51,28 +51,28 @@ export class ProgramComponent implements OnInit {
             type: ColumnEnum.string,
             selector: ColumnEnum.label,
             visible: false,
-            cell: (element: Program) => `${ element.id }`,
+            cell: (groupElement: Program) => `${ groupElement.id }`,
           },
           {
             header: 'Name',
             columnDef: 'name',
             type: ColumnEnum.string,
             selector: ColumnEnum.input,
-            cell: (element: Program) => `${ element.name }`
+            cell: (groupElement: Program) => `${ groupElement.name }`
           },
           {
             header: 'Remark',
             columnDef: 'remark',
             type: ColumnEnum.string,
             selector: ColumnEnum.input,
-            cell: (element: Program) => `${ element.remark }`
+            cell: (groupElement: Program) => `${ groupElement.remark }`
           },
           {
             header: 'LinkTag',
             columnDef: 'linkTag',
             type: ColumnEnum.string,
             selector: ColumnEnum.input,
-            cell: (element: Program) => `${ element.linkTag }`
+            cell: (groupElement: Program) => `${ groupElement.linkTag }`
           },
           {
             header: 'Auth',
@@ -85,13 +85,13 @@ export class ProgramComponent implements OnInit {
 
               return this.store.select(TableEnum.Groups);
             },
-            cell: (element: Program): string => {
+            cell: (groupElement: Program): string => {
 
               let authGroupName = '';
 
-              const authGroup = groups.filter(x => x.id ===  element.auth);
+              const authGroup = groups.filter(x => x.id ===  groupElement.auth);
 
-              const isNotAuthEmpty = element.auth !== '';
+              const isNotAuthEmpty = groupElement.auth !== '';
 
               const isAuthFound = authGroup !== undefined && authGroup.length > 0;
 
@@ -118,21 +118,21 @@ export class ProgramComponent implements OnInit {
                   type: ColumnEnum.string,
                   selector: ColumnEnum.label,
                   visible: false,
-                  cell: (element: Button) => `${ element.id }`
+                  cell: (buttonElement: Button) => `${ buttonElement.id }`
                 },
                 {
                   header: 'Name',
                   columnDef: 'name',
                   type: ColumnEnum.string,
                   selector: ColumnEnum.input,
-                  cell: (element: Button) => `${ element.name }`
+                  cell: (buttonElement: Button) => `${ buttonElement.name }`
                 },
                 {
                   header: 'Remark',
                   columnDef: 'remark',
                   type: ColumnEnum.string,
                   selector: ColumnEnum.input,
-                  cell: (element: Button) => `${ element.remark }`
+                  cell: (buttonElement: Button) => `${ buttonElement.remark }`
                 },
               ],
               read: (): Observable<any> => {
@@ -171,13 +171,13 @@ export class ProgramComponent implements OnInit {
                 };
 
               },
-              edit: (button: Button): void => {
+              edit: (buttonElement: Button): void => {
 
                 const dialog: DialogComponent = this.openDetailDialog({
                   title: '修改頁面',
                   button: [DialogEnum.btnEdit, DialogEnum.btnCancel],
                   method: DialogEnum.edit,
-                  data: button,
+                  data: buttonElement,
                 });
 
                 dialog.confirm = (): void => {
@@ -193,7 +193,7 @@ export class ProgramComponent implements OnInit {
                 };
 
               },
-              delete: (button: Button): void => {
+              delete: (buttonElement: Button): void => {
 
                 const isCanDelete = confirm('Are you sure you want to delete this?');
 
@@ -203,7 +203,7 @@ export class ProgramComponent implements OnInit {
                     new Delete<Button>(
                       TableEnum.Buttons,
                       [],
-                      button
+                      buttonElement
                     )
                   );
 
@@ -246,13 +246,13 @@ export class ProgramComponent implements OnInit {
           });
 
         },
-        edit: (element: Program): void => {
+        edit: (groupElement: Program): void => {
 
           const dialog: DialogComponent = this.openTableDialog({
             title: '修改頁面',
             button: [DialogEnum.btnEdit, DialogEnum.btnCancel],
             method: DialogEnum.edit,
-            data: element,
+            data: groupElement,
             confirm: (): void => {
               this.store.dispatch(
                 new Edit<Program>(
@@ -265,7 +265,7 @@ export class ProgramComponent implements OnInit {
           });
 
         },
-        delete: (element: Program): void => {
+        delete: (groupElement: Program): void => {
 
           const isCanDelete = confirm('Are you sure you want to delete this?');
 
@@ -275,7 +275,7 @@ export class ProgramComponent implements OnInit {
               new Delete<Program>(
                 TableEnum.Programs,
                 [],
-                element
+                groupElement
               )
             );
 

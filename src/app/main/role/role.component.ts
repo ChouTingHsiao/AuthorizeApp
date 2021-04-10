@@ -41,21 +41,21 @@ export class RoleComponent implements OnInit {
             type: ColumnEnum.string,
             selector: ColumnEnum.label,
             visible: false,
-            cell: (element: Role) => `${ element.id }`
+            cell: (roleElement: Role) => `${ roleElement.id }`
           },
           {
             header: 'Name',
             columnDef: 'name',
             type: ColumnEnum.string,
             selector: ColumnEnum.input,
-            cell: (element: Role) => `${ element.name }`
+            cell: (roleElement: Role) => `${ roleElement.name }`
           },
           {
             header: 'Remark',
             columnDef: 'remark',
             type: ColumnEnum.string,
             selector: ColumnEnum.input,
-            cell: (element: Role) => `${ element.remark }`
+            cell: (roleElement: Role) => `${ roleElement.remark }`
           },
         ],
         read: (): Observable<any> => {
@@ -86,13 +86,13 @@ export class RoleComponent implements OnInit {
           });
 
         },
-        edit: (element: Role): void => {
+        edit: (roleElement: Role): void => {
 
           const dialog: DialogComponent = this.openTableDialog({
             title: '修改頁面',
             button: [DialogEnum.btnEdit, DialogEnum.btnCancel],
             method: DialogEnum.edit,
-            data: element,
+            data: roleElement,
             confirm: (): void => {
 
               this.store.dispatch(
@@ -107,7 +107,7 @@ export class RoleComponent implements OnInit {
           });
 
         },
-        delete: (element: Role): void => {
+        delete: (roleElement: Role): void => {
 
           const isCanDelete = confirm('Are you sure you want to delete this?');
 
@@ -117,7 +117,7 @@ export class RoleComponent implements OnInit {
               new Delete<Role>(
                 TableEnum.Roles,
                 [],
-                element
+                roleElement
               )
             );
 

@@ -48,21 +48,21 @@ export class UserComponent implements OnInit {
             type: ColumnEnum.string,
             selector: ColumnEnum.label,
             visible: false,
-            cell: (element: User) => `${ element.id }`
+            cell: (userElement: User) => `${ userElement.id }`
           },
           {
             header: 'Name',
             columnDef: 'name',
             type: ColumnEnum.string,
             selector: ColumnEnum.input,
-            cell: (element: User) => `${ element.name }`
+            cell: (userElement: User) => `${ userElement.name }`
           },
           {
             header: 'Password',
             columnDef: 'password',
             type: ColumnEnum.string,
             selector: ColumnEnum.input,
-            cell: (element: User) => `${ element.password }`
+            cell: (userElement: User) => `${ userElement.password }`
           },
           {
             header: 'Role',
@@ -75,9 +75,9 @@ export class UserComponent implements OnInit {
 
               return this.store.select(TableEnum.Roles);
             },
-            cell: (element: User) => `${
-              element.role === '' ? '' :
-              roles.filter(x => x.id ===  element.role)[0].name
+            cell: (userElement: User) => `${
+              userElement.role === '' ? '' :
+              roles.filter(x => x.id ===  userElement.role)[0].name
             }`
           },
         ],
@@ -109,13 +109,13 @@ export class UserComponent implements OnInit {
           });
 
         },
-        edit: (element: User): void => {
+        edit: (userElement: User): void => {
 
           const dialog: DialogComponent = this.openTableDialog({
             title: '修改頁面',
             button: [DialogEnum.btnEdit, DialogEnum.btnCancel],
             method: DialogEnum.edit,
-            data: element,
+            data: userElement,
             confirm: (): void => {
 
               this.store.dispatch(
@@ -130,7 +130,7 @@ export class UserComponent implements OnInit {
           });
 
         },
-        delete: (element: User): void => {
+        delete: (userElement: User): void => {
 
           const isCanDelete = confirm('Are you sure you want to delete this?');
 
@@ -140,7 +140,7 @@ export class UserComponent implements OnInit {
               new Delete<User>(
                 TableEnum.Users,
                 [],
-                element
+                userElement
               )
             );
 

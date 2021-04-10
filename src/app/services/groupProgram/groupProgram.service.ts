@@ -1,3 +1,4 @@
+import Dexie from 'dexie';
 import { Injectable } from '@angular/core';
 import { GroupProgram } from '@shared/Model/groupProgram.model';
 import { Program } from '@shared/Model/program.model';
@@ -7,7 +8,6 @@ import { TableEnum } from '@shared/Enum/table.enum';
 import { OpenDB, GetAll, TableAdd, TableUpdate, TableDelete } from '@shared/Dexie/authorize.dexie';
 import { Observable } from 'rxjs';
 import { clone } from '@shared/Method/object.method';
-import Dexie from 'dexie';
 
 @Injectable({
   providedIn: 'root'
@@ -26,9 +26,9 @@ export class GroupProgramService {
 
     return new Observable(subscriber => {
 
-      GetAll(this.db, TableEnum.GroupPrograms).then(x => {
+      GetAll(this.db, TableEnum.GroupPrograms).then( (groupPrograms: GroupProgram[]) => {
 
-        subscriber.next(x);
+        subscriber.next(groupPrograms);
 
         subscriber.complete();
 
@@ -42,9 +42,9 @@ export class GroupProgramService {
 
     return new Observable(subscriber => {
 
-      GetAll(this.db, TableEnum.GroupPrograms).then((x: GroupProgram[])  => {
+      GetAll(this.db, TableEnum.GroupPrograms).then( (groupPrograms: GroupProgram[])  => {
 
-        const groupProgram = x.filter(y => y.group === groupId);
+        const groupProgram = groupPrograms.filter( authGroupProgram => authGroupProgram.group === groupId);
 
         subscriber.next(groupProgram);
 
@@ -62,25 +62,23 @@ export class GroupProgramService {
 
       const UserGroup: string = localStorage.getItem('UserGroup');
 
-      this.getByGroupId(UserGroup).subscribe((groupProgram) => {
+      this.getByGroupId(UserGroup).subscribe( (groupPrograms: GroupProgram[]) => {
 
-        const linkGroupPrograms: GroupProgram[] = groupProgram.filter( x => x.linkTag === linkName);
+        const linkGroupPrograms: GroupProgram[] = groupPrograms.filter( authGroupProgram => authGroupProgram.linkTag === linkName);
 
         const linkGroupProgram: GroupProgram = linkGroupPrograms.length < 1 ? null : linkGroupPrograms[0] ;
 
         if (linkGroupProgram !== null) {
 
-          this.programService.getAll().subscribe((programs) => {
+          this.programService.getAll().subscribe( programs => {
 
-            const program: Program = programs.filter( x => x.linkTag === linkName)[0];
+            const linkProgram: Program = programs.filter( program => program.linkTag === linkName)[0];
 
-            console.log(program);
-
-            program.buttons.forEach( button => {
+            linkProgram.buttons.forEach( button => {
               button.isEnable = linkGroupProgram.buttons.includes(button.id);
             });
 
-            subscriber.next(program.buttons);
+            subscriber.next(linkProgram.buttons);
 
             subscriber.complete();
 

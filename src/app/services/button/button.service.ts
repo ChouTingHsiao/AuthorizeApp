@@ -1,10 +1,10 @@
+import Dexie from 'dexie';
 import { Injectable } from '@angular/core';
 import { Button } from '@shared/Model/button.model';
 import { TableEnum } from '@shared/Enum/table.enum';
 import { OpenDB, GetAll, TableAdd, TableUpdate, TableDelete } from '@shared/Dexie/authorize.dexie';
 import { Observable } from 'rxjs';
 import { clone } from '@shared/Method/object.method';
-import Dexie from 'dexie';
 
 @Injectable({
   providedIn: 'root'
@@ -23,9 +23,9 @@ export class ButtonService {
 
     return new Observable(subscriber => {
 
-      GetAll(this.db, TableEnum.Buttons).then(x => {
+      GetAll(this.db, TableEnum.Buttons).then( (buttons: Button[]) => {
 
-        subscriber.next(x);
+        subscriber.next(buttons);
 
         subscriber.complete();
 
@@ -39,9 +39,9 @@ export class ButtonService {
 
     return new Observable(subscriber => {
 
-      GetAll(this.db, TableEnum.Buttons).then((x: Button[])  => {
+      GetAll(this.db, TableEnum.Buttons).then( (buttons: Button[]) => {
 
-        const programButton = x.filter(y => y.program === programId);
+        const programButton = buttons.filter( button => button.program === programId);
 
         subscriber.next(programButton);
 
