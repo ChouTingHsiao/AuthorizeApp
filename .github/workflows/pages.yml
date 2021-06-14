@@ -39,14 +39,17 @@ jobs:
       id: e2e
       run: npx ng e2e --no-webdriver-update
 
-    - name: Build and Deploy
-      id: Ngh
+    - name: Build
+      id: Build
+      run: npx ng build --prod --base-href https://choutinghsiao.github.io/AuthorizeApp/
+
+    - name: Deploy
+      id: Deploy
       uses: JamesIves/github-pages-deploy-action@4.1.4
       env:
-       ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-       BRANCH: gh-pages
-       FOLDER: dist/authorize-example
-       BUILD_SCRIPT: npx ng build --prod --base-href https://choutinghsiao.github.io/AuthorizeApp/
+       token: ${{ secrets.ACCESS_TOKEN }}
+       branch: gh-pages
+       folder: dist/authorize-example
 
   notify:
     runs-on: ubuntu-latest
