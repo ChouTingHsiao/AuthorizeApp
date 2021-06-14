@@ -45,8 +45,8 @@ jobs:
 
     - name: Deploy
       id: Deploy
-      uses: JamesIves/github-pages-deploy-action@main
-      env:
+      uses: JamesIves/github-pages-deploy-action@4.1.4
+      with:
        token: ${{ secrets.ACCESS_TOKEN }}
        branch: gh-pages
        folder: dist/authorize-example
