@@ -33,7 +33,7 @@ jobs:
 
     - name: update chrome
       id: update
-      run: npx webdriver-manager clean && npx webdriver-manager update --versions.chrome 88.0.4324.96
+      run: npx webdriver-manager clean && npx webdriver-manager update --versions.chrome 91.0.4472.77
 
     - name: e2e
       id: e2e
