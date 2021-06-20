@@ -46,10 +46,10 @@ export class AppPage {
     const addButton = element.all(by.css('button.mat-raised-button.mat-button-base')).get(0);
     waitIsVisibleToClick(addButton);
 
-    const nameInput = element(by.css('input[placeholder="name"]'));
+    const nameInput = element(by.css('input[data-placeholder="name"]'));
     nameInput.sendKeys('TEST1');
 
-    const passwordInput = element(by.css('input[placeholder="password"]'));
+    const passwordInput = element(by.css('input[data-placeholder="password"]'));
     passwordInput.sendKeys('TEST1');
 
     const roleSelect = element(by.css('mat-select[ng-reflect-name="role"]'));
@@ -92,10 +92,10 @@ export class AppPage {
     const addButton = element.all(by.css('button.mat-raised-button.mat-button-base')).get(0);
     waitIsVisibleToClick(addButton);
 
-    const nameInput = element(by.css('input[placeholder="name"]'));
+    const nameInput = element(by.css('input[data-placeholder="name"]'));
     nameInput.sendKeys('TEST1');
 
-    const passwordInput = element(by.css('input[placeholder="remark"]'));
+    const passwordInput = element(by.css('input[data-placeholder="remark"]'));
     passwordInput.sendKeys('TEST1');
 
     const dialogConfirmButton = element.all(by.css('button.mat-button.mat-button-base')).get(0);
@@ -132,7 +132,7 @@ export class AppPage {
     const addButton = element.all(by.css('button.mat-raised-button.mat-button-base')).get(0);
     waitIsVisibleToClick(addButton);
 
-    const nameInput = element(by.css('input[placeholder="name"]'));
+    const nameInput = element(by.css('input[data-placeholder="name"]'));
     nameInput.sendKeys('TEST1');
 
     const rolesMultiSelect = element(by.css('mat-select[ng-reflect-name="roles"]'));
@@ -178,13 +178,13 @@ export class AppPage {
     const addButton = element.all(by.css('button.mat-raised-button.mat-button-base')).get(0);
     waitIsVisibleToClick(addButton);
 
-    const nameInput = element(by.css('input[placeholder="name"]'));
+    const nameInput = element(by.css('input[data-placeholder="name"]'));
     nameInput.sendKeys('TEST1');
 
-    const remarkInput = element(by.css('input[placeholder="remark"]'));
+    const remarkInput = element(by.css('input[data-placeholder="remark"]'));
     remarkInput.sendKeys('TEST1');
 
-    const linkInput = element(by.css('input[placeholder="linkTag"]'));
+    const linkInput = element(by.css('input[data-placeholder="linkTag"]'));
     linkInput.sendKeys('TEST1');
 
     const authSelect = element(by.css('mat-select[ng-reflect-name="auth"]'));
@@ -227,7 +227,7 @@ export class AppPage {
     const addButton = element.all(by.css('button.mat-raised-button.mat-button-base')).get(0);
     waitIsVisibleToClick(addButton);
 
-    const nameInput = element(by.css('input[placeholder="name"]'));
+    const nameInput = element(by.css('input[data-placeholder="name"]'));
     nameInput.sendKeys('TEST1');
 
     const programSelect = element(by.css('mat-select[ng-reflect-name="program"]'));
