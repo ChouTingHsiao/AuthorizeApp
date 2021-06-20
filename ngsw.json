@@ -1,25 +1,28 @@
 {
   "configVersion": 1,
-  "timestamp": 1624182068662,
+  "timestamp": 1624186409498,
   "index": "https://choutinghsiao.github.io/AuthorizeApp/index.html",
   "assetGroups": [
     {
       "name": "app",
       "installMode": "prefetch",
       "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
       "urls": [
-        "https://choutinghsiao.github.io/AuthorizeApp/5-es2015.b1ac22e9d93285400782.js",
-        "https://choutinghsiao.github.io/AuthorizeApp/5-es5.b1ac22e9d93285400782.js",
+        "https://choutinghsiao.github.io/AuthorizeApp/5-es2015.1b81865b55b6a92df3eb.js",
+        "https://choutinghsiao.github.io/AuthorizeApp/5-es5.1b81865b55b6a92df3eb.js",
         "https://choutinghsiao.github.io/AuthorizeApp/favicon.ico",
         "https://choutinghsiao.github.io/AuthorizeApp/index.html",
-        "https://choutinghsiao.github.io/AuthorizeApp/main-es2015.d7d8cdd10c43d71e79d5.js",
-        "https://choutinghsiao.github.io/AuthorizeApp/main-es5.d7d8cdd10c43d71e79d5.js",
+        "https://choutinghsiao.github.io/AuthorizeApp/main-es2015.c512e5aa59cfae2daf14.js",
+        "https://choutinghsiao.github.io/AuthorizeApp/main-es5.c512e5aa59cfae2daf14.js",
         "https://choutinghsiao.github.io/AuthorizeApp/manifest.webmanifest",
-        "https://choutinghsiao.github.io/AuthorizeApp/polyfills-es2015.09ee2f719bd21ab5c7b1.js",
-        "https://choutinghsiao.github.io/AuthorizeApp/polyfills-es5.12b5c32d1603e35dd556.js",
-        "https://choutinghsiao.github.io/AuthorizeApp/runtime-es2015.fa715c5c4f7e28ba5fe6.js",
-        "https://choutinghsiao.github.io/AuthorizeApp/runtime-es5.fa715c5c4f7e28ba5fe6.js",
-        "https://choutinghsiao.github.io/AuthorizeApp/styles.d93b1083388918533ef4.css"
+        "https://choutinghsiao.github.io/AuthorizeApp/polyfills-es2015.4eb191482be2254421ff.js",
+        "https://choutinghsiao.github.io/AuthorizeApp/polyfills-es5.212e1daaa7ab7b9975d1.js",
+        "https://choutinghsiao.github.io/AuthorizeApp/runtime-es2015.d3434bb03b41a6d9ec34.js",
+        "https://choutinghsiao.github.io/AuthorizeApp/runtime-es5.d3434bb03b41a6d9ec34.js",
+        "https://choutinghsiao.github.io/AuthorizeApp/styles.b3fea983604f65896290.css"
       ],
       "patterns": []
     },
@@ -27,6 +30,9 @@
       "name": "assets",
       "installMode": "lazy",
       "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
       "urls": [
         "https://choutinghsiao.github.io/AuthorizeApp/assets/icons/icon-128x128.png",
         "https://choutinghsiao.github.io/AuthorizeApp/assets/icons/icon-144x144.png",
@@ -44,8 +50,8 @@
   ],
   "dataGroups": [],
   "hashTable": {
-    "https://choutinghsiao.github.io/AuthorizeApp/5-es2015.b1ac22e9d93285400782.js": "deebf1d8e030e9c54b86202c1bfa5b2a6b5a8ca2",
-    "https://choutinghsiao.github.io/AuthorizeApp/5-es5.b1ac22e9d93285400782.js": "ff13e1dce656ee999dbf18a9de79969cac1961ca",
+    "https://choutinghsiao.github.io/AuthorizeApp/5-es2015.1b81865b55b6a92df3eb.js": "acb56d8c174a3927d4ecbc2acde48db77317a0ad",
+    "https://choutinghsiao.github.io/AuthorizeApp/5-es5.1b81865b55b6a92df3eb.js": "878d122300b552815486908c9e8bec7f4a203bd0",
     "https://choutinghsiao.github.io/AuthorizeApp/assets/icons/icon-128x128.png": "dae3b6ed49bdaf4327b92531d4b5b4a5d30c7532",
     "https://choutinghsiao.github.io/AuthorizeApp/assets/icons/icon-144x144.png": "b0bd89982e08f9bd2b642928f5391915b74799a7",
     "https://choutinghsiao.github.io/AuthorizeApp/assets/icons/icon-152x152.png": "7479a9477815dfd9668d60f8b3b2fba709b91310",
@@ -55,15 +61,15 @@
     "https://choutinghsiao.github.io/AuthorizeApp/assets/icons/icon-72x72.png": "c457e56089a36952cd67156f9996bc4ce54a5ed9",
     "https://choutinghsiao.github.io/AuthorizeApp/assets/icons/icon-96x96.png": "3914125a4b445bf111c5627875fc190f560daa41",
     "https://choutinghsiao.github.io/AuthorizeApp/favicon.ico": "22f6a4a3bcaafafb0254e0f2fa4ceb89e505e8b2",
-    "https://choutinghsiao.github.io/AuthorizeApp/index.html": "4750a481a70254d213d0d622ceb39458320cddd8",
-    "https://choutinghsiao.github.io/AuthorizeApp/main-es2015.d7d8cdd10c43d71e79d5.js": "29b07f5aad4489a9a8e22dc9a3fea9c5d065cd9f",
-    "https://choutinghsiao.github.io/AuthorizeApp/main-es5.d7d8cdd10c43d71e79d5.js": "9a151049c6bd16859939abbd9d7a5ae22952260b",
+    "https://choutinghsiao.github.io/AuthorizeApp/index.html": "fb5ebbf105804da1147bbd0a7f95d90c3f4101fe",
+    "https://choutinghsiao.github.io/AuthorizeApp/main-es2015.c512e5aa59cfae2daf14.js": "85eb58871161132746f8b924408ce0463f5185dd",
+    "https://choutinghsiao.github.io/AuthorizeApp/main-es5.c512e5aa59cfae2daf14.js": "9e5665c3f2ac74bd7ed6004b32ca5a4cee22a576",
     "https://choutinghsiao.github.io/AuthorizeApp/manifest.webmanifest": "7275d44b6b65eaee5078337e62246dcf304c1707",
-    "https://choutinghsiao.github.io/AuthorizeApp/polyfills-es2015.09ee2f719bd21ab5c7b1.js": "72ad4ccc0a3916ae4598199447cdeadd6d380570",
-    "https://choutinghsiao.github.io/AuthorizeApp/polyfills-es5.12b5c32d1603e35dd556.js": "f32c7aaca8b60df7a9dfa6cb8f2b7751b5d0832c",
-    "https://choutinghsiao.github.io/AuthorizeApp/runtime-es2015.fa715c5c4f7e28ba5fe6.js": "fd2fe600464eec27d34d4a6400c3d9277b20917a",
-    "https://choutinghsiao.github.io/AuthorizeApp/runtime-es5.fa715c5c4f7e28ba5fe6.js": "fe667e5c21bbd4fafd17c7544623651741394543",
-    "https://choutinghsiao.github.io/AuthorizeApp/styles.d93b1083388918533ef4.css": "350224611df23cece40c75b8b6299d4d0daa4f6b"
+    "https://choutinghsiao.github.io/AuthorizeApp/polyfills-es2015.4eb191482be2254421ff.js": "cad3129c71535baaab25ac06d8429734959b0b3f",
+    "https://choutinghsiao.github.io/AuthorizeApp/polyfills-es5.212e1daaa7ab7b9975d1.js": "e90126400e6927695599ec800620014f7ce29d69",
+    "https://choutinghsiao.github.io/AuthorizeApp/runtime-es2015.d3434bb03b41a6d9ec34.js": "735626dc19ee2e96c3e97f271cb83ac4f749ed13",
+    "https://choutinghsiao.github.io/AuthorizeApp/runtime-es5.d3434bb03b41a6d9ec34.js": "a9f4f88b95bf3313abfdbf80a1e0c1f9bb8db59d",
+    "https://choutinghsiao.github.io/AuthorizeApp/styles.b3fea983604f65896290.css": "8fe5ba6e67a57c48127b4667722727deeb21da54"
   },
   "navigationUrls": [
     {
