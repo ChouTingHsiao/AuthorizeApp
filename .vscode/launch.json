@@ -12,13 +12,12 @@
             "webRoot": "${workspaceFolder}"
         },
         {
-            "type": "node",
+            "type": "pwa-node",
             "request": "launch",
             "name": "e2e",
             "runtimeArgs": [ "--inspect-brk" ],
             "program": "${workspaceRoot}/node_modules/protractor/bin/protractor",
             "args": ["${workspaceRoot}/e2e/protractor.conf.js"],
-            "port": 9229
         },
         {
             "type": "pwa-chrome",
