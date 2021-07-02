@@ -1,6 +1,6 @@
 import Dexie from 'dexie';
 import { TableEnum } from '@shared/Enum/table.enum';
-import { Users, Roles, Groups, GroupPrograms, Programs, Buttons, Menus } from '@shared/Dexie/data';
+import { Users, Roles, Groups, GroupPrograms, Programs, Buttons, Menus } from '@src/app/_shared/Dexie/authorize.data';
 
 function OpenDB(): Promise<Dexie> {
     const AuthorizeDb = new Dexie('Authorize');

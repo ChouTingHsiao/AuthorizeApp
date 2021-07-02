@@ -18,24 +18,25 @@ import { MatIconModule } from '@angular/material/icon';
 
 import { MatDialogModule } from '@angular/material/dialog';
 
-import { StoreModule } from '@ngrx/store';
+import { GroupService } from '@services/group/group.service';
 
-import { ROOT_REDUCER } from '@shared/Ngrx/Reducer/root.reducer';
+import { Groups } from '@src/app/_shared/Dexie/authorize.data';
 
 import { of } from 'rxjs';
 
-import { GroupService } from '@services/group/group.service';
+import { provideMockStore } from '@ngrx/store/testing';
 
-import { Groups } from '@shared/Dexie/data';
+import { ProgramsState } from '@src/app/_shared/Dexie/ngrx.data';
 
 describe('ProgramComponent', () => {
   let component: ProgramComponent;
   let fixture: ComponentFixture<ProgramComponent>;
 
+  const initialState = ProgramsState;
+
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
-        StoreModule.forRoot(ROOT_REDUCER),
         BrowserAnimationsModule,
         MatTableModule,
         MatPaginatorModule,
@@ -53,7 +54,8 @@ describe('ProgramComponent', () => {
           provide: GroupService, useValue: {
             getAll: () => of ( Groups )
           }
-        }
+        },
+        provideMockStore({ initialState })
       ]
     })
     .compileComponents();

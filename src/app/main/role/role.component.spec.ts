@@ -18,18 +18,19 @@ import { MatIconModule } from '@angular/material/icon';
 
 import { MatDialogModule } from '@angular/material/dialog';
 
-import { StoreModule } from '@ngrx/store';
+import { provideMockStore } from '@ngrx/store/testing';
 
-import { ROOT_REDUCER } from '@shared/Ngrx/Reducer/root.reducer';
+import { RolesState } from '@src/app/_shared/Dexie/ngrx.data';
 
 describe('RoleComponent', () => {
   let component: RoleComponent;
   let fixture: ComponentFixture<RoleComponent>;
 
+  const initialState = RolesState;
+
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
-        StoreModule.forRoot(ROOT_REDUCER),
         BrowserAnimationsModule,
         MatTableModule,
         MatPaginatorModule,
@@ -41,6 +42,9 @@ describe('RoleComponent', () => {
       declarations: [
         RoleComponent,
         TableComponent
+      ],
+      providers: [
+        provideMockStore({ initialState })
       ]
     })
     .compileComponents();

@@ -16,11 +16,13 @@ import { MatIconModule } from '@angular/material/icon';
 
 import { MenuService } from '@services/menu/menu.service';
 
+import { Menus } from '@src/app/_shared/Dexie/authorize.data';
+
 import { of } from 'rxjs';
 
 import { provideMockStore } from '@ngrx/store/testing';
 
-import { Menus, MenusState } from '@shared/Dexie/data';
+import { MenusState } from '@src/app/_shared/Dexie/ngrx.data';
 
 describe('MainComponent', () => {
   let component: MainComponent;

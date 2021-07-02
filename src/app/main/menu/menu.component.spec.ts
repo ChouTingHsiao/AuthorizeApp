@@ -18,24 +18,25 @@ import { MatIconModule } from '@angular/material/icon';
 
 import { MatDialogModule } from '@angular/material/dialog';
 
-import { StoreModule } from '@ngrx/store';
+import { ProgramService } from '@services/program/program.service';
 
-import { ROOT_REDUCER } from '@shared/Ngrx/Reducer/root.reducer';
+import { Programs } from '@src/app/_shared/Dexie/authorize.data';
 
 import { of } from 'rxjs';
 
-import { ProgramService } from '@services/program/program.service';
+import { provideMockStore } from '@ngrx/store/testing';
 
-import { Programs } from '@shared/Dexie/data';
+import { MenusState } from '@src/app/_shared/Dexie/ngrx.data';
 
 describe('MenuComponent', () => {
   let component: MenuComponent;
   let fixture: ComponentFixture<MenuComponent>;
 
+  const initialState = MenusState;
+
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
-        StoreModule.forRoot(ROOT_REDUCER),
         BrowserAnimationsModule,
         MatTableModule,
         MatPaginatorModule,
@@ -53,7 +54,8 @@ describe('MenuComponent', () => {
           provide: ProgramService, useValue: {
             getAll: () => of ( Programs )
           }
-        }
+        },
+        provideMockStore({ initialState })
       ]
     })
     .compileComponents();
