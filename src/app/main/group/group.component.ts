@@ -15,6 +15,7 @@ import { RoleService } from '@services/role/role.service';
 import { ProgramService } from '@services/program/program.service';
 import { Read, Create, Edit, Delete} from '@shared/Ngrx/Actions/maintain.action';
 import { Observable } from 'rxjs';
+import { getRolesState, getProgramsState, getButtonsState, getGroupProgramsState, getGroupsState } from '@shared/Ngrx/Selectors/maintain.selectors';
 
 @Component({
   selector: 'app-group',
@@ -29,7 +30,7 @@ export class GroupComponent implements OnInit {
 
   myGrid: Observable<Grid>;
 
-  constructor(private store: Store<any>,
+  constructor(private store: Store,
               private roleService: RoleService,
               private programService: ProgramService) { }
 
@@ -75,7 +76,7 @@ export class GroupComponent implements OnInit {
 
               this.store.dispatch( new Read<Role>(TableEnum.Roles) );
 
-              return this.store.select(TableEnum.Roles);
+              return this.store.select(getRolesState);
             },
             cell: (groupElement: Group) => `${
               groupElement.roles.map(x => {
@@ -117,7 +118,7 @@ export class GroupComponent implements OnInit {
 
                     this.store.dispatch( new Read<Program>(TableEnum.Programs) );
 
-                    return this.store.select(TableEnum.Programs);
+                    return this.store.select(getProgramsState);
                   },
                   cell: (groupProgramElement: GroupProgram): string => {
 
@@ -144,7 +145,7 @@ export class GroupComponent implements OnInit {
                   selector: ColumnEnum.multiselect,
                   source: (): Observable<any> => {
 
-                    return this.store.select(TableEnum.Buttons);
+                    return this.store.select(getButtonsState);
 
                   },
                   cell: (groupProgramElement: GroupProgram) => {
@@ -181,7 +182,7 @@ export class GroupComponent implements OnInit {
                   )
                 );
 
-                return this.store.select(TableEnum.GroupPrograms);
+                return this.store.select(getGroupProgramsState);
 
               },
               create: (): void => {
@@ -293,7 +294,7 @@ export class GroupComponent implements OnInit {
 
           this.store.dispatch( new Read<Group>(TableEnum.Groups) );
 
-          return this.store.select(TableEnum.Groups);
+          return this.store.select(getGroupsState);
 
         },
         create: (): void => {

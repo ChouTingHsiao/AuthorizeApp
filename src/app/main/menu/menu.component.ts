@@ -12,6 +12,7 @@ import { ProgramService } from '@services/program/program.service';
 import { Read, Create, Edit, Delete} from '@shared/Ngrx/Actions/maintain.action';
 import { Observable } from 'rxjs';
 import { Button } from '@shared/Model/button.model';
+import { getProgramsState, getButtonsState, getMenusState } from '@shared/Ngrx/Selectors/maintain.selectors';
 
 @Component({
   selector: 'app-menu',
@@ -24,7 +25,7 @@ export class MenuComponent implements OnInit {
 
   myGrid: Observable<Grid>;
 
-  constructor(private store: Store<any>,
+  constructor(private store: Store,
               private programService: ProgramService) { }
 
   ngOnInit() {
@@ -67,7 +68,7 @@ export class MenuComponent implements OnInit {
 
               this.store.dispatch( new Read<Program>(TableEnum.Programs) );
 
-              return this.store.select(TableEnum.Programs);
+              return this.store.select(getProgramsState);
             },
             cell: (menuElement: Menu): string => {
 
@@ -94,7 +95,7 @@ export class MenuComponent implements OnInit {
             selector: ColumnEnum.multiselect,
             source: (): Observable<any> => {
 
-              return this.store.select(TableEnum.Buttons);
+              return this.store.select(getButtonsState);
 
             },
             cell: (menuElement: Menu) => {
@@ -124,7 +125,7 @@ export class MenuComponent implements OnInit {
         ],
         read: (): Observable<any> => {
 
-          return this.store.select(TableEnum.Menus);
+          return this.store.select(getMenusState);
 
         },
         create: (): void => {

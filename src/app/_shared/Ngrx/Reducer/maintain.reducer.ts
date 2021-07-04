@@ -2,7 +2,7 @@ import { MaintainSuccessActions,
          CREATE_SUCCESS, READ_SUCCESS, EDIT_SUCCESS, DELETE_SUCCESS} from '@shared/Ngrx/Actions/maintain.action';
 import { EntityState, EntityAdapter, createEntityAdapter, Update } from '@ngrx/entity';
 
-interface State<T> extends EntityState<T> {
+export interface State<T> extends EntityState<T> {
   // additional entities state properties
   selectedUserId: number | null;
 }

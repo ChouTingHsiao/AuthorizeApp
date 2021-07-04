@@ -11,6 +11,7 @@ import { Role } from '@shared/Model/role.model';
 import { RoleService } from '@services/role/role.service';
 import { Read, Create, Edit, Delete} from '@shared/Ngrx/Actions/maintain.action';
 import { Observable } from 'rxjs';
+import { getRolesState, getUsersState } from '@shared/Ngrx/Selectors/maintain.selectors';
 
 @Component({
   selector: 'app-user',
@@ -23,7 +24,7 @@ export class UserComponent implements OnInit {
 
   myGrid: Observable<Grid>;
 
-  constructor(private store: Store<any>,
+  constructor(private store: Store,
               private roleService: RoleService) { }
 
   ngOnInit() {
@@ -73,7 +74,7 @@ export class UserComponent implements OnInit {
 
               this.store.dispatch( new Read<Role>(TableEnum.Roles) );
 
-              return this.store.select(TableEnum.Roles);
+              return this.store.select(getRolesState);
             },
             cell: (userElement: User) => `${
               userElement.role === '' ? '' :
@@ -85,7 +86,7 @@ export class UserComponent implements OnInit {
 
           this.store.dispatch( new Read<User>(TableEnum.Users) );
 
-          return this.store.select(TableEnum.Users);
+          return this.store.select(getUsersState);
 
         },
         create: (): void => {

@@ -9,6 +9,7 @@ import { Grid } from '@shared/Model/table.model';
 import { Role } from '@shared/Model/role.model';
 import { Read, Create, Edit, Delete} from '@shared/Ngrx/Actions/maintain.action';
 import { Observable } from 'rxjs';
+import { getRolesState } from '@shared/Ngrx/Selectors/maintain.selectors';
 
 @Component({
   selector: 'app-role',
@@ -21,7 +22,7 @@ export class RoleComponent implements OnInit {
 
   myGrid: Observable<Grid>;
 
-  constructor(private store: Store<any>) { }
+  constructor(private store: Store) { }
 
   ngOnInit() {
     this.loadGrid();
@@ -62,7 +63,7 @@ export class RoleComponent implements OnInit {
 
           this.store.dispatch( new Read<Role>(TableEnum.Roles) );
 
-          return this.store.select(TableEnum.Roles);
+          return this.store.select(getRolesState);
 
         },
         create: (): void => {

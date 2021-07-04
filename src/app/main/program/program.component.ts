@@ -12,6 +12,7 @@ import { Button } from '@shared/Model/button.model';
 import { GroupService } from '@services/group/group.service';
 import { Read, Create, Edit, Delete} from '@shared/Ngrx/Actions/maintain.action';
 import { Observable } from 'rxjs';
+import { getGroupsState, getButtonsState, getProgramsState } from '@shared/Ngrx/Selectors/maintain.selectors';
 
 @Component({
   selector: 'app-program',
@@ -26,7 +27,7 @@ export class ProgramComponent implements OnInit {
 
   myGrid: Observable<Grid>;
 
-  constructor(private store: Store<any>,
+  constructor(private store: Store,
               private groupService: GroupService) { }
 
   ngOnInit() {
@@ -83,7 +84,7 @@ export class ProgramComponent implements OnInit {
 
               this.store.dispatch( new Read<Group>(TableEnum.Groups) );
 
-              return this.store.select(TableEnum.Groups);
+              return this.store.select(getGroupsState);
             },
             cell: (groupElement: Program): string => {
 
@@ -144,7 +145,7 @@ export class ProgramComponent implements OnInit {
                   )
                 );
 
-                return this.store.select(TableEnum.Buttons);
+                return this.store.select(getButtonsState);
 
               },
               create: (): void => {
@@ -222,7 +223,7 @@ export class ProgramComponent implements OnInit {
 
           this.store.dispatch( new Read<Program>(TableEnum.Programs) );
 
-          return this.store.select(TableEnum.Programs);
+          return this.store.select(getProgramsState);
 
         },
         create: (): void => {
