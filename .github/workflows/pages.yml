@@ -33,7 +33,7 @@ jobs:
 
     - name: update chrome
       id: update
-      run: npx webdriver-manager clean && npx webdriver-manager update --versions.chrome 91.0.4472.77
+      run: npx webdriver-manager clean && npx webdriver-manager update --versions.chrome $(google-chrome --version | grep -ioE "[0-9.]{10,20}")
 
     - name: e2e
       id: e2e
