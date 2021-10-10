@@ -187,12 +187,6 @@ export class AppPage {
     const linkInput = element(by.css('input[data-placeholder="linkTag"]'));
     linkInput.sendKeys('TEST1');
 
-    const authSelect = element(by.css('mat-select[ng-reflect-name="auth"]'));
-    waitIsVisibleToClick(authSelect);
-
-    const checkButton = element.all(by.css('mat-option')).get(0);
-    waitIsVisibleToClick(checkButton);
-
     const dialogConfirmButton = element.all(by.css('button.mat-button.mat-button-base')).get(0);
     waitIsVisibleToClick(dialogConfirmButton);
 
