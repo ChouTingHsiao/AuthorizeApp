@@ -48,6 +48,8 @@ export class AuthorizeDirective implements OnInit, AfterViewChecked {
 
           element.disabled = true;
 
+          element.style.cssText  = 'background-color : gray; color : white;';
+
         });
 
       }
