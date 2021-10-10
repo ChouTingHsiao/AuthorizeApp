@@ -5,6 +5,5 @@ export interface Program {
     name: string;
     remark: string;
     linkTag: string;
-    auth: string;
     buttons?: Button[];
 }

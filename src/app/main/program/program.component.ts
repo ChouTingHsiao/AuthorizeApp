@@ -75,35 +75,6 @@ export class ProgramComponent implements OnInit {
             selector: ColumnEnum.input,
             cell: (groupElement: Program) => `${ groupElement.linkTag }`
           },
-          {
-            header: 'Auth',
-            columnDef: 'auth',
-            type: ColumnEnum.string,
-            selector: ColumnEnum.select,
-            source: (): Observable<any> => {
-
-              this.store.dispatch( new Read<Group>(TableEnum.Groups) );
-
-              return this.store.select(getGroupsState);
-            },
-            cell: (groupElement: Program): string => {
-
-              let authGroupName = '';
-
-              const authGroup = groups.filter(x => x.id ===  groupElement.auth);
-
-              const isNotAuthEmpty = groupElement.auth !== '';
-
-              const isAuthFound = authGroup !== undefined && authGroup.length > 0;
-
-              if (isNotAuthEmpty && isAuthFound) {
-                authGroupName = authGroup[0].name;
-              }
-
-              return authGroupName;
-
-            }
-          },
         ],
         detail: (program: Program): Observable<Detail> => {
 
