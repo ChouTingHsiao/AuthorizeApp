@@ -59,11 +59,11 @@ const Buttons: Button[] = [
 ];
 
 const Menus: Menu[] = [
-    { id: '1', name: 'User', program: '1', buttons: ['1', '2', '3'] },
-    { id: '2', name: 'Role', program: '2', buttons: ['4', '5', '6'] },
-    { id: '3', name: 'Group', program: '3', buttons: ['7', '8', '9'] },
-    { id: '4', name: 'Program', program: '4', buttons: ['10', '11', '12'] },
-    { id: '5', name: 'Menu', program: '5', buttons: ['13', '14', '15'] },
+    { id: '1', name: 'User', program: '1' },
+    { id: '2', name: 'Role', program: '2' },
+    { id: '3', name: 'Group', program: '3' },
+    { id: '4', name: 'Program', program: '4' },
+    { id: '5', name: 'Menu', program: '5' },
 ];
 
 export { Users, Roles, Groups, GroupPrograms, Programs, Buttons, Menus };

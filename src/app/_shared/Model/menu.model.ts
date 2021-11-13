@@ -3,5 +3,5 @@ export interface Menu {
     name: string;
     linkTag?: string;
     program: string;
-    buttons: string[];
+    programName?: string;
 }

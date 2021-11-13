@@ -7,7 +7,7 @@ export interface Column {
     source?: () => Observable<any>;
     visible?: boolean;
     value?: string;
-    cell: any;
+    cell?: any;
 }
 
 export interface TableSort {

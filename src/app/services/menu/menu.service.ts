@@ -1,12 +1,14 @@
 import Dexie from 'dexie';
 import { Injectable } from '@angular/core';
 import { Menu } from '@shared/Model/menu.model';
+import { Program } from '@shared/Model/program.model';
 import { GroupProgram } from '@shared/Model/groupProgram.model';
 import { TableEnum } from '@shared/Enum/table.enum';
 import { OpenDB, GetAll, TableAdd, TableUpdate, TableDelete } from '@shared/Dexie/authorize.dexie';
 import { GroupProgramService } from '@services/groupProgram/groupProgram.service';
 import { Observable } from 'rxjs';
 import { clone } from '@shared/Method/object.method';
+import { Programs } from '@src/app/_shared/Dexie/authorize.data';
 
 @Injectable({
   providedIn: 'root'
@@ -22,31 +24,44 @@ export class MenuService {
   }
 
   getAll(): Observable<Menu[]> {
-
     return new Observable(subscriber => {
-
         GetAll(this.db, TableEnum.Menus).then( (menus: Menu[]) => {
 
-          const UserGroup: string = localStorage.getItem('UserGroup');
+          GetAll(this.db, TableEnum.Programs).then( (programs: Program[]) => {
 
-          this.groupProgramService.getByGroupId(UserGroup).subscribe( groupPrograms => {
+            const UserGroup: string = localStorage.getItem('UserGroup');
 
-            menus.forEach( menu => {
+            this.groupProgramService.getByGroupId(UserGroup).subscribe( groupPrograms => {
 
-              const LinkedProgram = groupPrograms.find( authGroupProgram => authGroupProgram.program === menu.program);
+              menus.forEach( menu => {
 
-              menu.linkTag = LinkedProgram ? LinkedProgram.linkTag : '/';
+                //Menu Link
+                const LinkedProgram = groupPrograms.find( authGroupProgram => authGroupProgram.program === menu.program);
+
+                menu.linkTag = LinkedProgram ? LinkedProgram.linkTag : '/';
+
+                //Menu Authorize Program
+                const authorizeProgram = programs.filter(x => x.id === menu.program);
+
+                const isNotAuthEmpty = menu.program !== '';
+
+                const isAuthFound = authorizeProgram !== undefined && authorizeProgram.length > 0;
+
+                if (isNotAuthEmpty && isAuthFound) {
+                  menu.programName = authorizeProgram[0].name;
+                }
+
+              });
+
+              subscriber.next(menus);
+
+              subscriber.complete();
 
             });
-
-            subscriber.next(menus);
-
-            subscriber.complete();
 
           });
 
         });
-
     });
 
   }

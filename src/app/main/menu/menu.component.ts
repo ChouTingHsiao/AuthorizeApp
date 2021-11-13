@@ -49,19 +49,17 @@ export class MenuComponent implements OnInit {
             columnDef: 'id',
             type: ColumnEnum.string,
             selector: ColumnEnum.label,
-            visible: false,
-            cell: (menuElement: Menu) => `${ menuElement.id }`
+            visible: false
           },
           {
             header: 'Name',
             columnDef: 'name',
             type: ColumnEnum.string,
-            selector: ColumnEnum.input,
-            cell: (menuElement: Menu) => `${ menuElement.name }`
+            selector: ColumnEnum.input
           },
           {
             header: 'Program',
-            columnDef: 'program',
+            columnDef: 'programName',
             type: ColumnEnum.string,
             selector: ColumnEnum.select,
             source: (): Observable<any> => {
@@ -69,59 +67,8 @@ export class MenuComponent implements OnInit {
               this.store.dispatch( new Read<Program>(TableEnum.Programs) );
 
               return this.store.select(getProgramsState);
-            },
-            cell: (menuElement: Menu): string => {
-
-                let authProgramName = '';
-
-                const authProgram = programs.filter(x => x.id ===  menuElement.program);
-
-                const isNotAuthEmpty = menuElement.program !== '';
-
-                const isAuthFound = authProgram !== undefined && authProgram.length > 0;
-
-                if (isNotAuthEmpty && isAuthFound) {
-                  authProgramName = authProgram[0].name;
-                }
-
-                return authProgramName;
-
             }
-          },
-          {
-            header: 'Button',
-            columnDef: 'buttons',
-            type: ColumnEnum.string,
-            selector: ColumnEnum.multiselect,
-            source: (): Observable<any> => {
-
-              return this.store.select(getButtonsState);
-
-            },
-            cell: (menuElement: Menu) => {
-
-              const programButtons = programs.filter(x => x.id === menuElement.program);
-
-              if (programButtons.length > 0 &&
-                  programButtons[0].buttons &&
-                  programButtons[0].buttons.length > 0) {
-
-                return `${
-                  menuElement.buttons.map(x => {
-
-                    const button = programButtons[0].buttons.filter(y => y.id === x);
-
-                    return  button === undefined ? '' :  button[0].remark;
-
-                  }).join(',')
-                }`;
-
-              }
-
-              return '';
-
-            }
-          },
+          }
         ],
         read: (): Observable<any> => {
 

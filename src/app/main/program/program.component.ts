@@ -51,29 +51,25 @@ export class ProgramComponent implements OnInit {
             columnDef: 'id',
             type: ColumnEnum.string,
             selector: ColumnEnum.label,
-            visible: false,
-            cell: (groupElement: Program) => `${ groupElement.id }`,
+            visible: false
           },
           {
             header: 'Name',
             columnDef: 'name',
             type: ColumnEnum.string,
-            selector: ColumnEnum.input,
-            cell: (groupElement: Program) => `${ groupElement.name }`
+            selector: ColumnEnum.input
           },
           {
             header: 'Remark',
             columnDef: 'remark',
             type: ColumnEnum.string,
-            selector: ColumnEnum.input,
-            cell: (groupElement: Program) => `${ groupElement.remark }`
+            selector: ColumnEnum.input
           },
           {
             header: 'LinkTag',
             columnDef: 'linkTag',
             type: ColumnEnum.string,
-            selector: ColumnEnum.input,
-            cell: (groupElement: Program) => `${ groupElement.linkTag }`
+            selector: ColumnEnum.input
           },
         ],
         detail: (program: Program): Observable<Detail> => {

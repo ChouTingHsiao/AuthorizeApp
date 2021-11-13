@@ -1,6 +1,7 @@
 import Dexie from 'dexie';
 import { Injectable } from '@angular/core';
 import { User } from '@shared/Model/user.model';
+import { Role } from '@shared/Model/role.model';
 import { TableEnum } from '@shared/Enum/table.enum';
 import { OpenDB, GetAll, TableAdd, TableUpdate, TableDelete } from '@shared/Dexie/authorize.dexie';
 import { Observable } from 'rxjs';
@@ -20,19 +21,25 @@ export class UserService {
   }
 
   getAll(): Observable<User[]> {
-
     return new Observable(subscriber => {
 
       GetAll(this.db, TableEnum.Users).then( (users: User[]) => {
 
-        subscriber.next(users);
+        GetAll(this.db, TableEnum.Roles).then( (roles: Role[]) => {
 
-        subscriber.complete();
+          users.forEach((x) => {
+            x.roleName = roles.filter(y => y.id ===  x.role)[0].name;
+          });
+
+          subscriber.next(users);
+
+          subscriber.complete();
+
+        });
 
       });
 
     });
-
   }
 
   create(user: User): Observable<User> {

@@ -41,22 +41,19 @@ export class RoleComponent implements OnInit {
             columnDef: 'id',
             type: ColumnEnum.string,
             selector: ColumnEnum.label,
-            visible: false,
-            cell: (roleElement: Role) => `${ roleElement.id }`
+            visible: false
           },
           {
             header: 'Name',
             columnDef: 'name',
             type: ColumnEnum.string,
-            selector: ColumnEnum.input,
-            cell: (roleElement: Role) => `${ roleElement.name }`
+            selector: ColumnEnum.input
           },
           {
             header: 'Remark',
             columnDef: 'remark',
             type: ColumnEnum.string,
-            selector: ColumnEnum.input,
-            cell: (roleElement: Role) => `${ roleElement.remark }`
+            selector: ColumnEnum.input
           },
         ],
         read: (): Observable<any> => {

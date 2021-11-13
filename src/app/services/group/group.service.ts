@@ -1,6 +1,7 @@
 import Dexie from 'dexie';
 import { Injectable } from '@angular/core';
 import { Group } from '@shared/Model/group.model';
+import { Role } from '@shared/Model/role.model';
 import { TableEnum } from '@shared/Enum/table.enum';
 import { OpenDB, GetAll, TableAdd, TableUpdate, TableDelete } from '@shared/Dexie/authorize.dexie';
 import { RoleService } from '@services/role/role.service';
@@ -25,15 +26,25 @@ export class GroupService {
     return new Observable(subscriber => {
 
         GetAll(this.db, TableEnum.Groups).then( (groups: Group[]) => {
+          
+          GetAll(this.db, TableEnum.Roles).then( (roles: Role[]) => {
 
-          subscriber.next(groups);
+            groups.forEach( group => {
+              group.rolesName = group.roles.map(x => {
+                const role = roles.filter(y => y.id === x)[0];
+                return  role ? role.name : '';
+              }).join(',');
+            });
 
-          subscriber.complete();
+            subscriber.next(groups);
+
+            subscriber.complete();
+
+          });
 
         });
 
     });
-
   }
 
   getByAuth(): Observable<Group[]> {

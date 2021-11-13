@@ -57,19 +57,17 @@ export class GroupComponent implements OnInit {
             columnDef: 'id',
             type: ColumnEnum.string,
             selector: ColumnEnum.label,
-            visible: false,
-            cell: (groupElement: Group) => `${ groupElement.id }`
+            visible: false
           },
           {
             header: 'Name',
             columnDef: 'name',
             type: ColumnEnum.string,
-            selector: ColumnEnum.input,
-            cell: (groupElement: Group) => `${ groupElement.name }`
+            selector: ColumnEnum.input
           },
           {
             header: 'Roles',
-            columnDef: 'roles',
+            columnDef: 'rolesName',
             type: ColumnEnum.string,
             selector: ColumnEnum.multiselect,
             source: (): Observable<any> => {
@@ -77,13 +75,7 @@ export class GroupComponent implements OnInit {
               this.store.dispatch( new Read<Role>(TableEnum.Roles) );
 
               return this.store.select(getRolesState);
-            },
-            cell: (groupElement: Group) => `${
-              groupElement.roles.map(x => {
-                const role = roles.filter(y => y.id === x)[0];
-                return  role ? role.name : '';
-              }).join(',')
-            }`
+            }
           },
         ],
         detail: (group: Group): Observable<Detail> => {

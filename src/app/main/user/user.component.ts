@@ -48,26 +48,23 @@ export class UserComponent implements OnInit {
             columnDef: 'id',
             type: ColumnEnum.string,
             selector: ColumnEnum.label,
-            visible: false,
-            cell: (userElement: User) => `${ userElement.id }`
+            visible: false
           },
           {
             header: 'Name',
             columnDef: 'name',
             type: ColumnEnum.string,
-            selector: ColumnEnum.input,
-            cell: (userElement: User) => `${ userElement.name }`
+            selector: ColumnEnum.input
           },
           {
             header: 'Password',
             columnDef: 'password',
             type: ColumnEnum.string,
-            selector: ColumnEnum.input,
-            cell: (userElement: User) => `${ userElement.password }`
+            selector: ColumnEnum.input
           },
           {
             header: 'Role',
-            columnDef: 'role',
+            columnDef: 'roleName',
             type: ColumnEnum.string,
             selector: ColumnEnum.select,
             source: (): Observable<any> => {
@@ -75,11 +72,7 @@ export class UserComponent implements OnInit {
               this.store.dispatch( new Read<Role>(TableEnum.Roles) );
 
               return this.store.select(getRolesState);
-            },
-            cell: (userElement: User) => `${
-              userElement.role === '' ? '' :
-              roles.filter(x => x.id ===  userElement.role)[0].name
-            }`
+            }
           },
         ],
         read: (): Observable<any> => {
