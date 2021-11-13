@@ -6,13 +6,11 @@ import { DialogEnum } from '@shared/Enum/dialog.enum';
 import { ColumnEnum } from '@shared/Enum/column.enum';
 import { TableEnum } from '@shared/Enum/table.enum';
 import { Grid, Detail } from '@shared/Model/table.model';
-import { Group } from '@shared/Model/group.model';
 import { Program } from '@shared/Model/program.model';
 import { Button } from '@shared/Model/button.model';
-import { GroupService } from '@services/group/group.service';
 import { Read, Create, Edit, Delete} from '@shared/Ngrx/Actions/maintain.action';
 import { Observable } from 'rxjs';
-import { getGroupsState, getButtonsState, getProgramsState } from '@shared/Ngrx/Selectors/maintain.selectors';
+import { getButtonsState, getProgramsState } from '@shared/Ngrx/Selectors/maintain.selectors';
 
 @Component({
   selector: 'app-program',
@@ -27,18 +25,15 @@ export class ProgramComponent implements OnInit {
 
   myGrid: Observable<Grid>;
 
-  constructor(private store: Store,
-              private groupService: GroupService) { }
+  constructor(private store: Store) { }
 
   ngOnInit() {
 
-    this.groupService.getAll().subscribe((groups) => {
-      this.loadGrid(groups);
-    });
+    this.loadGrid();
 
   }
 
-  loadGrid(groups: Group[]) {
+  loadGrid() {
 
     this.myGrid = new Observable(subscriber => {
 
@@ -86,21 +81,18 @@ export class ProgramComponent implements OnInit {
                   type: ColumnEnum.string,
                   selector: ColumnEnum.label,
                   visible: false,
-                  cell: (buttonElement: Button) => `${ buttonElement.id }`
                 },
                 {
                   header: 'Name',
                   columnDef: 'name',
                   type: ColumnEnum.string,
                   selector: ColumnEnum.input,
-                  cell: (buttonElement: Button) => `${ buttonElement.name }`
                 },
                 {
                   header: 'Remark',
                   columnDef: 'remark',
                   type: ColumnEnum.string,
                   selector: ColumnEnum.input,
-                  cell: (buttonElement: Button) => `${ buttonElement.remark }`
                 },
               ],
               read: (): Observable<any> => {

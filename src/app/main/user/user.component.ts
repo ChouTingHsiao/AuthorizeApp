@@ -8,7 +8,6 @@ import { TableEnum } from '@shared/Enum/table.enum';
 import { Grid } from '@shared/Model/table.model';
 import { User } from '@shared/Model/user.model';
 import { Role } from '@shared/Model/role.model';
-import { RoleService } from '@services/role/role.service';
 import { Read, Create, Edit, Delete} from '@shared/Ngrx/Actions/maintain.action';
 import { Observable } from 'rxjs';
 import { getRolesState, getUsersState } from '@shared/Ngrx/Selectors/maintain.selectors';
@@ -24,18 +23,15 @@ export class UserComponent implements OnInit {
 
   myGrid: Observable<Grid>;
 
-  constructor(private store: Store,
-              private roleService: RoleService) { }
+  constructor(private store: Store) { }
 
   ngOnInit() {
 
-    this.roleService.getAll().subscribe((roles) => {
-      this.loadGrid(roles);
-    });
+    this.loadGrid();
 
   }
 
-  loadGrid(roles: Role[]) {
+  loadGrid() {
 
     this.myGrid = new Observable(subscriber => {
 

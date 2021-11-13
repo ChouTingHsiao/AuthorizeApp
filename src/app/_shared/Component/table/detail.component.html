@@ -20,7 +20,7 @@
 
     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ column.header }}</th>
 
-    <td mat-cell *matCellDef="let element">{{ column.cell(element) }}</td>
+    <td mat-cell *matCellDef="let element">{{column.displayName ? element[column.displayName] : element[column.columnDef]}}</td>
 
    </ng-container>
 

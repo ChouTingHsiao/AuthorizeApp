@@ -36,15 +36,11 @@ export class GroupComponent implements OnInit {
 
   ngOnInit() {
 
-    this.roleService.getAll().subscribe((roles) => {
-      this.programService.getAll().subscribe((programs) => {
-        this.loadGrid(roles, programs);
-      });
-    });
+    this.loadGrid();
 
   }
 
-  loadGrid(roles: Role[], programs: Program[]) {
+  loadGrid() {
 
     this.myGrid = new Observable(subscriber => {
 
@@ -80,7 +76,6 @@ export class GroupComponent implements OnInit {
           },
         ],
         detail: (group: Group): Observable<Detail> => {
-
           return new Observable(detailSubscriber => {
 
             const detail = {
@@ -93,18 +88,17 @@ export class GroupComponent implements OnInit {
                   type: ColumnEnum.string,
                   selector: ColumnEnum.label,
                   visible: false,
-                  cell: (groupProgramElement: GroupProgram) => `${ groupProgramElement.id }`
                 },
                 {
                   header: 'Name',
                   columnDef: 'name',
                   type: ColumnEnum.string,
                   selector: ColumnEnum.input,
-                  cell: (groupProgramElement: GroupProgram) => `${ groupProgramElement.name }`
                 },
                 {
                   header: 'Program',
                   columnDef: 'program',
+                  displayName : 'programName',
                   type: ColumnEnum.string,
                   selector: ColumnEnum.select,
                   source: (): Observable<any> => {
@@ -112,57 +106,17 @@ export class GroupComponent implements OnInit {
                     this.store.dispatch( new Read<Program>(TableEnum.Programs) );
 
                     return this.store.select(getProgramsState);
-                  },
-                  cell: (groupProgramElement: GroupProgram): string => {
-
-                      let authProgramName = '';
-
-                      const authProgram = programs.filter(x => x.id ===  groupProgramElement.program);
-
-                      const isNotAuthEmpty = groupProgramElement.program !== '';
-
-                      const isAuthFound = authProgram !== undefined && authProgram.length > 0;
-
-                      if (isNotAuthEmpty && isAuthFound) {
-                        authProgramName = authProgram[0].name;
-                      }
-
-                      return authProgramName;
-
                   }
                 },
                 {
                   header: 'Button',
                   columnDef: 'buttons',
+                  displayName : 'buttonsName',
                   type: ColumnEnum.string,
                   selector: ColumnEnum.multiselect,
                   source: (): Observable<any> => {
 
                     return this.store.select(getButtonsState);
-
-                  },
-                  cell: (groupProgramElement: GroupProgram) => {
-
-                    const programButtons = programs.filter(x => x.id === groupProgramElement.program);
-
-                    if (programButtons.length > 0 &&
-                        programButtons[0].buttons &&
-                        programButtons[0].buttons.length > 0) {
-
-                      return `${
-                        groupProgramElement.buttons.map(x => {
-
-                          const button = programButtons[0].buttons.filter(y => y.id === x);
-
-                          return  button === undefined ? '' :  button[0].remark;
-
-                        }).join(',')
-                      }`;
-
-                    }
-
-                    return '';
-
                   }
                 },
               ],
@@ -281,7 +235,6 @@ export class GroupComponent implements OnInit {
             detailSubscriber.complete();
 
           });
-
         },
         read: (): Observable<any> => {
 

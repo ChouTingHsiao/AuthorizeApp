@@ -23,37 +23,98 @@ export class GroupProgramService {
   }
 
   getAll(): Observable<GroupProgram[]> {
-
     return new Observable(subscriber => {
 
       GetAll(this.db, TableEnum.GroupPrograms).then( (groupPrograms: GroupProgram[]) => {
 
-        subscriber.next(groupPrograms);
+        GetAll(this.db, TableEnum.Programs).then( (programs: Program[]) => {
 
-        subscriber.complete();
+          groupPrograms.forEach( group => {
+            
+            const authProgram = programs.filter(x => x.id ===  group.program);
+
+            const isNotAuthEmpty = group.program !== '';
+
+            const isAuthFound = authProgram !== undefined && authProgram.length > 0;
+
+            if (isNotAuthEmpty && isAuthFound) {
+              group.programName = authProgram[0].name;
+            }
+
+          });
+
+          subscriber.next(groupPrograms);
+
+          subscriber.complete();
+
+        });
 
       });
 
     });
-
   }
 
   getByGroupId(groupId: string): Observable<GroupProgram[]> {
-
     return new Observable(subscriber => {
 
       GetAll(this.db, TableEnum.GroupPrograms).then( (groupPrograms: GroupProgram[])  => {
 
-        const groupProgram = groupPrograms.filter( authGroupProgram => authGroupProgram.group === groupId);
+        GetAll(this.db, TableEnum.Programs).then( (programs: Program[]) => {
 
-        subscriber.next(groupProgram);
+            GetAll(this.db, TableEnum.Buttons).then( (buttons: Button[]) => {
+  
+              const groupProgram = groupPrograms.filter( authGroupProgram => authGroupProgram.group === groupId);
 
-        subscriber.complete();
+              //群組程式
+              groupProgram.forEach( group => {
+                
+                const authProgram = programs.filter(x => x.id ===  group.program);
+
+                authProgram.forEach( program => {
+  
+                  const LinkedButtons = buttons.filter( button => button.program === program.id);
+    
+                  program.buttons = LinkedButtons;
+    
+                });
+    
+                const isNotAuthEmpty = group.program !== '';
+    
+                const isAuthFound = authProgram !== undefined && authProgram.length > 0;
+    
+                if (isNotAuthEmpty && isAuthFound) {
+                  group.programName = authProgram[0].name;
+                }
+
+                if (authProgram.length > 0 &&
+                    authProgram[0].buttons &&
+                    authProgram[0].buttons.length > 0) {
+
+                    group.buttonsName = group.buttons.map(x => {
+
+                      const button = authProgram[0].buttons.filter(y => y.id === x);
+
+                      return  button === undefined ? '' :  button[0].remark;
+
+                    }).join(',');
+
+                    console.log(group.buttonsName);
+
+                }
+    
+              });
+              
+              subscriber.next(groupProgram);
+
+              subscriber.complete();
+
+            });
+
+        });
 
       });
 
     });
-
   }
 
   getByLink(linkName: string): Observable<Button[]> {

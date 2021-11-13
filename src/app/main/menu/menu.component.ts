@@ -8,11 +8,10 @@ import { TableEnum } from '@shared/Enum/table.enum';
 import { Grid } from '@shared/Model/table.model';
 import { Program } from '@shared/Model/program.model';
 import { Menu } from '@shared/Model/menu.model';
-import { ProgramService } from '@services/program/program.service';
 import { Read, Create, Edit, Delete} from '@shared/Ngrx/Actions/maintain.action';
 import { Observable } from 'rxjs';
 import { Button } from '@shared/Model/button.model';
-import { getProgramsState, getButtonsState, getMenusState } from '@shared/Ngrx/Selectors/maintain.selectors';
+import { getProgramsState, getMenusState } from '@shared/Ngrx/Selectors/maintain.selectors';
 
 @Component({
   selector: 'app-menu',
@@ -25,18 +24,15 @@ export class MenuComponent implements OnInit {
 
   myGrid: Observable<Grid>;
 
-  constructor(private store: Store,
-              private programService: ProgramService) { }
+  constructor(private store: Store) { }
 
   ngOnInit() {
 
-    this.programService.getAll().subscribe((programs) => {
-      this.loadGrid(programs);
-    });
+    this.loadGrid();
 
   }
 
-  loadGrid(programs: Program[]) {
+  loadGrid() {
 
     this.myGrid = new Observable(subscriber => {
 
