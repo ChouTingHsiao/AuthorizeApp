@@ -63,7 +63,7 @@ export class GroupComponent implements OnInit {
           },
           {
             header: 'Roles',
-            columnDef: 'roles ',
+            columnDef: 'roles',
             displayName: 'rolesName',
             type: ColumnEnum.string,
             selector: ColumnEnum.multiselect,
