@@ -26,7 +26,7 @@ export class GroupService {
     return new Observable(subscriber => {
 
         GetAll(this.db, TableEnum.Groups).then( (groups: Group[]) => {
-          
+
           GetAll(this.db, TableEnum.Roles).then( (roles: Role[]) => {
 
             groups.forEach( group => {

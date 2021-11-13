@@ -35,12 +35,12 @@ export class MenuService {
 
               menus.forEach( menu => {
 
-                //Menu Link
+                // Menu Link
                 const LinkedProgram = groupPrograms.find( authGroupProgram => authGroupProgram.program === menu.program);
 
                 menu.linkTag = LinkedProgram ? LinkedProgram.linkTag : '/';
 
-                //Menu Authorize Program
+                // Menu Authorize Program
                 const authorizeProgram = programs.filter(x => x.id === menu.program);
 
                 const isNotAuthEmpty = menu.program !== '';

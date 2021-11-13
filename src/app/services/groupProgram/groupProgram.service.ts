@@ -30,7 +30,7 @@ export class GroupProgramService {
         GetAll(this.db, TableEnum.Programs).then( (programs: Program[]) => {
 
           groupPrograms.forEach( group => {
-            
+
             const authProgram = programs.filter(x => x.id ===  group.program);
 
             const isNotAuthEmpty = group.program !== '';
@@ -62,26 +62,26 @@ export class GroupProgramService {
         GetAll(this.db, TableEnum.Programs).then( (programs: Program[]) => {
 
             GetAll(this.db, TableEnum.Buttons).then( (buttons: Button[]) => {
-  
+
               const groupProgram = groupPrograms.filter( authGroupProgram => authGroupProgram.group === groupId);
 
-              //群組程式
+              // 群組程式
               groupProgram.forEach( group => {
-                
+
                 const authProgram = programs.filter(x => x.id ===  group.program);
 
                 authProgram.forEach( program => {
-  
+
                   const LinkedButtons = buttons.filter( button => button.program === program.id);
-    
+
                   program.buttons = LinkedButtons;
-    
+
                 });
-    
+
                 const isNotAuthEmpty = group.program !== '';
-    
+
                 const isAuthFound = authProgram !== undefined && authProgram.length > 0;
-    
+
                 if (isNotAuthEmpty && isAuthFound) {
                   group.programName = authProgram[0].name;
                 }
@@ -101,9 +101,9 @@ export class GroupProgramService {
                     console.log(group.buttonsName);
 
                 }
-    
+
               });
-              
+
               subscriber.next(groupProgram);
 
               subscriber.complete();
