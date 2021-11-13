@@ -64,7 +64,8 @@ export class UserComponent implements OnInit {
           },
           {
             header: 'Role',
-            columnDef: 'roleName',
+            columnDef: 'role',
+            displayName: 'roleName',
             type: ColumnEnum.string,
             selector: ColumnEnum.select,
             source: (): Observable<any> => {

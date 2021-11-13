@@ -2,6 +2,7 @@ import { Observable } from 'rxjs';
 export interface Column {
     header: string;
     columnDef: string;
+    displayName?: string;
     type: string;
     selector: string;
     source?: () => Observable<any>;

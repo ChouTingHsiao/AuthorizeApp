@@ -59,7 +59,8 @@ export class MenuComponent implements OnInit {
           },
           {
             header: 'Program',
-            columnDef: 'programName',
+            columnDef: 'program',
+            displayName: 'programName',
             type: ColumnEnum.string,
             selector: ColumnEnum.select,
             source: (): Observable<any> => {
