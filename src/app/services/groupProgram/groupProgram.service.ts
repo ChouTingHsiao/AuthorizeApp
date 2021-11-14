@@ -173,7 +173,7 @@ export class GroupProgramService {
           const isAuthFound = authProgram !== undefined && authProgram.length > 0;
 
           if (isNotAuthEmpty && isAuthFound) {
-            
+
             cloneGroupProgram.programName = authProgram[0].name;
           }
 
@@ -227,7 +227,7 @@ export class GroupProgramService {
           const isAuthFound = authProgram !== undefined && authProgram.length > 0;
 
           if (isNotAuthEmpty && isAuthFound) {
-            
+
             cloneGroupProgram.programName = authProgram[0].name;
           }
 
