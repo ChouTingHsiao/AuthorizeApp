@@ -4,7 +4,6 @@ import { Group } from '@shared/Model/group.model';
 import { Role } from '@shared/Model/role.model';
 import { TableEnum } from '@shared/Enum/table.enum';
 import { OpenDB, GetAll, TableAdd, TableUpdate, TableDelete } from '@shared/Dexie/authorize.dexie';
-import { RoleService } from '@services/role/role.service';
 import { Observable } from 'rxjs';
 import { clone } from '@shared/Method/object.method';
 
@@ -15,7 +14,7 @@ export class GroupService {
 
   private db: Promise<Dexie>;
 
-  constructor(private roleService: RoleService) {
+  constructor() {
 
     this.db = OpenDB();
 
