@@ -17,37 +17,33 @@ export class GroupService {
   constructor() {
 
     this.db = OpenDB();
-
   }
 
   getAll(): Observable<Group[]> {
-
     return new Observable(subscriber => {
 
-        GetAll(this.db, TableEnum.Groups).then( (groups: Group[]) => {
+      GetAll(this.db, TableEnum.Groups).then( (groups: Group[]) => {
 
-          GetAll(this.db, TableEnum.Roles).then( (roles: Role[]) => {
+        GetAll(this.db, TableEnum.Roles).then( (roles: Role[]) => {
 
-            groups.forEach( group => {
-              group.rolesName = group.roles.map(x => {
-                const role = roles.filter(y => y.id === x)[0];
-                return  role ? role.name : '';
-              }).join(',');
-            });
-
-            subscriber.next(groups);
-
-            subscriber.complete();
-
+          groups.forEach( group => {
+            group.rolesName = group.roles.map(x => {
+              const role = roles.filter(y => y.id === x)[0];
+              return  role ? role.name : '';
+            }).join(',');
           });
 
+          subscriber.next(groups);
+
+          subscriber.complete();
         });
+
+      });
 
     });
   }
 
   getByAuth(): Observable<Group[]> {
-
     return new Observable(subscriber => {
 
       this.getAll().subscribe( (groups: Group[]) => {
@@ -59,53 +55,78 @@ export class GroupService {
         subscriber.next(AuthGroup);
 
         subscriber.complete();
-
       });
 
     });
-
   }
 
   create(group: Group): Observable<Group> {
-
     return new Observable(subscriber => {
 
-      const cloneGroup = clone(group);
+      GetAll(this.db, TableEnum.Roles).then( (roles: Role[]) => {
 
-      if (!cloneGroup.roles) {
-        cloneGroup.roles = [''];
-      }
+        const cloneGroup = clone(group) as Group;
 
-      TableAdd(this.db, TableEnum.Groups, cloneGroup).then(() => {
+        if (!cloneGroup.roles) {
 
-        subscriber.next(cloneGroup);
+          cloneGroup.roles = [''];
 
-        subscriber.complete();
+          cloneGroup.rolesName = '';
+        }
+        else{
+
+          cloneGroup.rolesName = cloneGroup.roles.map(x => {
+            const role = roles.filter(y => y.id === x)[0];
+            return  role ? role.name : '';
+          }).join(',');
+        }
+
+        TableAdd(this.db, TableEnum.Groups, cloneGroup).then(() => {
+
+          subscriber.next(cloneGroup);
+
+          subscriber.complete();
+        });
 
       });
 
     });
-
   }
 
   update(group: Group): Observable<Group> {
-
     return new Observable(subscriber => {
 
-      TableUpdate(this.db, TableEnum.Groups, group.id, group).then(() => {
+      GetAll(this.db, TableEnum.Roles).then( (roles: Role[]) => {
 
-        subscriber.next(group);
+        const cloneGroup = clone(group) as Group;
 
-        subscriber.complete();
+        if (!cloneGroup.roles) {
+
+          cloneGroup.roles = [''];
+
+          cloneGroup.rolesName = '';
+        }
+        else{
+
+          cloneGroup.rolesName = cloneGroup.roles.map(x => {
+            const role = roles.filter(y => y.id === x)[0];
+            return  role ? role.name : '';
+          }).join(',');
+        }
+
+        TableUpdate(this.db, TableEnum.Groups, group.id, cloneGroup).then(() => {
+
+          subscriber.next(cloneGroup);
+
+          subscriber.complete();
+        });
 
       });
 
     });
-
   }
 
   delete(group: Group): Observable<Group> {
-
     return new Observable(subscriber => {
 
       TableDelete(this.db, TableEnum.Groups, group.id).then(() => {
@@ -113,11 +134,9 @@ export class GroupService {
         subscriber.next(group);
 
         subscriber.complete();
-
       });
 
     });
-
   }
 
 }

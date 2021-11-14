@@ -17,7 +17,6 @@ export class UserService {
   constructor() {
 
     this.db = OpenDB();
-
   }
 
   getAll(): Observable<User[]> {
@@ -34,7 +33,6 @@ export class UserService {
           subscriber.next(users);
 
           subscriber.complete();
-
         });
 
       });
@@ -43,47 +41,66 @@ export class UserService {
   }
 
   create(user: User): Observable<User> {
-
     return new Observable(subscriber => {
 
-      const cloneUser = clone(user);
+      GetAll(this.db, TableEnum.Roles).then( (roles: User[]) => {
 
-      if (!cloneUser.role) {
+        const cloneUser = clone(user) as User;
 
-        cloneUser.role = '';
+        if (!cloneUser.role) {
 
-      }
+          cloneUser.role = '';
 
-      TableAdd(this.db, TableEnum.Users, cloneUser).then(() => {
+          cloneUser.roleName = '';
+        }
+        else{
 
-        subscriber.next(cloneUser);
+          cloneUser.roleName = roles.filter(x => x.id ===  cloneUser.role)[0].name;
+        }
 
-        subscriber.complete();
+        TableAdd(this.db, TableEnum.Users, cloneUser).then(() => {
+
+          subscriber.next(cloneUser);
+
+          subscriber.complete();
+        });
 
       });
 
     });
-
   }
 
   update(user: User): Observable<User> {
-
     return new Observable(subscriber => {
 
-      TableUpdate(this.db, TableEnum.Users, user.id, user).then(() => {
+      GetAll(this.db, TableEnum.Roles).then( (roles: Role[]) => {
 
-        subscriber.next(user);
+        const cloneUser = clone(user) as User;
 
-        subscriber.complete();
+        if (!cloneUser.role) {
+
+          cloneUser.role = '';
+
+          cloneUser.roleName = '';
+        }
+        else{
+
+          cloneUser.roleName = roles.filter(x => x.id ===  cloneUser.role)[0].name;
+        }
+
+        TableUpdate(this.db, TableEnum.Users, user.id, cloneUser).then(() => {
+
+          subscriber.next(cloneUser);
+
+          subscriber.complete();
+        });
 
       });
 
     });
-
   }
 
   delete(user: User): Observable<User> {
-
     return new Observable(subscriber => {
 
       TableDelete(this.db, TableEnum.Users, user.id).then(() => {
@@ -91,11 +108,9 @@ export class UserService {
         subscriber.next(user);
 
         subscriber.complete();
-
       });
 
     });
-
   }
 
 }

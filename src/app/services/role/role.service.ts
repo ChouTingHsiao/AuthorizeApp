@@ -16,11 +16,9 @@ export class RoleService {
   constructor() {
 
     this.db = OpenDB();
-
   }
 
   getAll(): Observable<Role[]> {
-
     return new Observable(subscriber => {
 
         GetAll(this.db, TableEnum.Roles).then( (roles: Role[]) => {
@@ -28,53 +26,42 @@ export class RoleService {
           subscriber.next(roles);
 
           subscriber.complete();
-
         });
 
     });
-
   }
 
   getByRoleId(roleId: string): Observable<Role> {
-
     return new Observable(subscriber => {
 
         GetAll(this.db, TableEnum.Roles).then( (roles: Role[]) => {
 
           const authRole = roles.filter(x => x.id === roleId)[0];
 
-          console.log(authRole);
-
           subscriber.next(authRole);
 
           subscriber.complete();
-
         });
 
     });
-
   }
 
   create(role: Role): Observable<Role> {
-
     return new Observable(subscriber => {
 
-      const cloneRole = clone(role);
+      const cloneRole = clone(role)  as Role;
 
       TableAdd(this.db, TableEnum.Roles, cloneRole).then(() => {
 
         subscriber.next(cloneRole);
 
         subscriber.complete();
-
       });
 
     });
-
   }
 
   update(role: Role): Observable<Role> {
-
     return new Observable(subscriber => {
 
       TableUpdate(this.db, TableEnum.Roles, role.id, role).then(() => {
@@ -82,15 +69,12 @@ export class RoleService {
         subscriber.next(role);
 
         subscriber.complete();
-
       });
 
     });
-
   }
 
   delete(role: Role): Observable<Role> {
-
     return new Observable(subscriber => {
 
       TableDelete(this.db, TableEnum.Roles, role.id).then(() => {
@@ -98,11 +82,9 @@ export class RoleService {
         subscriber.next(role);
 
         subscriber.complete();
-
       });
 
     });
-
   }
 
 }

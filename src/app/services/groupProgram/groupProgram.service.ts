@@ -19,7 +19,6 @@ export class GroupProgramService {
   constructor(private programService: ProgramService) {
 
     this.db = OpenDB();
-
   }
 
   getAll(): Observable<GroupProgram[]> {
@@ -46,7 +45,6 @@ export class GroupProgramService {
           subscriber.next(groupPrograms);
 
           subscriber.complete();
-
         });
 
       });
@@ -83,6 +81,7 @@ export class GroupProgramService {
                 const isAuthFound = authProgram !== undefined && authProgram.length > 0;
 
                 if (isNotAuthEmpty && isAuthFound) {
+
                   group.programName = authProgram[0].name;
                 }
 
@@ -97,9 +96,6 @@ export class GroupProgramService {
                       return  button === undefined ? '' :  button[0].remark;
 
                     }).join(',');
-
-                    console.log(group.buttonsName);
-
                 }
 
               });
@@ -107,7 +103,6 @@ export class GroupProgramService {
               subscriber.next(groupProgram);
 
               subscriber.complete();
-
             });
 
         });
@@ -118,7 +113,6 @@ export class GroupProgramService {
   }
 
   getByLink(linkName: string): Observable<Button[]> {
-
     return new Observable(subscriber => {
 
       const UserGroup: string = localStorage.getItem('UserGroup');
@@ -142,7 +136,6 @@ export class GroupProgramService {
             subscriber.next(linkProgram.buttons);
 
             subscriber.complete();
-
           });
 
         } else {
@@ -150,51 +143,122 @@ export class GroupProgramService {
           subscriber.next(null);
 
           subscriber.complete();
-
         }
 
       });
 
     });
-
   }
 
   create(groupProgram: GroupProgram): Observable<GroupProgram> {
-
     return new Observable(subscriber => {
 
-      const cloneGroupProgram = clone(groupProgram);
+      GetAll(this.db, TableEnum.Programs).then( (programs: Program[]) => {
 
-      TableAdd(this.db, TableEnum.GroupPrograms, cloneGroupProgram).then(() => {
+        GetAll(this.db, TableEnum.Buttons).then( (buttons: Button[]) => {
 
-        subscriber.next(cloneGroupProgram);
+          const cloneGroupProgram = clone(groupProgram) as GroupProgram;
 
-        subscriber.complete();
+          const authProgram = programs.filter(x => x.id ===  cloneGroupProgram.program);
+
+          authProgram.forEach( program => {
+
+            const LinkedButtons = buttons.filter( button => button.program === program.id);
+
+            program.buttons = LinkedButtons;
+          });
+
+          const isNotAuthEmpty = cloneGroupProgram.program !== '';
+
+          const isAuthFound = authProgram !== undefined && authProgram.length > 0;
+
+          if (isNotAuthEmpty && isAuthFound) {
+            
+            cloneGroupProgram.programName = authProgram[0].name;
+          }
+
+          if (authProgram.length > 0 &&
+              authProgram[0].buttons &&
+              authProgram[0].buttons.length > 0) {
+
+                cloneGroupProgram.buttonsName = cloneGroupProgram.buttons.map(x => {
+
+                  const button = authProgram[0].buttons.filter(y => y.id === x);
+
+                  return  button === undefined ? '' :  button[0].remark;
+
+                }).join(',');
+          }
+
+          TableAdd(this.db, TableEnum.GroupPrograms, cloneGroupProgram).then(() => {
+
+            subscriber.next(cloneGroupProgram);
+
+            subscriber.complete();
+          });
+
+        });
 
       });
 
     });
-
   }
 
   update(groupProgram: GroupProgram): Observable<GroupProgram> {
-
     return new Observable(subscriber => {
 
-      TableUpdate(this.db, TableEnum.GroupPrograms, groupProgram.id, groupProgram).then(() => {
+      GetAll(this.db, TableEnum.Programs).then( (programs: Program[]) => {
 
-        subscriber.next(groupProgram);
+        GetAll(this.db, TableEnum.Buttons).then( (buttons: Button[]) => {
 
-        subscriber.complete();
+          const cloneGroupProgram = clone(groupProgram) as GroupProgram;
+
+          const authProgram = programs.filter(x => x.id ===  cloneGroupProgram.program);
+
+          authProgram.forEach( program => {
+
+            const LinkedButtons = buttons.filter( button => button.program === program.id);
+
+            program.buttons = LinkedButtons;
+          });
+
+          const isNotAuthEmpty = cloneGroupProgram.program !== '';
+
+          const isAuthFound = authProgram !== undefined && authProgram.length > 0;
+
+          if (isNotAuthEmpty && isAuthFound) {
+            
+            cloneGroupProgram.programName = authProgram[0].name;
+          }
+
+          if (authProgram.length > 0 &&
+              authProgram[0].buttons &&
+              authProgram[0].buttons.length > 0) {
+
+                cloneGroupProgram.buttonsName = cloneGroupProgram.buttons.map(x => {
+
+                  const button = authProgram[0].buttons.filter(y => y.id === x);
+
+                  return  button === undefined ? '' :  button[0].remark;
+
+                }).join(',');
+          }
+
+          TableUpdate(this.db, TableEnum.GroupPrograms, groupProgram.id, cloneGroupProgram).then(() => {
+
+            subscriber.next(cloneGroupProgram);
+
+            subscriber.complete();
+          });
+
+        });
 
       });
 
     });
-
   }
 
   delete(groupProgram: GroupProgram): Observable<GroupProgram> {
-
     return new Observable(subscriber => {
 
       TableDelete(this.db, TableEnum.GroupPrograms, groupProgram.id).then(() => {
@@ -202,11 +266,9 @@ export class GroupProgramService {
         subscriber.next(groupProgram);
 
         subscriber.complete();
-
       });
 
     });
-
   }
 
 }

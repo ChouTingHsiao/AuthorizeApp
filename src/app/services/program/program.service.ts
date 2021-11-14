@@ -17,39 +17,34 @@ export class ProgramService {
   constructor(private buttonService: ButtonService) {
 
     this.db = OpenDB();
-
   }
 
   getAll(): Observable<Program[]> {
-
     return new Observable(subscriber => {
 
-        GetAll(this.db, TableEnum.Programs).then( (programs: Program[]) => {
+      GetAll(this.db, TableEnum.Programs).then( (programs: Program[]) => {
 
-          this.buttonService.getAll().subscribe( buttons => {
+        this.buttonService.getAll().subscribe( buttons => {
 
-            programs.forEach( program => {
+          programs.forEach( program => {
 
-              const LinkedButtons = buttons.filter( button => button.program === program.id);
+            const LinkedButtons = buttons.filter( button => button.program === program.id);
 
-              program.buttons = LinkedButtons;
-
-            });
-
-            subscriber.next(programs);
-
-            subscriber.complete();
+            program.buttons = LinkedButtons;
 
           });
 
+          subscriber.next(programs);
+
+          subscriber.complete();
         });
 
-    });
+      });
 
+    });
   }
 
   create(program: Program): Observable<Program> {
-
     return new Observable(subscriber => {
 
       const cloneProgram = clone(program);
@@ -65,15 +60,12 @@ export class ProgramService {
         subscriber.next(cloneProgram);
 
         subscriber.complete();
-
       });
 
     });
-
   }
 
   update(program: Program): Observable<Program> {
-
     return new Observable(subscriber => {
 
       TableUpdate(this.db, TableEnum.Programs, program.id, program).then(() => {
@@ -81,15 +73,12 @@ export class ProgramService {
         subscriber.next(program);
 
         subscriber.complete();
-
       });
 
     });
-
   }
 
   delete(program: Program): Observable<Program> {
-
     return new Observable(subscriber => {
 
       TableDelete(this.db, TableEnum.Programs, program.id).then(() => {
@@ -97,11 +86,9 @@ export class ProgramService {
         subscriber.next(program);
 
         subscriber.complete();
-
       });
 
     });
-
   }
 
 }

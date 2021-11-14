@@ -16,7 +16,6 @@ export class ButtonService {
   constructor() {
 
     this.db = OpenDB();
-
   }
 
   getAll(): Observable<Button[]> {
@@ -28,7 +27,6 @@ export class ButtonService {
         subscriber.next(buttons);
 
         subscriber.complete();
-
       });
 
     });
@@ -46,7 +44,6 @@ export class ButtonService {
         subscriber.next(programButton);
 
         subscriber.complete();
-
       });
 
     });
@@ -54,25 +51,21 @@ export class ButtonService {
   }
 
   create(button: Button): Observable<Button> {
-
     return new Observable(subscriber => {
 
-      const cloneButton = clone(button);
+      const cloneButton = clone(button) as Button;
 
       TableAdd(this.db, TableEnum.Buttons, cloneButton).then(() => {
 
         subscriber.next(cloneButton);
 
         subscriber.complete();
-
       });
 
     });
-
   }
 
   update(button: Button): Observable<Button> {
-
     return new Observable(subscriber => {
 
       TableUpdate(this.db, TableEnum.Buttons, button.id, button).then(() => {
@@ -80,15 +73,12 @@ export class ButtonService {
         subscriber.next(button);
 
         subscriber.complete();
-
       });
 
     });
-
   }
 
   delete(button: Button): Observable<Button> {
-
     return new Observable(subscriber => {
 
       TableDelete(this.db, TableEnum.Buttons, button.id).then(() => {
@@ -96,11 +86,9 @@ export class ButtonService {
         subscriber.next(button);
 
         subscriber.complete();
-
       });
 
     });
-
   }
 
 }
