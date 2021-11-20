@@ -68,6 +68,8 @@ export class TableComponent implements OnChanges, OnDestroy {
 
   pageData: (page: PageEvent) => void = pageData;
 
+  isLoading: boolean = true;
+
   constructor(public matDialog: MatDialog) {}
 
   ngOnChanges(changes) {
@@ -83,10 +85,11 @@ export class TableComponent implements OnChanges, OnDestroy {
   setSource() {
     this.grid.subscribe(x => {
       this.subscription = x.read().subscribe((y) => {
+        this.isLoading = false;
         const entitiesArray = entityToArray(y);
         this.dataSource = new MatTableDataSource<any>(entitiesArray);
         this.pageNation();
-      });
+      }, error => this.isLoading = false);
       this.create = x.create;
       this.edit = x.edit;
       this.delete = x.delete;

@@ -44,4 +44,12 @@ multiTemplateDataRows
 <tr mat-row *matRowDef="let row; columns: isHasDetail ? ['expandedDetail'] : []" class="detail-row"></tr>
 
 </table>
+
+<div *ngIf="isLoading" class="loading">
+  <mat-progress-spinner
+    color="primary"
+    mode="indeterminate">
+  </mat-progress-spinner>
+</div>
+
 <mat-paginator [pageSizeOptions]="[5, 10, 20]" (page)="pageData($event)" showFirstLastButtons></mat-paginator>

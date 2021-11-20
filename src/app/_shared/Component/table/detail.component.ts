@@ -46,6 +46,8 @@ export class DetailComponent implements OnInit, OnDestroy {
 
   pageData: (page: PageEvent) => void = pageData;
 
+  isLoading: boolean = true;
+
   constructor(public matDialog: MatDialog) {}
 
   ngOnInit() {
@@ -64,10 +66,11 @@ export class DetailComponent implements OnInit, OnDestroy {
 
     this.detail.subscribe(x => {
       this.subscription = x.read().subscribe((y) => {
-          const entitiesArray = entityToArray(y);
-          this.dataSource = new MatTableDataSource<any>(entitiesArray);
-          this.pageNation();
-      });
+        this.isLoading = false;
+        const entitiesArray = entityToArray(y);
+        this.dataSource = new MatTableDataSource<any>(entitiesArray);
+        this.pageNation();
+      }, error => this.isLoading = false);
       this.create = x.create;
       this.edit = x.edit;
       this.delete = x.delete;
