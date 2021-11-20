@@ -46,7 +46,7 @@ export class DetailComponent implements OnInit, OnDestroy {
 
   pageData: (page: PageEvent) => void = pageData;
 
-  isLoading: boolean = true;
+  isLoading = true;
 
   constructor(public matDialog: MatDialog) {}
 

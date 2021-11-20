@@ -68,7 +68,7 @@ export class TableComponent implements OnChanges, OnDestroy {
 
   pageData: (page: PageEvent) => void = pageData;
 
-  isLoading: boolean = true;
+  isLoading = true;
 
   constructor(public matDialog: MatDialog) {}
 
