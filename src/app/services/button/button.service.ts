@@ -19,7 +19,6 @@ export class ButtonService {
   }
 
   getAll(): Observable<Button[]> {
-
     return new Observable(subscriber => {
 
       GetAll(this.db, TableEnum.Buttons).then( (buttons: Button[]) => {
@@ -30,11 +29,9 @@ export class ButtonService {
       });
 
     });
-
   }
 
   getByProgramId(programId: string): Observable<Button[]> {
-
     return new Observable(subscriber => {
 
       GetAll(this.db, TableEnum.Buttons).then( (buttons: Button[]) => {
@@ -47,7 +44,6 @@ export class ButtonService {
       });
 
     });
-
   }
 
   create(button: Button): Observable<Button> {
