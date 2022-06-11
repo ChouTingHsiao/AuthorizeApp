@@ -9,7 +9,7 @@ import { User } from '@shared/Model/user.model';
 import { Menu } from '@shared/Model/menu.model';
 import { Button } from '@shared/Model/button.model';
 
-export const ROOT_REDUCER = new InjectionToken<any>('Root Reducer', {factory: () => ({
+export const ROOT_REDUCER = new InjectionToken<unknown>('Root Reducer', {factory: () => ({
       Users: maintainReducer<User>(TableEnum.Users),
       Roles: maintainReducer<Role>(TableEnum.Roles),
       Groups: maintainReducer<Group>(TableEnum.Groups),

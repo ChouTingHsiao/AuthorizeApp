@@ -16,9 +16,9 @@ export class MultiSelectComponent implements OnInit {
 
   onChanges: (event) => void;
 
-  source: Observable<any>;
+  source: Observable<unknown>;
 
-  entityToArray = (x: any ): any[] => entityToArray(x);
+  entityToArray = (x: unknown ): unknown[] => entityToArray(x);
 
   constructor() {}
 
