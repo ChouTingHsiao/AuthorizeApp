@@ -56,7 +56,7 @@ export class RoleComponent implements OnInit {
             selector: ColumnEnum.input
           },
         ],
-        read: (): Observable<any> => {
+        read: (): Observable<unknown> => {
 
           this.store.dispatch( new Read<Role>(TableEnum.Roles) );
 

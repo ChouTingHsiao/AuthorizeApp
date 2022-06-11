@@ -67,7 +67,7 @@ export class GroupComponent implements OnInit {
             displayName: 'rolesName',
             type: ColumnEnum.string,
             selector: ColumnEnum.multiselect,
-            source: (): Observable<any> => {
+            source: (): Observable<unknown> => {
 
               this.store.dispatch( new Read<Role>(TableEnum.Roles) );
 
@@ -101,7 +101,7 @@ export class GroupComponent implements OnInit {
                   displayName : 'programName',
                   type: ColumnEnum.string,
                   selector: ColumnEnum.select,
-                  source: (): Observable<any> => {
+                  source: (): Observable<unknown> => {
 
                     this.store.dispatch( new Read<Program>(TableEnum.Programs) );
 
@@ -114,13 +114,13 @@ export class GroupComponent implements OnInit {
                   displayName : 'buttonsName',
                   type: ColumnEnum.string,
                   selector: ColumnEnum.multiselect,
-                  source: (): Observable<any> => {
+                  source: (): Observable<unknown> => {
 
                     return this.store.select(getButtonsState);
                   }
                 },
               ],
-              read: (): Observable<any> => {
+              read: (): Observable<unknown> => {
 
                 this.store.dispatch( new Read<GroupProgram>(
                   `${TableEnum.Groups}.${TableEnum.GroupPrograms}`,
@@ -236,7 +236,7 @@ export class GroupComponent implements OnInit {
 
           });
         },
-        read: (): Observable<any> => {
+        read: (): Observable<unknown> => {
 
           this.store.dispatch( new Read<Group>(TableEnum.Groups) );
 

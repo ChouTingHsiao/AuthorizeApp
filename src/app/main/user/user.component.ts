@@ -64,7 +64,7 @@ export class UserComponent implements OnInit {
             displayName: 'roleName',
             type: ColumnEnum.string,
             selector: ColumnEnum.select,
-            source: (): Observable<any> => {
+            source: (): Observable<unknown> => {
 
               this.store.dispatch( new Read<Role>(TableEnum.Roles) );
 
@@ -72,7 +72,7 @@ export class UserComponent implements OnInit {
             }
           },
         ],
-        read: (): Observable<any> => {
+        read: (): Observable<unknown> => {
 
           this.store.dispatch( new Read<User>(TableEnum.Users) );
 

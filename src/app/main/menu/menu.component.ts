@@ -59,7 +59,7 @@ export class MenuComponent implements OnInit {
             displayName: 'programName',
             type: ColumnEnum.string,
             selector: ColumnEnum.select,
-            source: (): Observable<any> => {
+            source: (): Observable<unknown> => {
 
               this.store.dispatch( new Read<Program>(TableEnum.Programs) );
 
@@ -67,7 +67,7 @@ export class MenuComponent implements OnInit {
             }
           }
         ],
-        read: (): Observable<any> => {
+        read: (): Observable<unknown> => {
 
           return this.store.select(getMenusState);
 

@@ -95,7 +95,7 @@ export class ProgramComponent implements OnInit {
                   selector: ColumnEnum.input,
                 },
               ],
-              read: (): Observable<any> => {
+              read: (): Observable<unknown> => {
 
                 this.store.dispatch( new Read<Button>(
                   `${TableEnum.Programs}.${TableEnum.Buttons}`,
@@ -178,7 +178,7 @@ export class ProgramComponent implements OnInit {
           });
 
         },
-        read: (): Observable<any> => {
+        read: (): Observable<unknown> => {
 
           this.store.dispatch( new Read<Program>(TableEnum.Programs) );
 
