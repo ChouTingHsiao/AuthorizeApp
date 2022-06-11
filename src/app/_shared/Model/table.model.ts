@@ -20,19 +20,19 @@ export interface Grid {
     tableName: string;
     sort: TableSort;
     columns: Column[];
-    detail?: (element: any) => Observable<Detail>;
-    read: () => Observable<any>;
+    detail?: (element: unknown) => Observable<Detail>;
+    read: () => Observable<unknown>;
     create: () => void;
-    edit: (element: any, event?: any) => void;
-    delete: (element: any, event?: any) => void;
+    edit: (element: unknown, event?: unknown) => void;
+    delete: (element: unknown, event?: unknown) => void;
 }
 
 export interface Detail {
     tableName: string;
     sort: TableSort;
     columns: Column[];
-    read?: () => Observable<any>;
+    read?: () => Observable<unknown>;
     create?: () => void;
-    edit?: (element: any, event?: any) => void;
-    delete?: (element: any, event?: any) => void;
+    edit?: (element: unknown, event?: unknown) => void;
+    delete?: (element: unknown, event?: unknown) => void;
 }
