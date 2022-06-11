@@ -35,16 +35,16 @@ export class TableComponent implements OnChanges, OnDestroy {
   grid: Observable<Grid>;
 
   @Output()
-  openTableDialog: EventEmitter<(dialog: Dialog) => any> = new EventEmitter();
+  openTableDialog: EventEmitter<(dialog: Dialog) => unknown> = new EventEmitter();
 
   @Output()
-  openDetailDialog: EventEmitter<(dialog: Dialog) => any> = new EventEmitter();
+  openDetailDialog: EventEmitter<(dialog: Dialog) => unknown> = new EventEmitter();
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-  dataSource: MatTableDataSource<any>;
+  dataSource: MatTableDataSource<unknown>;
 
   tableSort: Observable<TableSort>;
 
@@ -54,15 +54,15 @@ export class TableComponent implements OnChanges, OnDestroy {
 
   isHasDetail: boolean;
 
-  currentElement: any;
+  currentElement: unknown;
 
   dialogComponent: DialogComponent;
 
   create: () => void;
 
-  edit: (element: any, event: any) => void;
+  edit: (element: unknown, event: unknown) => void;
 
-  delete: (element: any, event: any) => void;
+  delete: (element: unknown, event: unknown) => void;
 
   sortData: (sort: Sort) => void = sortData;
 
@@ -87,7 +87,7 @@ export class TableComponent implements OnChanges, OnDestroy {
       this.subscription = x.read().subscribe((y) => {
         this.isLoading = false;
         const entitiesArray = entityToArray(y);
-        this.dataSource = new MatTableDataSource<any>(entitiesArray);
+        this.dataSource = new MatTableDataSource<unknown>(entitiesArray);
         this.pageNation();
       }, error => this.isLoading = false);
       this.create = x.create;

@@ -38,9 +38,9 @@ export class DetailComponent implements OnInit, OnDestroy {
 
   create: () => void;
 
-  edit: (element: any, event: any) => void;
+  edit: (element: unknown, event: unknown) => void;
 
-  delete: (element: any, event: any) => void;
+  delete: (element: unknown, event: unknown) => void;
 
   sortData: (sort: Sort) => void = sortData;
 
