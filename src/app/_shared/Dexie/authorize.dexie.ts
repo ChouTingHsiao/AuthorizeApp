@@ -64,7 +64,9 @@ function TableAdd(db: Promise<Dexie>, table: string, data: unknown): Promise<voi
 
                 const idArray = x.map(obj => parseInt(obj.id, 0));
 
-                data['id'] = (Math.max(...idArray) + 1).toString();
+                const Id = 'id';
+
+                data[Id] = (Math.max(...idArray) + 1).toString();
 
                 db.then( y => {
                     y.table(table).add(data).catch(Dexie.BulkError, (e) => {
