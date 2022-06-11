@@ -7,10 +7,10 @@ import { GroupProgramService } from '@services/groupProgram/groupProgram.service
 })
 export class AuthorizeDirective implements OnInit, AfterViewChecked {
 
-  AuthorizeDictionary: { [key: string]: any; } = {};
+  AuthorizeDictionary: { [key: string]: unknown; } = {};
 
   constructor(private router: Router,
-              private templateRef: TemplateRef<any>,
+              private templateRef: TemplateRef<unknown>,
               private viewContainer: ViewContainerRef,
               private groupProgramService: GroupProgramService) { }
 

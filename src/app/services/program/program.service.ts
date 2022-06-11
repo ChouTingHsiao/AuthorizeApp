@@ -47,7 +47,7 @@ export class ProgramService {
   create(program: Program): Observable<Program> {
     return new Observable(subscriber => {
 
-      const cloneProgram = clone(program);
+      const cloneProgram = clone(program) as Program;
 
       if (!cloneProgram.auth) {
 

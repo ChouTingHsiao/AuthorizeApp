@@ -32,7 +32,7 @@ function OpenDB(): Promise<Dexie> {
     return AuthorizeDb.open();
 }
 
-function TableInit(db: Dexie, table: string, data: any[]): void {
+function TableInit(db: Dexie, table: string, data: unknown[]): void {
 
     db.transaction('rw', db.table(table), () => {
 
@@ -51,20 +51,20 @@ function TableInit(db: Dexie, table: string, data: any[]): void {
     });
 }
 
-function GetAll(db: Promise<Dexie>, table: string): Promise<any[]> {
+function GetAll(db: Promise<Dexie>, table: string): Promise<unknown[]> {
     return db.then( x => {
        return x.table(table).toArray();
     });
 }
 
-function TableAdd(db: Promise<Dexie>, table: string, data: any): Promise<void> {
+function TableAdd(db: Promise<Dexie>, table: string, data: unknown): Promise<void> {
     return  db.then(x => {
               return x.table(table).toArray();
             }).then(x => {
 
                 const idArray = x.map(obj => parseInt(obj.id, 0));
 
-                data.id = (Math.max(...idArray) + 1).toString();
+                data['id'] = (Math.max(...idArray) + 1).toString();
 
                 db.then( y => {
                     y.table(table).add(data).catch(Dexie.BulkError, (e) => {
@@ -75,7 +75,7 @@ function TableAdd(db: Promise<Dexie>, table: string, data: any): Promise<void> {
             });
 }
 
-function TableUpdate(db: Promise<Dexie>, table: string, id: string, data: any): Promise<void> {
+function TableUpdate(db: Promise<Dexie>, table: string, id: string, data: unknown): Promise<void> {
     return  db.then( x => {
                 x.table(table).update(id, data).catch(Dexie.BulkError, (e) => {
                     console.error(`${table} add not succeed.`);

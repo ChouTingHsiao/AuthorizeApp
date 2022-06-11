@@ -21,7 +21,7 @@ function objectToArray(obj) {
 
 }
 
-function entityToArray(entity: any) {
+function entityToArray(entity: unknown) {
 
     const entities = 'entities';
 
@@ -29,9 +29,9 @@ function entityToArray(entity: any) {
 
 }
 
-function cloneArray(array: any[]): any[] {
+function cloneArray(array: unknown[]): unknown[] {
 
-    let newArray: any[] = [];
+    let newArray: unknown[] = [];
 
     if (typeof array[0]  === 'object' ) {
 
@@ -47,11 +47,11 @@ function cloneArray(array: any[]): any[] {
 
 }
 
-function clone(obj: any): any {
+function clone(obj: unknown): unknown {
 
-    const cloneObj: any = {};
+    const cloneObj: unknown = {};
 
-    for (const attribute in obj) {
+    for (const attribute in obj as object) {
 
         if ( Array.isArray(obj[attribute]) ) {
 

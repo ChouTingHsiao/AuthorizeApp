@@ -6,4 +6,5 @@ export interface Program {
     remark: string;
     linkTag: string;
     buttons?: Button[];
+    auth?: string;
 }
