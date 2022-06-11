@@ -19,7 +19,7 @@ import { getRolesState, getUsersState } from '@shared/Ngrx/Selectors/maintain.se
 })
 export class UserComponent implements OnInit {
 
-  openTableDialog: (dialog: Dialog) => any;
+  openTableDialog: (dialog: Dialog) => unknown;
 
   myGrid: Observable<Grid>;
 
@@ -97,7 +97,7 @@ export class UserComponent implements OnInit {
               );
 
             },
-          });
+          }) as DialogComponent;
 
         },
         edit: (userElement: User): void => {
@@ -118,7 +118,7 @@ export class UserComponent implements OnInit {
               );
 
             },
-          });
+          }) as DialogComponent;
 
         },
         delete: (userElement: User): void => {

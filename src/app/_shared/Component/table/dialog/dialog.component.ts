@@ -79,7 +79,7 @@ export class DialogComponent {
     componentRef.changeDetectorRef.detectChanges();
   }
 
-  getData(): any {
+  getData(): unknown {
 
     const data = {};
 

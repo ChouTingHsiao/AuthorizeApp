@@ -20,7 +20,7 @@ import { getProgramsState, getMenusState } from '@shared/Ngrx/Selectors/maintain
 })
 export class MenuComponent implements OnInit {
 
-  openTableDialog: (dialog: Dialog) => any;
+  openTableDialog: (dialog: Dialog) => unknown;
 
   myGrid: Observable<Grid>;
 
@@ -104,7 +104,7 @@ export class MenuComponent implements OnInit {
               );
 
             }
-          });
+          }) as DialogComponent;
 
         },
         edit: (menuElement: Menu): void => {
@@ -146,7 +146,7 @@ export class MenuComponent implements OnInit {
               );
 
             },
-          });
+          }) as DialogComponent;
 
         },
         delete: (menuElement: Menu): void => {

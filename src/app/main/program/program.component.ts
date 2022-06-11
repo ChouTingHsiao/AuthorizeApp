@@ -19,9 +19,9 @@ import { getButtonsState, getProgramsState } from '@shared/Ngrx/Selectors/mainta
 })
 export class ProgramComponent implements OnInit {
 
-  openTableDialog: (dialog: Dialog) => any;
+  openTableDialog: (dialog: Dialog) => unknown;
 
-  openDetailDialog: (dialog: Dialog) => any;
+  openDetailDialog: (dialog: Dialog) => unknown;
 
   myGrid: Observable<Grid>;
 
@@ -114,7 +114,7 @@ export class ProgramComponent implements OnInit {
                   button: [DialogEnum.btnCreate, DialogEnum.btnCancel],
                   method: DialogEnum.create,
                   data: {} as Button,
-                });
+                }) as DialogComponent;
 
                 dialog.confirm = (): void => {
 
@@ -138,7 +138,7 @@ export class ProgramComponent implements OnInit {
                   button: [DialogEnum.btnEdit, DialogEnum.btnCancel],
                   method: DialogEnum.edit,
                   data: buttonElement,
-                });
+                }) as DialogComponent;
 
                 dialog.confirm = (): void => {
 
@@ -203,7 +203,7 @@ export class ProgramComponent implements OnInit {
               );
 
             },
-          });
+          }) as DialogComponent;
 
         },
         edit: (groupElement: Program): void => {
@@ -222,7 +222,7 @@ export class ProgramComponent implements OnInit {
                 )
               );
             },
-          });
+          }) as DialogComponent;
 
         },
         delete: (groupElement: Program): void => {

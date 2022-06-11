@@ -18,7 +18,7 @@ import { getRolesState } from '@shared/Ngrx/Selectors/maintain.selectors';
 })
 export class RoleComponent implements OnInit {
 
-  openTableDialog: (dialog: Dialog) => any;
+  openTableDialog: (dialog: Dialog) => unknown;
 
   myGrid: Observable<Grid>;
 
@@ -81,7 +81,7 @@ export class RoleComponent implements OnInit {
               );
 
             },
-          });
+          }) as DialogComponent;
 
         },
         edit: (roleElement: Role): void => {
@@ -102,7 +102,7 @@ export class RoleComponent implements OnInit {
               );
 
             },
-          });
+          }) as DialogComponent;
 
         },
         delete: (roleElement: Role): void => {

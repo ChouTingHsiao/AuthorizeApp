@@ -24,9 +24,9 @@ import { getRolesState, getProgramsState, getButtonsState, getGroupProgramsState
 })
 export class GroupComponent implements OnInit {
 
-  openTableDialog: (dialog: Dialog) => any;
+  openTableDialog: (dialog: Dialog) => unknown;
 
-  openDetailDialog: (dialog: Dialog) => any;
+  openDetailDialog: (dialog: Dialog) => unknown;
 
   myGrid: Observable<Grid>;
 
@@ -166,7 +166,7 @@ export class GroupComponent implements OnInit {
                     );
 
                   }
-                });
+                }) as DialogComponent;
 
               },
               edit: (groupProgram: GroupProgram): void => {
@@ -209,7 +209,7 @@ export class GroupComponent implements OnInit {
 
                   },
 
-                });
+                }) as DialogComponent;
 
               },
               delete: (groupProgram: GroupProgram): void => {
@@ -261,7 +261,7 @@ export class GroupComponent implements OnInit {
               );
 
             },
-          });
+          }) as DialogComponent;
 
         },
         edit: (groupElement: Group): void => {
@@ -282,7 +282,7 @@ export class GroupComponent implements OnInit {
               );
 
             },
-          });
+          }) as DialogComponent;
 
         },
         delete: (groupElement: Group): void => {
