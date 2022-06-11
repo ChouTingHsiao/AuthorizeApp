@@ -10,46 +10,42 @@ function sortData(sort: Sort) {
     console.log(sort.active);
 
     console.log(sort.direction);
-
 }
 
 function pageData(page: PageEvent) {
 
     console.log(page);
-
 }
 
 function columnToDisplay(columns: Column[]): string[] {
 
-    const display = ['maintain'];
+  const display = ['maintain'];
 
-    const columnArray = columns.filter(data => !(data.visible === false)).map((x) => {
+  const columnArray = columns.filter(data => !(data.visible === false)).map((x) => {
 
-      return  x.columnDef;
+    return  x.columnDef;
 
-    });
+  });
 
-    return display.concat(columnArray);
-
+  return display.concat(columnArray);
 }
 
-function dataToColumn(data: any, columns: Column[]): Column[] {
+function dataToColumn(data: unknown, columns: Column[]): Column[] {
 
     if (data !== undefined) {
 
-        columns.forEach(y => {
+        columns.forEach(x => {
 
-          y.value = data[y.columnDef];
+          x.value = data[x.columnDef];
 
         });
 
     }
 
     return columns;
-
 }
 
-function openDialog( matDialog: MatDialog, columns: Column[]): (dialog: Dialog) => any {
+function openDialog( matDialog: MatDialog, columns: Column[]): (dialog: Dialog) => unknown {
 
     return ( dialog: Dialog ): DialogComponent => {
 
@@ -75,7 +71,6 @@ function openDialog( matDialog: MatDialog, columns: Column[]): (dialog: Dialog) 
 
         return instance;
     };
-
 }
 
 export { sortData, pageData, columnToDisplay, dataToColumn, openDialog };

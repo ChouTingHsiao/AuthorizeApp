@@ -23,14 +23,14 @@ export class DetailComponent implements OnInit, OnDestroy {
   detail: Observable<Detail>;
 
   @Output()
-  openDetailDialog: EventEmitter<(dialog: Dialog) => any> = new EventEmitter();
+  openDetailDialog: EventEmitter<(dialog: Dialog) => unknown> = new EventEmitter();
 
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-  dataSource: MatTableDataSource<any>;
+  dataSource: MatTableDataSource<unknown>;
 
   displayedColumns: string[];
 
@@ -68,7 +68,7 @@ export class DetailComponent implements OnInit, OnDestroy {
       this.subscription = x.read().subscribe((y) => {
         this.isLoading = false;
         const entitiesArray = entityToArray(y);
-        this.dataSource = new MatTableDataSource<any>(entitiesArray);
+        this.dataSource = new MatTableDataSource<unknown>(entitiesArray);
         this.pageNation();
       }, error => this.isLoading = false);
       this.create = x.create;

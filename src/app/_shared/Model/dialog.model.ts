@@ -3,7 +3,7 @@ export interface Dialog {
     title: string;
     button: string[];
     method: string;
-    data?: any;
+    data?: unknown;
     onChanges?: (event) => void;
     confirm?: () => void;
 
