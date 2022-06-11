@@ -5,10 +5,10 @@ export interface Column {
     displayName?: string;
     type: string;
     selector: string;
-    source?: () => Observable<any>;
+    source?: () => Observable<unknown>;
     visible?: boolean;
     value?: string;
-    cell?: any;
+    cell?: unknown;
 }
 
 export interface TableSort {
