@@ -20,7 +20,7 @@ export class RoleComponent implements OnInit {
 
   openTableDialog: (dialog: Dialog) => unknown;
 
-  myGrid: Observable<Grid>;
+  myGrid: Observable<Grid<Role>>;
 
   constructor(private store: Store) { }
 
@@ -32,7 +32,7 @@ export class RoleComponent implements OnInit {
 
     this.myGrid = new Observable(subscriber => {
 
-      const grid = {
+      const grid: Grid<Role> = {
         tableName: TableEnum.Roles,
         sort: { active: 'id', direction: 'asc' },
         columns: [
@@ -84,13 +84,13 @@ export class RoleComponent implements OnInit {
           }) as DialogComponent;
 
         },
-        edit: (roleElement: Role): void => {
+        edit: (role): void => {
 
           const dialog: DialogComponent = this.openTableDialog({
             title: '修改頁面',
             button: [DialogEnum.btnEdit, DialogEnum.btnCancel],
             method: DialogEnum.edit,
-            data: roleElement,
+            data: role,
             confirm: (): void => {
 
               this.store.dispatch(
@@ -105,7 +105,7 @@ export class RoleComponent implements OnInit {
           }) as DialogComponent;
 
         },
-        delete: (roleElement: Role): void => {
+        delete: (role): void => {
 
           const isCanDelete = confirm('Are you sure you want to delete this?');
 
@@ -115,7 +115,7 @@ export class RoleComponent implements OnInit {
               new Delete<Role>(
                 TableEnum.Roles,
                 [],
-                roleElement
+                role
               )
             );
 

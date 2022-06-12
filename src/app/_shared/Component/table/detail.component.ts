@@ -20,7 +20,7 @@ export class DetailComponent implements OnInit, OnDestroy {
   subscription: Subscription;
 
   @Input()
-  detail: Observable<Detail>;
+  detail: Observable<Detail<unknown>>;
 
   @Output()
   openDetailDialog: EventEmitter<(dialog: Dialog) => unknown> = new EventEmitter();

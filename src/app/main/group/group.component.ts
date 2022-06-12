@@ -28,7 +28,7 @@ export class GroupComponent implements OnInit {
 
   openDetailDialog: (dialog: Dialog) => unknown;
 
-  myGrid: Observable<Grid>;
+  myGrid: Observable<Grid<Group>>;
 
   constructor(private store: Store,
               private roleService: RoleService,
@@ -44,7 +44,7 @@ export class GroupComponent implements OnInit {
 
     this.myGrid = new Observable(subscriber => {
 
-      const grid = {
+      const grid: Grid<Group> = {
         tableName: TableEnum.Groups,
         sort: { active: 'id', direction: 'asc' },
         columns: [
@@ -75,10 +75,10 @@ export class GroupComponent implements OnInit {
             }
           },
         ],
-        detail: (group: Group): Observable<Detail> => {
+        detail: (group: Group): Observable<Detail<GroupProgram>> => {
           return new Observable(detailSubscriber => {
 
-            const detail = {
+            const detail: Detail<GroupProgram> = {
               tableName: TableEnum.GroupPrograms,
               sort: { active: 'id', direction: 'asc' },
               columns: [
@@ -169,7 +169,7 @@ export class GroupComponent implements OnInit {
                 }) as DialogComponent;
 
               },
-              edit: (groupProgram: GroupProgram): void => {
+              edit: (groupProgram): void => {
 
                 this.store.dispatch( new Read<Button>(
                   `${TableEnum.Programs}.${TableEnum.Buttons}`,
@@ -212,7 +212,7 @@ export class GroupComponent implements OnInit {
                 }) as DialogComponent;
 
               },
-              delete: (groupProgram: GroupProgram): void => {
+              delete: (groupProgram): void => {
 
                 const isCanDelete = confirm('Are you sure you want to delete this?');
 
@@ -264,13 +264,13 @@ export class GroupComponent implements OnInit {
           }) as DialogComponent;
 
         },
-        edit: (groupElement: Group): void => {
+        edit: (group): void => {
 
           const dialog: DialogComponent = this.openTableDialog({
             title: '修改頁面',
             button: [DialogEnum.btnEdit, DialogEnum.btnCancel],
             method: DialogEnum.edit,
-            data: groupElement,
+            data: group,
             confirm: (): void => {
 
               this.store.dispatch(
@@ -285,7 +285,7 @@ export class GroupComponent implements OnInit {
           }) as DialogComponent;
 
         },
-        delete: (groupElement: Group): void => {
+        delete: (group): void => {
 
           const isCanDelete = confirm('Are you sure you want to delete this?');
 
@@ -295,7 +295,7 @@ export class GroupComponent implements OnInit {
               new Delete<Group>(
                 TableEnum.Groups,
                 [],
-                groupElement
+                group
               )
             );
 

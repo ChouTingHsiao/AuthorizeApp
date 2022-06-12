@@ -32,7 +32,7 @@ export class TableComponent implements OnChanges, OnDestroy {
   subscription: Subscription;
 
   @Input()
-  grid: Observable<Grid>;
+  grid: Observable<Grid<unknown>>;
 
   @Output()
   openTableDialog: EventEmitter<(dialog: Dialog) => unknown> = new EventEmitter();

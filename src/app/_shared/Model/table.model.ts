@@ -1,4 +1,5 @@
 import { Observable } from 'rxjs';
+
 export interface Column {
     header: string;
     columnDef: string;
@@ -16,23 +17,23 @@ export interface TableSort {
     direction: string;
 }
 
-export interface Grid {
+export interface Grid<T> {
     tableName: string;
     sort: TableSort;
     columns: Column[];
-    detail?: (element: unknown) => Observable<Detail>;
+    detail?: (element: T) => Observable<Detail<unknown>>;
     read: () => Observable<unknown>;
     create: () => void;
-    edit: (element: unknown, event?: unknown) => void;
-    delete: (element: unknown, event?: unknown) => void;
+    edit: (element: T, event?: unknown) => void;
+    delete: (element: T, event?: unknown) => void;
 }
 
-export interface Detail {
+export interface Detail<T> {
     tableName: string;
     sort: TableSort;
     columns: Column[];
     read?: () => Observable<unknown>;
     create?: () => void;
-    edit?: (element: unknown, event?: unknown) => void;
-    delete?: (element: unknown, event?: unknown) => void;
+    edit?: (element: T, event?: unknown) => void;
+    delete?: (element: T, event?: unknown) => void;
 }

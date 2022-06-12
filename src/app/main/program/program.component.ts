@@ -23,7 +23,7 @@ export class ProgramComponent implements OnInit {
 
   openDetailDialog: (dialog: Dialog) => unknown;
 
-  myGrid: Observable<Grid>;
+  myGrid: Observable<Grid<Program>>;
 
   constructor(private store: Store) { }
 
@@ -37,7 +37,7 @@ export class ProgramComponent implements OnInit {
 
     this.myGrid = new Observable(subscriber => {
 
-      const grid = {
+      const grid: Grid<Program> = {
         tableName: TableEnum.Programs,
         sort: { active: 'id', direction: 'asc' },
         columns: [
@@ -67,11 +67,11 @@ export class ProgramComponent implements OnInit {
             selector: ColumnEnum.input
           },
         ],
-        detail: (program: Program): Observable<Detail> => {
+        detail: (program): Observable<Detail<Button>> => {
 
           return new Observable(detailSubscriber => {
 
-            const detail = {
+            const detail: Detail<Button> = {
               tableName: TableEnum.Buttons,
               sort: { active: 'id', direction: 'asc' },
               columns: [
@@ -131,13 +131,13 @@ export class ProgramComponent implements OnInit {
                 };
 
               },
-              edit: (buttonElement: Button): void => {
+              edit: (button): void => {
 
                 const dialog: DialogComponent = this.openDetailDialog({
                   title: '修改頁面',
                   button: [DialogEnum.btnEdit, DialogEnum.btnCancel],
                   method: DialogEnum.edit,
-                  data: buttonElement,
+                  data: button,
                 }) as DialogComponent;
 
                 dialog.confirm = (): void => {
@@ -153,7 +153,7 @@ export class ProgramComponent implements OnInit {
                 };
 
               },
-              delete: (buttonElement: Button): void => {
+              delete: (button): void => {
 
                 const isCanDelete = confirm('Are you sure you want to delete this?');
 
@@ -163,7 +163,7 @@ export class ProgramComponent implements OnInit {
                     new Delete<Button>(
                       TableEnum.Buttons,
                       [],
-                      buttonElement
+                      button
                     )
                   );
 
@@ -206,13 +206,13 @@ export class ProgramComponent implements OnInit {
           }) as DialogComponent;
 
         },
-        edit: (groupElement: Program): void => {
+        edit: (program): void => {
 
           const dialog: DialogComponent = this.openTableDialog({
             title: '修改頁面',
             button: [DialogEnum.btnEdit, DialogEnum.btnCancel],
             method: DialogEnum.edit,
-            data: groupElement,
+            data: program,
             confirm: (): void => {
               this.store.dispatch(
                 new Edit<Program>(
@@ -225,7 +225,7 @@ export class ProgramComponent implements OnInit {
           }) as DialogComponent;
 
         },
-        delete: (groupElement: Program): void => {
+        delete: (program): void => {
 
           const isCanDelete = confirm('Are you sure you want to delete this?');
 
@@ -235,7 +235,7 @@ export class ProgramComponent implements OnInit {
               new Delete<Program>(
                 TableEnum.Programs,
                 [],
-                groupElement
+                program
               )
             );
 

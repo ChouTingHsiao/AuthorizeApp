@@ -22,7 +22,7 @@ export class MenuComponent implements OnInit {
 
   openTableDialog: (dialog: Dialog) => unknown;
 
-  myGrid: Observable<Grid>;
+  myGrid: Observable<Grid<Menu>>;
 
   constructor(private store: Store) { }
 
@@ -36,7 +36,7 @@ export class MenuComponent implements OnInit {
 
     this.myGrid = new Observable(subscriber => {
 
-      const grid = {
+      const grid: Grid<Menu> = {
         tableName: TableEnum.Menus,
         sort: { active: 'id', direction: 'asc' },
         columns: [
@@ -107,12 +107,12 @@ export class MenuComponent implements OnInit {
           }) as DialogComponent;
 
         },
-        edit: (menuElement: Menu): void => {
+        edit: (menu): void => {
 
           this.store.dispatch( new Read<Button>(
             `${TableEnum.Programs}.${TableEnum.Buttons}`,
               [],
-              { program: menuElement.program } as Button
+              { program: menu.program } as Button
             )
           );
 
@@ -120,7 +120,7 @@ export class MenuComponent implements OnInit {
             title: '修改頁面',
             button: [DialogEnum.btnEdit, DialogEnum.btnCancel],
             method: DialogEnum.edit,
-            data: menuElement,
+            data: menu,
             onChanges: (event) => {
 
               if ( event.source.ngControl.name === 'program' ) {
@@ -149,7 +149,7 @@ export class MenuComponent implements OnInit {
           }) as DialogComponent;
 
         },
-        delete: (menuElement: Menu): void => {
+        delete: (menu): void => {
 
           const isCanDelete = confirm('Are you sure you want to delete this?');
 
@@ -159,7 +159,7 @@ export class MenuComponent implements OnInit {
               new Delete<Menu>(
                 TableEnum.Menus,
                 [],
-                menuElement
+                menu
               )
             );
 

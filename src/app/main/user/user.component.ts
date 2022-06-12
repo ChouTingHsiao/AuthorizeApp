@@ -21,7 +21,7 @@ export class UserComponent implements OnInit {
 
   openTableDialog: (dialog: Dialog) => unknown;
 
-  myGrid: Observable<Grid>;
+  myGrid: Observable<Grid<User>>;
 
   constructor(private store: Store) { }
 
@@ -35,7 +35,7 @@ export class UserComponent implements OnInit {
 
     this.myGrid = new Observable(subscriber => {
 
-      const grid = {
+      const grid: Grid<User> = {
         tableName: TableEnum.Users,
         sort: { active: 'id', direction: 'asc' },
         columns: [
@@ -100,13 +100,13 @@ export class UserComponent implements OnInit {
           }) as DialogComponent;
 
         },
-        edit: (userElement: User): void => {
+        edit: (user): void => {
 
           const dialog: DialogComponent = this.openTableDialog({
             title: '修改頁面',
             button: [DialogEnum.btnEdit, DialogEnum.btnCancel],
             method: DialogEnum.edit,
-            data: userElement,
+            data: user,
             confirm: (): void => {
 
               this.store.dispatch(
@@ -121,7 +121,7 @@ export class UserComponent implements OnInit {
           }) as DialogComponent;
 
         },
-        delete: (userElement: User): void => {
+        delete: (user): void => {
 
           const isCanDelete = confirm('Are you sure you want to delete this?');
 
@@ -131,7 +131,7 @@ export class UserComponent implements OnInit {
               new Delete<User>(
                 TableEnum.Users,
                 [],
-                userElement
+                user
               )
             );
 
