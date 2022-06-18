@@ -28,12 +28,4 @@ export interface Grid<T, U = unknown> {
     delete: (element: T, event?: unknown) => void;
 }
 
-export interface Detail<T> {
-    tableName: string;
-    sort: TableSort;
-    columns: Column[];
-    read?: () => Observable<unknown>;
-    create?: () => void;
-    edit?: (element: T, event?: unknown) => void;
-    delete?: (element: T, event?: unknown) => void;
-}
+export type Detail<T> = Omit<Grid<T>, 'detail'>;
