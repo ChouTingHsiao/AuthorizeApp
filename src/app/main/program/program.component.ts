@@ -23,21 +23,18 @@ export class ProgramComponent implements OnInit {
 
   openDetailDialog: (dialog: Dialog) => unknown;
 
-  myGrid: Observable<Grid<Program>>;
+  myGrid: Observable<Grid<Program, Button>>;
 
   constructor(private store: Store) { }
 
   ngOnInit() {
-
     this.loadGrid();
-
   }
 
   loadGrid() {
-
     this.myGrid = new Observable(subscriber => {
 
-      const grid: Grid<Program> = {
+      const grid: Grid<Program, Button> = {
         tableName: TableEnum.Programs,
         sort: { active: 'id', direction: 'asc' },
         columns: [
@@ -67,8 +64,7 @@ export class ProgramComponent implements OnInit {
             selector: ColumnEnum.input
           },
         ],
-        detail: (program): Observable<Detail<Button>> => {
-
+        detail: (program) => {
           return new Observable(detailSubscriber => {
 
             const detail: Detail<Button> = {
@@ -95,7 +91,7 @@ export class ProgramComponent implements OnInit {
                   selector: ColumnEnum.input,
                 },
               ],
-              read: (): Observable<unknown> => {
+              read: () => {
 
                 this.store.dispatch( new Read<Button>(
                   `${TableEnum.Programs}.${TableEnum.Buttons}`,
@@ -107,7 +103,7 @@ export class ProgramComponent implements OnInit {
                 return this.store.select(getButtonsState);
 
               },
-              create: (): void => {
+              create: () => {
 
                 const dialog: DialogComponent = this.openDetailDialog({
                   title: '新增頁面',
@@ -131,7 +127,7 @@ export class ProgramComponent implements OnInit {
                 };
 
               },
-              edit: (button): void => {
+              edit: (button) => {
 
                 const dialog: DialogComponent = this.openDetailDialog({
                   title: '修改頁面',
@@ -153,7 +149,7 @@ export class ProgramComponent implements OnInit {
                 };
 
               },
-              delete: (button): void => {
+              delete: (button) => {
 
                 const isCanDelete = confirm('Are you sure you want to delete this?');
 
@@ -173,19 +169,18 @@ export class ProgramComponent implements OnInit {
             };
 
             detailSubscriber.next(detail);
+
             detailSubscriber.complete();
-
           });
-
         },
-        read: (): Observable<unknown> => {
+        read: () => {
 
           this.store.dispatch( new Read<Program>(TableEnum.Programs) );
 
           return this.store.select(getProgramsState);
 
         },
-        create: (): void => {
+        create: () => {
 
           const dialog: DialogComponent = this.openTableDialog({
             title: '新增頁面',
@@ -206,7 +201,7 @@ export class ProgramComponent implements OnInit {
           }) as DialogComponent;
 
         },
-        edit: (program): void => {
+        edit: (program) => {
 
           const dialog: DialogComponent = this.openTableDialog({
             title: '修改頁面',
@@ -225,7 +220,7 @@ export class ProgramComponent implements OnInit {
           }) as DialogComponent;
 
         },
-        delete: (program): void => {
+        delete: (program) => {
 
           const isCanDelete = confirm('Are you sure you want to delete this?');
 
@@ -245,10 +240,8 @@ export class ProgramComponent implements OnInit {
       };
 
       subscriber.next(grid);
+
       subscriber.complete();
-
     });
-
   }
-
 }

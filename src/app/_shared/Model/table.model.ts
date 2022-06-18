@@ -17,11 +17,11 @@ export interface TableSort {
     direction: string;
 }
 
-export interface Grid<T> {
+export interface Grid<T, U = unknown> {
     tableName: string;
     sort: TableSort;
     columns: Column[];
-    detail?: (element: T) => Observable<Detail<unknown>>;
+    detail?: (element: T) => Observable<Detail<U>>;
     read: () => Observable<unknown>;
     create: () => void;
     edit: (element: T, event?: unknown) => void;

@@ -11,8 +11,6 @@ import { Group } from '@shared/Model/group.model';
 import { GroupProgram } from '@shared/Model/groupProgram.model';
 import { Program } from '@shared/Model/program.model';
 import { Button } from '@shared/Model/button.model';
-import { RoleService } from '@services/role/role.service';
-import { ProgramService } from '@services/program/program.service';
 import { Read, Create, Edit, Delete} from '@shared/Ngrx/Actions/maintain.action';
 import { Observable } from 'rxjs';
 import { getRolesState, getProgramsState, getButtonsState, getGroupProgramsState, getGroupsState } from '@shared/Ngrx/Selectors/maintain.selectors';
@@ -28,23 +26,18 @@ export class GroupComponent implements OnInit {
 
   openDetailDialog: (dialog: Dialog) => unknown;
 
-  myGrid: Observable<Grid<Group>>;
+  myGrid: Observable<Grid<Group, GroupProgram>>;
 
-  constructor(private store: Store,
-              private roleService: RoleService,
-              private programService: ProgramService) { }
+  constructor(private store: Store) { }
 
   ngOnInit() {
-
     this.loadGrid();
-
   }
 
   loadGrid() {
-
     this.myGrid = new Observable(subscriber => {
 
-      const grid: Grid<Group> = {
+      const grid: Grid<Group, GroupProgram> = {
         tableName: TableEnum.Groups,
         sort: { active: 'id', direction: 'asc' },
         columns: [
@@ -75,7 +68,7 @@ export class GroupComponent implements OnInit {
             }
           },
         ],
-        detail: (group: Group): Observable<Detail<GroupProgram>> => {
+        detail: (group) => {
           return new Observable(detailSubscriber => {
 
             const detail: Detail<GroupProgram> = {
@@ -236,14 +229,14 @@ export class GroupComponent implements OnInit {
 
           });
         },
-        read: (): Observable<unknown> => {
+        read: () => {
 
           this.store.dispatch( new Read<Group>(TableEnum.Groups) );
 
           return this.store.select(getGroupsState);
 
         },
-        create: (): void => {
+        create: () => {
 
           const dialog: DialogComponent = this.openTableDialog({
             title: '新增頁面',
@@ -264,7 +257,7 @@ export class GroupComponent implements OnInit {
           }) as DialogComponent;
 
         },
-        edit: (group): void => {
+        edit: (group) => {
 
           const dialog: DialogComponent = this.openTableDialog({
             title: '修改頁面',
@@ -285,7 +278,7 @@ export class GroupComponent implements OnInit {
           }) as DialogComponent;
 
         },
-        delete: (group): void => {
+        delete: (group) => {
 
           const isCanDelete = confirm('Are you sure you want to delete this?');
 
@@ -307,9 +300,6 @@ export class GroupComponent implements OnInit {
       subscriber.next(grid);
 
       subscriber.complete();
-
     });
-
   }
-
 }

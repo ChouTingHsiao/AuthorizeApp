@@ -27,13 +27,10 @@ export class MenuComponent implements OnInit {
   constructor(private store: Store) { }
 
   ngOnInit() {
-
     this.loadGrid();
-
   }
 
   loadGrid() {
-
     this.myGrid = new Observable(subscriber => {
 
       const grid: Grid<Menu> = {
@@ -67,12 +64,12 @@ export class MenuComponent implements OnInit {
             }
           }
         ],
-        read: (): Observable<unknown> => {
+        read: () => {
 
           return this.store.select(getMenusState);
 
         },
-        create: (): void => {
+        create: () => {
 
           const dialog: DialogComponent = this.openTableDialog({
             title: '新增頁面',
@@ -107,7 +104,7 @@ export class MenuComponent implements OnInit {
           }) as DialogComponent;
 
         },
-        edit: (menu): void => {
+        edit: (menu) => {
 
           this.store.dispatch( new Read<Button>(
             `${TableEnum.Programs}.${TableEnum.Buttons}`,
@@ -149,7 +146,7 @@ export class MenuComponent implements OnInit {
           }) as DialogComponent;
 
         },
-        delete: (menu): void => {
+        delete: (menu) => {
 
           const isCanDelete = confirm('Are you sure you want to delete this?');
 
@@ -171,9 +168,6 @@ export class MenuComponent implements OnInit {
       subscriber.next(grid);
 
       subscriber.complete();
-
     });
-
   }
-
 }

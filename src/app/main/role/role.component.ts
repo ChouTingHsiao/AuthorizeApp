@@ -29,7 +29,6 @@ export class RoleComponent implements OnInit {
   }
 
   loadGrid() {
-
     this.myGrid = new Observable(subscriber => {
 
       const grid: Grid<Role> = {
@@ -127,9 +126,6 @@ export class RoleComponent implements OnInit {
       subscriber.next(grid);
 
       subscriber.complete();
-
     });
-
   }
-
 }

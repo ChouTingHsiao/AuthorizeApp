@@ -26,13 +26,10 @@ export class UserComponent implements OnInit {
   constructor(private store: Store) { }
 
   ngOnInit() {
-
     this.loadGrid();
-
   }
 
   loadGrid() {
-
     this.myGrid = new Observable(subscriber => {
 
       const grid: Grid<User> = {
@@ -72,14 +69,14 @@ export class UserComponent implements OnInit {
             }
           },
         ],
-        read: (): Observable<unknown> => {
+        read: () => {
 
           this.store.dispatch( new Read<User>(TableEnum.Users) );
 
           return this.store.select(getUsersState);
 
         },
-        create: (): void => {
+        create: () => {
 
           const dialog: DialogComponent = this.openTableDialog({
             title: '新增頁面',
@@ -100,7 +97,7 @@ export class UserComponent implements OnInit {
           }) as DialogComponent;
 
         },
-        edit: (user): void => {
+        edit: (user) => {
 
           const dialog: DialogComponent = this.openTableDialog({
             title: '修改頁面',
@@ -121,7 +118,7 @@ export class UserComponent implements OnInit {
           }) as DialogComponent;
 
         },
-        delete: (user): void => {
+        delete: (user) => {
 
           const isCanDelete = confirm('Are you sure you want to delete this?');
 
@@ -143,9 +140,6 @@ export class UserComponent implements OnInit {
       subscriber.next(grid);
 
       subscriber.complete();
-
     });
-
   }
-
 }
