@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1655615722250,
+  "timestamp": 1655623938825,
   "index": "https://choutinghsiao.github.io/AuthorizeApp/index.html",
   "assetGroups": [
     {
@@ -11,18 +11,18 @@
         "ignoreVary": true
       },
       "urls": [
-        "https://choutinghsiao.github.io/AuthorizeApp/5-es2015.69a382fe8b3005de98f4.js",
-        "https://choutinghsiao.github.io/AuthorizeApp/5-es5.69a382fe8b3005de98f4.js",
+        "https://choutinghsiao.github.io/AuthorizeApp/673-es2015.ed983656d9c6bfd6ee33.js",
+        "https://choutinghsiao.github.io/AuthorizeApp/673-es5.ed983656d9c6bfd6ee33.js",
         "https://choutinghsiao.github.io/AuthorizeApp/favicon.ico",
         "https://choutinghsiao.github.io/AuthorizeApp/index.html",
-        "https://choutinghsiao.github.io/AuthorizeApp/main-es2015.e30999a5200303464c61.js",
-        "https://choutinghsiao.github.io/AuthorizeApp/main-es5.e30999a5200303464c61.js",
+        "https://choutinghsiao.github.io/AuthorizeApp/main-es2015.794d80acd28ec12dcb7b.js",
+        "https://choutinghsiao.github.io/AuthorizeApp/main-es5.794d80acd28ec12dcb7b.js",
         "https://choutinghsiao.github.io/AuthorizeApp/manifest.webmanifest",
-        "https://choutinghsiao.github.io/AuthorizeApp/polyfills-es2015.d74b108abb35193b00e4.js",
-        "https://choutinghsiao.github.io/AuthorizeApp/polyfills-es5.383939211b6047758ab1.js",
-        "https://choutinghsiao.github.io/AuthorizeApp/runtime-es2015.12f9164ad7e679d0650d.js",
-        "https://choutinghsiao.github.io/AuthorizeApp/runtime-es5.12f9164ad7e679d0650d.js",
-        "https://choutinghsiao.github.io/AuthorizeApp/styles.c5790aa0a40d4c810a0a.css"
+        "https://choutinghsiao.github.io/AuthorizeApp/polyfills-es2015.d25fc874d18e2d6563b3.js",
+        "https://choutinghsiao.github.io/AuthorizeApp/polyfills-es5.5864fd69f8cbe1b36add.js",
+        "https://choutinghsiao.github.io/AuthorizeApp/runtime-es2015.610dbbaaff6c40a2f6ca.js",
+        "https://choutinghsiao.github.io/AuthorizeApp/runtime-es5.610dbbaaff6c40a2f6ca.js",
+        "https://choutinghsiao.github.io/AuthorizeApp/styles.39892327a8752abd3eba.css"
       ],
       "patterns": []
     },
@@ -50,8 +50,8 @@
   ],
   "dataGroups": [],
   "hashTable": {
-    "https://choutinghsiao.github.io/AuthorizeApp/5-es2015.69a382fe8b3005de98f4.js": "25eafc09aa0bc7ec2ffdee796f0c3283a8dce042",
-    "https://choutinghsiao.github.io/AuthorizeApp/5-es5.69a382fe8b3005de98f4.js": "629a56f029c3fe0bca519a0da1603877013fca45",
+    "https://choutinghsiao.github.io/AuthorizeApp/673-es2015.ed983656d9c6bfd6ee33.js": "67aac0ab071b1c10850988be98632b5fb1deaee4",
+    "https://choutinghsiao.github.io/AuthorizeApp/673-es5.ed983656d9c6bfd6ee33.js": "d4d88a3a9263ad22ae300c8087cc62d964623dd3",
     "https://choutinghsiao.github.io/AuthorizeApp/assets/icons/icon-128x128.png": "dae3b6ed49bdaf4327b92531d4b5b4a5d30c7532",
     "https://choutinghsiao.github.io/AuthorizeApp/assets/icons/icon-144x144.png": "b0bd89982e08f9bd2b642928f5391915b74799a7",
     "https://choutinghsiao.github.io/AuthorizeApp/assets/icons/icon-152x152.png": "7479a9477815dfd9668d60f8b3b2fba709b91310",
@@ -61,15 +61,15 @@
     "https://choutinghsiao.github.io/AuthorizeApp/assets/icons/icon-72x72.png": "c457e56089a36952cd67156f9996bc4ce54a5ed9",
     "https://choutinghsiao.github.io/AuthorizeApp/assets/icons/icon-96x96.png": "3914125a4b445bf111c5627875fc190f560daa41",
     "https://choutinghsiao.github.io/AuthorizeApp/favicon.ico": "22f6a4a3bcaafafb0254e0f2fa4ceb89e505e8b2",
-    "https://choutinghsiao.github.io/AuthorizeApp/index.html": "e91233097f6173af8874e23608b7367b2c38030e",
-    "https://choutinghsiao.github.io/AuthorizeApp/main-es2015.e30999a5200303464c61.js": "66a80ac0cfb99594c7e2604701dd76894349b7a3",
-    "https://choutinghsiao.github.io/AuthorizeApp/main-es5.e30999a5200303464c61.js": "9fe204eed9cbbaf43e9b5bb9a969d1035ae1f6ef",
+    "https://choutinghsiao.github.io/AuthorizeApp/index.html": "4601d95023109caf454dca181ca47149eb4b8a42",
+    "https://choutinghsiao.github.io/AuthorizeApp/main-es2015.794d80acd28ec12dcb7b.js": "2a4d110dd3ae46c8b4b9a6b9c8c75853cd556695",
+    "https://choutinghsiao.github.io/AuthorizeApp/main-es5.794d80acd28ec12dcb7b.js": "0c55f6c63d5233271697ba7642255363e2895773",
     "https://choutinghsiao.github.io/AuthorizeApp/manifest.webmanifest": "7275d44b6b65eaee5078337e62246dcf304c1707",
-    "https://choutinghsiao.github.io/AuthorizeApp/polyfills-es2015.d74b108abb35193b00e4.js": "65c537467564ee0ba776b629f71ed3413413a7cb",
-    "https://choutinghsiao.github.io/AuthorizeApp/polyfills-es5.383939211b6047758ab1.js": "771cf28c4265215119c9d048494073447f0b454d",
-    "https://choutinghsiao.github.io/AuthorizeApp/runtime-es2015.12f9164ad7e679d0650d.js": "9e64b4d7bbfd77a457331742fd0bd097e26f28e6",
-    "https://choutinghsiao.github.io/AuthorizeApp/runtime-es5.12f9164ad7e679d0650d.js": "dd9ce72e007ac6b5773daf8886ee159f9999ec4c",
-    "https://choutinghsiao.github.io/AuthorizeApp/styles.c5790aa0a40d4c810a0a.css": "0925e442f95c1f07ce46e281f74bfbab6ad46623"
+    "https://choutinghsiao.github.io/AuthorizeApp/polyfills-es2015.d25fc874d18e2d6563b3.js": "65d28582b65111894f09722ec6c551960f5a9337",
+    "https://choutinghsiao.github.io/AuthorizeApp/polyfills-es5.5864fd69f8cbe1b36add.js": "fc63dea458d1b0c5938d71746894976db1eecbab",
+    "https://choutinghsiao.github.io/AuthorizeApp/runtime-es2015.610dbbaaff6c40a2f6ca.js": "dca948bc638d57d643e97fd72abe40265dd22afc",
+    "https://choutinghsiao.github.io/AuthorizeApp/runtime-es5.610dbbaaff6c40a2f6ca.js": "c456c53da3f92db85e81007b4a80c79276ad0311",
+    "https://choutinghsiao.github.io/AuthorizeApp/styles.39892327a8752abd3eba.css": "b352b2e06d807dbf55ff05a15d34d59d2804d36b"
   },
   "navigationUrls": [
     {
