@@ -37,7 +37,7 @@ jobs:
 
     - name: e2e
       id: e2e
-      run: ng e2e --headless --no-watch
+      run: npx ng e2e --headless --no-watch
 
     - name: Build
       id: Build
