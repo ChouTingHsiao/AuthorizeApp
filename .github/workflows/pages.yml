@@ -21,7 +21,7 @@ jobs:
 
     - name: install
       id: install
-      run: npm install
+      run: npm ci
 
     - name: Lint
       id: Lint
