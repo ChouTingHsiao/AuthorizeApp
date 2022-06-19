@@ -13,11 +13,11 @@ jobs:
       id: Checkout
       uses: actions/checkout@master
 
-    - name: Use Node.js 12.8
+    - name: Use Node.js 12.14
       id: Node
       uses: actions/setup-node@v1
       with:
-        node-version: 12.8
+        node-version: 12.14
 
     - name: install
       id: install
