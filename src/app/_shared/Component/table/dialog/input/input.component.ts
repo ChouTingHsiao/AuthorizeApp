@@ -7,11 +7,10 @@ import { IDialogInputComponent } from '@shared/Component/table/dialog/IDialogInp
   templateUrl: './input.component.html',
   styleUrls: ['./input.component.scss']
 })
-export class InputComponent implements IDialogInputComponent, OnInit {
+export class InputComponent implements IDialogInputComponent {
 
   column: Column;
 
   constructor() {}
 
-  ngOnInit() {}
 }
