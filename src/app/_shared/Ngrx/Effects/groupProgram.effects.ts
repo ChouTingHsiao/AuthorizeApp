@@ -25,7 +25,7 @@ export class GroupProgramEffects {
 
   loadGroupGroupPrograms$ = createEffect(() => this.actions$.pipe(
     ofType(`${TableEnum.Groups}.${TableEnum.GroupPrograms}.${DialogEnum.read}`),
-    mergeMap((x) => this.groupProgramService.getByGroupId(x[this.newData].group)
+    mergeMap((x) => this.groupProgramService.getByGroupId((x[this.newData] as GroupProgram).group)
       .pipe(
         map(groupPrograms => ( new ReadSuccess<GroupProgram>(TableEnum.GroupPrograms, groupPrograms) )),
         catchError(() => EMPTY)
