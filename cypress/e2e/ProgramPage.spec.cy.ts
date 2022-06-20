@@ -1,12 +1,11 @@
 import { SignIn } from "../_shared/LoginHelper";
 import { GetPageRange, CheckTotalCount, ClickLastButton, DeleteLastData } from "../_shared/TableHelper";
+import Dexie from 'dexie';
 
 describe('My ProgramPage Test', () => {
   before(() => {
 
-    Cypress.on("window:before:load", win => {
-      win.indexedDB.deleteDatabase("Authorize");
-    });
+    Dexie.delete('Authorize')
   })
   
   it('Should display Program page', () => {
