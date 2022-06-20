@@ -2,6 +2,13 @@ import { SignIn } from "../_shared/LoginHelper";
 import { GetPageRange, CheckTotalCount, ClickLastButton, DeleteLastData } from "../_shared/TableHelper";
 
 describe('My UserPage Test', () => {
+  before(() => {
+
+    Cypress.on("window:before:load", win => {
+      win.indexedDB.deleteDatabase("Authorize");
+    });
+  })
+  
   it('Should display User page', () => {
     
     cy.visit('/')
