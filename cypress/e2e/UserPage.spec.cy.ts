@@ -1,13 +1,7 @@
 import { SignIn } from "../_shared/LoginHelper";
 import { GetPageRange, CheckTotalCount, ClickLastButton, DeleteLastData } from "../_shared/TableHelper";
-import Dexie from 'dexie';
 
-describe('My UserPage Test', () => {
-  before(() => {
-
-    Dexie.delete('Authorize')
-  })
-  
+describe('My UserPage Test', () => {  
   it('Should display User page', () => {
     
     cy.visit('/')

@@ -1,13 +1,7 @@
 import { SignIn } from "../_shared/LoginHelper";
 import { GetPageRange, CheckTotalCount, ClickLastButton, DeleteLastData } from "../_shared/TableHelper";
-import Dexie from 'dexie';
 
 describe('My MenuPage Test', () => {
-  before(() => {
-
-    Dexie.delete('Authorize')
-  })
-  
   it('Should display Menu page', () => {
     
     cy.visit('/')

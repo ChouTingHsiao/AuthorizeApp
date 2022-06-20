@@ -1,13 +1,7 @@
 import { SignIn } from "../_shared/LoginHelper";
 import { GetPageRange, CheckTotalCount, ClickLastButton, DeleteLastData } from "../_shared/TableHelper";
-import Dexie from 'dexie';
 
 describe('My GroupPage Test', () => {
-  before(() => {
-
-    Dexie.delete('Authorize')
-  })
-  
   it('Should display Group page', () => {
     
     cy.visit('/')
