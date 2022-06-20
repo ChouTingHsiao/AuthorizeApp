@@ -17,7 +17,7 @@ describe('My RolePage Test', () => {
 
     cy.get('button[aria-label="Menu"]').click()
 
-    cy.get('a#Program').click()
+    cy.get('a#Role').click()
 
     cy.get('button[aria-label="Menu"]').click()
   })
@@ -30,15 +30,12 @@ describe('My RolePage Test', () => {
 
     cy.get('input[data-placeholder="remark"]').type('TEST1')
 
-    cy.get('input[data-placeholder="linkTag"]').type('TEST1')
-
     cy.get('button.mat-button.mat-button-base').eq(0).click()
 
     CheckTotalCount()
   })
 
   it('Should Edit Item', () => {
-    
     ClickLastButton()
 
     cy.wait(500)
