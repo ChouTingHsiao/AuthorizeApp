@@ -1,8 +1,8 @@
 import { SignIn } from "../_shared/LoginHelper";
 import { GetPageRange, CheckTotalCount, ClickLastButton, DeleteLastData } from "../_shared/TableHelper";
 
-describe('My UserPage Test', () => {
-  it('Should display User page', () => {
+describe('My ProgramPage Test', () => {
+  it('Should display Program page', () => {
     
     cy.visit('/')
 
@@ -10,7 +10,7 @@ describe('My UserPage Test', () => {
 
     cy.get('button[aria-label="Menu"]').click()
 
-    cy.get('a#User').click()
+    cy.get('a#Role').click()
 
     cy.get('button[aria-label="Menu"]').click()
   })
@@ -21,11 +21,7 @@ describe('My UserPage Test', () => {
 
     cy.get('input[data-placeholder="name"]').type('TEST1')
 
-    cy.get('input[data-placeholder="password"]').type('TEST1')
-
-    cy.get('mat-select[ng-reflect-name="role"]').click()
-
-    cy.get('mat-option').eq(2).click()
+    cy.get('input[data-placeholder="remark"]').type('TEST1')
 
     cy.get('button.mat-button.mat-button-base').eq(0).click()
 
@@ -33,7 +29,6 @@ describe('My UserPage Test', () => {
   })
 
   it('Should Edit Item', () => {
-    
     ClickLastButton()
 
     cy.wait(500)

@@ -1,6 +1,6 @@
 import { SignIn } from "../_shared/LoginHelper";
 
-describe('My First Test', () => {
+describe('My LoginPage Test', () => {
   it('Should display login page', () => {
     
     cy.visit('/')
