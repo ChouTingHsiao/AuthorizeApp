@@ -1,4 +1,3 @@
-import { SignIn } from "../_shared/LoginHelper";
 
 describe('My LoginPage Test', () => {
   it('Should display login page', () => {
@@ -12,7 +11,7 @@ describe('My LoginPage Test', () => {
       expect(loginTitle).to.match(/Auth/)
     })
 
-    SignIn()
+    cy.login('ADMIN', 'ADMIN')
 
     cy.get('span[ng-reflect-router-link="Main"]').should(($div) => {
 

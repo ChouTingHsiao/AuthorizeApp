@@ -1,4 +1,3 @@
-import { SignIn } from "../_shared/LoginHelper";
 import { GetPageRange, CheckTotalCount, ClickLastButton, DeleteLastData } from "../_shared/TableHelper";
 
 describe('My MenuPage Test', () => {
@@ -6,7 +5,7 @@ describe('My MenuPage Test', () => {
     
     cy.visit('/')
 
-    SignIn()
+    cy.login('ADMIN', 'ADMIN')
 
     cy.get('button[aria-label="Menu"]').click()
 
