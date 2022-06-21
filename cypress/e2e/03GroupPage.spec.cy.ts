@@ -12,6 +12,8 @@ describe('My GroupPage Test', () => {
 
     cy.get('a#Group').click()
 
+    cy.get('button#btnAdd').should("be.visible")
+    
     cy.get('button[aria-label="Menu"]').click()
   })
 

@@ -12,6 +12,8 @@ describe('My ProgramPage Test', () => {
 
     cy.get('a#Program').click()
 
+    cy.get('button#btnAdd').should("be.visible")
+    
     cy.get('button[aria-label="Menu"]').click()
   })
 

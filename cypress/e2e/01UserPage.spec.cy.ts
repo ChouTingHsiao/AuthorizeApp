@@ -12,6 +12,8 @@ describe('My UserPage Test', () => {
 
     cy.get('a#User').click()
 
+    cy.get('button#btnAdd').should("be.visible")
+
     cy.get('button[aria-label="Menu"]').click()
   })
 

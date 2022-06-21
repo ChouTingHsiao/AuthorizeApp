@@ -12,6 +12,8 @@ describe('My RolePage Test', () => {
 
     cy.get('a#Role').click()
 
+    cy.get('button#btnAdd').should("be.visible")
+    
     cy.get('button[aria-label="Menu"]').click()
   })
 
