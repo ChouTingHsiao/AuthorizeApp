@@ -13,12 +13,12 @@ describe('My RolePage Test', () => {
     cy.get('a#Role').click()
 
     cy.get('button#btnAdd').should("be.visible")
-    
-    cy.get('button[aria-label="Menu"]').click()
   })
 
   it('Should Add Item', () => {
-    
+   
+    cy.get('button[aria-label="Menu"]').click()
+
     cy.get('button#btnAdd').click()
 
     cy.get('input[data-placeholder="name"]').type('TEST1')
@@ -31,9 +31,10 @@ describe('My RolePage Test', () => {
   })
 
   it('Should Edit Item', () => {
-    ClickLastButton()
 
     cy.wait(500)
+
+    ClickLastButton()
 
     cy.get('button.mat-raised-button.mat-button-base.mat-accent').last().click()
 
