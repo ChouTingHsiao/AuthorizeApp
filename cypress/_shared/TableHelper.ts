@@ -1,20 +1,16 @@
 
-export function GetPageRange(): Cypress.Chainable<JQuery<HTMLElement>> {
-
-   return cy.get('div.mat-paginator-range-label')
-}
-
 export function CheckTotalCount() {
     
-    cy.get('div.mat-paginator-range-label')
-    .invoke('text')
-    .then(($nowText) => {
+    cy.get<string>('@previousTotal').then($preText => {
+        cy.get<string>('@currentTotal')
+        .then(($nowText) => {
 
-        console.log($nowText.split(' '));
+            const previousTotal = parseInt($preText.split(' ')[5], 10)
 
-        const nowTotal = parseInt($nowText.split(' ')[5], 10)
+            const nowTotal = parseInt($nowText.split(' ')[5], 10)
 
-        expect(nowTotal).to.be.greaterThan(0)
+            expect(nowTotal).to.be.greaterThan(previousTotal)
+        })
     })
 }
 

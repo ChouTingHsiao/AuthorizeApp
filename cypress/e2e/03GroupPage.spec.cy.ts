@@ -1,4 +1,4 @@
-import { GetPageRange, CheckTotalCount, ClickLastButton, DeleteLastData } from "../_shared/TableHelper";
+import { CheckTotalCount, ClickLastButton, DeleteLastData } from "../_shared/TableHelper";
 
 describe('My GroupPage Test', () => {
   it('Should display Group page', () => {
@@ -28,7 +28,13 @@ describe('My GroupPage Test', () => {
 
     cy.get('body').click()
 
+    cy.cacheElement('previousTotal', 'div.mat-paginator-range-label')
+
     cy.get('button.mat-button.mat-button-base').eq(0).click()
+
+    cy.wait(500)
+
+    cy.cacheElement('currentTotal', 'div.mat-paginator-range-label')
 
     CheckTotalCount()
   })

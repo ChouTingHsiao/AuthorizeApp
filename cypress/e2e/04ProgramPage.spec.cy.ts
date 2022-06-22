@@ -1,4 +1,4 @@
-import { GetPageRange, CheckTotalCount, ClickLastButton, DeleteLastData } from "../_shared/TableHelper";
+import { CheckTotalCount, ClickLastButton, DeleteLastData } from "../_shared/TableHelper";
 
 describe('My ProgramPage Test', () => {
   it('Should display Program page', () => {
@@ -26,7 +26,13 @@ describe('My ProgramPage Test', () => {
 
     cy.get('input[data-placeholder="linkTag"]').type('TEST1')
 
+    cy.cacheElement('previousTotal', 'div.mat-paginator-range-label')
+
     cy.get('button.mat-button.mat-button-base').eq(0).click()
+
+    cy.wait(500)
+
+    cy.cacheElement('currentTotal', 'div.mat-paginator-range-label')
 
     CheckTotalCount()
   })

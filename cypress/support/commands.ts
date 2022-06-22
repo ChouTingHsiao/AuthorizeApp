@@ -50,3 +50,11 @@ Cypress.Commands.add('login', (account, password) => {
 
     cy.get('input#btn_Login').click()
 })
+
+Cypress.Commands.add('cacheElement', (key: string, value: string): Cypress.Chainable<string> => {
+
+    return cy
+    .get(value)
+    .invoke('text')
+    .as(key)
+})

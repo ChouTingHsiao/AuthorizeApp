@@ -1,4 +1,4 @@
-import { GetPageRange, CheckTotalCount, ClickLastButton, DeleteLastData } from "../_shared/TableHelper";
+import { CheckTotalCount, ClickLastButton, DeleteLastData } from "../_shared/TableHelper";
 
 describe('My RolePage Test', () => {
   it('Should display Role page', () => {
@@ -24,7 +24,13 @@ describe('My RolePage Test', () => {
 
     cy.get('input[data-placeholder="remark"]').type('TEST1')
 
+    cy.cacheElement('previousTotal', 'div.mat-paginator-range-label')
+
     cy.get('button.mat-button.mat-button-base').eq(0).click()
+
+    cy.wait(500)
+
+    cy.cacheElement('currentTotal', 'div.mat-paginator-range-label')
 
     CheckTotalCount()
   })
