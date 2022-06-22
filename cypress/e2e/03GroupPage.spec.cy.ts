@@ -1,4 +1,3 @@
-import { CheckTotalCount, ClickLastButton, DeleteLastData } from "../_shared/TableHelper";
 
 describe('My GroupPage Test', () => {
   it('Should display Group page', () => {
@@ -35,12 +34,12 @@ describe('My GroupPage Test', () => {
 
     cy.cacheElement('currentTotal', 'div.mat-paginator-range-label')
 
-    CheckTotalCount()
+    cy.CheckTotalCount()
   })
 
   it('Should Edit Item', () => {
 
-    ClickLastButton()
+    cy.ClickLastButton()
 
     cy.get('button.mat-raised-button.mat-button-base.mat-accent').last().click()
 
@@ -52,19 +51,11 @@ describe('My GroupPage Test', () => {
 
     cy.wait(500)
 
-    cy
-      .get('app-table tbody')
-      .find('tr:not(.detail-row)')
-      .last()
-      .find('.mat-column-name')
-      .first()
-      .should(($td) => {
-        expect($td.text()).to.eq(newName)
-      })
+    cy.CheckColumnValue('name', newName)
   })
 
   it('Should Delete Item', () => {
     
-    DeleteLastData()
+    cy.DeleteLastData()
   })
 })

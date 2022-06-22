@@ -1,6 +1,6 @@
 
-export function CheckTotalCount() {
-    
+Cypress.Commands.add('CheckTotalCount', () => {
+
     cy.get<string>('@previousTotal').then($preText => {
         cy.get<string>('@currentTotal')
         .then(($nowText) => {
@@ -12,9 +12,9 @@ export function CheckTotalCount() {
             expect(nowTotal).to.be.greaterThan(previousTotal)
         })
     })
-}
+})
 
-export function ClickLastButton(): void {
+Cypress.Commands.add('ClickLastButton', () => {
 
     cy.get('button.mat-paginator-navigation-last').then(($btn) => {
         if ($btn.is(":disabled")) {
@@ -23,9 +23,23 @@ export function ClickLastButton(): void {
             cy.wrap($btn).click()
         }
     })
-}
+})
 
-export function DeleteLastData(): void {
+Cypress.Commands.add('CheckColumnValue', (column, value) => {
 
-    cy.get('button.mat-raised-button.mat-button-base.mat-warn').last().click()
-}
+    cy.get('app-table tbody')
+      .find('tr:not(.detail-row)')
+      .last()
+      .find(`.mat-column-${column}`)
+      .first()
+      .should(($td) => {
+        expect($td.text()).to.eq(value)
+      })
+})
+
+Cypress.Commands.add('DeleteLastData', () => {
+
+    cy.get('button.mat-raised-button.mat-button-base.mat-warn')
+    .last()
+    .click()
+})
