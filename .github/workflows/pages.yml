@@ -31,10 +31,6 @@ jobs:
       id: test
       run: npm test
 
-    - name: update chrome
-      id: update
-      run: npx webdriver-manager clean && npx webdriver-manager update --versions.chrome $(google-chrome --version | grep -ioE "[0-9.]{10,20}")
-
     - name: e2e
       id: e2e
       run: npx ng e2e --headless --no-watch
