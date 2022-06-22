@@ -37,8 +37,6 @@ describe('My RolePage Test', () => {
 
   it('Should Edit Item', () => {
 
-    cy.wait(500)
-
     ClickLastButton()
 
     cy.get('button.mat-raised-button.mat-button-base.mat-accent').last().click()

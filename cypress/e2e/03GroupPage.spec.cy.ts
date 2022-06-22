@@ -31,7 +31,6 @@ describe('My GroupPage Test', () => {
     cy.cacheElement('previousTotal', 'div.mat-paginator-range-label')
 
     cy.get('button.mat-button.mat-button-base').eq(0).click()
-
     cy.wait(500)
 
     cy.cacheElement('currentTotal', 'div.mat-paginator-range-label')
@@ -40,8 +39,6 @@ describe('My GroupPage Test', () => {
   })
 
   it('Should Edit Item', () => {
-
-    cy.wait(500)
 
     ClickLastButton()
 
