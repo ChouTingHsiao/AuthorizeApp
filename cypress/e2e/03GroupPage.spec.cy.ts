@@ -51,7 +51,7 @@ describe('My GroupPage Test', () => {
 
     cy.wait(500)
 
-    cy.CheckColumnValue('name', newName)
+    cy.CheckLastColumnValue('name', newName)
   })
 
   it('Should Delete Item', () => {

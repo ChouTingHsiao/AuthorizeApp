@@ -25,7 +25,7 @@ Cypress.Commands.add('ClickLastButton', () => {
     })
 })
 
-Cypress.Commands.add('CheckColumnValue', (column, value) => {
+Cypress.Commands.add('CheckLastColumnValue', (column, value) => {
 
     cy.get('app-table tbody')
       .find('tr:not(.detail-row)')
