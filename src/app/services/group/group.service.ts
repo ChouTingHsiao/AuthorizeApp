@@ -1,9 +1,8 @@
-import Dexie from 'dexie';
+import { authorizeDb } from '@shared/Dexie/authorizeDb.dexie';
+import { nanoid } from 'nanoid'
 import { Injectable } from '@angular/core';
 import { Group } from '@shared/Model/group.model';
 import { Role } from '@shared/Model/role.model';
-import { TableEnum } from '@shared/Enum/table.enum';
-import { OpenDB, GetAll, TableAdd, TableUpdate, TableDelete } from '@shared/Dexie/authorize.dexie';
 import { Observable } from 'rxjs';
 import { clone } from '@shared/Method/object.method';
 
@@ -12,19 +11,14 @@ import { clone } from '@shared/Method/object.method';
 })
 export class GroupService {
 
-  private db: Promise<Dexie>;
-
-  constructor() {
-
-    this.db = OpenDB();
-  }
+  constructor() {}
 
   getAll(): Observable<Group[]> {
     return new Observable(subscriber => {
 
-      GetAll(this.db, TableEnum.Groups).then( (groups: Group[]) => {
+      authorizeDb.Groups.toArray().then( (groups: Group[]) => {
 
-        GetAll(this.db, TableEnum.Roles).then( (roles: Role[]) => {
+        authorizeDb.Roles.toArray().then( (roles: Role[]) => {
 
           groups.forEach( group => {
             group.rolesName = group.roles.map(x => {
@@ -37,9 +31,7 @@ export class GroupService {
 
           subscriber.complete();
         });
-
       });
-
     });
   }
 
@@ -56,16 +48,17 @@ export class GroupService {
 
         subscriber.complete();
       });
-
     });
   }
 
   create(group: Group): Observable<Group> {
     return new Observable(subscriber => {
 
-      GetAll(this.db, TableEnum.Roles).then( (roles: Role[]) => {
+      authorizeDb.Roles.toArray().then( (roles: Role[]) => {
 
         const cloneGroup = clone(group) as Group;
+
+        cloneGroup.id = nanoid();
 
         if (!cloneGroup.roles) {
 
@@ -81,22 +74,22 @@ export class GroupService {
           }).join(',');
         }
 
-        TableAdd(this.db, TableEnum.Groups, cloneGroup).then(() => {
+        authorizeDb.Groups.add(cloneGroup).then((added) => {
+
+          console.log(added);
 
           subscriber.next(cloneGroup);
 
           subscriber.complete();
         });
-
       });
-
     });
   }
 
   update(group: Group): Observable<Group> {
     return new Observable(subscriber => {
 
-      GetAll(this.db, TableEnum.Roles).then( (roles: Role[]) => {
+      authorizeDb.Roles.toArray().then( (roles: Role[]) => {
 
         const cloneGroup = clone(group) as Group;
 
@@ -114,29 +107,29 @@ export class GroupService {
           }).join(',');
         }
 
-        TableUpdate(this.db, TableEnum.Groups, group.id, cloneGroup).then(() => {
+        authorizeDb.Groups.update(cloneGroup.id, cloneGroup).then((updated) => {
+
+          console.log(updated);
 
           subscriber.next(cloneGroup);
 
           subscriber.complete();
         });
-
       });
-
     });
   }
 
   delete(group: Group): Observable<Group> {
     return new Observable(subscriber => {
 
-      TableDelete(this.db, TableEnum.Groups, group.id).then(() => {
+      authorizeDb.Groups.delete(group.id).then((deleted) => {
+
+        console.log(deleted);
 
         subscriber.next(group);
 
         subscriber.complete();
       });
-
     });
   }
-
 }

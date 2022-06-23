@@ -1,8 +1,7 @@
-import Dexie from 'dexie';
+import { authorizeDb } from '@shared/Dexie/authorizeDb.dexie';
+import { nanoid } from 'nanoid'
 import { Injectable } from '@angular/core';
 import { Program } from '@shared/Model/program.model';
-import { TableEnum } from '@shared/Enum/table.enum';
-import { OpenDB, GetAll, TableAdd, TableUpdate, TableDelete } from '@shared/Dexie/authorize.dexie';
 import { ButtonService } from '@services/button/button.service';
 import { Observable } from 'rxjs';
 import { clone } from '@shared/Method/object.method';
@@ -12,17 +11,12 @@ import { clone } from '@shared/Method/object.method';
 })
 export class ProgramService {
 
-  private db: Promise<Dexie>;
-
-  constructor(private buttonService: ButtonService) {
-
-    this.db = OpenDB();
-  }
+  constructor(private buttonService: ButtonService) {}
 
   getAll(): Observable<Program[]> {
     return new Observable(subscriber => {
 
-      GetAll(this.db, TableEnum.Programs).then( (programs: Program[]) => {
+      authorizeDb.Programs.toArray().then( (programs: Program[]) => {
 
         this.buttonService.getAll().subscribe( buttons => {
 
@@ -38,9 +32,7 @@ export class ProgramService {
 
           subscriber.complete();
         });
-
       });
-
     });
   }
 
@@ -49,46 +41,49 @@ export class ProgramService {
 
       const cloneProgram = clone(program) as Program;
 
+      cloneProgram.id = nanoid();
+
       if (!cloneProgram.auth) {
 
         cloneProgram.auth = '';
-
       }
 
-      TableAdd(this.db, TableEnum.Programs, cloneProgram).then(() => {
+      authorizeDb.Programs.add(cloneProgram).then((added) => {
+
+        console.log(added);
 
         subscriber.next(cloneProgram);
 
         subscriber.complete();
       });
-
     });
   }
 
   update(program: Program): Observable<Program> {
     return new Observable(subscriber => {
 
-      TableUpdate(this.db, TableEnum.Programs, program.id, program).then(() => {
+      authorizeDb.Programs.update(program.id, program).then((updated) => {
+
+        console.log(updated);
 
         subscriber.next(program);
 
         subscriber.complete();
       });
-
     });
   }
 
   delete(program: Program): Observable<Program> {
     return new Observable(subscriber => {
 
-      TableDelete(this.db, TableEnum.Programs, program.id).then(() => {
+      authorizeDb.Programs.delete(program.id).then((deleted) => {
+
+        console.log(deleted);
 
         subscriber.next(program);
 
         subscriber.complete();
       });
-
     });
   }
-
 }

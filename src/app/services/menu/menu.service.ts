@@ -1,10 +1,9 @@
-import Dexie from 'dexie';
+import { authorizeDb } from '@shared/Dexie/authorizeDb.dexie';
+import { nanoid } from 'nanoid'
 import { Injectable } from '@angular/core';
 import { Menu } from '@shared/Model/menu.model';
 import { Program } from '@shared/Model/program.model';
 import { GroupProgram } from '@shared/Model/groupProgram.model';
-import { TableEnum } from '@shared/Enum/table.enum';
-import { OpenDB, GetAll, TableAdd, TableUpdate, TableDelete } from '@shared/Dexie/authorize.dexie';
 import { GroupProgramService } from '@services/groupProgram/groupProgram.service';
 import { Observable } from 'rxjs';
 import { clone } from '@shared/Method/object.method';
@@ -14,19 +13,14 @@ import { clone } from '@shared/Method/object.method';
 })
 export class MenuService {
 
-  private db: Promise<Dexie>;
-
-  constructor(private groupProgramService: GroupProgramService) {
-
-    this.db = OpenDB();
-  }
+  constructor(private groupProgramService: GroupProgramService) {}
 
   getAll(): Observable<Menu[]> {
     return new Observable(subscriber => {
 
-      GetAll(this.db, TableEnum.Menus).then( (menus: Menu[]) => {
+      authorizeDb.Menus.toArray().then( (menus: Menu[]) => {
 
-        GetAll(this.db, TableEnum.Programs).then( (programs: Program[]) => {
+        authorizeDb.Programs.toArray().then( (programs: Program[]) => {
 
           const UserGroup: string = localStorage.getItem('UserGroup');
 
@@ -56,11 +50,8 @@ export class MenuService {
 
             subscriber.complete();
           });
-
         });
-
       });
-
     });
   }
 
@@ -86,9 +77,11 @@ export class MenuService {
   create(menu: Menu): Observable<Menu> {
     return new Observable(subscriber => {
 
-      GetAll(this.db, TableEnum.Programs).then( (programs: Program[]) => {
+      authorizeDb.Programs.toArray().then( (programs: Program[]) => {
 
         const cloneMenu = clone(menu) as Menu;
+
+        cloneMenu.id = nanoid();
 
         if (!cloneMenu.program) {
 
@@ -101,7 +94,9 @@ export class MenuService {
           cloneMenu.programName = programs.filter(x => x.id ===  cloneMenu.program)[0].name;
         }
 
-        TableAdd(this.db, TableEnum.Menus, cloneMenu).then(() => {
+        authorizeDb.Menus.add(cloneMenu).then((added) => {
+
+          console.log(added);
 
           subscriber.next(cloneMenu);
 
@@ -116,7 +111,7 @@ export class MenuService {
   update(menu: Menu): Observable<Menu> {
     return new Observable(subscriber => {
 
-      GetAll(this.db, TableEnum.Programs).then( (programs: Program[]) => {
+      authorizeDb.Programs.toArray().then( (programs: Program[]) => {
 
         const cloneMenu = clone(menu) as Menu;
 
@@ -131,22 +126,24 @@ export class MenuService {
           cloneMenu.programName = programs.filter(x => x.id ===  cloneMenu.program)[0].name;
         }
 
-        TableUpdate(this.db, TableEnum.Menus, menu.id, cloneMenu).then(() => {
+        authorizeDb.Menus.update(cloneMenu.id, cloneMenu).then((updated) => {
+
+          console.log(updated);
 
           subscriber.next(cloneMenu);
 
           subscriber.complete();
         });
-
       });
-
     });
   }
 
   delete(menu: Menu): Observable<Menu> {
     return new Observable(subscriber => {
 
-      TableDelete(this.db, TableEnum.Menus, menu.id).then(() => {
+      authorizeDb.Menus.delete(menu.id).then((deleted) => {
+
+        console.log(deleted);
 
         subscriber.next(menu);
 

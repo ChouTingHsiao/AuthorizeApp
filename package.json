@@ -31,15 +31,16 @@
     "@ngrx/store-devtools": "^12.0.0",
     "angular-cli-ghpages": "^0.6.2",
     "dexie": "^3.2.1",
+    "nanoid": "^4.0.0",
     "rxjs": "^6.6.7",
     "tslib": "^2.0.0",
     "web-animations-js": "^2.3.2",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
-    "@angular-devkit/core": "^12.2.17",
-    "@angular-devkit/build-angular": "^12.2.17",
     "@angular-devkit/architect": "^0.1202.17",
+    "@angular-devkit/build-angular": "^12.2.17",
+    "@angular-devkit/core": "^12.2.17",
     "@angular-eslint/builder": "12.7.0",
     "@angular-eslint/eslint-plugin": "12.7.0",
     "@angular-eslint/eslint-plugin-template": "12.7.0",
@@ -54,6 +55,7 @@
     "@types/node": "^12.20.28",
     "@typescript-eslint/eslint-plugin": "4.28.2",
     "@typescript-eslint/parser": "4.28.2",
+    "cypress": "latest",
     "eslint": "^7.26.0",
     "jasmine-core": "^3.6.0",
     "jasmine-spec-reporter": "~5.0.0",
@@ -63,7 +65,6 @@
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "^1.5.0",
     "ts-node": "~7.0.0",
-    "typescript": "~4.3.5",
-    "cypress": "latest"
+    "typescript": "~4.3.5"
   }
 }

@@ -1,8 +1,7 @@
-import Dexie from 'dexie';
+import { authorizeDb } from '@shared/Dexie/authorizeDb.dexie';
+import { nanoid } from 'nanoid'
 import { Injectable } from '@angular/core';
 import { Button } from '@shared/Model/button.model';
-import { TableEnum } from '@shared/Enum/table.enum';
-import { OpenDB, GetAll, TableAdd, TableUpdate, TableDelete } from '@shared/Dexie/authorize.dexie';
 import { Observable } from 'rxjs';
 import { clone } from '@shared/Method/object.method';
 
@@ -11,30 +10,24 @@ import { clone } from '@shared/Method/object.method';
 })
 export class ButtonService {
 
-  private db: Promise<Dexie>;
-
-  constructor() {
-
-    this.db = OpenDB();
-  }
+  constructor() {}
 
   getAll(): Observable<Button[]> {
     return new Observable(subscriber => {
 
-      GetAll(this.db, TableEnum.Buttons).then( (buttons: Button[]) => {
+      authorizeDb.Buttons.toArray().then( (buttons: Button[]) => {
 
         subscriber.next(buttons);
 
         subscriber.complete();
       });
-
     });
   }
 
   getByProgramId(programId: string): Observable<Button[]> {
     return new Observable(subscriber => {
 
-      GetAll(this.db, TableEnum.Buttons).then( (buttons: Button[]) => {
+      authorizeDb.Buttons.toArray().then( (buttons: Button[]) => {
 
         const programButton = buttons.filter( button => button.program === programId);
 
@@ -42,7 +35,6 @@ export class ButtonService {
 
         subscriber.complete();
       });
-
     });
   }
 
@@ -51,40 +43,44 @@ export class ButtonService {
 
       const cloneButton = clone(button) as Button;
 
-      TableAdd(this.db, TableEnum.Buttons, cloneButton).then(() => {
+      cloneButton.id = nanoid();
+
+      authorizeDb.Buttons.add(cloneButton).then((added) => {
+
+        console.log(added);
 
         subscriber.next(cloneButton);
 
         subscriber.complete();
       });
-
     });
   }
 
   update(button: Button): Observable<Button> {
     return new Observable(subscriber => {
 
-      TableUpdate(this.db, TableEnum.Buttons, button.id, button).then(() => {
+      authorizeDb.Buttons.toArray().then((updated) => {
+
+        console.log(updated);
 
         subscriber.next(button);
 
         subscriber.complete();
       });
-
     });
   }
 
   delete(button: Button): Observable<Button> {
     return new Observable(subscriber => {
 
-      TableDelete(this.db, TableEnum.Buttons, button.id).then(() => {
+      authorizeDb.Buttons.delete(button.id).then((deleted) => {
+
+        console.log(deleted);
 
         subscriber.next(button);
 
         subscriber.complete();
       });
-
     });
   }
-
 }

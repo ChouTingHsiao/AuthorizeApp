@@ -1,30 +1,25 @@
-import Dexie from 'dexie';
+import { authorizeDb } from '@shared/Dexie/authorizeDb.dexie';
+import { nanoid } from 'nanoid'
 import { Injectable } from '@angular/core';
 import { User } from '@shared/Model/user.model';
 import { Role } from '@shared/Model/role.model';
-import { TableEnum } from '@shared/Enum/table.enum';
-import { OpenDB, GetAll, TableAdd, TableUpdate, TableDelete } from '@shared/Dexie/authorize.dexie';
 import { Observable } from 'rxjs';
 import { clone } from '@shared/Method/object.method';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  private db: Promise<Dexie>;
-
-  constructor() {
-
-    this.db = OpenDB();
-  }
+  constructor() {}
 
   getAll(): Observable<User[]> {
-    return new Observable(subscriber => {
+    return new Observable((subscriber) => {
 
-      GetAll(this.db, TableEnum.Users).then( (users: User[]) => {
+      authorizeDb.Users.toArray().then( (users: User[]) => {
 
-        GetAll(this.db, TableEnum.Roles).then( (roles: Role[]) => {
+        authorizeDb.Roles.toArray().then( (roles: Role[]) => {
 
           users.forEach((x) => {
             x.roleName = roles.filter(y => y.id ===  x.role)[0].name;
@@ -34,18 +29,18 @@ export class UserService {
 
           subscriber.complete();
         });
-
       });
-
     });
   }
 
   create(user: User): Observable<User> {
     return new Observable(subscriber => {
 
-      GetAll(this.db, TableEnum.Roles).then( (roles: User[]) => {
+      authorizeDb.Roles.toArray().then((roles: Role[]) => {
 
         const cloneUser = clone(user) as User;
+
+        cloneUser.id = nanoid();
 
         if (!cloneUser.role) {
 
@@ -58,22 +53,22 @@ export class UserService {
           cloneUser.roleName = roles.filter(x => x.id ===  cloneUser.role)[0].name;
         }
 
-        TableAdd(this.db, TableEnum.Users, cloneUser).then(() => {
+        authorizeDb.Users.add(cloneUser).then((added) => {
+
+          console.log(added);
 
           subscriber.next(cloneUser);
 
           subscriber.complete();
         });
-
       });
-
     });
   }
 
   update(user: User): Observable<User> {
     return new Observable(subscriber => {
 
-      GetAll(this.db, TableEnum.Roles).then( (roles: Role[]) => {
+      authorizeDb.Roles.toArray().then( (roles: Role[]) => {
 
         const cloneUser = clone(user) as User;
 
@@ -88,29 +83,29 @@ export class UserService {
           cloneUser.roleName = roles.filter(x => x.id ===  cloneUser.role)[0].name;
         }
 
-        TableUpdate(this.db, TableEnum.Users, user.id, cloneUser).then(() => {
+        authorizeDb.Users.update(cloneUser.id, cloneUser).then((updated) => {
+
+          console.log(updated);
 
           subscriber.next(cloneUser);
 
           subscriber.complete();
         });
-
       });
-
     });
   }
 
   delete(user: User): Observable<User> {
     return new Observable(subscriber => {
 
-      TableDelete(this.db, TableEnum.Users, user.id).then(() => {
+      authorizeDb.Users.delete(user.id).then((deleted) => {
+
+        console.log(deleted);
 
         subscriber.next(user);
 
         subscriber.complete();
       });
-
     });
   }
-
 }

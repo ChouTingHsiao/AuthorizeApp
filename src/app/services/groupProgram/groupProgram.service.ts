@@ -1,11 +1,10 @@
-import Dexie from 'dexie';
+import { authorizeDb } from '@shared/Dexie/authorizeDb.dexie';
+import { nanoid } from 'nanoid'
 import { Injectable } from '@angular/core';
 import { GroupProgram } from '@shared/Model/groupProgram.model';
 import { Program } from '@shared/Model/program.model';
 import { Button } from '@shared/Model/button.model';
 import { ProgramService } from '@services/program/program.service';
-import { TableEnum } from '@shared/Enum/table.enum';
-import { OpenDB, GetAll, TableAdd, TableUpdate, TableDelete } from '@shared/Dexie/authorize.dexie';
 import { Observable } from 'rxjs';
 import { clone } from '@shared/Method/object.method';
 
@@ -14,19 +13,14 @@ import { clone } from '@shared/Method/object.method';
 })
 export class GroupProgramService {
 
-  private db: Promise<Dexie>;
-
-  constructor(private programService: ProgramService) {
-
-    this.db = OpenDB();
-  }
+  constructor(private programService: ProgramService) {}
 
   getAll(): Observable<GroupProgram[]> {
     return new Observable(subscriber => {
 
-      GetAll(this.db, TableEnum.GroupPrograms).then( (groupPrograms: GroupProgram[]) => {
+      authorizeDb.GroupPrograms.toArray().then( (groupPrograms: GroupProgram[]) => {
 
-        GetAll(this.db, TableEnum.Programs).then( (programs: Program[]) => {
+        authorizeDb.Programs.toArray().then( (programs: Program[]) => {
 
           groupPrograms.forEach( group => {
 
@@ -46,69 +40,64 @@ export class GroupProgramService {
 
           subscriber.complete();
         });
-
       });
-
     });
   }
 
   getByGroupId(groupId: string): Observable<GroupProgram[]> {
     return new Observable(subscriber => {
 
-      GetAll(this.db, TableEnum.GroupPrograms).then( (groupPrograms: GroupProgram[])  => {
+      authorizeDb.GroupPrograms.toArray().then( (groupPrograms: GroupProgram[])  => {
 
-        GetAll(this.db, TableEnum.Programs).then( (programs: Program[]) => {
+        authorizeDb.Programs.toArray().then( (programs: Program[]) => {
 
-            GetAll(this.db, TableEnum.Buttons).then( (buttons: Button[]) => {
+          authorizeDb.Buttons.toArray().then( (buttons: Button[]) => {
 
-              const groupProgram = groupPrograms.filter( authGroupProgram => authGroupProgram.group === groupId);
+            const groupProgram = groupPrograms.filter( authGroupProgram => authGroupProgram.group === groupId);
 
-              // 群組程式
-              groupProgram.forEach( group => {
+            // 群組程式
+            groupProgram.forEach( group => {
 
-                const authProgram = programs.filter(x => x.id ===  group.program);
+              const authProgram = programs.filter(x => x.id ===  group.program);
 
-                authProgram.forEach( program => {
+              authProgram.forEach( program => {
 
-                  const LinkedButtons = buttons.filter( button => button.program === program.id);
+                const LinkedButtons = buttons.filter( button => button.program === program.id);
 
-                  program.buttons = LinkedButtons;
-
-                });
-
-                const isNotAuthEmpty = group.program !== '';
-
-                const isAuthFound = authProgram !== undefined && authProgram.length > 0;
-
-                if (isNotAuthEmpty && isAuthFound) {
-
-                  group.programName = authProgram[0].name;
-                }
-
-                if (authProgram.length > 0 &&
-                    authProgram[0].buttons &&
-                    authProgram[0].buttons.length > 0) {
-
-                    group.buttonsName = group.buttons.map(x => {
-
-                      const button = authProgram[0].buttons.filter(y => y.id === x);
-
-                      return  button === undefined ? '' :  button[0].remark;
-
-                    }).join(',');
-                }
+                program.buttons = LinkedButtons;
 
               });
 
-              subscriber.next(groupProgram);
+              const isNotAuthEmpty = group.program !== '';
 
-              subscriber.complete();
+              const isAuthFound = authProgram !== undefined && authProgram.length > 0;
+
+              if (isNotAuthEmpty && isAuthFound) {
+
+                group.programName = authProgram[0].name;
+              }
+
+              if (authProgram.length > 0 &&
+                  authProgram[0].buttons &&
+                  authProgram[0].buttons.length > 0) {
+
+                  group.buttonsName = group.buttons.map(x => {
+
+                    const button = authProgram[0].buttons.filter(y => y.id === x);
+
+                    return  button === undefined ? '' :  button[0].remark;
+
+                  }).join(',');
+              }
+
             });
 
+            subscriber.next(groupProgram);
+
+            subscriber.complete();
+          });
         });
-
       });
-
     });
   }
 
@@ -146,18 +135,19 @@ export class GroupProgramService {
         }
 
       });
-
     });
   }
 
   create(groupProgram: GroupProgram): Observable<GroupProgram> {
     return new Observable(subscriber => {
 
-      GetAll(this.db, TableEnum.Programs).then( (programs: Program[]) => {
+      authorizeDb.Programs.toArray().then( (programs: Program[]) => {
 
-        GetAll(this.db, TableEnum.Buttons).then( (buttons: Button[]) => {
+        authorizeDb.Buttons.toArray().then( (buttons: Button[]) => {
 
           const cloneGroupProgram = clone(groupProgram) as GroupProgram;
+
+          cloneGroupProgram.id = nanoid();
 
           const authProgram = programs.filter(x => x.id ===  cloneGroupProgram.program);
 
@@ -190,26 +180,25 @@ export class GroupProgramService {
                 }).join(',');
           }
 
-          TableAdd(this.db, TableEnum.GroupPrograms, cloneGroupProgram).then(() => {
+          authorizeDb.GroupPrograms.add(cloneGroupProgram).then((added) => {
+
+            console.log(added);
 
             subscriber.next(cloneGroupProgram);
 
             subscriber.complete();
           });
-
         });
-
       });
-
     });
   }
 
   update(groupProgram: GroupProgram): Observable<GroupProgram> {
     return new Observable(subscriber => {
 
-      GetAll(this.db, TableEnum.Programs).then( (programs: Program[]) => {
+      authorizeDb.Programs.toArray().then( (programs: Program[]) => {
 
-        GetAll(this.db, TableEnum.Buttons).then( (buttons: Button[]) => {
+        authorizeDb.Buttons.toArray().then( (buttons: Button[]) => {
 
           const cloneGroupProgram = clone(groupProgram) as GroupProgram;
 
@@ -244,31 +233,30 @@ export class GroupProgramService {
                 }).join(',');
           }
 
-          TableUpdate(this.db, TableEnum.GroupPrograms, groupProgram.id, cloneGroupProgram).then(() => {
+          authorizeDb.GroupPrograms.update(cloneGroupProgram.id, cloneGroupProgram).then((updated) => {
+
+            console.log(updated);
 
             subscriber.next(cloneGroupProgram);
 
             subscriber.complete();
           });
-
         });
-
       });
-
     });
   }
 
   delete(groupProgram: GroupProgram): Observable<GroupProgram> {
     return new Observable(subscriber => {
 
-      TableDelete(this.db, TableEnum.GroupPrograms, groupProgram.id).then(() => {
+      authorizeDb.GroupPrograms.delete(groupProgram.id).then((deleted) => {
+
+        console.log(deleted);
 
         subscriber.next(groupProgram);
 
         subscriber.complete();
       });
-
     });
   }
-
 }
