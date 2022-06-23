@@ -1,4 +1,4 @@
-import { authorizeDb } from '@shared/Dexie/authorizeDb.dexie';
+import { authorizeDb } from '@shared/Dexie/AuthorizeDb.dexie';
 import { nanoid } from 'nanoid'
 import { Injectable } from '@angular/core';
 import { GroupProgram } from '@shared/Model/groupProgram.model';
