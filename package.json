@@ -7,7 +7,7 @@
     "build": "ng build",
     "test": "ng test --watch=false",
     "lint": "ng lint",
-    "e2e": "ng e2e --headless --no-watch",
+    "e2e": "ng e2e --browser chrome --headless --no-watch",
     "deploy": "ng build --configuration production --base-href https://chou-ting-hsiao.github.io/AuthorizeApp/ && npx ngh --dir=dist/authorize-example",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run"
