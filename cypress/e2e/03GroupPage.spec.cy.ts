@@ -30,6 +30,7 @@ describe('My GroupPage Test', () => {
     cy.cacheElement('previousTotal', 'div.mat-paginator-range-label')
 
     cy.get('button.mat-button.mat-button-base').eq(0).click()
+
     cy.wait(500)
 
     cy.cacheElement('currentTotal', 'div.mat-paginator-range-label')
@@ -41,7 +42,7 @@ describe('My GroupPage Test', () => {
 
     cy.ClickLastButton()
 
-    cy.get('button.mat-raised-button.mat-button-base.mat-accent').last().click()
+    cy.ClickEditByColumn('name', 'TEST1')
 
     const newName = 'TEST2'
 
@@ -51,11 +52,11 @@ describe('My GroupPage Test', () => {
 
     cy.wait(500)
 
-    cy.CheckLastColumnValue('name', newName)
+    cy.CheckColumnValue('name', newName)
   })
 
   it('Should Delete Item', () => {
     
-    cy.DeleteLastData()
+    cy.ClickDeleteByColumn('name', 'TEST2')
   })
 })

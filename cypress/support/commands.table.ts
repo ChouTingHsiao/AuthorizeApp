@@ -25,21 +25,29 @@ Cypress.Commands.add('ClickLastButton', () => {
     })
 })
 
-Cypress.Commands.add('CheckLastColumnValue', (column, value) => {
+Cypress.Commands.add('ClickEditByColumn', (column, value) => {
 
     cy.get('app-table tbody')
-      .find('tr:not(.detail-row)')
-      .last()
-      .find(`.mat-column-${column}`)
-      .first()
-      .should(($td) => {
-        expect($td.text()).to.eq(value)
-      })
+    .find(`tr:not(.detail-row) td.mat-column-${column}`)
+    .contains(value)
+    .siblings('td.mat-column-maintain')
+    .find('button#btnEdit')
+    .click()
 })
 
-Cypress.Commands.add('DeleteLastData', () => {
+Cypress.Commands.add('CheckColumnValue', (column, value) => {
 
-    cy.get('button.mat-raised-button.mat-button-base.mat-warn')
-    .last()
+    cy.get('app-table tbody')
+      .find(`tr:not(.detail-row) td.mat-column-${column}`)
+      .contains(value)
+})
+
+Cypress.Commands.add('ClickDeleteByColumn', (column, value) => {
+
+    cy.get('app-table tbody')
+    .find(`tr:not(.detail-row) td.mat-column-${column}`)
+    .contains(value)
+    .siblings('td.mat-column-maintain')
+    .find('button#btnDelete')
     .click()
 })

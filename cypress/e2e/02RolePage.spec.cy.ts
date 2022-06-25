@@ -38,7 +38,7 @@ describe('My RolePage Test', () => {
 
     cy.ClickLastButton()
 
-    cy.get('button.mat-raised-button.mat-button-base.mat-accent').last().click()
+    cy.ClickEditByColumn('name', 'TEST1')
 
     const newName = 'TEST2'
 
@@ -48,11 +48,11 @@ describe('My RolePage Test', () => {
 
     cy.wait(500)
 
-    cy.CheckLastColumnValue('name', newName)
+    cy.CheckColumnValue('name', newName)
   })
 
   it('Should Delete Item', () => {
     
-    cy.DeleteLastData()
+    cy.ClickDeleteByColumn('name', 'TEST2')
   })
 })

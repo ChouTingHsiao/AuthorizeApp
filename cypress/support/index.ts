@@ -11,9 +11,11 @@ declare global {
 
             ClickLastButton(): void;
 
-            CheckLastColumnValue(column: string, value: string): void;
+            ClickEditByColumn(column: string, value: string): void;
 
-            DeleteLastData(): void;
+            CheckColumnValue(column: string, value: string): void;
+
+            ClickDeleteByColumn(column: string, value: string): void;
         }
     }
 }
