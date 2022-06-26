@@ -7,15 +7,13 @@ declare global {
 
             cacheElement(key: string, value: string): Cypress.Chainable<string>;
 
-            CheckTotalCount(): void;
+            CheckTotalCount(previous: string, current: string): void;
 
             ClickLastButton(): void;
 
-            ClickEditByColumn(column: string, value: string): void;
+            CheckColumnValue(column: string, value: string, isDetail?: boolean): void;
 
-            CheckColumnValue(column: string, value: string): void;
-
-            ClickDeleteByColumn(column: string, value: string): void;
+            ClickButtonByColumn(button: string, column: string, value: string, isDetail?: boolean): void;
         }
     }
 }

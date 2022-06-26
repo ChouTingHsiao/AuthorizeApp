@@ -1,6 +1,6 @@
 
 describe('My ProgramPage Test', () => {
-  it('Should display Program page', () => {
+  it('Should Display Program page', () => {
     
     cy.visit('/')
 
@@ -33,14 +33,14 @@ describe('My ProgramPage Test', () => {
 
     cy.cacheElement('currentTotal', 'div.mat-paginator-range-label')
 
-    cy.CheckTotalCount()
+    cy.CheckTotalCount('previousTotal', 'currentTotal')
   })
 
   it('Should Edit Item', () => {
 
     cy.ClickLastButton()
 
-    cy.ClickEditByColumn('name', 'TEST1')
+    cy.ClickButtonByColumn(`button#btnEdit`, 'name', 'TEST1')
 
     const newName = 'TEST2'
 
@@ -55,6 +55,6 @@ describe('My ProgramPage Test', () => {
 
   it('Should Delete Item', () => {
     
-    cy.ClickDeleteByColumn('name', 'TEST2')
+    cy.ClickButtonByColumn('button#btnDelete', 'name', 'TEST2')
   })
 })

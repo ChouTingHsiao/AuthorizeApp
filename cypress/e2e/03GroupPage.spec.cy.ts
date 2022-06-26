@@ -1,6 +1,6 @@
 
 describe('My GroupPage Test', () => {
-  it('Should display Group page', () => {
+  it('Should Display Group page', () => {
     
     cy.visit('/')
 
@@ -35,14 +35,14 @@ describe('My GroupPage Test', () => {
 
     cy.cacheElement('currentTotal', 'div.mat-paginator-range-label')
 
-    cy.CheckTotalCount()
+    cy.CheckTotalCount('previousTotal', 'currentTotal')
   })
 
   it('Should Edit Item', () => {
 
     cy.ClickLastButton()
 
-    cy.ClickEditByColumn('name', 'TEST1')
+    cy.ClickButtonByColumn('button#btnEdit', 'name', 'TEST1')
 
     const newName = 'TEST2'
 
@@ -55,8 +55,54 @@ describe('My GroupPage Test', () => {
     cy.CheckColumnValue('name', newName)
   })
 
+  const detailElement = 'app-table tbody tr.detail-row';
+
+  it('Should Display Detail', () => {
+
+    cy.ClickButtonByColumn('button[aria-label="Detail"]', 'name', 'TEST2')
+
+    cy.get(`${detailElement} button#btnAdd`).should("be.visible")
+  })
+
+  it('Should Add Detail', () => {
+
+    cy.get(`${detailElement} button#btnAdd`).click()
+
+    cy.get('input[data-placeholder="name"]').type('TEST1')
+
+    cy.cacheElement('previousDetailTotal', `${detailElement} div.mat-paginator-range-label`)
+
+    cy.get('button.mat-button.mat-button-base').eq(0).click()
+
+    cy.wait(500)
+
+    cy.cacheElement('currentDetailTotal', `${detailElement} div.mat-paginator-range-label`)
+
+    cy.CheckTotalCount('previousDetailTotal', 'currentDetailTotal')
+  })
+
+  it('Should Edit Detail', () => {
+
+    cy.ClickButtonByColumn(`button#btnEdit`, 'name', 'TEST1', true)
+
+    const newName = 'TEST2'
+
+    cy.get('input[data-placeholder="name"]').clear().type(newName)
+
+    cy.get('button.mat-button.mat-button-base').eq(0).click()
+
+    cy.wait(500)
+
+    cy.CheckColumnValue('name', newName, true)
+  })
+
+  it('Should Delete Detail', () => {
+    
+    cy.ClickButtonByColumn('button#btnDelete', 'name', 'TEST2', true)
+  })
+
   it('Should Delete Item', () => {
     
-    cy.ClickDeleteByColumn('name', 'TEST2')
+    cy.ClickButtonByColumn('button#btnDelete', 'name', 'TEST2')
   })
 })
