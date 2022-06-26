@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Read } from '@shared/Ngrx/Actions/maintain.action';
+import { TableEnum } from '@shared/Enum/table.enum';
+import { Menu } from '@shared/Model/menu.model';
 import { Role } from '@shared/Model/role.model';
 import { RoleService } from '@services/role/role.service';
 import { Group } from '@shared/Model/group.model';
@@ -20,7 +24,8 @@ export class DashboardComponent implements OnInit {
 
   groupPrograms: Observable<GroupProgram[]>;
 
-  constructor(private groupService: GroupService,
+  constructor(private store: Store,
+              private groupService: GroupService,
               private roleService: RoleService,
               private groupProgramService: GroupProgramService) { }
 
@@ -40,6 +45,8 @@ export class DashboardComponent implements OnInit {
   SetGroup(group: Group) {
 
     localStorage.setItem('UserGroup', group.id);
+
+    this.store.dispatch( new Read<Menu>(TableEnum.Menus) );
   }
 }
 
