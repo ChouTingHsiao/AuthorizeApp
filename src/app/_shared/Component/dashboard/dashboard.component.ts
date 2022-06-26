@@ -35,8 +35,11 @@ export class DashboardComponent implements OnInit {
     const UserGroup: string =  localStorage.getItem('UserGroup');
 
     this.groupPrograms = this.groupProgramService.getByGroupId(UserGroup);
-
   }
 
+  SetGroup(group: Group) {
+
+    localStorage.setItem('UserGroup', group.id);
+  }
 }
 

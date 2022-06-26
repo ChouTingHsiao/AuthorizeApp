@@ -20,7 +20,7 @@
         </mat-card-header>
         <mat-divider></mat-divider>
         <mat-card-content class="theme-left container">
-          <p *ngFor="let group of (groups | async)" >
+          <p *ngFor="let group of (groups | async)"(click)="SetGroup(group)">
             &nbsp;&nbsp;{{group.name}}
           </p>
         </mat-card-content>
