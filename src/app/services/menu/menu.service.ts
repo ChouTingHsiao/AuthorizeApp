@@ -141,9 +141,7 @@ export class MenuService {
   delete(menu: Menu): Observable<Menu> {
     return new Observable(subscriber => {
 
-      authorizeDb.Menus.delete(menu.id).then((deleted) => {
-
-        console.log(deleted);
+      authorizeDb.Menus.delete(menu.id).then(() => {
 
         subscriber.next(menu);
 

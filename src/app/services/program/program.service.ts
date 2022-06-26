@@ -76,9 +76,7 @@ export class ProgramService {
   delete(program: Program): Observable<Program> {
     return new Observable(subscriber => {
 
-      authorizeDb.Programs.delete(program.id).then((deleted) => {
-
-        console.log(deleted);
+      authorizeDb.Programs.delete(program.id).then(() => {
 
         subscriber.next(program);
 

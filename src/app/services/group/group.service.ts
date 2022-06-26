@@ -122,9 +122,7 @@ export class GroupService {
   delete(group: Group): Observable<Group> {
     return new Observable(subscriber => {
 
-      authorizeDb.Groups.delete(group.id).then((deleted) => {
-
-        console.log(deleted);
+      authorizeDb.Groups.delete(group.id).then(() => {
 
         subscriber.next(group);
 

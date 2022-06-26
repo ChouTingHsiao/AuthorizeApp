@@ -249,9 +249,7 @@ export class GroupProgramService {
   delete(groupProgram: GroupProgram): Observable<GroupProgram> {
     return new Observable(subscriber => {
 
-      authorizeDb.GroupPrograms.delete(groupProgram.id).then((deleted) => {
-
-        console.log(deleted);
+      authorizeDb.GroupPrograms.delete(groupProgram.id).then(() => {
 
         subscriber.next(groupProgram);
 

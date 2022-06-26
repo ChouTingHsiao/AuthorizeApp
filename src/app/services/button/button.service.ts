@@ -73,9 +73,7 @@ export class ButtonService {
   delete(button: Button): Observable<Button> {
     return new Observable(subscriber => {
 
-      authorizeDb.Buttons.delete(button.id).then((deleted) => {
-
-        console.log(deleted);
+      authorizeDb.Buttons.delete(button.id).then(() => {
 
         subscriber.next(button);
 

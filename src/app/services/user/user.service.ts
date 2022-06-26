@@ -98,9 +98,7 @@ export class UserService {
   delete(user: User): Observable<User> {
     return new Observable(subscriber => {
 
-      authorizeDb.Users.delete(user.id).then((deleted) => {
-
-        console.log(deleted);
+      authorizeDb.Users.delete(user.id).then(() => {
 
         subscriber.next(user);
 

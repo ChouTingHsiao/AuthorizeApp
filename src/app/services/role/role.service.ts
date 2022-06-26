@@ -73,9 +73,7 @@ export class RoleService {
   delete(role: Role): Observable<Role> {
     return new Observable(subscriber => {
 
-      authorizeDb.Roles.delete(role.id).then((deleted) => {
-
-        console.log(deleted);
+      authorizeDb.Roles.delete(role.id).then(() => {
 
         subscriber.next(role);
 
