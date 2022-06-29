@@ -2,7 +2,7 @@
 <div class="container in550-1550 theme-center">
     <mat-card class="example-card">
         <mat-card-header>
-          <mat-icon mat-card-avatar>assignment_ind</mat-icon>
+          <mat-icon class="font-theme" mat-card-avatar>assignment_ind</mat-icon>
           <mat-card-title>Your Role</mat-card-title>
         </mat-card-header>
         <mat-divider></mat-divider>
@@ -15,12 +15,13 @@
 
     <mat-card class="example-card">
         <mat-card-header>
-          <mat-icon mat-card-avatar>supervisor_account</mat-icon>
+          <mat-icon class="font-theme" mat-card-avatar>supervisor_account</mat-icon>
           <mat-card-title>Your Group</mat-card-title>
         </mat-card-header>
         <mat-divider></mat-divider>
         <mat-card-content class="theme-left container">
-          <p *ngFor="let group of (groups | async)"(click)="SetGroup(group)">
+          <p *ngFor="let group of (dashBoardGroups | async)"(click)="SetGroup(group)">
+            <mat-icon class="font-theme" *ngIf="group.isActive">gps_fixed</mat-icon>
             &nbsp;&nbsp;{{group.name}}
           </p>
         </mat-card-content>
@@ -28,7 +29,7 @@
 
     <mat-card class="example-card">
       <mat-card-header>
-        <mat-icon mat-card-avatar>airplay</mat-icon>
+        <mat-icon class="font-theme" mat-card-avatar>airplay</mat-icon>
         <mat-card-title>Authorize Program</mat-card-title>
       </mat-card-header>
       <mat-divider></mat-divider>

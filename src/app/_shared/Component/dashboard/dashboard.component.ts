@@ -9,6 +9,7 @@ import { Group } from '@shared/Model/group.model';
 import { GroupService } from '@services/group/group.service';
 import { GroupProgram } from '@shared/Model/groupProgram.model';
 import { GroupProgramService } from '@services/groupProgram/groupProgram.service';
+import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -21,6 +22,8 @@ export class DashboardComponent implements OnInit {
   role: Observable<Role>;
 
   groups: Observable<Group[]>;
+
+  dashBoardGroups: Observable<Group[]>;
 
   groupPrograms: Observable<GroupProgram[]>;
 
@@ -37,6 +40,8 @@ export class DashboardComponent implements OnInit {
 
     this.groups = this.groupService.getByAuth();
 
+    this.dashBoardGroups = this.groups.pipe(map(x => this.ActiveGroup(x, "")));
+
     const UserGroup: string =  localStorage.getItem('UserGroup');
 
     this.groupPrograms = this.groupProgramService.getByGroupId(UserGroup);
@@ -47,6 +52,26 @@ export class DashboardComponent implements OnInit {
     localStorage.setItem('UserGroup', group.id);
 
     this.store.dispatch( new Read<Menu>(TableEnum.Menus) );
+
+    this.dashBoardGroups = this.groups.pipe(map(x => this.ActiveGroup(x, group.id)));
+  }
+
+  ActiveGroup(groups: Group[], id: string): Group[] {
+
+    groups.forEach(x => {
+
+      x.isActive = false;
+
+      if(x.id === id){
+        x.isActive = true;
+      }
+    });
+
+    if(id === ""){
+      groups[0].isActive = true;
+    }
+
+    return groups;
   }
 }
 

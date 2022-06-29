@@ -3,4 +3,5 @@ export interface Group {
     name: string;
     roles: string[];
     rolesName?: string;
+    isActive?: boolean;
 }
