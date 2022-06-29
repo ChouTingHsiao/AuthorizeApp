@@ -58,18 +58,18 @@ export class DashboardComponent implements OnInit {
 
   ActiveGroup(groups: Group[], id: string): Group[] {
 
+    const currentGroup: string = localStorage.getItem('UserGroup');
+
+    this.groupPrograms = this.groupProgramService.getByGroupId(currentGroup);
+
     groups.forEach(x => {
 
       x.isActive = false;
 
-      if(x.id === id){
+      if(x.id === currentGroup){
         x.isActive = true;
       }
     });
-
-    if(id === ""){
-      groups[0].isActive = true;
-    }
 
     return groups;
   }
