@@ -27,10 +27,12 @@ export class MenuComponent implements OnInit {
   constructor(private store: Store) { }
 
   ngOnInit() {
+    
     this.loadGrid();
   }
 
   loadGrid() {
+    
     this.myGrid = new Observable(subscriber => {
 
       const grid: Grid<Menu> = {
@@ -67,7 +69,6 @@ export class MenuComponent implements OnInit {
         read: () => {
 
           return this.store.select(getMenusState);
-
         },
         create: () => {
 
@@ -86,9 +87,7 @@ export class MenuComponent implements OnInit {
                     { program: event.value } as Button
                   )
                 );
-
               }
-
             },
             confirm: (): void => {
 
@@ -99,10 +98,8 @@ export class MenuComponent implements OnInit {
                   dialog.getData() as Menu
                 )
               );
-
             }
           }) as DialogComponent;
-
         },
         edit: (menu) => {
 
@@ -128,9 +125,7 @@ export class MenuComponent implements OnInit {
                     { program: event.value } as Button
                   )
                 );
-
               }
-
             },
             confirm: (): void => {
 
@@ -141,10 +136,8 @@ export class MenuComponent implements OnInit {
                   dialog.getData() as Menu
                 )
               );
-
-            },
+            }
           }) as DialogComponent;
-
         },
         delete: (menu) => {
 
@@ -159,9 +152,7 @@ export class MenuComponent implements OnInit {
                 menu
               )
             );
-
           }
-
         }
       };
 

@@ -26,10 +26,12 @@ export class UserComponent implements OnInit {
   constructor(private store: Store) { }
 
   ngOnInit() {
+
     this.loadGrid();
   }
 
   loadGrid() {
+
     this.myGrid = new Observable(subscriber => {
 
       const grid: Grid<User> = {
@@ -67,14 +69,13 @@ export class UserComponent implements OnInit {
 
               return this.store.select(getRolesState);
             }
-          },
+          }
         ],
         read: () => {
 
           this.store.dispatch( new Read<User>(TableEnum.Users) );
 
           return this.store.select(getUsersState);
-
         },
         create: () => {
 
@@ -92,10 +93,8 @@ export class UserComponent implements OnInit {
                   dialog.getData() as User
                 )
               );
-
-            },
+            }
           }) as DialogComponent;
-
         },
         edit: (user) => {
 
@@ -113,10 +112,8 @@ export class UserComponent implements OnInit {
                   dialog.getData() as User
                 )
               );
-
-            },
+            }
           }) as DialogComponent;
-
         },
         delete: (user) => {
 
@@ -131,9 +128,7 @@ export class UserComponent implements OnInit {
                 user
               )
             );
-
           }
-
         }
       };
 

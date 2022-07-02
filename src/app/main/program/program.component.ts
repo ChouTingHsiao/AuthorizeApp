@@ -28,10 +28,12 @@ export class ProgramComponent implements OnInit {
   constructor(private store: Store) { }
 
   ngOnInit() {
+    
     this.loadGrid();
   }
 
   loadGrid() {
+
     this.myGrid = new Observable(subscriber => {
 
       const grid: Grid<Program, Button> = {
@@ -62,9 +64,10 @@ export class ProgramComponent implements OnInit {
             columnDef: 'linkTag',
             type: ColumnEnum.string,
             selector: ColumnEnum.input
-          },
+          }
         ],
         detail: (program) => {
+
           return new Observable(detailSubscriber => {
 
             const detail: Detail<Button> = {
@@ -89,7 +92,7 @@ export class ProgramComponent implements OnInit {
                   columnDef: 'remark',
                   type: ColumnEnum.string,
                   selector: ColumnEnum.input,
-                },
+                }
               ],
               read: () => {
 
@@ -101,7 +104,6 @@ export class ProgramComponent implements OnInit {
                 );
 
                 return this.store.select(getButtonsState);
-
               },
               create: () => {
 
@@ -123,9 +125,7 @@ export class ProgramComponent implements OnInit {
                     [],
                     buttonData)
                   );
-
                 };
-
               },
               edit: (button) => {
 
@@ -145,9 +145,7 @@ export class ProgramComponent implements OnInit {
                       dialog.getData() as Button
                     )
                   );
-
                 };
-
               },
               delete: (button) => {
 
@@ -162,9 +160,7 @@ export class ProgramComponent implements OnInit {
                       button
                     )
                   );
-
                 }
-
               }
             };
 
@@ -178,7 +174,6 @@ export class ProgramComponent implements OnInit {
           this.store.dispatch( new Read<Program>(TableEnum.Programs) );
 
           return this.store.select(getProgramsState);
-
         },
         create: () => {
 
@@ -199,7 +194,6 @@ export class ProgramComponent implements OnInit {
 
             },
           }) as DialogComponent;
-
         },
         edit: (program) => {
 
@@ -218,7 +212,6 @@ export class ProgramComponent implements OnInit {
               );
             },
           }) as DialogComponent;
-
         },
         delete: (program) => {
 
@@ -233,9 +226,7 @@ export class ProgramComponent implements OnInit {
                 program
               )
             );
-
           }
-
         }
       };
 

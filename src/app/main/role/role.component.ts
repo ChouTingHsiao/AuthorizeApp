@@ -25,10 +25,12 @@ export class RoleComponent implements OnInit {
   constructor(private store: Store) { }
 
   ngOnInit() {
+
     this.loadGrid();
   }
 
   loadGrid() {
+
     this.myGrid = new Observable(subscriber => {
 
       const grid: Grid<Role> = {
@@ -53,14 +55,13 @@ export class RoleComponent implements OnInit {
             columnDef: 'remark',
             type: ColumnEnum.string,
             selector: ColumnEnum.input
-          },
+          }
         ],
         read: (): Observable<unknown> => {
 
           this.store.dispatch( new Read<Role>(TableEnum.Roles) );
 
           return this.store.select(getRolesState);
-
         },
         create: (): void => {
 
@@ -78,10 +79,8 @@ export class RoleComponent implements OnInit {
                   dialog.getData() as Role
                 )
               );
-
-            },
+            }
           }) as DialogComponent;
-
         },
         edit: (role): void => {
 
@@ -99,10 +98,8 @@ export class RoleComponent implements OnInit {
                   dialog.getData() as Role
                 )
               );
-
             },
           }) as DialogComponent;
-
         },
         delete: (role): void => {
 
@@ -117,9 +114,7 @@ export class RoleComponent implements OnInit {
                 role
               )
             );
-
           }
-
         }
       };
 

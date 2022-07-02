@@ -31,10 +31,12 @@ export class GroupComponent implements OnInit {
   constructor(private store: Store) { }
 
   ngOnInit() {
+    
     this.loadGrid();
   }
 
   loadGrid() {
+
     this.myGrid = new Observable(subscriber => {
 
       const grid: Grid<Group, GroupProgram> = {
@@ -66,9 +68,10 @@ export class GroupComponent implements OnInit {
 
               return this.store.select(getRolesState);
             }
-          },
+          }
         ],
         detail: (group) => {
+
           return new Observable(detailSubscriber => {
 
             const detail: Detail<GroupProgram> = {
@@ -111,9 +114,9 @@ export class GroupComponent implements OnInit {
 
                     return this.store.select(getButtonsState);
                   }
-                },
+                }
               ],
-              read: (): Observable<unknown> => {
+              read: () => {
 
                 this.store.dispatch( new Read<GroupProgram>(
                   `${TableEnum.Groups}.${TableEnum.GroupPrograms}`,
@@ -123,9 +126,8 @@ export class GroupComponent implements OnInit {
                 );
 
                 return this.store.select(getGroupProgramsState);
-
               },
-              create: (): void => {
+              create: () => {
 
                 const dialog: DialogComponent = this.openDetailDialog({
                   title: '新增頁面',
@@ -142,9 +144,7 @@ export class GroupComponent implements OnInit {
                           { program: event.value } as Button
                         )
                       );
-
                     }
-
                   },
                   confirm: (): void => {
 
@@ -157,12 +157,10 @@ export class GroupComponent implements OnInit {
                       [],
                       groupProgramData)
                     );
-
                   }
                 }) as DialogComponent;
-
               },
-              edit: (groupProgram): void => {
+              edit: (groupProgram) => {
 
                 this.store.dispatch( new Read<Button>(
                   `${TableEnum.Programs}.${TableEnum.Buttons}`,
@@ -186,9 +184,7 @@ export class GroupComponent implements OnInit {
                           { program: event.value } as Button
                         )
                       );
-
                     }
-
                   },
                   confirm: (): void => {
 
@@ -199,13 +195,10 @@ export class GroupComponent implements OnInit {
                         dialog.getData() as GroupProgram
                       )
                     );
-
-                  },
-
+                  }
                 }) as DialogComponent;
-
               },
-              delete: (groupProgram): void => {
+              delete: (groupProgram) => {
 
                 const isCanDelete = confirm('Are you sure you want to delete this?');
 
@@ -218,15 +211,13 @@ export class GroupComponent implements OnInit {
                       groupProgram
                     )
                   );
-
                 }
-
               }
             };
 
             detailSubscriber.next(detail);
-            detailSubscriber.complete();
 
+            detailSubscriber.complete();
           });
         },
         read: () => {
@@ -234,7 +225,6 @@ export class GroupComponent implements OnInit {
           this.store.dispatch( new Read<Group>(TableEnum.Groups) );
 
           return this.store.select(getGroupsState);
-
         },
         create: () => {
 
@@ -252,10 +242,8 @@ export class GroupComponent implements OnInit {
                   dialog.getData() as Group
                 )
               );
-
-            },
+            }
           }) as DialogComponent;
-
         },
         edit: (group) => {
 
@@ -273,10 +261,8 @@ export class GroupComponent implements OnInit {
                   dialog.getData() as Group
                 )
               );
-
             },
           }) as DialogComponent;
-
         },
         delete: (group) => {
 
@@ -291,9 +277,7 @@ export class GroupComponent implements OnInit {
                 group
               )
             );
-
           }
-
         }
       };
 
