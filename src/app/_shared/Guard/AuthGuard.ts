@@ -23,7 +23,6 @@ export class AuthGuard implements CanActivate {
 
       let loggedIn = false;
 
-
       this.menuService.getAll().pipe(
           switchMap( menus => this.groupProgramService.getAll().pipe(
             map(groupPrograms => ({ menus, groupPrograms }))
@@ -39,21 +38,19 @@ export class AuthGuard implements CanActivate {
         if (menu[0] && menu[0].program.length > 0) {
 
           loggedIn = groupPrograms.filter( x => x.group === UserGroup && x.program === menu[0].program).length > 0;
-
         }
 
         if (!loggedIn) {
+
           console.log('Not Auth');
+
           this.router.navigate(['/401']);
         }
 
         subscriber.next(loggedIn);
 
         subscriber.complete();
-
       });
-
     });
-
   }
 }

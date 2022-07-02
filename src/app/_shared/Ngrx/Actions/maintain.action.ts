@@ -78,4 +78,3 @@ export type MaintainSuccessActions<T> =
   | CreateSuccess<T>
   | EditSuccess<T>
   | DeleteSuccess<T>;
-

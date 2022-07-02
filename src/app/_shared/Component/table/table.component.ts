@@ -83,6 +83,7 @@ export class TableComponent implements OnChanges, OnDestroy {
   }
 
   setSource() {
+
     this.grid.subscribe(x => {
       this.subscription = x.read().subscribe((y) => {
         this.isLoading = false;
@@ -109,13 +110,10 @@ export class TableComponent implements OnChanges, OnDestroy {
     this.dataSource.sort = this.sort;
 
     this.dataSource.paginator = this.paginator;
-
   }
 
   initDetailHandler(openDetailDialog: (dialog: Dialog) => DialogComponent) {
 
     this.openDetailDialog.emit(openDetailDialog);
-
   }
-
 }

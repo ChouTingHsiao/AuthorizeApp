@@ -6,7 +6,7 @@ import { Router, CanActivate } from '@angular/router';
 })
 export class LoginGuard implements CanActivate {
 
-    constructor(private router: Router) {}
+  constructor(private router: Router) {}
 
   canActivate() {
 
@@ -15,9 +15,13 @@ export class LoginGuard implements CanActivate {
     const loggedIn: boolean = userRole && userRole.length > 0;
 
     if (!loggedIn) {
+
       console.log('Not Login');
+
       this.router.navigate(['/Login']);
+
     } else {
+
       console.log(`Role:${userRole}`);
     }
 

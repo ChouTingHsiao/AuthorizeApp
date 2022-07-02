@@ -37,9 +37,7 @@ function dataToColumn(data: unknown, columns: Column[]): Column[] {
         columns.forEach(x => {
 
           x.value = data[x.columnDef];
-
         });
-
     }
 
     return columns;

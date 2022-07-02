@@ -8,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class UnauthorizeComponent implements OnInit {
 
   first: string;
+
   third: string;
 
   constructor() { }
@@ -16,5 +17,4 @@ export class UnauthorizeComponent implements OnInit {
     this.first = '4';
     this.third = '1';
   }
-
 }

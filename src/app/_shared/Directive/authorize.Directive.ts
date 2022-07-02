@@ -25,11 +25,8 @@ export class AuthorizeDirective implements OnInit, AfterViewChecked {
       buttons.forEach(x => {
 
         this.AuthorizeDictionary[x.name] = x.isEnable;
-
       });
-
     });
-
   }
 
   ngAfterViewChecked() {
@@ -49,14 +46,8 @@ export class AuthorizeDirective implements OnInit, AfterViewChecked {
           element.disabled = true;
 
           element.style.cssText  = 'background-color : gray; color : white;';
-
         });
-
       }
-
     }
-
-
   }
-
 }

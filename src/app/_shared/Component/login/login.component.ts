@@ -21,7 +21,9 @@ export class LoginComponent implements OnInit {
               private groupService: GroupService) { }
 
   ngOnInit() {
+
     this.Account = 'USER';
+    
     this.Password = 'USER';
   }
 
@@ -64,10 +66,6 @@ export class LoginComponent implements OnInit {
       localStorage.setItem('UserRole', '');
 
       alert('登入失敗');
-
     });
-
   }
-
 }
-

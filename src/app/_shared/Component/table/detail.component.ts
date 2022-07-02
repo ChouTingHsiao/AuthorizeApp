@@ -25,7 +25,6 @@ export class DetailComponent implements OnInit, OnDestroy {
   @Output()
   openDetailDialog: EventEmitter<(dialog: Dialog) => unknown> = new EventEmitter();
 
-
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
   @ViewChild(MatSort, {static: true}) sort: MatSort;
@@ -53,13 +52,11 @@ export class DetailComponent implements OnInit, OnDestroy {
   ngOnInit() {
 
     this.setSource();
-
   }
 
   ngOnDestroy() {
 
     this.subscription.unsubscribe();
-
   }
 
   setSource() {
@@ -77,7 +74,6 @@ export class DetailComponent implements OnInit, OnDestroy {
       this.displayedColumns = columnToDisplay(x.columns);
       this.openDetailDialog.emit(openDialog(this.matDialog, x.columns));
     });
-
   }
 
   pageNation() {
@@ -85,7 +81,5 @@ export class DetailComponent implements OnInit, OnDestroy {
     this.dataSource.sort = this.sort;
 
     this.dataSource.paginator = this.paginator;
-
   }
-
 }
