@@ -6,14 +6,15 @@ import { DialogEnum } from '@shared/Enum/dialog.enum';
 import { ColumnEnum } from '@shared/Enum/column.enum';
 import { TableEnum } from '@shared/Enum/table.enum';
 import { Grid, Detail } from '@shared/Model/table.model';
-import { Role } from '@shared/Model/role.model';
 import { Group } from '@shared/Model/group.model';
 import { GroupProgram } from '@shared/Model/groupProgram.model';
-import { Program } from '@shared/Model/program.model';
-import { Button } from '@shared/Model/button.model';
-import { Read, Create, Edit, Delete} from '@shared/Ngrx/Actions/maintain.action';
+import { Create, Edit, Delete} from '@shared/Ngrx/Actions/maintain.action';
 import { Observable } from 'rxjs';
-import { getRolesState, getProgramsState, getButtonsState, getGroupProgramsState, getGroupsState } from '@shared/Ngrx/Selectors/maintain.selectors';
+import { GroupService } from '@services/group/group.service';
+import { GroupProgramService } from '@services/groupProgram/groupProgram.service';
+import { RoleService } from '@services/role/role.service';
+import { ProgramService } from '@services/program/program.service';
+import { ButtonService } from '@services/button/button.service';
 
 @Component({
   selector: 'app-group',
@@ -28,7 +29,13 @@ export class GroupComponent implements OnInit {
 
   myGrid: Observable<Grid<Group, GroupProgram>>;
 
-  constructor(private store: Store) { }
+  constructor(
+    private store: Store,
+    private groupProgramService: GroupProgramService,
+    private roleService: RoleService,
+    private programService: ProgramService,
+    private groupService: GroupService,
+    private buttonService: ButtonService){}
 
   ngOnInit() {
     
@@ -64,9 +71,7 @@ export class GroupComponent implements OnInit {
             selector: ColumnEnum.multiselect,
             source: (): Observable<unknown> => {
 
-              this.store.dispatch( new Read<Role>(TableEnum.Roles) );
-
-              return this.store.select(getRolesState);
+              return this.roleService.getAll();
             }
           }
         ],
@@ -99,9 +104,7 @@ export class GroupComponent implements OnInit {
                   selector: ColumnEnum.select,
                   source: (): Observable<unknown> => {
 
-                    this.store.dispatch( new Read<Program>(TableEnum.Programs) );
-
-                    return this.store.select(getProgramsState);
+                    return this.programService.getAll();
                   }
                 },
                 {
@@ -112,20 +115,13 @@ export class GroupComponent implements OnInit {
                   selector: ColumnEnum.multiselect,
                   source: (): Observable<unknown> => {
 
-                    return this.store.select(getButtonsState);
+                    return this.buttonService.getAll();
                   }
                 }
               ],
               read: () => {
 
-                this.store.dispatch( new Read<GroupProgram>(
-                  `${TableEnum.Groups}.${TableEnum.GroupPrograms}`,
-                    [],
-                    { group: group.id } as GroupProgram
-                  )
-                );
-
-                return this.store.select(getGroupProgramsState);
+                return this.groupProgramService.getByGroupId(group.id);
               },
               create: () => {
 
@@ -138,12 +134,6 @@ export class GroupComponent implements OnInit {
 
                     if ( event.source.ngControl.name === 'program' ) {
 
-                      this.store.dispatch( new Read<Button>(
-                        `${TableEnum.Programs}.${TableEnum.Buttons}`,
-                          [],
-                          { program: event.value } as Button
-                        )
-                      );
                     }
                   },
                   confirm: (): void => {
@@ -162,13 +152,6 @@ export class GroupComponent implements OnInit {
               },
               edit: (groupProgram) => {
 
-                this.store.dispatch( new Read<Button>(
-                  `${TableEnum.Programs}.${TableEnum.Buttons}`,
-                    [],
-                    { program: groupProgram.program } as Button
-                  )
-                );
-
                 const dialog: DialogComponent = this.openDetailDialog({
                   title: '修改頁面',
                   button: [DialogEnum.btnEdit, DialogEnum.btnCancel],
@@ -178,12 +161,6 @@ export class GroupComponent implements OnInit {
 
                     if ( event.source.ngControl.name === 'program' ) {
 
-                      this.store.dispatch( new Read<Button>(
-                        `${TableEnum.Programs}.${TableEnum.Buttons}`,
-                          [],
-                          { program: event.value } as Button
-                        )
-                      );
                     }
                   },
                   confirm: (): void => {
@@ -222,9 +199,7 @@ export class GroupComponent implements OnInit {
         },
         read: () => {
 
-          this.store.dispatch( new Read<Group>(TableEnum.Groups) );
-
-          return this.store.select(getGroupsState);
+          return this.groupService.getAll();
         },
         create: () => {
 

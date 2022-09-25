@@ -8,9 +8,10 @@ import { TableEnum } from '@shared/Enum/table.enum';
 import { Grid, Detail } from '@shared/Model/table.model';
 import { Program } from '@shared/Model/program.model';
 import { Button } from '@shared/Model/button.model';
-import { Read, Create, Edit, Delete} from '@shared/Ngrx/Actions/maintain.action';
+import { Create, Edit, Delete} from '@shared/Ngrx/Actions/maintain.action';
 import { Observable } from 'rxjs';
-import { getButtonsState, getProgramsState } from '@shared/Ngrx/Selectors/maintain.selectors';
+import { ProgramService } from '@services/program/program.service';
+import { ButtonService } from '@services/button/button.service';
 
 @Component({
   selector: 'app-program',
@@ -25,7 +26,10 @@ export class ProgramComponent implements OnInit {
 
   myGrid: Observable<Grid<Program, Button>>;
 
-  constructor(private store: Store) { }
+  constructor(
+    private store: Store,
+    private programService: ProgramService,
+    private buttonService: ButtonService){}
 
   ngOnInit() {
     
@@ -96,14 +100,7 @@ export class ProgramComponent implements OnInit {
               ],
               read: () => {
 
-                this.store.dispatch( new Read<Button>(
-                  `${TableEnum.Programs}.${TableEnum.Buttons}`,
-                    [],
-                    { program: program.id } as Button
-                  )
-                );
-
-                return this.store.select(getButtonsState);
+                return this.buttonService.getByProgramId(program.id);
               },
               create: () => {
 
@@ -171,9 +168,7 @@ export class ProgramComponent implements OnInit {
         },
         read: () => {
 
-          this.store.dispatch( new Read<Program>(TableEnum.Programs) );
-
-          return this.store.select(getProgramsState);
+          return this.programService.getAll();
         },
         create: () => {
 

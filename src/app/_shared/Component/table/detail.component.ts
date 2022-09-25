@@ -35,6 +35,8 @@ export class DetailComponent implements OnInit, OnDestroy {
 
   dialogComponent: DialogComponent;
 
+  read: () => Observable<unknown>;
+
   create: () => void;
 
   edit: (element: unknown, event: unknown) => void;
@@ -52,6 +54,8 @@ export class DetailComponent implements OnInit, OnDestroy {
   ngOnInit() {
 
     this.setSource();
+
+    this.gridRead();
   }
 
   ngOnDestroy() {
@@ -62,18 +66,38 @@ export class DetailComponent implements OnInit, OnDestroy {
   setSource() {
 
     this.detail.subscribe(x => {
-      this.subscription = x.read().subscribe((y) => {
-        this.isLoading = false;
-        const entitiesArray = entityToArray(y);
-        this.dataSource = new MatTableDataSource<unknown>(entitiesArray);
-        this.pageNation();
-      }, error => this.isLoading = false);
+
+      this.read = x.read;
+
       this.create = x.create;
+
       this.edit = x.edit;
+
       this.delete = x.delete;
+
       this.displayedColumns = columnToDisplay(x.columns);
-      this.openDetailDialog.emit(openDialog(this.matDialog, x.columns));
+
+      this.openDetailDialog.emit(openDialog(this.matDialog, x.columns, () => {
+        this.gridRead();
+      }));
     });
+  }
+
+  gridRead(): void {
+
+    this.subscription = this.read().subscribe((y) => {
+      this.isLoading = false;
+      const entitiesArray = entityToArray(y);
+      this.dataSource = new MatTableDataSource<unknown>(entitiesArray);
+      this.pageNation();
+    }, error => this.isLoading = false);
+  }
+
+  gridDelete(element: unknown, event: unknown): void {
+
+    this.delete(element, event);
+
+    this.gridRead();
   }
 
   pageNation() {

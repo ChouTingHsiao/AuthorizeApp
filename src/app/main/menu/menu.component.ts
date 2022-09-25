@@ -6,12 +6,11 @@ import { DialogEnum } from '@shared/Enum/dialog.enum';
 import { ColumnEnum } from '@shared/Enum/column.enum';
 import { TableEnum } from '@shared/Enum/table.enum';
 import { Grid } from '@shared/Model/table.model';
-import { Program } from '@shared/Model/program.model';
 import { Menu } from '@shared/Model/menu.model';
-import { Read, Create, Edit, Delete} from '@shared/Ngrx/Actions/maintain.action';
+import { Create, Edit, Delete} from '@shared/Ngrx/Actions/maintain.action';
 import { Observable } from 'rxjs';
-import { Button } from '@shared/Model/button.model';
-import { getProgramsState, getMenusState } from '@shared/Ngrx/Selectors/maintain.selectors';
+import { MenuService } from '@services/menu/menu.service';
+import { ProgramService } from '@services/program/program.service';
 
 @Component({
   selector: 'app-menu',
@@ -24,7 +23,10 @@ export class MenuComponent implements OnInit {
 
   myGrid: Observable<Grid<Menu>>;
 
-  constructor(private store: Store) { }
+  constructor(
+    private store: Store,
+    private menuService: MenuService,
+    private programService: ProgramService){}
 
   ngOnInit() {
     
@@ -60,15 +62,13 @@ export class MenuComponent implements OnInit {
             selector: ColumnEnum.select,
             source: (): Observable<unknown> => {
 
-              this.store.dispatch( new Read<Program>(TableEnum.Programs) );
-
-              return this.store.select(getProgramsState);
+              return this.programService.getAll();
             }
           }
         ],
         read: () => {
 
-          return this.store.select(getMenusState);
+          return this.menuService.getAll();
         },
         create: () => {
 
@@ -81,12 +81,6 @@ export class MenuComponent implements OnInit {
 
               if ( event.source.ngControl.name === 'program' ) {
 
-                this.store.dispatch( new Read<Button>(
-                  `${TableEnum.Programs}.${TableEnum.Buttons}`,
-                    [],
-                    { program: event.value } as Button
-                  )
-                );
               }
             },
             confirm: (): void => {
@@ -103,13 +97,6 @@ export class MenuComponent implements OnInit {
         },
         edit: (menu) => {
 
-          this.store.dispatch( new Read<Button>(
-            `${TableEnum.Programs}.${TableEnum.Buttons}`,
-              [],
-              { program: menu.program } as Button
-            )
-          );
-
           const dialog: DialogComponent = this.openTableDialog({
             title: '修改頁面',
             button: [DialogEnum.btnEdit, DialogEnum.btnCancel],
@@ -119,12 +106,6 @@ export class MenuComponent implements OnInit {
 
               if ( event.source.ngControl.name === 'program' ) {
 
-                this.store.dispatch( new Read<Button>(
-                  `${TableEnum.Programs}.${TableEnum.Buttons}`,
-                    [],
-                    { program: event.value } as Button
-                  )
-                );
               }
             },
             confirm: (): void => {

@@ -43,7 +43,7 @@ function dataToColumn(data: unknown, columns: Column[]): Column[] {
     return columns;
 }
 
-function openDialog( matDialog: MatDialog, columns: Column[]): (dialog: Dialog) => unknown {
+function openDialog( matDialog: MatDialog, columns: Column[], closeEvent: () => void): (dialog: Dialog) => unknown {
 
     return ( dialog: Dialog ): DialogComponent => {
 
@@ -63,9 +63,7 @@ function openDialog( matDialog: MatDialog, columns: Column[]): (dialog: Dialog) 
           instance.dynamicAddComponent(element);
         });
 
-        dialogRef.afterClosed().subscribe(result => {
-          console.log(`Dialog result: ${result}`);
-        });
+        dialogRef.afterClosed().subscribe(closeEvent);
 
         return instance;
     };
