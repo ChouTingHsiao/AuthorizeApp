@@ -131,18 +131,19 @@ export class ProgramComponent implements OnInit {
                   button: [DialogEnum.btnEdit, DialogEnum.btnCancel],
                   method: DialogEnum.edit,
                   data: button,
+                  confirm: (): void => {
+
+                    this.store.dispatch(
+                      new Edit<Button>(
+                        TableEnum.Buttons,
+                        [],
+                        dialog.getData() as Button
+                      )
+                    );
+
+                    console.log(dialog);
+                  }
                 }) as DialogComponent;
-
-                dialog.confirm = (): void => {
-
-                  this.store.dispatch(
-                    new Edit<Button>(
-                      TableEnum.Buttons,
-                      [],
-                      dialog.getData() as Button
-                    )
-                  );
-                };
               },
               delete: (button) => {
 

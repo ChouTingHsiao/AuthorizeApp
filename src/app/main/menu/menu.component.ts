@@ -77,12 +77,6 @@ export class MenuComponent implements OnInit {
             button: [DialogEnum.btnCreate, DialogEnum.btnCancel],
             method: DialogEnum.create,
             data: {} as Menu,
-            onChanges: (event) => {
-
-              if ( event.source.ngControl.name === 'program' ) {
-
-              }
-            },
             confirm: (): void => {
 
               this.store.dispatch(
@@ -102,12 +96,6 @@ export class MenuComponent implements OnInit {
             button: [DialogEnum.btnEdit, DialogEnum.btnCancel],
             method: DialogEnum.edit,
             data: menu,
-            onChanges: (event) => {
-
-              if ( event.source.ngControl.name === 'program' ) {
-
-              }
-            },
             confirm: (): void => {
 
               this.store.dispatch(

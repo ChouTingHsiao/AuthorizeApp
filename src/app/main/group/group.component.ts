@@ -134,6 +134,8 @@ export class GroupComponent implements OnInit {
 
                     if ( event.source.ngControl.name === 'program' ) {
 
+                      dialog.ComponentDictionary.buttons.source = 
+                      this.buttonService.getByProgramId(event.value);
                     }
                   },
                   confirm: (): void => {
@@ -141,6 +143,8 @@ export class GroupComponent implements OnInit {
                     const groupProgramData = dialog.getData() as GroupProgram;
 
                     groupProgramData.group = group.id;
+
+                    console.log(groupProgramData);
 
                     this.store.dispatch( new Create<GroupProgram>(
                       TableEnum.GroupPrograms,
@@ -160,7 +164,8 @@ export class GroupComponent implements OnInit {
                   onChanges: (event) => {
 
                     if ( event.source.ngControl.name === 'program' ) {
-
+                      dialog.ComponentDictionary.buttons.source = 
+                      this.buttonService.getByProgramId(event.value);
                     }
                   },
                   confirm: (): void => {
