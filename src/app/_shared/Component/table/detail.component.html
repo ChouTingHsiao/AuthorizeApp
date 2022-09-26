@@ -11,7 +11,7 @@
    <th mat-header-cell *matHeaderCellDef  style="width: 20%;"></th>
    <td mat-cell *matCellDef="let element" >
     <button id="btnEdit" mat-raised-button color="accent" (click)="edit(element, $event)">Edit</button>&nbsp;
-    <button id="btnDelete" mat-raised-button color="warn" (click)="delete(element, $event)">Delete</button>
+    <button id="btnDelete" mat-raised-button color="warn" (click)="gridDelete(element, $event)">Delete</button>
    </td>
    </ng-container>
 

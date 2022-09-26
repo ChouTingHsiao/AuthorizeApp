@@ -1,4 +1,4 @@
-import { Component, OnChanges, ViewChild, Input, Output, EventEmitter, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, OnChanges, ViewChild, Input, Output, EventEmitter, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
@@ -27,7 +27,7 @@ import { sortData, pageData, columnToDisplay, openDialog } from '@shared/Method/
     ])
   ]
 })
-export class TableComponent implements OnChanges, OnDestroy {
+export class TableComponent implements OnInit, OnChanges, OnDestroy {
 
   subscription: Subscription;
 
@@ -58,6 +58,8 @@ export class TableComponent implements OnChanges, OnDestroy {
 
   dialogComponent: DialogComponent;
 
+  read: () => Observable<unknown>;
+
   create: () => void;
 
   edit: (element: unknown, event: unknown) => void;
@@ -72,9 +74,20 @@ export class TableComponent implements OnChanges, OnDestroy {
 
   constructor(public matDialog: MatDialog) {}
 
-  ngOnChanges(changes) {
-    if (changes.grid && this.grid !== undefined) {
+  ngOnInit(): void {
+
       this.setSource();
+
+      this.gridRead();
+  }
+
+  ngOnChanges(changes) {
+
+    if (changes.grid &&
+        this.grid !== undefined &&
+        this.read !== undefined) {
+
+      this.gridRead();
     }
   }
 
@@ -85,24 +98,47 @@ export class TableComponent implements OnChanges, OnDestroy {
   setSource() {
 
     this.grid.subscribe(x => {
-      this.subscription = x.read().subscribe((y) => {
-        this.isLoading = false;
-        const entitiesArray = entityToArray(y);
-        this.dataSource = new MatTableDataSource<unknown>(entitiesArray);
-        this.pageNation();
-      }, error => this.isLoading = false);
+
+      this.read = x.read;
+
       this.create = x.create;
+
       this.edit = x.edit;
+
       this.delete = x.delete;
+
       this.isHasDetail = x.detail != null;
+
       this.tableSort =  new Observable(subscriber => {
         subscriber.next(x.sort);
-        subscriber.next();
+        subscriber.complete();
       });
+
       this.columns = x.columns;
+
       this.displayedColumns = columnToDisplay(x.columns);
-      this.openTableDialog.emit(openDialog(this.matDialog, x.columns));
+
+      this.openTableDialog.emit(openDialog(this.matDialog, x.columns, () => {
+        this.gridRead();
+      }));
     });
+  }
+
+  gridRead(): void {
+
+    this.subscription = this.read().subscribe((y) => {
+      this.isLoading = false;
+      const entitiesArray = entityToArray(y);
+      this.dataSource = new MatTableDataSource<unknown>(entitiesArray);
+      this.pageNation();
+    }, error => this.isLoading = false);
+  }
+
+  gridDelete(element: unknown, event: unknown): void {
+
+    this.delete(element, event);
+
+    this.gridRead();
   }
 
   pageNation() {

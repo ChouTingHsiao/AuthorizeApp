@@ -16,7 +16,7 @@ multiTemplateDataRows
         <mat-icon>{{ element === currentElement ? 'arrow_drop_down' : 'arrow_right' }}</mat-icon>
       </button>
       <button id="btnEdit" mat-raised-button color="accent" (click)="edit(element, $event)" aria-label="Edit">Edit</button>&nbsp;
-      <button id="btnDelete" mat-raised-button color="warn" (click)="delete(element, $event)" aria-label="Delete">Delete</button>
+      <button id="btnDelete" mat-raised-button color="warn" (click)="gridDelete(element, $event)" aria-label="Delete">Delete</button>
     </td>
   </ng-container>
 

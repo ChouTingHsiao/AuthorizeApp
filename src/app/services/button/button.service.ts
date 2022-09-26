@@ -59,11 +59,13 @@ export class ButtonService {
   update(button: Button): Observable<Button> {
     return new Observable(subscriber => {
 
-      authorizeDb.Buttons.toArray().then((updated) => {
+      const cloneButton = clone(button) as Button;
+
+      authorizeDb.Buttons.update(cloneButton.id, cloneButton).then((updated) => {
 
         console.log(updated);
 
-        subscriber.next(button);
+        subscriber.next(cloneButton);
 
         subscriber.complete();
       });

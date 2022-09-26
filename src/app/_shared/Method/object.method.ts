@@ -23,7 +23,16 @@ function entityToArray(entity: unknown) {
 
     const entities = 'entities';
 
-    return objectToArray(entity[entities]);
+    if (entity == null) {
+        return new Array();
+    }
+
+    if (entity[entities] != null) {
+        
+        return objectToArray(entity[entities]);
+    }
+
+    return objectToArray(entity);
 }
 
 function cloneArray(array: unknown[]): unknown[] {

@@ -32,7 +32,7 @@ export class DialogComponent {
 
   @ViewChild('content') content: ElementRef;
 
-  constructor(private componenFactoryResolver: ComponentFactoryResolver) {}
+  constructor(private componentFactoryResolver: ComponentFactoryResolver) {}
 
   dynamicAddComponent(element: Column) {
 
@@ -40,19 +40,19 @@ export class DialogComponent {
 
     switch (element.selector) {
       case ColumnEnum.input: {
-        componentFactory = this.componenFactoryResolver.resolveComponentFactory(InputComponent);
+        componentFactory = this.componentFactoryResolver.resolveComponentFactory(InputComponent);
         break;
       }
       case ColumnEnum.select: {
-        componentFactory = this.componenFactoryResolver.resolveComponentFactory(SelectComponent);
+        componentFactory = this.componentFactoryResolver.resolveComponentFactory(SelectComponent);
         break;
       }
       case ColumnEnum.multiselect: {
-        componentFactory = this.componenFactoryResolver.resolveComponentFactory(MultiSelectComponent);
+        componentFactory = this.componentFactoryResolver.resolveComponentFactory(MultiSelectComponent);
         break;
       }
       default: {
-        componentFactory = this.componenFactoryResolver.resolveComponentFactory(LabelComponent);
+        componentFactory = this.componentFactoryResolver.resolveComponentFactory(LabelComponent);
         break;
       }
     }

@@ -7,10 +7,10 @@ import { ColumnEnum } from '@shared/Enum/column.enum';
 import { TableEnum } from '@shared/Enum/table.enum';
 import { Grid } from '@shared/Model/table.model';
 import { User } from '@shared/Model/user.model';
-import { Role } from '@shared/Model/role.model';
-import { Read, Create, Edit, Delete} from '@shared/Ngrx/Actions/maintain.action';
+import { Create, Edit, Delete} from '@shared/Ngrx/Actions/maintain.action';
 import { Observable } from 'rxjs';
-import { getRolesState, getUsersState } from '@shared/Ngrx/Selectors/maintain.selectors';
+import { UserService } from '@services/user/user.service';
+import { RoleService } from '@services/role/role.service';
 
 @Component({
   selector: 'app-user',
@@ -23,7 +23,10 @@ export class UserComponent implements OnInit {
 
   myGrid: Observable<Grid<User>>;
 
-  constructor(private store: Store) { }
+  constructor(
+    private store: Store,
+    private userService: UserService,
+    private roleService: RoleService){}
 
   ngOnInit() {
 
@@ -65,17 +68,13 @@ export class UserComponent implements OnInit {
             selector: ColumnEnum.select,
             source: (): Observable<unknown> => {
 
-              this.store.dispatch( new Read<Role>(TableEnum.Roles) );
-
-              return this.store.select(getRolesState);
+              return this.roleService.getAll();
             }
           }
         ],
         read: () => {
-
-          this.store.dispatch( new Read<User>(TableEnum.Users) );
-
-          return this.store.select(getUsersState);
+          
+          return this.userService.getAll();
         },
         create: () => {
 
